@@ -49,30 +49,18 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     public class Verificador extends AsyncTask<String,Void, String> {
 
         private Alimento ca = null;//Crearemos un objeto de este tipo para almacenar los datos
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            myHelper = new MySQLHelper();
-            try {
-                myHelper.abrirConexion();
-            } catch (ClassNotFoundException e) {
-                Toast.makeText(ConfirmarAlimentoActivity.this, "Ha ocurrido un error al acceder a la bbdd.", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                Toast.makeText(ConfirmarAlimentoActivity.this, "Ha ocurrido un error al acceder a la bbdd. El error es: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
 
         @Override
         protected String doInBackground(String... cod_barras) {
             String cadena=null;
+            myHelper = new MySQLHelper();
             try {
+                myHelper.abrirConexion();
                 myHelper.consultaCodBarras("9632147856984");
                 cadena = "Hecho!";
             } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
             return cadena;

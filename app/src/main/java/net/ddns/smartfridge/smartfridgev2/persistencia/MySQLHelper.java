@@ -31,11 +31,9 @@ public class MySQLHelper {
      * @throws ClassNotFoundException cuando no se encuentra el driver especificado
      * @throws SQLException cuando no se ha podido establecer la conexión
      */
-    public void abrirConexion() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
-        Class.forName(DRIVER).newInstance();
-        Log.d("Suerte", "NO tenemos conexion");
+    public void abrirConexion() throws ClassNotFoundException, SQLException {
+        Class.forName(DRIVER);
         conexion = (Connection) DriverManager.getConnection(servidor, USER, PASS);
-        Log.d("Suerte", "tenemos conexion");
     }
 
     /**

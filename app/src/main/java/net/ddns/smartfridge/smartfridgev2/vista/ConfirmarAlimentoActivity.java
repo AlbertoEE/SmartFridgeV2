@@ -5,11 +5,14 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQLHelper;
+
+import org.w3c.dom.Text;
 
 import java.sql.SQLException;
 
@@ -27,6 +30,8 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
         new Verificador().execute(cod_barrras);
         setContentView(R.layout.activity_confirmar_alimento);
+        TextView tv = findViewById(R.id.textView);
+        tv.setSelected(true);
     }
 
 

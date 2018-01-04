@@ -7,34 +7,36 @@
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity">
 
     <ImageView
-        android:id="@+id/ivConfirmacion"
+        android:id="@+id/ivProducto_ConfirmarAlimento"
         android:layout_width="323dp"
         android:layout_height="313dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintVertical_bias="0.100000024"
         app:srcCompat="@drawable/ic_launcher_background"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="705dp"
-        android:layout_height="133dp"
+        android:id="@+id/tvNombreProducto_ConfirmarAlimento"
+        android:layout_width="523dp"
+        android:layout_height="67dp"
         android:layout_marginBottom="8dp"
         android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
         android:focusable="false"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
-        android:text="¿Es este tu alimento?"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/ivConfirmacion"
+        android:singleLine="true"
+        android:text="¿Es este tu alimento? Pulsa el verde para aceptar o el rojo pare negar..."
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.746"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -50,34 +52,4 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.9"
-        app:srcCompat="@android:color/holo_green_light" />
-
-    <ImageButton
-        android:id="@+id/imageButton5"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.907"
-        app:srcCompat="@android:color/holo_red_dark" />
 </android.support.constraint.ConstraintLayout>

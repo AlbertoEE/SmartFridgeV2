@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    tools:context="net.ddns.smartfridge.smartfridgev2.vista.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight=".50">
+
+        <Button
+            android:id="@+id/maBotonCA"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight=".50"
+            android:onClick="abrirControlAlimentos"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/maBotonCLC"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight=".50"
+            android:onClick="abrirCrearListaCompra"
+            android:text="2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight=".50">
+
+        <Button
+            android:id="@+id/maBotonSR"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight=".50"
+            android:onClick="abrirSugerirReceta"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/maBotonPM"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight=".50"
+            android:onClick="abrirPlanificarMenu"
+            android:text="4" />
+    </LinearLayout>
+</LinearLayout>

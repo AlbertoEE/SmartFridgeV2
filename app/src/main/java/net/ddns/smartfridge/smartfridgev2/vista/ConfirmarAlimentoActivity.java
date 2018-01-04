@@ -81,4 +81,9 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     public void volverIdentificarAlimento (View v){
         dialogos.dialogAlimentoNoEncontrado();
     }
+
+    //Programamos el botón de SI
+    public void alimentoIdentificado (View v){
+        dialogos.dialogAlimentoEncontrado();
+    }
 }

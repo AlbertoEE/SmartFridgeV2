@@ -31,7 +31,8 @@
         <activity android:name=".vista.IdentificarAlimentoActivity" />
         <activity android:name=".vista.EscanerActivity" />
         <activity android:name=".vista.ConfirmarAlimentoActivity" />
-        <activity android:name=".vista.ProductoNoEncontradoActivity"></activity>
+        <activity android:name=".vista.ProductoNoEncontradoActivity" />
+        <activity android:name=".vista.CaducidadAlimento"></activity>
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private MySQLHelper myHelper;
     private ImageView imagen_alimento;//ImageView para mostrar la imagen de la bbdd
     private TextView texto_alimento; //TextView para mostrar el nombre de la bbdd
-    public static boolean encontrado = false;//Variable para saber si se ha encontrado el elemento en la bbdd y así mostrar un layout u otro
+    //private boolean encontrado=false;//Variable para saber si se ha encontrado el elemento en la bbdd y así mostrar un layout u otro
     private Alimento_Codigo ac;
 
     @Override
@@ -35,19 +35,18 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         escaner = getIntent();
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
-        //texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
         new Verificador().execute(cod_barrras);
-        Toast.makeText(this, "" + encontrado, Toast.LENGTH_SHORT).show();
-        if (encontrado) {
-            setContentView(R.layout.activity_confirmar_alimento);
+        //Toast.makeText(this, "" + encontrado, Toast.LENGTH_SHORT).show();
+        //if (encontrado) {
+            //setContentView(R.layout.activity_confirmar_alimento);
             //imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
             //texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
             //texto_alimento.setSelected(true);//Para las animaciones de los textos
 
             //texto_alimento.setText(ac.getNomAlimento());
-        } else {
-
-        }
+        //} else {
+            //setContentView(R.layout.activity_producto_no_encontrado);
+        //}
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
@@ -73,15 +72,25 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Alimento_Codigo al) {
             super.onPostExecute(al);
+            if (al!=null) {
+                setContentView(R.layout.activity_confirmar_alimento);
+                imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
+                texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
+                imagen_alimento.setImageBitmap(al.getImagen());
+                texto_alimento.setText(al.getNomAlimento());
+                texto_alimento.setSelected(true);//Para las animaciones de los textos
+            } else {
+                setContentView(R.layout.activity_producto_no_encontrado);
+            }
             //ac = al;
             /*
             String nombre = al.getNomAlimento();
             //TextView texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
             //Toast.makeText(ConfirmarAlimentoActivity.this, "nombre: " + nombre, Toast.LENGTH_SHORT).show();
             //imagen_alimento.setImageBitmap(al.getImagen());
-            texto_alimento.setText(al.getNomAlimento());*/
+            texto_alimento.setText(al.getNomAlimento());
             String nombre = al.getNomAlimento();
-            Toast.makeText(ConfirmarAlimentoActivity.this, "nombre: " + nombre, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ConfirmarAlimentoActivity.this, "nombre: " + nombre, Toast.LENGTH_SHORT).show();*/
         }
     }
 }

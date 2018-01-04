@@ -46,16 +46,18 @@ public class MySQLHelper {
     }
 
     //Consulta para comprobar si el código de barras escaneado está en la bbdd
-    public void consultaCodBarras(String cod_barras) throws SQLException {
+    public String consultaCodBarras(String cod_barras) throws SQLException {
+        String madre=null;
         String query_cod_barras = "SELECT * from " + TABLA_COD_ALI + " where cod_barras = \'" + cod_barras + "\'";
         //Log.d("prueba", query_cod_barras);
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(query_cod_barras);
         //Log.d("Suerte", "cursor antes del while");
         while (rs.next()) {
-            String madre = rs.getString(2);
+            madre = rs.getString(2);
             //Log.d("Suerte", madre);
         }
+        return madre;
     }
     /**
      * Consulta de prueba

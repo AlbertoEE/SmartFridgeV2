@@ -25,23 +25,8 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         escaner = getIntent();
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
-
-        /*myHelper = new MySQLHelper();
-        try {
-            myHelper.abrirConexion();
-            //Log.d("Suerte", "conexion abierta");
-            //myHelper.consultaCodBarras("9632147856984");
-            //myHelper.cerrarConexion();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
-        new Verificador().execute("9632147856984");
+        new Verificador().execute(cod_barrras);
         setContentView(R.layout.activity_confirmar_alimento);
-      /*  Log.d("prueba", cod_barrras);
-        Log.d("prueba", formato_codigo);*/
     }
 
 
@@ -56,8 +41,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             myHelper = new MySQLHelper();
             try {
                 myHelper.abrirConexion();
-                myHelper.consultaCodBarras("9632147856984");
-                cadena = "Hecho!";
+                cadena = myHelper.consultaCodBarras(cod_barras[0]);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQLHelper;
 
 import org.w3c.dom.Text;
@@ -25,8 +27,8 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private MySQLHelper myHelper;
     private ImageView imagen_alimento;//ImageView para mostrar la imagen de la bbdd
     private TextView texto_alimento; //TextView para mostrar el nombre de la bbdd
-    //private boolean encontrado=false;//Variable para saber si se ha encontrado el elemento en la bbdd y así mostrar un layout u otro
     private Alimento_Codigo ac;
+    private Dialogos dialogos;//Para tener acceso a los dialogs que se mostrarán en la app
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +38,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
         new Verificador().execute(cod_barrras);
-        //Toast.makeText(this, "" + encontrado, Toast.LENGTH_SHORT).show();
-        //if (encontrado) {
-            //setContentView(R.layout.activity_confirmar_alimento);
-            //imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
-            //texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
-            //texto_alimento.setSelected(true);//Para las animaciones de los textos
-
-            //texto_alimento.setText(ac.getNomAlimento());
-        //} else {
-            //setContentView(R.layout.activity_producto_no_encontrado);
-        //}
+        dialogos = new Dialogos(this);
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
@@ -82,15 +74,11 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             } else {
                 setContentView(R.layout.activity_producto_no_encontrado);
             }
-            //ac = al;
-            /*
-            String nombre = al.getNomAlimento();
-            //TextView texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
-            //Toast.makeText(ConfirmarAlimentoActivity.this, "nombre: " + nombre, Toast.LENGTH_SHORT).show();
-            //imagen_alimento.setImageBitmap(al.getImagen());
-            texto_alimento.setText(al.getNomAlimento());
-            String nombre = al.getNomAlimento();
-            Toast.makeText(ConfirmarAlimentoActivity.this, "nombre: " + nombre, Toast.LENGTH_SHORT).show();*/
         }
+    }
+
+    //Programamos el botón de NO
+    public void volverIdentificarAlimento (View v){
+        dialogos.dialogAlimentoNoEncontrado();
     }
 }

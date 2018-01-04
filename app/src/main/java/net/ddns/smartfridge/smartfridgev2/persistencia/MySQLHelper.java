@@ -1,13 +1,25 @@
 package net.ddns.smartfridge.smartfridgev2.persistencia;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase creada para manejar las conexiones a la BBDD externa escrita en MySQL, para el correcto
@@ -46,18 +58,28 @@ public class MySQLHelper {
     }
 
     //Consulta para comprobar si el código de barras escaneado está en la bbdd
-    public String consultaCodBarras(String cod_barras) throws SQLException {
-        String madre=null;
+    public Alimento_Codigo consultaCodBarras(String cod_barras) throws SQLException {
+        Alimento_Codigo ac=null;//Para almacenar los datos de la bbdd
+        int id;//Para almacenar el id de la bbdd
+        String nombre;//Para almacenar le nombre de la bbdd
+        String cod_ba;//Para almacenar el código de barras de la bbdd
+        Bitmap imagen;//Para almacenar la imagen de la bbdd
         String query_cod_barras = "SELECT * from " + TABLA_COD_ALI + " where cod_barras = \'" + cod_barras + "\'";
-        //Log.d("prueba", query_cod_barras);
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(query_cod_barras);
-        //Log.d("Suerte", "cursor antes del while");
         while (rs.next()) {
-            madre = rs.getString(2);
-            //Log.d("Suerte", madre);
+            id = rs.getInt(1);
+            nombre = rs.getString(2);
+            cod_ba = rs.getString(3);
+            //Recogemos el blob de la bbdd
+            Blob blob = rs.getBlob(4);
+            //Lo pasamos a array de bytes
+            byte[] data = blob.getBytes(1, (int)blob.length());
+            ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            imagen = BitmapFactory.decodeStream(bais);
+            ac = new Alimento_Codigo(id, nombre, cod_ba, imagen);
         }
-        return madre;
+        return ac;
     }
     /**
      * Consulta de prueba

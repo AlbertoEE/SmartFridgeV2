@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQLHelper;
 
 import org.w3c.dom.Text;
@@ -34,31 +35,30 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         tv.setSelected(true);
     }
 
-
     //Creamos el AsyncTask para hacer la consulta a la bbdd
-    public class Verificador extends AsyncTask<String,Void, String> {
+    public class Verificador extends AsyncTask<String,Void, Alimento_Codigo> {
 
         private Alimento ca = null;//Crearemos un objeto de este tipo para almacenar los datos
 
         @Override
-        protected String doInBackground(String... cod_barras) {
-            String cadena=null;
+        protected Alimento_Codigo doInBackground(String... cod_barras) {
+            Alimento_Codigo al=null;
             myHelper = new MySQLHelper();
             try {
                 myHelper.abrirConexion();
-                cadena = myHelper.consultaCodBarras(cod_barras[0]);
+                al = myHelper.consultaCodBarras(cod_barras[0]);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            return cadena;
+            return al;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.d("prueba", ""+s);
+        protected void onPostExecute(Alimento_Codigo al) {
+            super.onPostExecute(al);
+            Log.d("prueba", "creado objeto alimento código");
         }
     }
 }

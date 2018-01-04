@@ -3,7 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo;
 import android.graphics.Bitmap;
 
 /**
- * Clase que representa un alimento de la bbdd de mysql
+ * Clase que representa un alimento de la bbdd de sqlite
  */
 
 public class Alimento {

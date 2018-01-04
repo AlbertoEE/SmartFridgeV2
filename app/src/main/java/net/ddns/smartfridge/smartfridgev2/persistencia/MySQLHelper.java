@@ -10,6 +10,7 @@ import com.mysql.jdbc.Statement;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

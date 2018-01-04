@@ -31,8 +31,9 @@ public class MySQLHelper {
      * @throws ClassNotFoundException cuando no se encuentra el driver especificado
      * @throws SQLException cuando no se ha podido establecer la conexión
      */
-    public void abrirConexion() throws ClassNotFoundException, SQLException{
-        Class.forName(DRIVER);
+    public void abrirConexion() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
+        Class.forName(DRIVER).newInstance();
+        Log.d("Suerte", "NO tenemos conexion");
         conexion = (Connection) DriverManager.getConnection(servidor, USER, PASS);
         Log.d("Suerte", "tenemos conexion");
     }
@@ -49,13 +50,13 @@ public class MySQLHelper {
     //Consulta para comprobar si el código de barras escaneado está en la bbdd
     public void consultaCodBarras(String cod_barras) throws SQLException {
         String query_cod_barras = "SELECT * from " + TABLA_COD_ALI + " where cod_barras = \'" + cod_barras + "\'";
-        Log.d("prueba", query_cod_barras);
+        //Log.d("prueba", query_cod_barras);
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(query_cod_barras);
-        Log.d("Suerte", "cursor antes del while");
+        //Log.d("Suerte", "cursor antes del while");
         while (rs.next()) {
             String madre = rs.getString(2);
-            Log.d("Suerte", madre);
+            //Log.d("Suerte", madre);
         }
     }
     /**

@@ -25,19 +25,20 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         escaner = getIntent();
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
-        myHelper = new MySQLHelper();
+
+        /*myHelper = new MySQLHelper();
         try {
             myHelper.abrirConexion();
-            Log.d("Suerte", "conexion abierta");
-            myHelper.consultaCodBarras("9632147856984");
-            myHelper.cerrarConexion();
+            //Log.d("Suerte", "conexion abierta");
+            //myHelper.consultaCodBarras("9632147856984");
+            //myHelper.cerrarConexion();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
-
+        new Verificador().execute("9632147856984");
         setContentView(R.layout.activity_confirmar_alimento);
       /*  Log.d("prueba", cod_barrras);
         Log.d("prueba", formato_codigo);*/
@@ -45,7 +46,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
 
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
-    public class Verificador extends AsyncTask<String,Void, Alimento> {
+    public class Verificador extends AsyncTask<String,Void, String> {
 
         private Alimento ca = null;//Crearemos un objeto de este tipo para almacenar los datos
         @Override
@@ -58,14 +59,29 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 Toast.makeText(ConfirmarAlimentoActivity.this, "Ha ocurrido un error al acceder a la bbdd.", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
                 Toast.makeText(ConfirmarAlimentoActivity.this, "Ha ocurrido un error al acceder a la bbdd. El error es: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
             }
         }
 
         @Override
-        protected Alimento doInBackground(String... cod_barras) {
-
-            return null;
+        protected String doInBackground(String... cod_barras) {
+            String cadena=null;
+            try {
+                myHelper.consultaCodBarras("9632147856984");
+                cadena = "Hecho!";
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return cadena;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("prueba", ""+s);
+        }
     }
 }

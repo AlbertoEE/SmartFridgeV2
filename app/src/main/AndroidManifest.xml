@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".vista.MainActivity"
+            android:name=".vista.InitialActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
         <activity android:name=".vista.EscanerActivity" />
         <activity android:name=".vista.ConfirmarAlimentoActivity" />
         <activity android:name=".vista.ProductoNoEncontradoActivity" />
-        <activity android:name=".vista.CaducidadAlimento"></activity>
+        <activity android:name=".vista.CaducidadAlimento" />
     </application>
 
 </manifest>

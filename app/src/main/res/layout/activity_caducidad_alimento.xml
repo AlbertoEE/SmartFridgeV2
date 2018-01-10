@@ -4,6 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento">
+
+    <ImageView
+        android:id="@+id/ivCad1"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageView
+        android:id="@+id/ivCad2"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCad1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageView
+        android:id="@+id/ivCad3"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCad2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageView
+        android:id="@+id/ivCad4"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCad3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageView
+        android:id="@+id/ivCad5"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCad4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageView
+        android:id="@+id/ivCad6"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCad5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageView
+        android:id="@+id/ivCad7"
+        android:layout_width="38dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCad6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
+
+    <ImageButton
+        android:id="@+id/ivCadMas"
+        android:layout_width="91dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivCad7"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uno" />
 
 </android.support.constraint.ConstraintLayout>

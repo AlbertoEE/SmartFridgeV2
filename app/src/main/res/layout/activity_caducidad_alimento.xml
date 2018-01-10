@@ -85,4 +85,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/uno" />
 
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivCad5"
+        app:layout_constraintVertical_bias="0.276"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
 </android.support.constraint.ConstraintLayout>

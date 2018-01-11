@@ -30,6 +30,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         //Para que no se guarde el histórico de códigos escaneados
         intent.putExtra("SAVE_HISTORY", false);
         startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 
     @Override

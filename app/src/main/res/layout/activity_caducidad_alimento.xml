@@ -7,86 +7,97 @@
     android:orientation="vertical"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento">
 
-    <ImageView
-        android:id="@+id/ivCad1"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
-    <ImageView
-        android:id="@+id/ivCad2"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivCad1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
-    <ImageView
-        android:id="@+id/ivCad3"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivCad2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
-    <ImageView
-        android:id="@+id/ivCad4"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivCad3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
-    <ImageView
-        android:id="@+id/ivCad5"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivCad4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
-    <ImageView
-        android:id="@+id/ivCad6"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivCad5"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
-    <ImageView
-        android:id="@+id/ivCad7"
-        android:layout_width="38dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivCad6"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uno" />
-
     <ImageButton
         android:id="@+id/ivCadMas"
         android:layout_width="91dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="44dp"
+        android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivCad7"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
         app:srcCompat="@drawable/uno" />
 
-    <ImageView
-        android:id="@+id/imageView17"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="292dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.083">
+
+        <ImageView
+            android:id="@+id/ivCad1"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+        <ImageView
+            android:id="@+id/ivCad2"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivCad1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+        <ImageView
+            android:id="@+id/ivCad3"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivCad2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+        <ImageView
+            android:id="@+id/ivCad4"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivCad3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+        <ImageView
+            android:id="@+id/ivCad5"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivCad4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+        <ImageView
+            android:id="@+id/ivCad6"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivCad5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+        <ImageView
+            android:id="@+id/ivCad7"
+            android:layout_width="38dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ivCad6"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uno" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="190dp"
         android:layout_height="190dp"
         android:layout_marginBottom="8dp"
@@ -95,10 +106,21 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivCad5"
-        app:layout_constraintVertical_bias="0.276"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivDropZone"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.768"
+            app:srcCompat="@drawable/ic_launcher_background" />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
+import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
+import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
 
 public class CaducidadAlimento extends AppCompatActivity {
-
+    private boolean ocupado = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,5 +46,19 @@ public class CaducidadAlimento extends AppCompatActivity {
         iv7.setImageDrawable(redondo);
         ImageView iv8 = (ImageView)findViewById(R.id.ivCadMas);
         iv8.setImageDrawable(this.getResources().getDrawable(R.drawable.uno));
+
+        cargarDragAndDrop();
+    }
+
+    private void cargarDragAndDrop(){
+        findViewById(R.id.ivCad1).setOnLongClickListener(new CustomOnLongClickListener(1));
+        findViewById(R.id.ivCad2).setOnLongClickListener(new CustomOnLongClickListener(2));
+        findViewById(R.id.ivCad3).setOnLongClickListener(new CustomOnLongClickListener(3));
+        findViewById(R.id.ivCad4).setOnLongClickListener(new CustomOnLongClickListener(4));
+        findViewById(R.id.ivCad5).setOnLongClickListener(new CustomOnLongClickListener(5));
+        findViewById(R.id.ivCad6).setOnLongClickListener(new CustomOnLongClickListener(6));
+        findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
+        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone)));
+        findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2());
     }
 }

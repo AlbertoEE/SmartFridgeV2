@@ -2,11 +2,13 @@ package net.ddns.smartfridge.smartfridgev2.modelo;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa un alimento de la bbdd de mysql
  */
 
-public class Alimento_Codigo {
+public class Alimento_Codigo implements Serializable{
     private int id_codigo;//Id del alimento
     private String nomAlimento;//Nombre del alimento
     private String codigo_barras;//Representa el código de barras del alimento

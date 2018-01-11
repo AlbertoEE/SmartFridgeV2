@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQLHelper;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 
 public class ConfirmarAlimentoActivity extends AppCompatActivity {
@@ -25,10 +27,10 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private String cod_barrras = null;//Variable para almacenar el código de barras que recibimos el Escaner
     private String formato_codigo = null;//Para recoger el formato del código leído
     private MySQLHelper myHelper;
-    private ImageView imagen_alimento;//ImageView para mostrar la imagen de la bbdd
-    private TextView texto_alimento; //TextView para mostrar el nombre de la bbdd
-    private Alimento_Codigo ac;
+    private static ImageView imagen_alimento;//ImageView para mostrar la imagen de la bbdd
+    private static TextView texto_alimento; //TextView para mostrar el nombre de la bbdd
     private Dialogos dialogos;//Para tener acceso a los dialogs que se mostrarán en la app
+    private static Alimento_Codigo al=null;//Para el objeto de tipo Alimento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,9 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     //Creamos el AsyncTask para hacer la consulta a la bbdd
     public class Verificador extends AsyncTask<String,Void, Alimento_Codigo> {
 
-        private Alimento ca = null;//Crearemos un objeto de este tipo para almacenar los datos
-
         @Override
         protected Alimento_Codigo doInBackground(String... cod_barras) {
-            Alimento_Codigo al=null;
+            //Alimento_Codigo al;
             myHelper = new MySQLHelper();
             try {
                 myHelper.abrirConexion();
@@ -71,19 +71,27 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 imagen_alimento.setImageBitmap(al.getImagen());
                 texto_alimento.setText(al.getNomAlimento());
                 texto_alimento.setSelected(true);//Para las animaciones de los textos
+
             } else {
                 setContentView(R.layout.activity_producto_no_encontrado);
             }
+            //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();
         }
     }
 
     //Programamos el botón de NO
     public void volverIdentificarAlimento (View v){
+        //Toast.makeText(this, "nombre: " + al.getNomAlimento(), Toast.LENGTH_SHORT).show();
         dialogos.dialogAlimentoNoEncontrado();
     }
 
     //Programamos el botón de SI
     public void alimentoIdentificado (View v){
         dialogos.dialogAlimentoEncontrado();
+    }
+
+
+    public static Alimento_Codigo getAlimento() {
+        return al;
     }
 }

@@ -5,9 +5,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
+import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
+
+import java.io.IOException;
 
 /**
  * Clase para mostrar los diferentes tipos de dialogs en la app
@@ -16,6 +21,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
 public class Dialogos {
     private Context contexto;//El contexto del dialog
     private Intent intent;//Para llamar a otras Activitys
+    private Alimento acod;//Para crear un objeto que sea un alimento
 
     public Dialogos(Context context){
         this.contexto=context;

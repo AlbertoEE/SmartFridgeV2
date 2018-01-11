@@ -1,5 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.vista;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,15 +12,19 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
 
 public class CaducidadAlimento extends AppCompatActivity {
     private boolean ocupado = false;
+    private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        ac = ConfirmarAlimentoActivity.getAlimento();
         setContentView(R.layout.activity_caducidad_alimento);
         //Cogemos el drawable de la carpeta de recursos
         Drawable elemento = getResources().getDrawable(R.drawable.uno);
@@ -46,7 +51,8 @@ public class CaducidadAlimento extends AppCompatActivity {
         iv7.setImageDrawable(redondo);
         ImageView iv8 = (ImageView)findViewById(R.id.ivCadMas);
         iv8.setImageDrawable(this.getResources().getDrawable(R.drawable.uno));
-
+        ImageView dd = (ImageView)findViewById(R.id.ivDropZone);
+        dd.setImageBitmap(ac.getImagen());
         cargarDragAndDrop();
     }
 

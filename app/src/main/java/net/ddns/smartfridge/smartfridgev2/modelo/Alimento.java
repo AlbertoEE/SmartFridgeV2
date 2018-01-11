@@ -2,11 +2,13 @@ package net.ddns.smartfridge.smartfridgev2.modelo;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa un alimento de la bbdd de sqlite
  */
 
-public class Alimento {
+public class Alimento implements Serializable {
     private int id;//Id del alimento
     private String nombreAlimento;//Nombre del alimento
     private int cantidad;//Número de unidades del alimento almacenadas
@@ -24,6 +26,12 @@ public class Alimento {
         this.fecha_caducidad = fecha_caducidad;
         this.dias_caducidad = dias_caducidad;
         this.imagen = imagen;
+    }
+
+    //Constructor que recibe como parámetros el nombre y la imagen
+    public Alimento (String nombreA, Bitmap bm){
+        this.nombreAlimento = nombreA;
+        this.imagen = bm;
     }
 
     public int getCantidad() {

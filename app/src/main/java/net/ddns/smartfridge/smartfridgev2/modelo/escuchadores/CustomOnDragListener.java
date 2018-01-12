@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo.escuchadores;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.DragEvent;
@@ -20,24 +21,29 @@ import net.ddns.smartfridge.smartfridgev2.R;
 public class CustomOnDragListener implements View.OnDragListener {
     private boolean dentro;
     private RelativeLayout zona;
+    private LinearLayout myLinearLayout;
     private ImageView draggedView;
     private ImageView backGround;
+    private View children[];
+    private Context context;
 
-    public CustomOnDragListener(ImageView imageView){
+    public CustomOnDragListener(ImageView imageView, LinearLayout linearLayout, Context context){
         this.backGround = imageView;
+        myLinearLayout = linearLayout;
+        this.context = context;
     }
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
         // v será el elemento el cual hace referencia a la zona de drop, es decir, el elemento que
         // tiene asignado el dragListener
-
-
-        int action = event.getAction();
+        draggedView = (ImageView) event.getLocalState();
         zona = (RelativeLayout) v;
+        ordenarPrimerPaso();
+        int action = event.getAction();
         switch (action){
             case DragEvent.ACTION_DRAG_STARTED:
-                draggedView = (ImageView) event.getLocalState();
+
                 // Este evento se activa cuando se ha iniciado el DRAG, aquí debemos indicar la zona
                 // dónde permitimos al usuario hacer el DROP, verbigracia, poniendo un filtro azul
                 //  a la zona de DROP
@@ -100,26 +106,67 @@ public class CustomOnDragListener implements View.OnDragListener {
                 // En este caso como el elemento que arrastramos pertenece a un gridLayout-->LinearLaout
                 // y debemos obtener desde donde viene, es decir, su padre para eliminarlo de ahí ya
                 // que su nueva posición puede no corresponderse
-                ViewGroup owner = (ViewGroup) draggedView.getParent();
-                owner.removeView(draggedView);
-                // Ahora obtenemos el contenedor donde se va a alojar el objeto ARRASTRADO y lo
-                // añadimos a la zona de DROP
-                RelativeLayout.LayoutParams layoutParams =
-                        (RelativeLayout.LayoutParams)backGround.getLayoutParams();
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                draggedView.setLayoutParams(layoutParams);
-                zona.addView(draggedView);
+                if(zona.getChildCount() == 0){
+                    ViewGroup owner = (ViewGroup) draggedView.getParent();
+                    owner.removeView(draggedView);
+                    // Ahora obtenemos el contenedor donde se va a alojar el objeto ARRASTRADO y lo
+                    // añadimos a la zona de DROP
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(1000, 1000);
+                    layoutParams.width = 24;
+                    layoutParams.height = 24;
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    draggedView.setLayoutParams(layoutParams);
+                    zona.addView(draggedView);
 
-                // Importante dale a la zona de la que proviene el objeto visibilidad (CREO QUE FUNCIONA SIN ESTE PASO)
-                // ESTE PASO ES MUY IMPORTANTE TENEMOS QUE DAR VISIBILIDAD ACABADA AL OBJETO ARRASTRADO
-                // YA QUE HEMOS ACABADO DE MOVERLO Y LO HEMOS SOLTADO
+                    // Importante dale a la zona de la que proviene el objeto visibilidad (CREO QUE FUNCIONA SIN ESTE PASO)
+                    // ESTE PASO ES MUY IMPORTANTE TENEMOS QUE DAR VISIBILIDAD ACABADA AL OBJETO ARRASTRADO
+                    // YA QUE HEMOS ACABADO DE MOVERLO Y LO HEMOS SOLTADO
 
-                draggedView.setVisibility(View.VISIBLE);
-                ClipData.Item item = event.getClipData().getItemAt(0);
-                String dragData;
-                // Gets the text data from the item.
-                dragData = String.valueOf(item.getText());
-                Log.d("DragAndDrop", dragData);
+                    draggedView.setVisibility(View.VISIBLE);
+                    ClipData.Item item = event.getClipData().getItemAt(0);
+                    String dragData;
+                    // Gets the text data from the item.
+                    dragData = String.valueOf(item.getText());
+                    Log.d("DragAndDrop", dragData);
+                }else{
+                    children = new View[zona.getChildCount()];
+                    // get children of linearlayout
+                    for (int i=0; i < children.length; i++){
+                        this.children[i] = zona.getChildAt(i);
+                    }
+
+                    ViewGroup owner = (ViewGroup) draggedView.getParent();
+                    LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(32,44);
+                    children[0].setLayoutParams(ll);
+                    zona.removeView(children[0]);
+                    owner.addView(children[0]);
+
+
+                    //
+
+                    owner = (ViewGroup) draggedView.getParent();
+                    owner.removeView(draggedView);
+                    // Ahora obtenemos el contenedor donde se va a alojar el objeto ARRASTRADO y lo
+                    // añadimos a la zona de DROP
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(1000, 1000);
+                    layoutParams.width = 24;
+                    layoutParams.height = 24;
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    draggedView.setLayoutParams(layoutParams);
+                    zona.addView(draggedView);
+
+                    // Importante dale a la zona de la que proviene el objeto visibilidad (CREO QUE FUNCIONA SIN ESTE PASO)
+                    // ESTE PASO ES MUY IMPORTANTE TENEMOS QUE DAR VISIBILIDAD ACABADA AL OBJETO ARRASTRADO
+                    // YA QUE HEMOS ACABADO DE MOVERLO Y LO HEMOS SOLTADO
+
+                    draggedView.setVisibility(View.VISIBLE);
+                    ClipData.Item item = event.getClipData().getItemAt(0);
+                    String dragData;
+                    // Gets the text data from the item.
+                    dragData = String.valueOf(item.getText());
+                    Log.d("DragAndDrop", dragData);
+
+                }
 
                 // El ejemplo donde lo he visto lo usa en un Thread aparte pero funciona igual si está fuera del thread
                 /*draggedView.post(new Runnable() {
@@ -135,6 +182,10 @@ public class CustomOnDragListener implements View.OnDragListener {
 
                 // Comprobamos si está en la zona de drop el obejto arrastrado, de no ser el caso
                 // le damos visibilidad para que vuelva a verse en su sitio
+                if(myLinearLayout.getChildCount() == 6){
+                    ordenarSegundoPaso();
+                }
+
                 if (!dentro){
                     draggedView.setVisibility(View.VISIBLE);
                 }
@@ -152,28 +203,67 @@ public class CustomOnDragListener implements View.OnDragListener {
         }
         return false;
     }
-    /*private void ordenarPrimerPaso(LinearLayout ll){
-        myLinearLayout = ll;
+    private void ordenarPrimerPaso(){
         int childcount = myLinearLayout.getChildCount();
-        View[] children = new View[childcount];
-
+        this.children = new View[childcount];
         // get children of linearlayout
         for (int i=0; i < childcount; i++){
-            children[i] = myLinearLayout.getChildAt(i);
+            this.children[i] = myLinearLayout.getChildAt(i);
         }
-        this.children = children;
     }
 
-    private void reorder() {
-        myLinearLayout.removeAllViews();
+    private void ordenarSegundoPaso() {
+        this.children = new View[6];
+        // get children of linearlayout
+        for (int i=0; i < 6; i++){
+            this.children[i] = myLinearLayout.getChildAt(i);
+        }
 
-        //and resort, first position
-        myLinearLayout.addView(this.children[0]);
-        myLinearLayout.addView(this.children[1]);
-        myLinearLayout.addView(this.children[2]);
-        myLinearLayout.addView(this.children[3]);
-        myLinearLayout.addView(this.children[4]);
-        myLinearLayout.addView(this.children[5]);
-        myLinearLayout.addView(this.children[6]);
-    }*/
+        myLinearLayout.removeAllViews();
+        int x = 0;
+        while(x != 6){
+            for (View item : this.children) {
+                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 1){
+                    myLinearLayout.removeView(item);
+                    myLinearLayout.addView(item);
+                    x++;
+                }
+            }
+            for (View item : this.children) {
+                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 2){
+                    myLinearLayout.removeView(item);
+                    myLinearLayout.addView(item);
+                    x++;
+                }
+            }
+            for (View item : this.children) {
+                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 3){
+                    myLinearLayout.removeView(item);
+                    myLinearLayout.addView(item);
+                    x++;
+                }
+            }
+            for (View item : this.children) {
+                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 4){
+                    myLinearLayout.removeView(item);
+                    myLinearLayout.addView(item);
+                    x++;
+                }
+            }
+            for (View item : this.children) {
+                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 5){
+                    myLinearLayout.removeView(item);
+                    myLinearLayout.addView(item);
+                    x++;
+                }
+            }
+            for (View item : this.children) {
+                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 6){
+                    myLinearLayout.removeView(item);
+                    myLinearLayout.addView(item);
+                    x++;
+                }
+            }
+        }
+    }
 }

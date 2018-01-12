@@ -10,6 +10,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
@@ -39,14 +40,14 @@ public class CaducidadAlimento extends AppCompatActivity {
         iv1.setImageDrawable(redondo);
         ImageView iv2 = (ImageView)findViewById(R.id.ivCad2);
         iv2.setImageDrawable(redondo);
-        ImageView iv3 = (ImageView)findViewById(R.id.ivCad3);
-        iv3.setImageDrawable(redondo);
+        /*ImageView iv3 = (ImageView)findViewById(R.id.ivCad3);
+        iv3.setImageDrawable(redondo);*/
         ImageView iv4 = (ImageView)findViewById(R.id.ivCad4);
         iv4.setImageDrawable(redondo);
         ImageView iv5 = (ImageView)findViewById(R.id.ivCad5);
         iv5.setImageDrawable(redondo);
-        ImageView iv6 = (ImageView)findViewById(R.id.ivCad6);
-        iv6.setImageDrawable(redondo);
+        /*ImageView iv6 = (ImageView)findViewById(R.id.ivCad6);
+        iv6.setImageDrawable(redondo);*/
         ImageView iv7 = (ImageView)findViewById(R.id.ivCad7);
         iv7.setImageDrawable(redondo);
         ImageView iv8 = (ImageView)findViewById(R.id.ivCadMas);
@@ -64,7 +65,7 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.ivCad5).setOnLongClickListener(new CustomOnLongClickListener(5));
         findViewById(R.id.ivCad6).setOnLongClickListener(new CustomOnLongClickListener(6));
         findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
-        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone)));
+        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone), (LinearLayout) findViewById(R.id.linearLayout), this));
         findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
     }
 }

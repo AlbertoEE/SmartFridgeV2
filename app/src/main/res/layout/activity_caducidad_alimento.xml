@@ -18,6 +18,19 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
         app:srcCompat="@drawable/uno" />
 
+    <ImageView
+        android:id="@+id/ivDropZone"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="292dp"
@@ -56,7 +69,7 @@
             android:layout_weight="1"
             app:layout_constraintStart_toEndOf="@+id/ivCad2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/uno" />
+            app:srcCompat="@drawable/ic_menu" />
 
         <ImageView
             android:id="@+id/ivCad4"
@@ -83,7 +96,7 @@
             android:layout_weight="1"
             app:layout_constraintStart_toEndOf="@+id/ivCad5"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/uno" />
+            app:srcCompat="@drawable/ic_fridge" />
 
         <ImageView
             android:id="@+id/ivCad7"
@@ -109,18 +122,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivDropZone"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.768"
-            app:srcCompat="@drawable/ic_launcher_background" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

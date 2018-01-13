@@ -32,6 +32,7 @@ public class CaducidadAlimento extends AppCompatActivity {
     private boolean ocupado = false;
     private int unidadesWheel=0;
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
+    private int tiempo_Caducidad;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,10 @@ public class CaducidadAlimento extends AppCompatActivity {
         wheel(wheelPicker);
     }
 
+    public void setTiempo_Caducidad(int tiempo_Caducidad){
+        this.tiempo_Caducidad = tiempo_Caducidad;
+    }
+
     private void cargarDragAndDrop(){
         findViewById(R.id.ivCad1).setOnLongClickListener(new CustomOnLongClickListener(1));
         findViewById(R.id.ivCad2).setOnLongClickListener(new CustomOnLongClickListener(2));
@@ -79,7 +84,7 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.ivCad5).setOnLongClickListener(new CustomOnLongClickListener(5));
         findViewById(R.id.ivCad6).setOnLongClickListener(new CustomOnLongClickListener(6));
         findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
-        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone), (LinearLayout) findViewById(R.id.linearLayout), this));
+        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone), (LinearLayout) findViewById(R.id.linearLayout), this, this));
         //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
         //
     }
@@ -105,6 +110,7 @@ public class CaducidadAlimento extends AppCompatActivity {
                 //Las uds van a ser la posición del wheel picker + 1
                 unidadesWheel = itemSel + 1;
                 Log.d("uds", "uds: " + unidadesWheel);
+                Log.d("XEXU", String.valueOf(tiempo_Caducidad));
             }
         });
     }

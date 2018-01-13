@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 
 /**
  * Created by Alberto on 10/01/2018.
@@ -26,13 +27,15 @@ public class CustomOnDragListener implements View.OnDragListener {
     private ImageView backGround;
     private View children[];
     private Context context;
+    private CaducidadAlimento caducidadAlimento;
     private int w;
     private int h;
 
-    public CustomOnDragListener(ImageView imageView, LinearLayout linearLayout, Context context){
+    public CustomOnDragListener(ImageView imageView, LinearLayout linearLayout, Context context, CaducidadAlimento caducidadAlimento){
         this.backGround = imageView;
         this.myLinearLayout = linearLayout;
         this.context = context;
+        this.caducidadAlimento = caducidadAlimento;
     }
 
     @Override
@@ -90,6 +93,7 @@ public class CustomOnDragListener implements View.OnDragListener {
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     String dragData;
                     dragData = String.valueOf(item.getText());
+                    caducidadAlimento.setTiempo_Caducidad(Integer.parseInt(dragData));
                 }else{
                     View hijaDeRelative = zona.getChildAt(0);
                     zona.removeView(hijaDeRelative);
@@ -105,6 +109,10 @@ public class CustomOnDragListener implements View.OnDragListener {
                     zona.addView(draggedView);
                     draggedView.setVisibility(View.VISIBLE);
 
+                    ClipData.Item item = event.getClipData().getItemAt(0);
+                    String dragData;
+                    dragData = String.valueOf(item.getText());
+                    caducidadAlimento.setTiempo_Caducidad(Integer.parseInt(dragData));
                 }
 
                 return true;
@@ -139,10 +147,6 @@ public class CustomOnDragListener implements View.OnDragListener {
         for (int i=0; i < 6; i++){
             this.children[i] = myLinearLayout.getChildAt(i);
         }
-        Log.d("HijosEnLinearLayout", String.valueOf(children.length));
-        Log.d("HijosEnLinearLayout", String.valueOf(myLinearLayout.getChildCount()));
-        Log.d("HijosEnLinearLayout", String.valueOf(children.length));
-        Log.d("HijosEnLinearLayout", String.valueOf(myLinearLayout.getChildCount()));
         int x = 0;
         while(x != 6){
             for (View item : this.children) {

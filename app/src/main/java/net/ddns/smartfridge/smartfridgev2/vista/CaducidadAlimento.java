@@ -80,7 +80,7 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.ivCad6).setOnLongClickListener(new CustomOnLongClickListener(6));
         findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
         findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone), (LinearLayout) findViewById(R.id.linearLayout), this));
-        findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
+        //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
     }
 
     //Método para dar las características al WheelPicker

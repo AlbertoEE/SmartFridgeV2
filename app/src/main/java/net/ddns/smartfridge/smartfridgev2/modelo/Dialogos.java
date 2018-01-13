@@ -196,7 +196,7 @@ public class Dialogos {
         dialog.show();*/
         new FancyGifDialog.Builder(clase)
                 .setTitle("CONFIRMAR CADUCIDAD Y CANTIDAD")
-                .setMessage("El alimento caducará en: \" + caducidad + day + \".\\nLas unidades seleccionadas son: \" + udsSeleccionadas + \", ¿Es correcto?")
+                .setMessage("El alimento caducará en: " + caducidad + day + ".\nLas unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?")
                 .setNegativeBtnText("Cancelar")
                 .setPositiveBtnBackground("#FF4081")
                 .setPositiveBtnText("Aceptar")

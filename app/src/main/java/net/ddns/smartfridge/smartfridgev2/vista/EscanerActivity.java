@@ -43,7 +43,7 @@ public class EscanerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result resultado) {
-        Toast.makeText(this, resultado.getText(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, resultado.getText(), Toast.LENGTH_SHORT).show();
         // If you would like to resume scanning, call this method below:
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

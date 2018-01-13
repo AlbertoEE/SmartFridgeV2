@@ -76,6 +76,11 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 setContentView(R.layout.activity_producto_no_encontrado);
             }
             //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();
+            try {
+                myHelper.cerrarConexion();
+            } catch (SQLException e) {
+                Toast.makeText(ConfirmarAlimentoActivity.this, "Error con la bbdd", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

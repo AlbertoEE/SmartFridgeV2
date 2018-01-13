@@ -25,6 +25,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
+import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,6 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
-
         Dialogos dialogos = new Dialogos(this,this);
         dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad);
 

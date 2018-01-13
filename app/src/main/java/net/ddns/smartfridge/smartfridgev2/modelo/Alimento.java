@@ -17,9 +17,19 @@ public class Alimento implements Serializable {
     private int dias_caducidad;//Dias que faltan para que el alimento caduque
     private Bitmap imagen;//Imagen del alimento
 
-
+    //Constructor 1
     public Alimento(int id, String nombreAlimento, int cantidad, int fecha_registro, int fecha_caducidad, int dias_caducidad, Bitmap imagen) {
         this.id = id;
+        this.nombreAlimento = nombreAlimento;
+        this.cantidad = cantidad;
+        this.fecha_registro = fecha_registro;
+        this.fecha_caducidad = fecha_caducidad;
+        this.dias_caducidad = dias_caducidad;
+        this.imagen = imagen;
+    }
+
+    //Constructor 2
+    public Alimento(String nombreAlimento, int cantidad, int fecha_registro, int fecha_caducidad, int dias_caducidad, Bitmap imagen) {
         this.nombreAlimento = nombreAlimento;
         this.cantidad = cantidad;
         this.fecha_registro = fecha_registro;

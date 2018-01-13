@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SmartFridgeV2.iml" filepath="$PROJECT_DIR$/SmartFridgeV2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WheelPicker-1.1.2/WheelPicker-1.1.2.iml" filepath="$PROJECT_DIR$/WheelPicker-1.1.2/WheelPicker-1.1.2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.44-bin/mysql-connector-java-5.1.44-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.44-bin/mysql-connector-java-5.1.44-bin.iml" />
     </modules>

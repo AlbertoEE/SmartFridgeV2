@@ -124,4 +124,37 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tvUnidades"
+        android:layout_width="98dp"
+        android:layout_height="21dp"
+        android:layout_marginBottom="76dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="8dp"
+        android:text="UNIDADES"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <com.aigestudio.wheelpicker.WheelPicker
+        android:id="@+id/wheelUds"
+        android:layout_width="36dp"
+        android:layout_height="116dp"
+        android:layout_marginBottom="38dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:wheel_atmospheric="true"
+        app:wheel_curved="true"
+        app:wheel_cyclic="false"
+        app:wheel_indicator="true"
+        app:wheel_indicator_color="@color/colorAccent"
+        app:wheel_item_space="80px"
+        app:wheel_item_text_color="@color/light_grey_superLight"
+        app:wheel_item_text_size="15dp"
+        app:wheel_maximum_width_text="15dp"
+        app:wheel_selected_item_position="1"
+        app:wheel_selected_item_text_color="@color/grey_dark" />
+
 </android.support.constraint.ConstraintLayout>

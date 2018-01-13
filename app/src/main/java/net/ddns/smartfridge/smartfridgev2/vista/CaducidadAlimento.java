@@ -12,13 +12,19 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.aigestudio.wheelpicker.WheelPicker;
+
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CaducidadAlimento extends AppCompatActivity {
+    public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private boolean ocupado = false;
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
     @Override
@@ -55,6 +61,9 @@ public class CaducidadAlimento extends AppCompatActivity {
         ImageView dd = (ImageView)findViewById(R.id.ivDropZone);
         dd.setImageBitmap(ac.getImagen());
         cargarDragAndDrop();
+
+        WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUds);
+        wheel(wheelPicker);
     }
 
     private void cargarDragAndDrop(){
@@ -67,5 +76,18 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
         findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone), (LinearLayout) findViewById(R.id.linearLayout), this));
         findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
+    }
+
+    //Método para dar las características al WheelPicker
+    public void wheel(WheelPicker wheelPicker){
+        //Asignamos datos al WheelPicker
+        List<Integer> unidades = new ArrayList<>();
+        for (int k = 1; k <= MAXUDS; k++)
+            unidades.add(k);
+        wheelPicker.setData(unidades);
+        //Asignamos los items que van a estar visibles
+        wheelPicker.setVisibleItemCount(2);
+        //Le ponemos las mismas dimensiones a todos los elementos
+        wheelPicker.setSameWidth(true);
     }
 }

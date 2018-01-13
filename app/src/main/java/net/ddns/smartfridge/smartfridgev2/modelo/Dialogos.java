@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.ControlAlimentosActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
 
 import java.io.IOException;
@@ -22,9 +23,11 @@ public class Dialogos {
     private Context contexto;//El contexto del dialog
     private Intent intent;//Para llamar a otras Activitys
     private Alimento acod;//Para crear un objeto que sea un alimento
+    private AlertDialog.Builder builder;//El builder para crear los dialogs
 
     public Dialogos(Context context){
         this.contexto=context;
+        builder = new AlertDialog.Builder(contexto);
     }
     //Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
     public void dialogAlimentoNoEncontrado(){
@@ -62,6 +65,32 @@ public class Dialogos {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 intent = new Intent(contexto, CaducidadAlimento.class);
+                contexto.startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //No hacemos nada
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
+    public void dialogCaducidad(int udsSeleccionadas){
+        //Título
+        builder.setTitle("CONFIRMAR CADUCIDAD Y CANTIDAD");
+        //Mensaje del Alert
+        builder.setMessage("Las unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?");
+        //Añadimos los botones
+        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Metodo para almacenar los datos en la nevera local
+                Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
+                intent = new Intent(contexto, ControlAlimentosActivity.class);
                 contexto.startActivity(intent);
             }
         });

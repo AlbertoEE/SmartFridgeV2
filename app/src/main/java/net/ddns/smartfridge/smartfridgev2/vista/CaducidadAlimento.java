@@ -9,13 +9,17 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
@@ -26,6 +30,7 @@ import java.util.List;
 public class CaducidadAlimento extends AppCompatActivity {
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private boolean ocupado = false;
+    private int unidadesWheel=0;
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,7 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Método para dar las características al WheelPicker
     public void wheel(WheelPicker wheelPicker){
+        //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
         List<Integer> unidades = new ArrayList<>();
         for (int k = 1; k <= MAXUDS; k++)
@@ -89,5 +95,23 @@ public class CaducidadAlimento extends AppCompatActivity {
         wheelPicker.setVisibleItemCount(2);
         //Le ponemos las mismas dimensiones a todos los elementos
         wheelPicker.setSameWidth(true);
+        /*Para poner color de fondo
+        wheelPicker.setBackgroundColor(getResources().getColor(R.color.viewfinder_laser));*/
+        wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(WheelPicker picker, Object data, int position) {
+                int itemSel = picker.getCurrentItemPosition();
+                //Las uds van a ser la posición del wheel picker + 1
+                unidadesWheel = itemSel + 1;
+                Log.d("uds", "uds: " + unidadesWheel);
+            }
+        });
+    }
+
+    //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
+    public void confirmarCaducidad(View v){
+        Dialogos dialogos = new Dialogos(this);
+        dialogos.dialogCaducidad(unidadesWheel);
+        //Toast.makeText(this, "Las uds seleccionadas son: " + unidadesWheel , Toast.LENGTH_SHORT).show();
     }
 }

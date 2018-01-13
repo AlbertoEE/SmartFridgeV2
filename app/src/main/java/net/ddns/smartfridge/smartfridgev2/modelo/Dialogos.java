@@ -25,7 +25,10 @@ public class Dialogos {
     private Intent intent;//Para llamar a otras Activitys
     private Alimento acod;//Para crear un objeto que sea un alimento
     private AlertDialog.Builder builder;//El builder para crear los dialogs
-    private Activity clase;
+    private Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
+    private static final String DIA = " día";//Cte para el mensaje del dialog
+    private static final String DIAS = " días";//Cte para el mensaje del dialog
+
     public Dialogos(Context context, Activity clase){
         this.contexto=context;
         builder = new AlertDialog.Builder(contexto);
@@ -45,6 +48,7 @@ public class Dialogos {
                 intent = new Intent(contexto, IdentificarAlimentoActivity.class);
                 contexto.startActivity(intent);
                 ConfirmarAlimentoActivity ca = (ConfirmarAlimentoActivity) clase;
+                //Finalizamos el activity
                 ca.finishAffinity();
             }
         });
@@ -71,6 +75,7 @@ public class Dialogos {
                 intent = new Intent(contexto, CaducidadAlimento.class);
                 contexto.startActivity(intent);
                 ConfirmarAlimentoActivity ca = (ConfirmarAlimentoActivity) clase;
+                //Finalizamos el activity
                 ca.finishAffinity();
             }
         });
@@ -85,11 +90,17 @@ public class Dialogos {
     }
 
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
-    public void dialogCaducidad(int udsSeleccionadas){
+    public void dialogCaducidad(int udsSeleccionadas, int caducidad){
+        String day=null;//Para poner el mensaje del dialog
+        if (caducidad==1){
+            day = DIA;
+        } else {
+            day = DIAS;
+        }
         //Título
         builder.setTitle("CONFIRMAR CADUCIDAD Y CANTIDAD");
         //Mensaje del Alert
-        builder.setMessage("Las unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?");
+        builder.setMessage("El alimento caducará en: " + caducidad + day + ".\nLas unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?");
         //Añadimos los botones
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
@@ -97,10 +108,9 @@ public class Dialogos {
                 //Metodo para almacenar los datos en la nevera local
                 Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                 intent = new Intent(contexto, InitialActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 contexto.startActivity(intent);
                 CaducidadAlimento ia = (CaducidadAlimento) clase;
+                //Finalizamos el activity
                 ia.finish();
                 ia.finishAffinity();
             }

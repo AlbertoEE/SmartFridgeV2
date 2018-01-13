@@ -42,8 +42,8 @@ dependencies {
     compile "com.android.support:design:${supportLibrariesVersion}"
     //WheelPicker
     compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
-    //include ':net.ddns.smartfridge.smartfridgev2',':WheelPicker'
-    //compile project('net.ddns.smartfridge.smartfridgev2:WheelPicker')
+    //Dialogs
+    compile 'com.github.Shashank02051997:FancyGifDialog-Android:1.1'
 
 }
 

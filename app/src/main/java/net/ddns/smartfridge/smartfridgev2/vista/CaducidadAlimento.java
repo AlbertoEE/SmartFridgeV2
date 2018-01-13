@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
@@ -29,10 +31,9 @@ import java.util.List;
 
 public class CaducidadAlimento extends AppCompatActivity {
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
-    private boolean ocupado = false;
-    private int unidadesWheel=0;
+    private int unidadesWheel;//Unidades del Wheel Picker
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
-    private int tiempo_Caducidad;
+    private int tiempo_Caducidad;//Para almacenar los días de caducidad
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,8 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.ivCad5).setOnLongClickListener(new CustomOnLongClickListener(5));
         findViewById(R.id.ivCad6).setOnLongClickListener(new CustomOnLongClickListener(6));
         findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
-        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone), (LinearLayout) findViewById(R.id.linearLayout), this, this));
+        findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone),
+                (LinearLayout) findViewById(R.id.linearLayout), this, this));
         //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
         //
     }
@@ -101,6 +103,10 @@ public class CaducidadAlimento extends AppCompatActivity {
         wheelPicker.setVisibleItemCount(2);
         //Le ponemos las mismas dimensiones a todos los elementos
         wheelPicker.setSameWidth(true);
+        //Indicamos que al inciarse esté apuntando a un elemento, en este caso, el primero
+        wheelPicker.setSelectedItemPosition(0);
+        //Iniciamos la variable a 1, ya que empezará en el primer elemento, que tendrá valor 1
+        unidadesWheel = 1;
         /*Para poner color de fondo
         wheelPicker.setBackgroundColor(getResources().getColor(R.color.viewfinder_laser));*/
         wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
@@ -110,15 +116,37 @@ public class CaducidadAlimento extends AppCompatActivity {
                 //Las uds van a ser la posición del wheel picker + 1
                 unidadesWheel = itemSel + 1;
                 Log.d("uds", "uds: " + unidadesWheel);
-                Log.d("XEXU", String.valueOf(tiempo_Caducidad));
+                //Log.d("XEXU", String.valueOf(tiempo_Caducidad));
             }
         });
     }
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
+        /*
         Dialogos dialogos = new Dialogos(this,this);
-        dialogos.dialogCaducidad(unidadesWheel);
-        //Toast.makeText(this, "Las uds seleccionadas son: " + unidadesWheel , Toast.LENGTH_SHORT).show();
+        dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad);*/
+        new FancyGifDialog.Builder(this)
+                .setTitle("Mira que dialog más chulo Alberto!!")
+                .setMessage("Te gusta este dialog para usarlo en el Smart Fridge ¡¡¡Y lo sabes!!!!")
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Dale anda")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                .setGifResource(R.drawable.gif1)   //Pass your Gif here
+                .isCancellable(true)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        Toast.makeText(getApplicationContext(), "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //Programar
+                    }
+                })
+                .build();
     }
 }

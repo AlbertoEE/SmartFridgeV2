@@ -40,7 +40,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
         new Verificador().execute(cod_barrras);
-        dialogos = new Dialogos(this);
+        dialogos = new Dialogos(this, this);
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd

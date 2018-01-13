@@ -26,6 +26,8 @@ public class CustomOnDragListener implements View.OnDragListener {
     private ImageView backGround;
     private View children[];
     private Context context;
+    private int w;
+    private int h;
 
     public CustomOnDragListener(ImageView imageView, LinearLayout linearLayout, Context context){
         this.backGround = imageView;
@@ -77,7 +79,10 @@ public class CustomOnDragListener implements View.OnDragListener {
                 if(zona.getChildCount() == 0){
                     ViewGroup owner = (ViewGroup) draggedView.getParent();
                     owner.removeView(draggedView);
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(32, 44);
+                    LinearLayout.LayoutParams linearLayoutParams = (LinearLayout.LayoutParams) draggedView.getLayoutParams();
+                    w = linearLayoutParams.width;
+                    h = linearLayoutParams.height;
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(w*2, h*2);
                     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     draggedView.setLayoutParams(layoutParams);
                     zona.addView(draggedView);
@@ -88,15 +93,14 @@ public class CustomOnDragListener implements View.OnDragListener {
                 }else{
                     View hijaDeRelative = zona.getChildAt(0);
                     zona.removeView(hijaDeRelative);
-                    LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(32,44);
+                    LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(w,h);
                     hijaDeRelative.setLayoutParams(ll);
                     myLinearLayout.addView(hijaDeRelative);
                     hijaDeRelative.setVisibility(View.VISIBLE);
 
                     ViewGroup owner = (ViewGroup) draggedView.getParent();
                     owner.removeView(draggedView);
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(32, 44);
-                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(w*2, h*2);                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     draggedView.setLayoutParams(layoutParams);
                     zona.addView(draggedView);
                     draggedView.setVisibility(View.VISIBLE);

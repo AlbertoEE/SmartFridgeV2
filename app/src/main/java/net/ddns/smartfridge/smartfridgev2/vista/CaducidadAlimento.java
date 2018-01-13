@@ -111,7 +111,7 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
-        Dialogos dialogos = new Dialogos(this);
+        Dialogos dialogos = new Dialogos(this,this);
         dialogos.dialogCaducidad(unidadesWheel);
         //Toast.makeText(this, "Las uds seleccionadas son: " + unidadesWheel , Toast.LENGTH_SHORT).show();
     }

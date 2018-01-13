@@ -123,30 +123,9 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
-        /*
+
         Dialogos dialogos = new Dialogos(this,this);
-        dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad);*/
-        new FancyGifDialog.Builder(this)
-                .setTitle("Mira que dialog más chulo Alberto!!")
-                .setMessage("Te gusta este dialog para usarlo en el Smart Fridge ¡¡¡Y lo sabes!!!!")
-                .setNegativeBtnText("Cancel")
-                .setPositiveBtnBackground("#FF4081")
-                .setPositiveBtnText("Dale anda")
-                .setNegativeBtnBackground("#FFA9A7A8")
-                .setGifResource(R.drawable.gif1)   //Pass your Gif here
-                .isCancellable(true)
-                .OnPositiveClicked(new FancyGifDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        Toast.makeText(getApplicationContext(), "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .OnNegativeClicked(new FancyGifDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        //Programar
-                    }
-                })
-                .build();
+        dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad);
+
     }
 }

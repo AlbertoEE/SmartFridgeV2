@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,6 +15,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.services.vision.v1.Vision;
+import com.google.api.services.vision.v1.VisionRequestInitializer;
+
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
 
@@ -22,6 +28,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     //de que el usuario no haya concedido los permisos necesarios
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
     private Bitmap imagenCamara = null;//Para almacenar la imagen
+    private static final String API_KEY= "AIzaSyBC8ENdWQzUaWLMHx7LjWxcpANwUF8E";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +61,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
                 imagenCamara = (Bitmap) extras.get(KEY);
-                Toast.makeText(this, "Pulsado Api vision", Toast.LENGTH_SHORT).show();
+                //Comprobamos si se ha hecho una foto
+                if (imagenCamara != null) {
+                    //uriFoto = gai.guardarImagen(imagenCamara);
+                } else {//Si no se ha hecho, se lo indicamos al usuario
+                    Toast.makeText(this, "Error al tomar la fotografía. Por favor, vuelva a intentarlo.", Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
@@ -90,6 +102,11 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
     //Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void visionCloud(View v) {
+        //Creamos la instancia del objeto Vision para usar Cloud Vision API.
+        Vision.Builder visionBuilder = new Vision.Builder(new NetHttpTransport(), new AndroidJsonFactory(),null);
+        visionBuilder.setVisionRequestInitializer(new VisionRequestInitializer(API_KEY));
+        Vision vision = visionBuilder.build();
+        //Solicitamos los permisos
         Permiso permiso = new Permiso();
         if (permiso.permisoCamara(this, this) && permiso.permisoEscritura(this, this) && (permiso.permisoLectura(this, this))) {
             llamarHacerFoto();

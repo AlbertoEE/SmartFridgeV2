@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 
@@ -36,8 +37,9 @@ public class CaducidadAlimento extends AppCompatActivity {
     private int tiempo_Caducidad;//Para almacenar los días de caducidad
     private AlimentoDB adb;//Instancia del Gestor de BD de Alimentos
     private CustomDatePicker customDatePicker;
-    private String fecha_inicial;
-    private String fecha_final;
+    private String fecha_inicial;//Para asignar la fecha actual
+    private String fecha_final;//Para asignar la fecha de caducidad a través del calendario
+    private int controlDragAndDrop;//Para determinar si la selección de la caducidad se ha hecho por un medio u otro
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,9 +135,9 @@ public class CaducidadAlimento extends AppCompatActivity {
         Fecha fecha = new Fecha();
         String fecha_actual = fecha.fechaActual();
         String fecha_caducidad_alimento = fecha.diasAFecha(tiempo_Caducidad);
-        /*Programar para cuando se de al boton de más
-        int dias = fecha.fechaDias();
-        //Toast.makeText(this, "dias para caducidad: " + dias, Toast.LENGTH_LONG).show();*/
+        //Metemos en la variable los dias que faltan para la caducidad
+        int diasCaducidad = fecha.fechaDias(fecha_final);
+        Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
         //Creamos el objeto Alimento
         Alimento al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, ac.getImagen());
         Dialogos dialogos = new Dialogos(this,this);

@@ -133,30 +133,9 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
-        Fecha fecha = new Fecha();
-        //Convertimos en String la fecha del día de hoy
-        String fecha_actual = fecha.fechaActual();
-        //Verificamos si se ha seleccionado la caducidad por drag and drop o por el calendario
-        if (controlDragAndDrop==-1){
-            //Significa que se ha seleccionado la caducidad por medio del drag and drop
-            String fecha_caducidad_alimento = fecha.diasAFecha(tiempo_Caducidad);
-            //Creamos el objeto Alimento
-            al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, ac.getImagen());
-        } else if (controlDragAndDrop==1){
-
-        }
-
-
-
-
-        //Metemos en la variable los dias que faltan para la caducidad
-        int diasCaducidad = fecha.fechaDias(fecha_final);
-        //Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
-
         Dialogos dialogos = new Dialogos(this,this);
-        dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al);
 
-        /*Visualizamos el contenido de la bbdd
+        //Visualizamos el contenido de la bbdd
         Cursor c = adb.getAlimentos();
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
@@ -169,7 +148,32 @@ public class CaducidadAlimento extends AppCompatActivity {
                 String f_cad = c.getString(5);
                 Log.d("tag", "Mi Nevera: " + nombre + ", " + cantidad + ", " + caducidad + ", "+ f_hoy + ", " + f_cad);
             } while(c.moveToNext());
-        }*/
+        }
+
+        Fecha fecha = new Fecha();
+        //Convertimos en String la fecha del día de hoy
+        String fecha_actual = fecha.fechaActual();
+        //Verificamos si se ha seleccionado la caducidad por drag and drop o por el calendario
+        //controlDragAndDrop=1;
+        if (controlDragAndDrop==-1){
+            //Significa que se ha seleccionado la caducidad por medio del drag and drop
+            String fecha_caducidad_alimento = fecha.diasAFecha(tiempo_Caducidad);
+            //Creamos el objeto Alimento
+            al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, ac.getImagen());
+            //Mostramos el dialog con los datos
+            dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al);
+        } else if (controlDragAndDrop==1){
+            //Significa que se ha seleccionado la caducidad por medio del calendario
+            //Metemos en la variable los dias que faltan para la caducidad
+            int diasCaducidad = fecha.fechaDias(fecha_final);
+            //Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
+            //Creamos el objeto Alimento
+            al = new Alimento(ac.getNomAlimento(), unidadesWheel, diasCaducidad, fecha_actual, fecha_final, ac.getImagen());
+            //Mostramos el dialog con los datos
+            dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al);
+        } else if (controlDragAndDrop==0){
+            //Programar
+        }
     }
 
     public void botonMas(View view){

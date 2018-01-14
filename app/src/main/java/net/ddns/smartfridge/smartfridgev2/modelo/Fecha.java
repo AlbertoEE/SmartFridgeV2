@@ -49,11 +49,14 @@ public class Fecha {
             //Formateamos los strings con las fechas
             fechaInicial = dateFormat.parse(dia_hoy);
             fechaFinal=dateFormat.parse(fechaCalendarioMas);
+            //Hacemos la operación y lo pasamos de milisegundos a dias
+            diasParaCaducidad =(int) ((fechaFinal.getTime()-fechaInicial.getTime())/MILISEGUNDOS);
         } catch (java.text.ParseException e) {
             e.printStackTrace();
+        } catch (NullPointerException e){
+            diasParaCaducidad = 0;
         }
-        //Hacemos la operación y lo pasamos de milisegundos a dias
-        diasParaCaducidad =(int) ((fechaFinal.getTime()-fechaInicial.getTime())/MILISEGUNDOS);
+
         return diasParaCaducidad;
     }
 }

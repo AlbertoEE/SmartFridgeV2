@@ -39,7 +39,7 @@ public class CaducidadAlimento extends AppCompatActivity {
     private CustomDatePicker customDatePicker;
     private String fecha_inicial;//Para asignar la fecha actual
     private String fecha_final;//Para asignar la fecha de caducidad a través del calendario
-    private int controlDragAndDrop;//Para determinar si la selección de la caducidad se ha hecho por un medio u otro
+    private int [] controlDragAndDrop = {-1, 0, 1};//Para determinar si la selección de la caducidad se ha hecho por un medio u otro
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

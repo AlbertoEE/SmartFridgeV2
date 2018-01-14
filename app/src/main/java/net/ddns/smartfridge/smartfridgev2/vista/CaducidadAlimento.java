@@ -25,6 +25,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListen
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
 import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +35,15 @@ public class CaducidadAlimento extends AppCompatActivity {
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
     private int tiempo_Caducidad;//Para almacenar los días de caducidad
     private AlimentoDB adb;//Instancia del Gestor de BD de Alimentos
+    private CustomDatePicker customDatePicker;
+    private String fecha_inicial;
+    private String fecha_final;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
+        customDatePicker = new CustomDatePicker(this, this);
         ac = ConfirmarAlimentoActivity.getAlimento();
         setContentView(R.layout.activity_caducidad_alimento);
         //Cogemos el drawable de la carpeta de recursos
@@ -149,5 +155,18 @@ public class CaducidadAlimento extends AppCompatActivity {
                 Log.d("tag", "Mi Nevera: " + nombre + ", " + cantidad + ", " + caducidad + ", "+ f_hoy + ", " + f_cad);
             } while(c.moveToNext());
         }
+    }
+
+    public void botonMas(View view){
+        try {
+            customDatePicker.obtenerFecha();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setFechas(String fecha_incial, String fecha_final){
+        this.fecha_inicial = fecha_incial;
+        this.fecha_final = fecha_final;
     }
 }

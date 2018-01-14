@@ -22,6 +22,5 @@ public class ControlAlimentosActivity extends AppCompatActivity {
     public void abrirIdentificarAlimento(View v){
         Intent intent = new Intent (this, IdentificarAlimentoActivity.class);
         startActivity(intent);
-
     }
 }

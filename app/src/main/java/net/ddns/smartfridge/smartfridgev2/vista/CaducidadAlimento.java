@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
@@ -149,6 +150,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             //Programar
             dialogos.dialogNoCaducidad();
         }
+        Toast.makeText(this, String.valueOf(controlDragAndDrop), Toast.LENGTH_SHORT).show();
     }
 
     public void botonMas(View view){

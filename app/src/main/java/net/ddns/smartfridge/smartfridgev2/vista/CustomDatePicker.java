@@ -35,10 +35,12 @@ public class CustomDatePicker {
     private Activity clase;
     private Context c;
     private CaducidadAlimento ca;
+    RelativeLayout relativeLayout;
 
     public CustomDatePicker(Context context, Activity clase){
         c = context;
         this.clase = clase;
+        ca = (CaducidadAlimento) clase;
     }
 
     public void obtenerFecha() throws ParseException {
@@ -46,18 +48,24 @@ public class CustomDatePicker {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                ca = (CaducidadAlimento) clase;
                 ca.setFechas(fechasConverter(dia, mes, anio), fechasConverter(dayOfMonth, month, year));
                 comprobarFecha();
+                ca.setControlDragAndDrop(1);
             }
         }, anio, mes, dia);
         //date= format.parse(diaRecogido+mesRecogido+anioRecogido);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
-        datePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                ca.setControlDragAndDrop(0);
+            public void onCancel(DialogInterface dialogInterface) {
+                relativeLayout = ca.findViewById(R.id.relativeLayout);
+                Log.d("mamamammaam", "onDismiss: " + relativeLayout.getChildCount());
+                if(relativeLayout.getChildCount() != 0){
+                    ca.setControlDragAndDrop(-1);
+                }else{
+                    ca.setControlDragAndDrop(0);
+                }
             }
         });
     }
@@ -103,7 +111,6 @@ public class CustomDatePicker {
                     }
                 }
             }
-            ca.setControlDragAndDrop(1);
         }
     }
 }

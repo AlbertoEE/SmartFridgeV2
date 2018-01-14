@@ -97,13 +97,16 @@ public class CustomOnDragListener implements View.OnDragListener {
                     View hijaDeRelative = zona.getChildAt(0);
                     zona.removeView(hijaDeRelative);
                     LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(w,h);
+                    Log.d("width", "onDrag: " + w);
+                    Log.d("height", "onDrag: " + h);
                     hijaDeRelative.setLayoutParams(ll);
                     myLinearLayout.addView(hijaDeRelative);
                     hijaDeRelative.setVisibility(View.VISIBLE);
 
                     ViewGroup owner = (ViewGroup) draggedView.getParent();
                     owner.removeView(draggedView);
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(w*2, h*2);                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(w*2, h*2);
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     draggedView.setLayoutParams(layoutParams);
                     zona.addView(draggedView);
                     draggedView.setVisibility(View.VISIBLE);

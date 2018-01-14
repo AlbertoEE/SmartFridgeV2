@@ -1,11 +1,8 @@
 package net.ddns.smartfridge.smartfridgev2.modelo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
@@ -15,11 +12,8 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.ControlAlimentosActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.InitialActivity;
-
-import java.io.IOException;
 
 /**
  * Clase para mostrar los diferentes tipos de dialogs en la app

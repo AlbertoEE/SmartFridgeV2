@@ -25,9 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".vista.ControlAlimentosActivity" />
         <activity android:name=".vista.CrearListaCompraActivity" />
-        <activity android:name=".vista.PlanificarMenuActivity" />
         <activity android:name=".vista.SugerirRecetaActivity" />
         <activity android:name=".vista.IdentificarAlimentoActivity" />
         <activity android:name=".vista.EscanerActivity" />

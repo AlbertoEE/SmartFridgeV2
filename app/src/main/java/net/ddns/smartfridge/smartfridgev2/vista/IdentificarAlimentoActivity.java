@@ -40,6 +40,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Toast.makeText(this, "ResultCode: " + requestCode, Toast.LENGTH_SHORT).show();
         //Si viene del escaner
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
@@ -49,10 +50,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 //Log.d("scaner", "RESULT_CANCELED");
             }
             //Si viene del api vision
-        } else if (requestCode == Permiso.PERM_FOTO && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            imagenCamara = (Bitmap) extras.get(KEY);
-            Toast.makeText(this, "Pulsado Api vision", Toast.LENGTH_SHORT).show();
+        } else {
+            if(resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                imagenCamara = (Bitmap) extras.get(KEY);
+                Toast.makeText(this, "Pulsado Api vision", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -77,7 +80,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             //Miramos el código de respuesta a qué permiso pertenece
             case PERMISOS: {
                 if ((grantResults.length > 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    escanear();
+                    llamarHacerFoto();
                 } else {
                     Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
                 }

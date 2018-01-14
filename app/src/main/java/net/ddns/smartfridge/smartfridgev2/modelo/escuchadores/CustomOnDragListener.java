@@ -77,7 +77,6 @@ public class CustomOnDragListener implements View.OnDragListener {
                 dentro = true;
                 backGround.clearColorFilter();
                 backGround.invalidate();
-                Log.d("dafuq", String.valueOf(zona.getChildCount()));
                 if(zona.getChildCount() == 0){
                     ViewGroup owner = (ViewGroup) draggedView.getParent();
                     owner.removeView(draggedView);
@@ -96,7 +95,8 @@ public class CustomOnDragListener implements View.OnDragListener {
                 }else{
                     View hijaDeRelative = zona.getChildAt(0);
                     zona.removeView(hijaDeRelative);
-                    LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(w,h);
+                    LinearLayout.LayoutParams ll
+                            = (LinearLayout.LayoutParams) myLinearLayout.getChildAt(0).getLayoutParams();
                     Log.d("width", "onDrag: " + w);
                     Log.d("height", "onDrag: " + h);
                     hijaDeRelative.setLayoutParams(ll);

@@ -230,4 +230,29 @@ public class Dialogos {
                 })
                 .build();
     }
+    //Dialog para cuando no se ha seleccionado una caducidad
+    public void dialogNoCaducidad(){
+        new FancyGifDialog.Builder(clase)
+                .setTitle("¡NO SE HA SELECCIONADO LA CADUCIDAD!")
+                .setMessage("Por favor, selecciona una fecha de caducidad para este alimento.")
+                .setNegativeBtnText("Cancelar")
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Aceptar")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                .setGifResource(R.drawable.gif4)
+                .isCancellable(true)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //Volvemos a la pantalla anterior
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //Volvemos a la pantalla anterior
+                    }
+                })
+                .build();
+    }
 }

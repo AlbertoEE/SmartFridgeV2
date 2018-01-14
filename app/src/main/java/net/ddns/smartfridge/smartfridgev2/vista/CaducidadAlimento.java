@@ -173,7 +173,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al);
         } else if (controlDragAndDrop==0){
             //Programar
-
+            dialogos.dialogNoCaducidad();
         }
     }
 

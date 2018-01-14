@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
@@ -26,18 +22,11 @@ import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.Fecha;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
-import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
 import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
-import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 public class CaducidadAlimento extends AppCompatActivity {
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker

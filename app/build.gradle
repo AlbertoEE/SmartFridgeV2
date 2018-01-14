@@ -44,6 +44,9 @@ dependencies {
     compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
     //Dialogs
     compile 'com.github.Shashank02051997:FancyGifDialog-Android:1.1'
+    //Api Vision
+    compile 'com.google.cloud:google-cloud-vision:1.14.0'
+
 
 }
 

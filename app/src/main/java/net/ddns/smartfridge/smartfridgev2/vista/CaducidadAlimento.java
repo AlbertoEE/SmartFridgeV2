@@ -49,35 +49,10 @@ public class CaducidadAlimento extends AppCompatActivity {
         customDatePicker = new CustomDatePicker(this, this);
         ac = ConfirmarAlimentoActivity.getAlimento();
         setContentView(R.layout.activity_caducidad_alimento);
-        //Cogemos el drawable de la carpeta de recursos
-        Drawable elemento = getResources().getDrawable(R.drawable.uno);
-        //Convertimos el drawable a bitmap
-        Bitmap bitmap = ((BitmapDrawable) elemento).getBitmap();
-        //Hacemos ese bitmap redondeado
-        RoundedBitmapDrawable redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        //Redondeamos los bordes
-        redondo.setCornerRadius(bitmap.getHeight());
-        //Cogemos la referencia al imageView
-        ImageView iv1 = (ImageView)findViewById(R.id.ivCad1);
-        iv1.setImageDrawable(redondo);
-        ImageView iv2 = (ImageView)findViewById(R.id.ivCad2);
-        iv2.setImageDrawable(redondo);
-        /*ImageView iv3 = (ImageView)findViewById(R.id.ivCad3);
-        iv3.setImageDrawable(redondo);*/
-        ImageView iv4 = (ImageView)findViewById(R.id.ivCad4);
-        iv4.setImageDrawable(redondo);
-        ImageView iv5 = (ImageView)findViewById(R.id.ivCad5);
-        iv5.setImageDrawable(redondo);
-        /*ImageView iv6 = (ImageView)findViewById(R.id.ivCad6);
-        iv6.setImageDrawable(redondo);*/
-        ImageView iv7 = (ImageView)findViewById(R.id.ivCad7);
-        iv7.setImageDrawable(redondo);
-        ImageView iv8 = (ImageView)findViewById(R.id.ivCadMas);
-        iv8.setImageDrawable(this.getResources().getDrawable(R.drawable.uno));
+        ponerImagenes();
         ImageView dd = (ImageView)findViewById(R.id.ivDropZone);
         dd.setImageBitmap(ac.getImagen());
         cargarDragAndDrop();
-
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUds);
         wheel(wheelPicker);
         adb = new AlimentoDB(this);
@@ -98,7 +73,6 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone),
                 (LinearLayout) findViewById(R.id.linearLayout), this, this));
         //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
-        //
     }
 
     //Método para dar las características al WheelPicker
@@ -196,5 +170,58 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     public void setControlDragAndDrop(int controlDragAndDrop) {
         this.controlDragAndDrop = controlDragAndDrop;
+    }
+
+    //Método para poner las imágenes a los botones del drag and drop
+    public void ponerImagenes(){
+        Drawable elemento;//Para almacenar los elementos drawable
+        Bitmap bitmap;//Para convertir el drawable a bitmap
+        RoundedBitmapDrawable redondo;//Para hacer la imagen redonda
+        //Cogemos el drawable de la carpeta de recursos
+        elemento = getResources().getDrawable(R.drawable.ic_1);
+        //Convertimos el drawable a bitmap
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        //Hacemos ese bitmap redondeado
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        //Redondeamos los bordes
+        redondo.setCornerRadius(bitmap.getHeight());
+        //Cogemos la referencia al imageView
+        ImageView iv1 = (ImageView)findViewById(R.id.ivCad1);
+        iv1.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.ic_2);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv2 = (ImageView)findViewById(R.id.ivCad2);
+        iv2.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.ic_3);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv3 = (ImageView)findViewById(R.id.ivCad3);
+        iv3.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.ic_4);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv4 = (ImageView)findViewById(R.id.ivCad4);
+        iv4.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.ic_5);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv5 = (ImageView)findViewById(R.id.ivCad5);
+        iv5.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.ic_6);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv6 = (ImageView)findViewById(R.id.ivCad6);
+        iv6.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.ic_7);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv7 = (ImageView)findViewById(R.id.ivCad7);
+        iv7.setImageDrawable(redondo);
+        elemento = getResources().getDrawable(R.drawable.mas);
+        bitmap = ((BitmapDrawable) elemento).getBitmap();
+        redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        ImageView iv8 = (ImageView)findViewById(R.id.ivCadMas);
+        iv8.setImageDrawable(redondo);
     }
 }

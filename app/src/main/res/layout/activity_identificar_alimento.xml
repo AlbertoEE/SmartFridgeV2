@@ -8,38 +8,44 @@
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity">
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ibEscaner"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@null"
         android:onClick="scaner"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ic_scanner" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ibCloudVision"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ic_apivision" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ibManual"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.852"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ic_manual" />
 
 </android.support.constraint.ConstraintLayout>

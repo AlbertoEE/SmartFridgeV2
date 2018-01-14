@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.modelo.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQLHelper;
 
@@ -31,6 +33,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private static TextView texto_alimento; //TextView para mostrar el nombre de la bbdd
     private Dialogos dialogos;//Para tener acceso a los dialogs que se mostrarán en la app
     private static Alimento_Codigo al=null;//Para el objeto de tipo Alimento
+    private CustomDialogProgressBar customDialogProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,20 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         escaner = getIntent();
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
-        new Verificador().execute(cod_barrras);
         dialogos = new Dialogos(this, this);
+        new Verificador().execute(cod_barrras);
+
+
+        //customDialogProgressBar = new CustomDialogProgressBar(this, (ProgressBar) findViewById(R.id.spin_kit));
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
     public class Verificador extends AsyncTask<String,Void, Alimento_Codigo> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            customDialogProgressBar.showDialog();
+        }
 
         @Override
         protected Alimento_Codigo doInBackground(String... cod_barras) {
@@ -78,6 +89,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();
             try {
                 myHelper.cerrarConexion();
+                customDialogProgressBar.endDialog();
             } catch (SQLException e) {
                 Toast.makeText(ConfirmarAlimentoActivity.this, "Error con la bbdd", Toast.LENGTH_SHORT).show();
             }

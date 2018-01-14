@@ -12,6 +12,7 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.ControlAlimentosActivity;
@@ -160,8 +161,9 @@ public class Dialogos {
     }
 
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
-    public void dialogCaducidad(int udsSeleccionadas, int caducidad){
+    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento){
         String day=null;//Para poner el mensaje del dialog
+
         if (caducidad==1){
             day = DIA;
         } else {
@@ -207,13 +209,17 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //Metodo para almacenar los datos en la nevera local
+                        AlimentoDB adb = new AlimentoDB(contexto);
+                        adb.guardarAlimento(alimento);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         intent = new Intent(contexto, InitialActivity.class);
                         contexto.startActivity(intent);
+                        adb.cerrarConexion();
                         CaducidadAlimento ia = (CaducidadAlimento) clase;
                         //Finalizamos el activity
                         ia.finish();
                         ia.finishAffinity();
+
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {

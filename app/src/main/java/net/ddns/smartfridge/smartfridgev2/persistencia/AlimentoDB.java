@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.persistencia;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
@@ -17,6 +18,7 @@ public class AlimentoDB {
     private MiNeveraDB miNevera;//Para la instancia de MiNeveraDB
     private SQLiteDatabase sql;//Para crear la instancia de SQLiteDatabase para escritura
     private SQLiteDatabase sqe;//Para crear la instancia de SQLiteDatabase para lectura
+    private static final String QUERYBBDDCOMPLETA = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTOS;
 
     //Constructor
     public AlimentoDB(Context contexto){
@@ -47,5 +49,11 @@ public class AlimentoDB {
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[5], alimento.getFecha_caducidad());
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[6], blob);
         sql.insert(MiNeveraDB.TABLA_ALIMENTOS, null, cv);
+    }
+
+    public Cursor getAlimentos(){
+        //El resultado se almacena en un cursor
+        Cursor cursor = sqe.rawQuery(QUERYBBDDCOMPLETA, new String[]{});
+        return cursor;
     }
 }

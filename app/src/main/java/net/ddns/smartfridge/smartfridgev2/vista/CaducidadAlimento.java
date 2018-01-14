@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -20,21 +21,28 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
+import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CaducidadAlimento extends AppCompatActivity {
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private int unidadesWheel;//Unidades del Wheel Picker
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
     private int tiempo_Caducidad;//Para almacenar los días de caducidad
+    private AlimentoDB adb;//Instancia del Gestor de BD de Alimentos
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +80,7 @@ public class CaducidadAlimento extends AppCompatActivity {
 
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUds);
         wheel(wheelPicker);
+        adb = new AlimentoDB(this);
     }
 
     public void setTiempo_Caducidad(int tiempo_Caducidad){
@@ -124,8 +133,38 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
-        Dialogos dialogos = new Dialogos(this,this);
-        dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad);
+        //Recogemos la fecha actual
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date date = new Date();
+        //Lo pasamos a un string
+        String fecha_actual = dateFormat.format(date);
+        //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
 
+        //Instanciamos un objeto Calendar
+        Calendar hoy = Calendar.getInstance();
+        hoy.add(Calendar.DATE, tiempo_Caducidad);
+        SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+        //Toast.makeText(this, "+ 20: " + dateformatter.format(hoy.getTime()), Toast.LENGTH_SHORT).show();
+        //Creamos el objeto Alimento
+        Log.d("uds", "Uds " + unidadesWheel);
+        Alimento al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, dateformatter.format(hoy.getTime()), ac.getImagen());
+        Log.d("tag", "" + al.getNombreAlimento());
+        Dialogos dialogos = new Dialogos(this,this);
+        dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al);
+
+        //Visualizamos el contenido de la bbdd
+        Cursor c = adb.getAlimentos();
+        if (c.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                int id = c.getInt(0);
+                String nombre= c.getString(1);
+                int cantidad = c.getInt(2);
+                int caducidad = c.getInt(3);
+                String f_hoy = c.getString(4);
+                String f_cad = c.getString(5);
+                Log.d("tag", "Mi Nevera: " + nombre + ", " + cantidad + ", " + caducidad + ", "+ f_hoy + ", " + f_cad);
+            } while(c.moveToNext());
+        }
     }
 }

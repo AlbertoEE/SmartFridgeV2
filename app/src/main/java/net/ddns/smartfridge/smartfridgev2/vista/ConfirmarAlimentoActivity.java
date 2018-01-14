@@ -42,11 +42,13 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         escaner = getIntent();
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
-        dialogos = new Dialogos(this, this);
+        ProgressBar progressBar = findViewById(R.id.spin_kit);
+        Log.d("NOFUNCIONA", "onCreate: " + progressBar);
+        customDialogProgressBar = new CustomDialogProgressBar(this);
         new Verificador().execute(cod_barrras);
+        dialogos = new Dialogos(this, this);
 
 
-        //customDialogProgressBar = new CustomDialogProgressBar(this, (ProgressBar) findViewById(R.id.spin_kit));
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
@@ -67,6 +69,11 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             return al;

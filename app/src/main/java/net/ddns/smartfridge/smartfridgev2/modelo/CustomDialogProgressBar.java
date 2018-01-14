@@ -22,15 +22,11 @@ import net.ddns.smartfridge.smartfridgev2.R;
 
 public class CustomDialogProgressBar {
     private Dialog dialog;
-    private ProgressBar progressBar;
 
-    public CustomDialogProgressBar(Activity activity, ProgressBar progressBar){
+    public CustomDialogProgressBar(Activity activity){
         dialog = new Dialog(activity);
-        this.progressBar = progressBar;
     }
     public void showDialog(){
-        RotatingPlane doubleBounce = new RotatingPlane();
-        progressBar.setIndeterminateDrawable(doubleBounce);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_progressbar);

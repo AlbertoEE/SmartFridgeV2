@@ -7,7 +7,7 @@
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
-        style="@style/SpinKitView.Large.RotatingPlane"
+        style="@style/SpinKitView.Large.Wave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

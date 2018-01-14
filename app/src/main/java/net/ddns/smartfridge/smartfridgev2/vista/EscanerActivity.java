@@ -32,7 +32,7 @@ public class EscanerActivity extends AppCompatActivity implements ZXingScannerVi
     public void onResume() {
         super.onResume();
         escanerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        escanerView.startCamera();          // Start camera on resume
+        escanerView.startCamera();          // Start camera on resume, 1 for frontcamera, nothing for normal camera
     }
 
     @Override

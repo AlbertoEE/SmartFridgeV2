@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.modelo;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
+import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

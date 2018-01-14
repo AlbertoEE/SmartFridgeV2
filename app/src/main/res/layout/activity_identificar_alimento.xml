@@ -25,6 +25,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@null"
+        android:onClick="visionCloud"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

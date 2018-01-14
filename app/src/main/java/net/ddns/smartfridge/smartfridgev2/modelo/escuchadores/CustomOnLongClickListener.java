@@ -1,7 +1,10 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.escuchadores;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.view.View;
+
+import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 
 /**
  * Created by Alberto on 10/01/2018.
@@ -10,6 +13,7 @@ import android.view.View;
 public class CustomOnLongClickListener implements View.OnLongClickListener {
 
     private String tiempo;
+    private CaducidadAlimento ca;
 
     public CustomOnLongClickListener(int tiempo){
         this.tiempo = String.valueOf(tiempo);

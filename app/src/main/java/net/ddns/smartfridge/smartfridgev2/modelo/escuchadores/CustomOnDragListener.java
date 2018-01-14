@@ -42,7 +42,6 @@ public class CustomOnDragListener implements View.OnDragListener {
     public boolean onDrag(View v, DragEvent event) {
         draggedView = (ImageView) event.getLocalState();
         zona = (RelativeLayout) v;
-        ordenarPrimerPaso();
         int action = event.getAction();
         switch (action){
             case DragEvent.ACTION_DRAG_STARTED:
@@ -115,6 +114,8 @@ public class CustomOnDragListener implements View.OnDragListener {
                     caducidadAlimento.setTiempo_Caducidad(Integer.parseInt(dragData));
                 }
 
+                caducidadAlimento.setControlDragAndDrop(-1);
+
                 return true;
 
             case DragEvent.ACTION_DRAG_ENDED:
@@ -135,12 +136,6 @@ public class CustomOnDragListener implements View.OnDragListener {
         }
         return false;
     }
-    private void ordenarPrimerPaso(){
-        this.children = new View[6];
-        for (int i=0; i < 6; i++){
-            this.children[i] = myLinearLayout.getChildAt(i);
-        }
-    }
 
     private void ordenarSegundoPaso() {
         this.children = new View[6];
@@ -149,53 +144,13 @@ public class CustomOnDragListener implements View.OnDragListener {
         }
         int x = 0;
         while(x != 6){
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 1){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
-                }
-            }
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 2){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
-                }
-            }
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 3){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
-                }
-            }
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 4){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
-                }
-            }
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 5){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
-                }
-            }
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 6){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
-                }
-            }
-            for (View item : this.children) {
-                if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == 7){
-                    myLinearLayout.removeView(item);
-                    myLinearLayout.addView(item);
-                    x++;
+            for (int i=1; i < 8; i++){
+                for (View item : this.children) {
+                    if(Integer.parseInt(context.getResources().getResourceEntryName(item.getId()).substring(5)) == i){
+                        myLinearLayout.removeView(item);
+                        myLinearLayout.addView(item);
+                        x++;
+                    }
                 }
             }
         }

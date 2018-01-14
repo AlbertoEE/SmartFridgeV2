@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
@@ -45,6 +47,7 @@ public class CustomDatePicker {
                 month = month + 1;
                 ca = (CaducidadAlimento) clase;
                 ca.setFechas(fechasConverter(dia, mes, anio), fechasConverter(dayOfMonth, month, year));
+                comprobarFecha();
             }
         }, anio, mes, dia);
         //date= format.parse(diaRecogido+mesRecogido+anioRecogido);
@@ -60,5 +63,40 @@ public class CustomDatePicker {
         fecha += "-" + String.valueOf(anio);
         Toast.makeText(c, fecha, Toast.LENGTH_SHORT).show();
         return fecha;
+    }
+
+    private void comprobarFecha(){
+        if (ca.getControlDragAndDrop() == -1){
+            View children[];
+
+            RelativeLayout relativeLayout = (RelativeLayout) ca.findViewById(R.id.relativeLayout);
+            View central = relativeLayout.getChildAt(0);
+            relativeLayout.removeView(central);
+
+            LinearLayout linearLayout = (LinearLayout) ca.findViewById(R.id.linearLayout);
+            View ejemplo = linearLayout.getChildAt(0);
+            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) ejemplo.getLayoutParams();
+
+            central.setLayoutParams(ll);
+            linearLayout.addView(central);
+
+            children = new View[7];
+            for (int i=0; i < 7; i++){
+                children[i] = linearLayout.getChildAt(i);
+            }
+            int x = 0;
+            while(x != 7) {
+                for (int i = 1; i < 8; i++) {
+                    for (View item : children) {
+                        if (Integer.parseInt(c.getResources().getResourceEntryName(item.getId()).substring(5)) == i) {
+                            linearLayout.removeView(item);
+                            linearLayout.addView(item);
+                            x++;
+                        }
+                    }
+                }
+            }
+            ca.setControlDragAndDrop(1);
+        }
     }
 }

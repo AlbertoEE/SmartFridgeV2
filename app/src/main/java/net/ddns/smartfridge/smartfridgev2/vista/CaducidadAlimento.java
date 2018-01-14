@@ -24,6 +24,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.modelo.Fecha;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener2;
 import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -125,7 +127,7 @@ public class CaducidadAlimento extends AppCompatActivity {
                 int itemSel = picker.getCurrentItemPosition();
                 //Las uds van a ser la posición del wheel picker + 1
                 unidadesWheel = itemSel + 1;
-                Log.d("uds", "uds: " + unidadesWheel);
+                //Log.d("uds", "uds: " + unidadesWheel);
                 //Log.d("XEXU", String.valueOf(tiempo_Caducidad));
             }
         });
@@ -133,22 +135,14 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
-        //Recogemos la fecha actual
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        Date date = new Date();
-        //Lo pasamos a un string
-        String fecha_actual = dateFormat.format(date);
-        //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
-
-        //Instanciamos un objeto Calendar
-        Calendar hoy = Calendar.getInstance();
-        hoy.add(Calendar.DATE, tiempo_Caducidad);
-        SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
-        //Toast.makeText(this, "+ 20: " + dateformatter.format(hoy.getTime()), Toast.LENGTH_SHORT).show();
+        Fecha fecha = new Fecha();
+        String fecha_actual = fecha.fechaActual();
+        String fecha_caducidad_alimento = fecha.diasAFecha(tiempo_Caducidad);
+        /*Programar para cuando se de al boton de más
+        int dias = fecha.fechaDias();
+        //Toast.makeText(this, "dias para caducidad: " + dias, Toast.LENGTH_LONG).show();*/
         //Creamos el objeto Alimento
-        Log.d("uds", "Uds " + unidadesWheel);
-        Alimento al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, dateformatter.format(hoy.getTime()), ac.getImagen());
-        Log.d("tag", "" + al.getNombreAlimento());
+        Alimento al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, ac.getImagen());
         Dialogos dialogos = new Dialogos(this,this);
         dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al);
 

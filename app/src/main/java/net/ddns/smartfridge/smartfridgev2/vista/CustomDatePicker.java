@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,12 @@ public class CustomDatePicker {
         //date= format.parse(diaRecogido+mesRecogido+anioRecogido);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
+        datePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                ca.setControlDragAndDrop(0);
+            }
+        });
     }
 
     private String fechasConverter(int dia, int mes, int anio){

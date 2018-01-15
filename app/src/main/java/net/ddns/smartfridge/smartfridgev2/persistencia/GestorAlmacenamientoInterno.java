@@ -11,14 +11,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
-import net.ddns.smartfridge.smartfridgev2.modelo.Fecha;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  *  Clase con los métodos para guardar una imagen realizada con la cámara en el almacenamieno interno del teléfono o de la tablet
@@ -63,6 +60,7 @@ public class GestorAlmacenamientoInterno {
         if (disponible()){
             //Si el directorio está disponible, se lo asociamos a la variable directorio de Almacenamiento
             directorioAlmcto = cogerDirectorio();
+
             //Creamos el fichero con el mismo nombre porque se tiene que sobreescribir y así sólo se almacena una
             fichero = new File(directorioAlmcto + "/imagenVision.png");
 
@@ -91,7 +89,5 @@ public class GestorAlmacenamientoInterno {
             Toast.makeText(contexto, "Almacenamiento externo no disponible", Toast.LENGTH_SHORT).show();
         }
         //return uriFoto;
-        Fecha fecha = new Fecha();
-        Log.d("ms", "ms: " + fecha.fechaActual());
     }
 }

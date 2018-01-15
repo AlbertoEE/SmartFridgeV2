@@ -20,7 +20,7 @@
         <activity
             android:name=".vista.InitialActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,6 +34,7 @@
         <activity android:name=".vista.ConfirmarAlimentoActivity" />
         <activity android:name=".vista.ProductoNoEncontradoActivity" />
         <activity android:name=".vista.CaducidadAlimento" />
+        <activity android:name=".vista.InsertarManualmenteActivity"></activity>
     </application>
 
 </manifest>

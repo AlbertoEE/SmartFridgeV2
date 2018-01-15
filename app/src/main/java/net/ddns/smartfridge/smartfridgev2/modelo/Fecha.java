@@ -20,7 +20,8 @@ public class Fecha {
     //Método para conseguir la fecha actual
     public String fechaActual(){
         //Recogemos la fecha actual
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_hhmmss", Locale.getDefault());
         Date date = new Date();
         //Lo pasamos a un string
         String fecha_actual = dateFormat.format(date);

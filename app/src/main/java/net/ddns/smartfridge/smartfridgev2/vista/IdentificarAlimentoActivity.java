@@ -22,6 +22,7 @@ import com.google.api.services.vision.v1.VisionRequestInitializer;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
+import net.ddns.smartfridge.smartfridgev2.persistencia.GestorAlmacenamientoInterno;
 
 public class IdentificarAlimentoActivity extends AppCompatActivity {
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
@@ -29,12 +30,13 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
     private Bitmap imagenCamara = null;//Para almacenar la imagen
     private static final String API_KEY= "AIzaSyBC8ENdWQzUaWLMHx7LjWxcpANwUF8E";
+    private GestorAlmacenamientoInterno gai;//Para almacenar la foto
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
-        Intent intent = getIntent();
+        gai = new GestorAlmacenamientoInterno(this);
     }
 
     public void escanear() {
@@ -63,7 +65,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 imagenCamara = (Bitmap) extras.get(KEY);
                 //Comprobamos si se ha hecho una foto
                 if (imagenCamara != null) {
-                    //uriFoto = gai.guardarImagen(imagenCamara);
+                    gai.guardarImagen(imagenCamara);
                 } else {//Si no se ha hecho, se lo indicamos al usuario
                     Toast.makeText(this, "Error al tomar la fotografía. Por favor, vuelva a intentarlo.", Toast.LENGTH_LONG).show();
                 }

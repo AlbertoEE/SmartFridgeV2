@@ -16,7 +16,7 @@ public class Permiso {
     public static final int PERM_FOTO=1;//Lo usaremos para indicar la posición del array para el permiso de la cámara
     public static final int PERM_LECTURA=2;//Lo usaremos para indicar la posición del array para el permiso de lectura en almcto interno
     public static final int PERM_ESCRITURA=3;//Lo usaremos para indicar la posición del array para el permiso de escritura en almcto interno
-
+    public static final int PERM_FOTO2 = 4;
     //Metodo para comprobar si tiene concedido el permiso para acceder a la cámara
     public boolean permisoCamara(Context contexto, Activity actividad){
         boolean permisoC = false;//Declaramos la variable donde vamos a almacenar el permiso, la inicializamos como false
@@ -66,5 +66,27 @@ public class Permiso {
             permisoE=false;
         }
         return permisoE;
+    }
+
+    public boolean permisoCamara2(Activity activity, Context context){
+        boolean permisoCamara = true;
+
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            permisoCamara = false;
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.CAMERA)) {
+                Toast.makeText(context, "Es necesario el acceso a la cámara para realizar las fotografías",
+                        Toast.LENGTH_LONG).show();
+
+            } else {
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.CAMERA}, PERM_FOTO2);
+
+            }
+        }
+
+        return permisoCamara;
     }
 }

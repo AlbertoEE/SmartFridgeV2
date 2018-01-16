@@ -126,4 +126,9 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             startActivityForResult(iHacerFotografia, Permiso.PERM_FOTO);
         }
     }
+
+    public void insertarManualmenteButton(View view){
+        Intent intent = new Intent(this, InsertarManualmenteActivity.class);
+        startActivity(intent);
+    }
 }

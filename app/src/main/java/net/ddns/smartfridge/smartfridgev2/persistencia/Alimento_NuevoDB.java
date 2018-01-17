@@ -1,5 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.persistencia;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -14,10 +15,10 @@ public class Alimento_NuevoDB {
     private static final String QUERYBBDDCOMPLETA = "SELECT nombre_ali_nuevo FROM " + MiNeveraDB.TABLA_ALIMENTOS_CREADOS;
 
     //Constructor
-    public Alimento_NuevoDB(MiNeveraDB miNevera, SQLiteDatabase sql, SQLiteDatabase sqe) {
-        this.miNevera = miNevera;
-        this.sql = sql;
-        this.sqe = sqe;
+    public Alimento_NuevoDB(Context contexto){
+        miNevera = new MiNeveraDB(contexto);
+        sqe= miNevera.getReadableDatabase();
+        sql = miNevera.getWritableDatabase();
     }
 
     //Método para cerrar la conexión con la bbdd

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Nuevo;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.Alimento_NuevoDB;
+import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
 import java.io.ByteArrayOutputStream;
 
@@ -33,18 +36,21 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
     private Bitmap foto = null;
-    private EditText etNombreAlimento;
+    private AutoCompleteTextView etNombreAlimento;
     private final static int COD_CAMARA = 1;
     private Alimento_NuevoDB alimento_nuevoDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar_manualmente);
+        alimento_nuevoDB = new Alimento_NuevoDB(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, generarSugerencias(alimento_nuevoDB.getAlimentosNuevos()));
         cargarMarquee();
-        etNombreAlimento = (EditText) findViewById(R.id.etNombreAlimento);
+        etNombreAlimento = (AutoCompleteTextView) findViewById(R.id.etNombreAlimento);
+        etNombreAlimento.setAdapter(adapter);
     }
 
     private void cargarMarquee(){
@@ -103,9 +109,16 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     
     private String[] generarSugerencias(Cursor cursor){
         int count = cursor.getCount();
+        int contador = 0;
+        Log.d("Count", "generarSugerencias: " + count);
         String[] alimentos = new String[count];
-        for(int i = 0; i < count; i++){
-            alimentos[i] = cursor.getString(0);
+        //Log.d("String", "NOMBRE: " + cursor.getString(0));
+        //Log.d("String", "NOMBRE: " + cursor.getString(1));
+        if(cursor.moveToFirst()){
+            do{
+                alimentos[contador] = cursor.getString(0);
+                contador++;
+            }while(cursor.moveToNext() && contador != count);
         }
         return alimentos;
     }

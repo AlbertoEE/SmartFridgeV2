@@ -139,6 +139,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         intent = new Intent(contexto, CaducidadAlimento.class);
+                        intent.putExtra("ClasePadre", "ConfirmarAlmientoActivity");
                         contexto.startActivity(intent);
                         ConfirmarAlimentoActivity ca = (ConfirmarAlimentoActivity) clase;
                         //Finalizamos el activity

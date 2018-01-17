@@ -42,13 +42,14 @@ public class CaducidadAlimento extends AppCompatActivity {
     private String fecha_final;//Para asignar la fecha de caducidad a través del calendario
     private int controlDragAndDrop = 0;//Para determinar si la selección de la caducidad se ha hecho por un medio u otro
     private Alimento al;//Para construir el objeto de tipo alimento que se almacenará en la bbdd
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent i = getIntent();
+        intent = getIntent();
         customDatePicker = new CustomDatePicker(this, this);
-        ac = ConfirmarAlimentoActivity.getAlimento();
+
         setContentView(R.layout.activity_caducidad_alimento);
         ponerImagenes();
         ImageView dd = (ImageView)findViewById(R.id.ivDropZone);
@@ -57,6 +58,16 @@ public class CaducidadAlimento extends AppCompatActivity {
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUds);
         wheel(wheelPicker);
         adb = new AlimentoDB(this);
+    }
+
+    private void comprobarPadre(){
+        if(intent.getExtras().get("ClasePadre").equals("InsertarManualmenteActivity")){
+            String nombre = (String) intent.getExtras().get("NombreAlimento");
+            Bitmap foto = (Bitmap) intent.getExtras().get("FotoBitMap");
+            ac = new Alimento_Codigo(nombre, foto);
+        }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
+            ac = ConfirmarAlimentoActivity.getAlimento();
+        }
     }
 
     public void setTiempo_Caducidad(int tiempo_Caducidad){

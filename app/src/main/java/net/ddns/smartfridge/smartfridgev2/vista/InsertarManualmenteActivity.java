@@ -3,22 +3,33 @@ package net.ddns.smartfridge.smartfridgev2.vista;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
+
+import java.io.ByteArrayOutputStream;
 
 import static net.ddns.smartfridge.smartfridgev2.modelo.Permiso.PERM_FOTO2;
 
 public class InsertarManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
+    private Bitmap foto = null;
+    private EditText etNombreAlimento;
     private final static int COD_CAMARA = 1;
 
     @Override
@@ -26,7 +37,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar_manualmente);
         cargarMarquee();
-
+        etNombreAlimento = (EditText) findViewById(R.id.etNombreAlimento);
     }
 
     private void cargarMarquee(){
@@ -51,6 +62,38 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    private void mostrarFoto(){
+        ImageButton ibCamara = (ImageButton) findViewById(R.id.ibCamara);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        this.foto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        try {
+            Glide.with(this)
+                    .load(stream.toByteArray())
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(ibCamara);
+        } catch (Exception e){
+            Toast.makeText(this, "Imagen no disponible", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void siguienteBoton(View view){
+        String nombre = String.valueOf(etNombreAlimento.getText());
+        Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
+        if(!nombre.equals("") ){
+            Intent intent = new Intent(InsertarManualmenteActivity.this, CaducidadAlimento.class);
+            intent.putExtra("FotoBitMap", foto);
+            intent.putExtra("ClasePadre", "InsertarManualmenteActivity");
+            intent.putExtra("NombreAlimento" , etNombreAlimento.getText());
+            startActivity(intent);
+            //finish();
+        }else{
+            Toast.makeText(this, "Campo de nombre obligatorio", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -59,8 +102,23 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     hacerFoto();
                 } else{
-
+                    Toast.makeText(this, "No se ha podido abrir la cámara", Toast.LENGTH_SHORT).show();
                 }
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Al volver de hacer la foto la colocamos en el lugar del botón de la cámara
+        if (requestCode == COD_CAMARA && resultCode != RESULT_CANCELED && data != null) {
+            //Bundle extras = data.getExtras();
+            this.foto = (Bitmap) data.getExtras().get("data");
+            if(foto != null){
+                mostrarFoto();
+            } else{
+                Toast.makeText(this, "Error al tomar la foto", Toast.LENGTH_SHORT).show();
             }
         }
     }

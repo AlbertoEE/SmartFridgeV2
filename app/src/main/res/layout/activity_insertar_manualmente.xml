@@ -54,7 +54,7 @@
         app:layout_constraintVertical_bias="0.39" />
 
     <ImageButton
-        android:id="@+id/imageView"
+        android:id="@+id/ibCamara"
         android:background="@null"
         android:layout_width="231dp"
         android:layout_height="211dp"
@@ -73,7 +73,7 @@
         app:srcCompat="@drawable/ic_camera" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibSiguiente"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
@@ -81,12 +81,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@null"
+        android:onClick="siguienteBoton"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/ibCamara"
         app:layout_constraintVertical_bias="0.61"
         app:srcCompat="@drawable/ic_next" />
 

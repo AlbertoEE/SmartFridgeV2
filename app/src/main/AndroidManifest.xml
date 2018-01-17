@@ -35,6 +35,7 @@
         <activity android:name=".vista.ProductoNoEncontradoActivity" />
         <activity android:name=".vista.CaducidadAlimento" />
         <activity android:name=".vista.InsertarManualmenteActivity"></activity>
+
     </application>
 
 </manifest>

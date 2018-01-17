@@ -34,11 +34,9 @@ import java.util.List;
 public class GestorAlmacenamientoInterno {
 
     private Context contexto;//Para obtener el contexto de la activity
-    private ContentResolver cr;
 
-    public GestorAlmacenamientoInterno(Context cont, ContentResolver _cr){
+    public GestorAlmacenamientoInterno(Context cont){
         this.contexto=cont;
-        this.cr = _cr;
     }
 
     //Método para comprobar si el almacenamiento externo está disponible
@@ -62,7 +60,7 @@ public class GestorAlmacenamientoInterno {
     }
 
     //Método para guardar la imagen
-    public void guardarImagen(Bitmap b, ContentResolver cr){
+    public void guardarImagen(Bitmap b){
 
         String directorioAlmcto;//Para darle el nombre a la imagen
         File fichero;

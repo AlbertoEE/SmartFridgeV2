@@ -29,6 +29,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorAlmacenamientoInterno;
 
 import java.io.File;
+import java.io.IOException;
 
 public class IdentificarAlimentoActivity extends AppCompatActivity {
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
@@ -39,7 +40,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private GestorAlmacenamientoInterno gai;//Para almacenar la foto
     private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";//Nombre de la foto creada
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
-    private static final int DIMENSION_BITMAP = 1200;//Para redimensionar el bitmap de la imagen
+    private static final int DIMENSION_BITMAP = 1000;//Para redimensionar el bitmap de la imagen
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,15 +161,39 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         //Comprobamos que no esté vacía
         if (uri != null){
             //Primero escalamos la imagen
-            //Bitmap imagenEscalada =
+            try {
+                Bitmap imagenEscalada = escalarImagen(MediaStore.Images.Media.getBitmap
+                        (getContentResolver(), uri), DIMENSION_BITMAP);
+                //LLAMADA AL ASYNC TASK PASANDO COMO PARÁMETRO ESTE BITMAP
+            } catch (IOException e) {
+                Log.d("redimensionar", "No ha sido posible redimensionar el bitmpa");
+            }
         } else {
             Toast.makeText(this, "Error al cargar la imagen. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
             Log.d("prueba", "Image picker da imagen a null");
         }
     }
 
-    //Metodo para escalar la imagen
+    //Metodo para escalar la imagen y darle el tamaño de 1000x1000
     public Bitmap escalarImagen(Bitmap bitmap, int dimension){
-        return null;
+        int anchoOriginal = bitmap.getWidth();
+        int altoOriginal = bitmap.getHeight();
+        int anchoRed = DIMENSION_BITMAP;
+        int altoRed = DIMENSION_BITMAP;
+        //Creamos los if para que se ajuste el tamaño
+        if (altoOriginal > anchoOriginal){
+            //Si el alto original es mayor que el ancho original
+            altoRed = DIMENSION_BITMAP;
+            anchoRed = (int) ((altoRed * (float) anchoOriginal) / (float) altoOriginal);
+        } else if (anchoOriginal > altoOriginal){
+            //Si el ancho original es mayor que el alto original
+            anchoRed = DIMENSION_BITMAP;
+            altoOriginal = (int) ((anchoRed * (float) altoOriginal) / (float) anchoOriginal);
+        } else {
+            //En el caso de que ambos valores sean iguales
+            anchoRed = DIMENSION_BITMAP;
+            altoRed = DIMENSION_BITMAP;
+        }
+        return Bitmap.createScaledBitmap(bitmap, anchoRed, altoRed, false);
     }
 }

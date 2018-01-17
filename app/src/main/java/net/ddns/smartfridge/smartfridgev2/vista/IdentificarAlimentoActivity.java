@@ -38,7 +38,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private Bitmap imagenCamara = null;//Para almacenar la imagen
     private static final String API_KEY= "AIzaSyDnjuzwlVTlgcubURXS3xhFwmuKBEvxGGQ";
     private GestorAlmacenamientoInterno gai;//Para almacenar la foto
-    private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";
+    private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";//Nombre de la foto creada
+    private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,9 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 imagenCamara = (Bitmap) extras.get(KEY);
                 //Comprobamos si se ha hecho una foto
                 if (imagenCamara != null) {
+                    //Guardamos la imagen
                     gai.guardarImagen(imagenCamara);
+                    fotoUri = data.getData();
                 } else {//Si no se ha hecho, se lo indicamos al usuario
                     Toast.makeText(this, "Error al tomar la fotografía. Por favor, vuelva a intentarlo.", Toast.LENGTH_LONG).show();
                 }
@@ -134,7 +137,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         //Miramos si hay alguna aplicación que pueda hacer la foto
         if (iHacerFotografia.resolveActivity(this.getPackageManager()) != null) {
             //Cogemos la uri de la foto que hacemos
-            Uri fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
+            fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
             //Le pasamos la Uri al Intent
             iHacerFotografia.putExtra(KEY_URI, fotoUri);
             iHacerFotografia.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -151,5 +154,16 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     public File cogerArchivoCamara(){
         File archivo = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return new File (archivo, NOMBRE_FOTO_CAMARA);
+    }
+
+    //Metodo para cargar la imagen
+    public void cargarImagen(Uri uri){
+        //Comprobamos que no esté vacía
+        if (uri != null){
+
+        } else {
+            Toast.makeText(this, "Error al cargar la imagen. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+            Log.d("prueba", "Image picker da imagen a null");
+        }
     }
 }

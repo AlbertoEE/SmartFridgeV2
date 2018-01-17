@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -31,12 +32,15 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private Bitmap imagenCamara = null;//Para almacenar la imagen
     private static final String API_KEY= "AIzaSyBC8ENdWQzUaWLMHx7LjWxcpANwUF8E";
     private GestorAlmacenamientoInterno gai;//Para almacenar la foto
+    private ContentResolver cr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
-        gai = new GestorAlmacenamientoInterno(this);
+        cr = getContentResolver();
+        gai = new GestorAlmacenamientoInterno(this, cr);
+
     }
 
     public void escanear() {
@@ -65,7 +69,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 imagenCamara = (Bitmap) extras.get(KEY);
                 //Comprobamos si se ha hecho una foto
                 if (imagenCamara != null) {
-                    gai.guardarImagen(imagenCamara);
+                    gai.guardarImagen(imagenCamara, cr);
                 } else {//Si no se ha hecho, se lo indicamos al usuario
                     Toast.makeText(this, "Error al tomar la fotografía. Por favor, vuelva a intentarlo.", Toast.LENGTH_LONG).show();
                 }

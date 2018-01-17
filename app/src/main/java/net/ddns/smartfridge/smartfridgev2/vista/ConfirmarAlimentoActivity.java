@@ -51,7 +51,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
 
     }
 
-    //Creamos el AsyncTask para hacer la consulta a la bbddb
+    //Creamos el AsyncTask para hacer la consulta a la bbdd
     public class Verificador extends AsyncTask<String,Void, Alimento_Codigo> {
         @Override
         protected void onPreExecute() {

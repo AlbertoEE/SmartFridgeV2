@@ -1,12 +1,15 @@
 package net.ddns.smartfridge.smartfridgev2.vista;
 
 import android.Manifest;
-import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -19,12 +22,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.vision.v1.Vision;
+import com.google.api.services.vision.v1.VisionRequest;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorAlmacenamientoInterno;
 
@@ -41,6 +51,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";//Nombre de la foto creada
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
     private static final int DIMENSION_BITMAP = 1000;//Para redimensionar el bitmap de la imagen
+    private CustomDialogProgressBar customDialogProgressBar;//Para el progressbar personalizado
+    private static final String HEADER = "X-Android-Package";//Para general el header de solicitudes http
 
 
     @Override
@@ -48,7 +60,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
         gai = new GestorAlmacenamientoInterno(this);
-
+        customDialogProgressBar = new CustomDialogProgressBar(this);
     }
 
     public void escanear() {
@@ -165,8 +177,15 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 Bitmap imagenEscalada = escalarImagen(MediaStore.Images.Media.getBitmap
                         (getContentResolver(), uri), DIMENSION_BITMAP);
                 //LLAMADA AL ASYNC TASK PASANDO COMO PARÁMETRO ESTE BITMAP
+                if (conexion()){
+
+                } else {
+                    Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
+                }
             } catch (IOException e) {
-                Log.d("redimensionar", "No ha sido posible redimensionar el bitmpa");
+                Log.d("redimensionar", "Error al ejecutar la consulta: " + e.getMessage());
+                Toast.makeText(this, "Error al ejecutar la consulta. Por favor, vuelva a " +
+                        "intentarlo.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "Error al cargar la imagen. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
@@ -195,5 +214,50 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             altoRed = DIMENSION_BITMAP;
         }
         return Bitmap.createScaledBitmap(bitmap, anchoRed, altoRed, false);
+    }
+    //Comrpobamos si hay conexión
+    public boolean conexion() {
+        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    //Creamos el AsyncTask para hacer la consulta a la web
+    public class CloudVisionTask extends AsyncTask<Object,Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Mostramos el progressBar personalizado
+            customDialogProgressBar.showDialogCuadrado();
+        }
+
+        @Override
+        protected String doInBackground(Object... objects) {
+            HttpTransport ht = AndroidHttp.newCompatibleTransport();
+            //Para trabajar con el Json que nos devuelve la consulta
+            com.google.api.client.json.JsonFactory jsf = GsonFactory.getDefaultInstance();
+            //Metemos la clave y creamos el objeto que va a hacer las consultas
+            //Le asignamos la clave del producto
+            VisionRequestInitializer ri = new VisionRequestInitializer(API_KEY){
+                //Hacemos la peticion para inicializar el servicio Cloud Api Vision
+                @Override
+                protected void initializeVisionRequest(VisionRequest<?> request) throws IOException {
+                    super.initializeVisionRequest(request);
+                    //Cogemos el nombre del package
+                    String packageName = getPackageName();
+                    //Para el header de HTTP usado para las solicitudes a las apis de Google
+                    request.getRequestHeaders().set(HEADER, packageName);
+                    //String signature = PackageManagerUtils.getSignature
+                }
+            };
+
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
     }
 }

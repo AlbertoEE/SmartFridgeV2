@@ -13,11 +13,17 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;//Cte para la versión de la BBDD
     private static final String DATABASE_NAME = "MiNevera";//Cte para el nombre de la BBDD
     public static final String TABLA_ALIMENTOS = "alimentos";//Para crear la tabla Alimentos
-    public static final String [] CAMPOS_ALIMENTOS = {"_id", "nombre", "cantidad", "dias_caducidad", "fecha_registro", "fecha_caducidad", "imagen_alimento"};//Campos de la tabla alimentos
+    public static final String TABLA_ALIMENTOS_CREADOS = "alimentos_creados";//Para crear la tabla Alimentos_Creados
+    public static final String [] CAMPOS_ALIMENTOS = {"_id", "nombre", "cantidad", "dias_caducidad", "fecha_registro", "fecha_caducidad", "imagen_alimento", "id_alimento_creado"};//Campos de la tabla alimentos
     private static final String CREATE_TABLA_ALIMENTOS  = "CREATE TABLE " + TABLA_ALIMENTOS + " (" + CAMPOS_ALIMENTOS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CAMPOS_ALIMENTOS[1] +
             " TEXT NOT NULL, " + CAMPOS_ALIMENTOS[2] + " INTEGER NOT NULL, " + CAMPOS_ALIMENTOS[3] + " INTEGER NOT NULL, " + CAMPOS_ALIMENTOS[4] + " TEXT, " + CAMPOS_ALIMENTOS[5] +
-            " TEXT, " + CAMPOS_ALIMENTOS[6] + " BLOB)";//Tabla users
+            " TEXT, " + CAMPOS_ALIMENTOS[6] + " BLOB, " + CAMPOS_ALIMENTOS[7] + " INTEGER)";//Tabla alimentos
+    public static final String [] CAMPOS_ALI_CREADOS = {"_id", "nombre_ali_nuevo", "fecha_creado"};//Nombre de los
+    //campos de la tabla "alimentos_creados"
+    private static final String CREATE_tABLA_ALIMENTOS_CREADOS = "CREATE TABLE " + TABLA_ALIMENTOS_CREADOS + " (" + CAMPOS_ALI_CREADOS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + CAMPOS_ALI_CREADOS[1] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[2] + " TEXT NOT NULL)";//Tabla alimentos_creados
     public static final String INSERT_ALIMENTO = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'manzana\', 3, 6, \'13012018\', \'19012018\')";
+    public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre, fecha_registro) VALUES (\'pomelo\', \'13012018\')";
 
     //Constructor de la clase
     public MiNeveraDB (Context context) {
@@ -26,8 +32,10 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLA_ALIMENTOS);
-        //db.execSQL(INSERT_ALIMENTO);
-        Log.d("insert", "sql: " + INSERT_ALIMENTO);
+        db.execSQL(CREATE_tABLA_ALIMENTOS_CREADOS);
+        db.execSQL(INSERT_ALIMENTO);
+        db.execSQL(INSERT_ALI_CREADO);
+        Log.d("insert", "sql: " + INSERT_ALI_CREADO);
     }
 
     @Override

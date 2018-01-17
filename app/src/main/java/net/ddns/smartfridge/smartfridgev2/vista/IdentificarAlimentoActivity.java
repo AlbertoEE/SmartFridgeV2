@@ -34,12 +34,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
     //de que el usuario no haya concedido los permisos necesarios
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
-    private static final String KEY_URI = "Uri";//Cte para el nombre de la clave "Uri"
     private Bitmap imagenCamara = null;//Para almacenar la imagen
     private static final String API_KEY= "AIzaSyDnjuzwlVTlgcubURXS3xhFwmuKBEvxGGQ";
     private GestorAlmacenamientoInterno gai;//Para almacenar la foto
     private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";//Nombre de la foto creada
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
+    private static final int DIMENSION_BITMAP = 1200;//Para redimensionar el bitmap de la imagen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,10 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 if (imagenCamara != null) {
                     //Guardamos la imagen
                     gai.guardarImagen(imagenCamara);
-                    fotoUri = data.getData();
+                    //Cogemos la uri de la foto que hacemos
+                    fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
+                    //Llamamos al metodo cargarImagen y le pasamos la uri
+                    cargarImagen(fotoUri);
                 } else {//Si no se ha hecho, se lo indicamos al usuario
                     Toast.makeText(this, "Error al tomar la fotografía. Por favor, vuelva a intentarlo.", Toast.LENGTH_LONG).show();
                 }
@@ -136,11 +139,6 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Miramos si hay alguna aplicación que pueda hacer la foto
         if (iHacerFotografia.resolveActivity(this.getPackageManager()) != null) {
-            //Cogemos la uri de la foto que hacemos
-            fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
-            //Le pasamos la Uri al Intent
-            iHacerFotografia.putExtra(KEY_URI, fotoUri);
-            iHacerFotografia.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(iHacerFotografia, Permiso.PERM_FOTO);
         }
     }
@@ -160,10 +158,16 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     public void cargarImagen(Uri uri){
         //Comprobamos que no esté vacía
         if (uri != null){
-
+            //Primero escalamos la imagen
+            //Bitmap imagenEscalada =
         } else {
             Toast.makeText(this, "Error al cargar la imagen. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
             Log.d("prueba", "Image picker da imagen a null");
         }
+    }
+
+    //Metodo para escalar la imagen
+    public Bitmap escalarImagen(Bitmap bitmap, int dimension){
+        return null;
     }
 }

@@ -43,6 +43,7 @@ public class CaducidadAlimento extends AppCompatActivity {
     private int controlDragAndDrop = 0;//Para determinar si la selección de la caducidad se ha hecho por un medio u otro
     private Alimento al;//Para construir el objeto de tipo alimento que se almacenará en la bbdd
     private Intent intent;
+    private ImageView dd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,8 @@ public class CaducidadAlimento extends AppCompatActivity {
 
         setContentView(R.layout.activity_caducidad_alimento);
         ponerImagenes();
-        ImageView dd = (ImageView)findViewById(R.id.ivDropZone);
-        dd.setImageBitmap(ac.getImagen());
+        dd = (ImageView)findViewById(R.id.ivDropZone);
+        comprobarPadre();
         cargarDragAndDrop();
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUds);
         wheel(wheelPicker);
@@ -62,11 +63,15 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     private void comprobarPadre(){
         if(intent.getExtras().get("ClasePadre").equals("InsertarManualmenteActivity")){
-            String nombre = (String) intent.getExtras().get("NombreAlimento");
+            String nombre = String.valueOf(intent.getExtras().get("NombreAlimento"));
             Bitmap foto = (Bitmap) intent.getExtras().get("FotoBitMap");
             ac = new Alimento_Codigo(nombre, foto);
+            if (ac.getImagen() != null){
+                dd.setImageBitmap(ac.getImagen());
+            }
         }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
             ac = ConfirmarAlimentoActivity.getAlimento();
+            dd.setImageBitmap(ac.getImagen());
         }
     }
 

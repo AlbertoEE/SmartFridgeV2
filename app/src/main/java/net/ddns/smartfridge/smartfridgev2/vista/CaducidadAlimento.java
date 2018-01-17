@@ -35,6 +35,7 @@ public class CaducidadAlimento extends AppCompatActivity {
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private int unidadesWheel;//Unidades del Wheel Picker
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
+    private Alimento a;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
     private int tiempo_Caducidad;//Para almacenar los días de caducidad
     private AlimentoDB adb;//Instancia del Gestor de BD de Alimentos
     private CustomDatePicker customDatePicker;
@@ -65,9 +66,9 @@ public class CaducidadAlimento extends AppCompatActivity {
         if(intent.getExtras().get("ClasePadre").equals("InsertarManualmenteActivity")){
             String nombre = String.valueOf(intent.getExtras().get("NombreAlimento"));
             Bitmap foto = (Bitmap) intent.getExtras().get("FotoBitMap");
-            ac = new Alimento_Codigo(nombre, foto);
+            a = new Alimento(nombre, foto);
             if (ac.getImagen() != null){
-                dd.setImageBitmap(ac.getImagen());
+                dd.setImageBitmap(a.getImagen());
             }
         }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
             ac = ConfirmarAlimentoActivity.getAlimento();

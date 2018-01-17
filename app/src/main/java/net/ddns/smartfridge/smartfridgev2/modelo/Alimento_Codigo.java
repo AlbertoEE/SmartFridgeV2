@@ -21,11 +21,6 @@ public class Alimento_Codigo implements Serializable{
         this.imagen = imagen;
     }
 
-    public Alimento_Codigo(String nomAlimento, Bitmap imagen){
-        this.nomAlimento = nomAlimento;
-        this.imagen = imagen;
-    }
-
     public int getId_codigo() {
         return id_codigo;
     }

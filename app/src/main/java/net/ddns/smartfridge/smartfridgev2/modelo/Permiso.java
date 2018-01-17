@@ -69,12 +69,11 @@ public class Permiso {
     }
 
     public boolean permisoCamara2(Activity activity, Context context){
-        boolean permisoCamara = true;
+        boolean permisoCamara = false;
 
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            permisoCamara = false;
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.CAMERA)) {
                 Toast.makeText(context, "Es necesario el acceso a la cámara para realizar las fotografías",
@@ -85,6 +84,8 @@ public class Permiso {
                         new String[]{Manifest.permission.CAMERA}, PERM_FOTO2);
 
             }
+        }else{
+            permisoCamara = true;
         }
 
         return permisoCamara;

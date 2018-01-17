@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,7 +21,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Nuevo;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
+import net.ddns.smartfridge.smartfridgev2.persistencia.Alimento_NuevoDB;
 
 import java.io.ByteArrayOutputStream;
 
@@ -31,11 +35,14 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     private Bitmap foto = null;
     private EditText etNombreAlimento;
     private final static int COD_CAMARA = 1;
+    private Alimento_NuevoDB alimento_nuevoDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar_manualmente);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, generarSugerencias(alimento_nuevoDB.getAlimentosNuevos()));
         cargarMarquee();
         etNombreAlimento = (EditText) findViewById(R.id.etNombreAlimento);
     }
@@ -92,6 +99,15 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
             Toast.makeText(this, "Campo de nombre obligatorio", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    
+    private String[] generarSugerencias(Cursor cursor){
+        int count = cursor.getCount();
+        String[] alimentos = new String[count];
+        for(int i = 0; i < count; i++){
+            alimentos[i] = cursor.getString(0);
+        }
+        return alimentos;
     }
 
     @Override

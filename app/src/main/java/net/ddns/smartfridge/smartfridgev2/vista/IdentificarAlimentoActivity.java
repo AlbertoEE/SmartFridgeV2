@@ -34,6 +34,7 @@ import com.google.api.services.vision.v1.VisionRequest;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
+import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
@@ -197,13 +198,13 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                     Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
                 }
             } catch (IOException e) {
-                Log.d("redimensionar", "Error al ejecutar la consulta: " + e.getMessage());
+                Log.d("seguimiento", "Error al ejecutar la consulta: " + e.getMessage());
                 Toast.makeText(this, "Error al ejecutar la consulta. Por favor, vuelva a " +
                         "intentarlo.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "Error al cargar la imagen. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
-            Log.d("prueba", "Image picker da imagen a null");
+            Log.d("seguimiento", "Image picker da imagen a null");
         }
     }
 
@@ -289,7 +290,20 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 air.setFeatures(new ArrayList<Feature>(){{
                     add(caracteristicasVision(FEATURES, NUM_RESULTADOS));
                 }});
+                add(air);
             }});
+            //Ahora tratamos la respuesta que nos envíe el API Vision
+            try {
+                Vision.Images.Annotate aRespuesta = vision.images().annotate(bair);
+                //Si el tamaño de la imagen es muy grande, puede darnos error cuando intentemos comprimirlo a GZIP, lo inhabilitamos
+                aRespuesta.setDisableGZipContent(true);
+                Log.d("seguimiento", "creada Cloud Vision request objetc, enviando consulta");
+                //Almacenamos la respuesta en un BatchAnnotateImagesResponse
+                BatchAnnotateImagesResponse respuesta = aRespuesta.execute();
+                return tratarRespuesta(respuesta);
+            } catch (IOException e) {
+                Log.d("seguimiento", "Error al ejecutar API Vision: " + e.getMessage());
+            }
             return null;
         }
         @Override
@@ -320,5 +334,11 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         //Le asignamos el número de resultados que nos va a devolver
         labelDetection.setMaxResults(NUM_RESULTADOS);
         return  labelDetection;
+    }
+
+    //Método para tratar la respuesta obtenida por el API
+    public String tratarRespuesta(BatchAnnotateImagesResponse respuesta){
+
+        return null;
     }
 }

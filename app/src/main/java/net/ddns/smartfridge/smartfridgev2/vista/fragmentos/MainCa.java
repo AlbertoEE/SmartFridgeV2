@@ -10,6 +10,7 @@ import android.widget.Button;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.MiNeveraActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +28,14 @@ public class MainCa extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), IdentificarAlimentoActivity.class);
+                startActivity(i);
+            }
+        });
+
+        view.findViewById(R.id.ibNevera).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), MiNeveraActivity.class);
                 startActivity(i);
             }
         });

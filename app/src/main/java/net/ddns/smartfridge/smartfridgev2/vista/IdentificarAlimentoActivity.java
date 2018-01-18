@@ -35,6 +35,7 @@ import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
+import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
@@ -48,6 +49,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class IdentificarAlimentoActivity extends AppCompatActivity {
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
@@ -300,6 +303,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 Log.d("seguimiento", "creada Cloud Vision request objetc, enviando consulta");
                 //Almacenamos la respuesta en un BatchAnnotateImagesResponse
                 BatchAnnotateImagesResponse respuesta = aRespuesta.execute();
+                //El metodo de tratarRespuesta nos devuelve un String
                 return tratarRespuesta(respuesta);
             } catch (IOException e) {
                 Log.d("seguimiento", "Error al ejecutar API Vision: " + e.getMessage());
@@ -339,6 +343,19 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     //Método para tratar la respuesta obtenida por el API
     public String tratarRespuesta(BatchAnnotateImagesResponse respuesta){
 
-        return null;
+        //Programar!!!!!!!!!!!!!!!!!!!!!!!
+        String message = "I found these things:\n\n";
+
+        List<EntityAnnotation> labels = respuesta.getResponses().get(0).getLabelAnnotations();
+        if (labels != null) {
+            for (EntityAnnotation label : labels) {
+                message += String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription());
+                message += "\n";
+            }
+        } else {
+            message += "nothing";
+        }
+
+        return message;
     }
 }

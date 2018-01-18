@@ -50,6 +50,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -300,7 +301,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             Vision vision = builder.build();
 
             /*Ahora vamos a codificar los datos de la imagen, ya que el API no puede usar Bitmap directamente, y vamos a crear un objeto Imagen. Se lo pasaremos como argumento a
-            AnnotateImageRequest y activaremos la función LABEL_DETECTION*/
+            AnnotateImageRequest y activaremos la función LABEL_DETECTION
             BatchAnnotateImagesRequest bair = new BatchAnnotateImagesRequest();
             bair.setRequests(new ArrayList<AnnotateImageRequest>(){{
                 AnnotateImageRequest air = new AnnotateImageRequest();
@@ -319,10 +320,29 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 aRespuesta.setDisableGZipContent(true);
                 Log.d("seguimiento", "creada Cloud Vision request objetc, enviando consulta");
                 //Almacenamos la respuesta en un BatchAnnotateImagesResponse
-                BatchAnnotateImagesResponse respuesta = aRespuesta.execute();
+                BatchAnnotateImagesResponse respuesta = aRespuesta.execute();*/
+
+                // Create the image request
+                AnnotateImageRequest imageRequest = new AnnotateImageRequest();
+                Image image = convertirBitmap(imagenEscalada);
+                //image.encodeContent(imageBytes);
+                imageRequest.setImage(image);
+
+                // Add the features we want
+                Feature labelDetection = new Feature();
+                labelDetection.setType("LABEL_DETECTION");
+                labelDetection.setMaxResults(10);
+                imageRequest.setFeatures(Collections.singletonList(labelDetection));
+
+                // Batch and execute the request
+                BatchAnnotateImagesRequest requestBatch = new BatchAnnotateImagesRequest();
+                requestBatch.setRequests(Collections.singletonList(imageRequest));
+                BatchAnnotateImagesResponse response = vision.images()
+                        .annotate(requestBatch)
+                        .setDisableGZipContent(true)
+                        .execute();
                 //El metodo de tratarRespuesta nos devuelve un String
-                return tratarRespuesta(respuesta);
-                //return "hola";
+                return tratarRespuesta(response);
             } catch (IOException e) {
                 Log.d("seguimiento", "Error al ejecutar API Vision: " + e.getMessage());
             }
@@ -332,6 +352,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             customDialogProgressBar.endDialog();
+            Log.d("json", "mensaje: " + s);
+            Toast.makeText(IdentificarAlimentoActivity.this, "" + s, Toast.LENGTH_SHORT).show();
             //Vamos a crear el Intent para abrir el activity de ConfirmarAlimentoActivity
             Intent i = new Intent(getApplicationContext(), ConfirmarAlimentoActivity.class);
             i.putExtra("ClasePadre", "IdentificarAlimentoActivity");
@@ -365,10 +387,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
     //Método para tratar la respuesta obtenida por el API
     public String tratarRespuesta(BatchAnnotateImagesResponse respuesta){
-
         //Programar!!!!!!!!!!!!!!!!!!!!!!!
         String message = "I found these things:\n\n";
-
         List<EntityAnnotation> labels = respuesta.getResponses().get(0).getLabelAnnotations();
         if (labels != null) {
             for (EntityAnnotation label : labels) {
@@ -378,7 +398,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         } else {
             message += "nothing";
         }
-
         return message;
+        //Log.d("json", "mensaje: " + message);
     }
 }

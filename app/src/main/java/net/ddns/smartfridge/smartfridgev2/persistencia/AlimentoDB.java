@@ -50,10 +50,15 @@ public class AlimentoDB {
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[6], blob);
         sql.insert(MiNeveraDB.TABLA_ALIMENTOS, null, cv);
     }
-
+    //Recoge todos los alimentos de la bbdd
     public Cursor getAlimentos(){
         //El resultado se almacena en un cursor
         Cursor cursor = sqe.rawQuery(QUERYBBDDCOMPLETA, new String[]{});
         return cursor;
+    }
+
+    //Metodo para borrar un alimento de la bbdd a partir de su id
+    public void borrarAlimento(int id){
+        sql.execSQL("DELETE FROM " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id + ";");
     }
 }

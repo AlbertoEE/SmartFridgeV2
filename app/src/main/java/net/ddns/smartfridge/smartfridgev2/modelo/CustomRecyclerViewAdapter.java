@@ -92,7 +92,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
             } catch (Exception e){
                 e.printStackTrace();
             }
-        }
+       }
 
         /*cursor.moveToPosition(position);
 

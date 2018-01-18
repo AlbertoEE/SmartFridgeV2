@@ -22,10 +22,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonFactory;
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
+import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -109,7 +110,10 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                     //Guardamos la imagen
                     gai.guardarImagen(imagenCamara);
                     //Cogemos la uri de la foto que hacemos
-                    fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
+                    //Log.d("seguimiento", "uri: " + FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara()));
+                    //fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
+                    File f = cogerArchivoCamara();
+                    fotoUri = Uri.parse(gai.guardarImagen(imagenCamara));
                     //Llamamos al metodo cargarImagen y le pasamos la uri
                     cargarImagen(fotoUri);
                 } else {//Si no se ha hecho, se lo indicamos al usuario
@@ -151,9 +155,10 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     //Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void visionCloud(View v) {
         //Creamos la instancia del objeto Vision para usar Cloud Vision API.
+        /*
         Vision.Builder visionBuilder = new Vision.Builder(new NetHttpTransport(), new AndroidJsonFactory(),null);
         visionBuilder.setVisionRequestInitializer(new VisionRequestInitializer(API_KEY));
-        Vision vision = visionBuilder.build();
+        Vision vision = visionBuilder.build();*/
         //Solicitamos los permisos
         Permiso permiso = new Permiso();
         if (permiso.permisoCamara(this, this) && permiso.permisoEscritura(this, this) && (permiso.permisoLectura(this, this))) {
@@ -170,6 +175,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Miramos si hay alguna aplicación que pueda hacer la foto
         if (iHacerFotografia.resolveActivity(this.getPackageManager()) != null) {
+            /*fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() +
+            ".provider", cogerArchivoCamara());*/
             startActivityForResult(iHacerFotografia, Permiso.PERM_FOTO);
         }
     }
@@ -181,8 +188,17 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
     //Metodo para coger el fichero con la imagen hecha con la cámara
     public File cogerArchivoCamara(){
-        File archivo = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        return new File (archivo, NOMBRE_FOTO_CAMARA);
+
+        File archivo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String directorioAlmcto;//Para darle el nombre a la imagen
+        File fichero;
+        GestorAlmacenamientoInterno gi = new GestorAlmacenamientoInterno(this);
+        directorioAlmcto = gi.cogerDirectorio();
+        fichero = new File(directorioAlmcto + "/imagenVision.png");
+        /*File archivo = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return new File(dir, NOMBRE_FOTO_CAMARA);*/
+        return fichero;
     }
 
     //Metodo para cargar la imagen
@@ -196,7 +212,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                         (getContentResolver(), uri), DIMENSION_BITMAP);
                 //LLAMADA AL ASYNC TASK PASANDO COMO PARÁMETRO ESTE BITMAP
                 if (conexion()){
-
+                    new CloudVisionTask().execute(imagenEscalada);
                 } else {
                     Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
                 }
@@ -252,10 +268,11 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Object... objects) {
+            try {
             //Construimos la instancia de Vision API
             HttpTransport ht = AndroidHttp.newCompatibleTransport();
             //Para trabajar con el Json que nos devuelve la consulta
-            com.google.api.client.json.JsonFactory jsf = GsonFactory.getDefaultInstance();
+            JsonFactory jsf = GsonFactory.getDefaultInstance();
             //Metemos la clave y creamos el objeto que va a hacer las consultas, pasándole lo necesario para inicializarla
             //Le asignamos la clave del producto
             VisionRequestInitializer ri = new VisionRequestInitializer(API_KEY){
@@ -296,7 +313,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 add(air);
             }});
             //Ahora tratamos la respuesta que nos envíe el API Vision
-            try {
+
                 Vision.Images.Annotate aRespuesta = vision.images().annotate(bair);
                 //Si el tamaño de la imagen es muy grande, puede darnos error cuando intentemos comprimirlo a GZIP, lo inhabilitamos
                 aRespuesta.setDisableGZipContent(true);
@@ -305,6 +322,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 BatchAnnotateImagesResponse respuesta = aRespuesta.execute();
                 //El metodo de tratarRespuesta nos devuelve un String
                 return tratarRespuesta(respuesta);
+                //return "hola";
             } catch (IOException e) {
                 Log.d("seguimiento", "Error al ejecutar API Vision: " + e.getMessage());
             }
@@ -313,6 +331,11 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            customDialogProgressBar.endDialog();
+            //Vamos a crear el Intent para abrir el activity de ConfirmarAlimentoActivity
+            Intent i = new Intent(getApplicationContext(), ConfirmarAlimentoActivity.class);
+            i.putExtra("ClasePadre", "IdentificarAlimentoActivity");
+            startActivity(i);
         }
     }
 

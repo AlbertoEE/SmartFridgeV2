@@ -40,14 +40,23 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         escaner = getIntent();
+        String s = escaner.getStringExtra("string");
+        TextView t = (TextView)findViewById(R.id.tvCloud) ;
         cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
         formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
         ProgressBar progressBar = findViewById(R.id.spin_kit);
         Log.d("NOFUNCIONA", "onCreate: " + progressBar);
         customDialogProgressBar = new CustomDialogProgressBar(this);
-        new Verificador().execute(cod_barrras);
-        dialogos = new Dialogos(this, this);
 
+        dialogos = new Dialogos(this, this);
+        //t.setText(s);
+        if(escaner.getStringExtra("ClasePadre").equals("IdentificarAlimentoActivity")){
+            setContentView(R.layout.activity_confirmar_alimento);
+            texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
+            texto_alimento.setText("Api Cloud Vision");
+        } else {
+            new Verificador().execute(cod_barrras);
+        }
 
     }
 
@@ -89,7 +98,6 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 imagen_alimento.setImageBitmap(al.getImagen());
                 texto_alimento.setText(al.getNomAlimento());
                 texto_alimento.setSelected(true);//Para las animaciones de los textos
-
             } else {
                 setContentView(R.layout.activity_producto_no_encontrado);
             }

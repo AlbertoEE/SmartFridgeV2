@@ -34,6 +34,7 @@ import java.util.List;
 public class GestorAlmacenamientoInterno {
 
     private Context contexto;//Para obtener el contexto de la activity
+    private String path;//Para el path de la foto
 
     public GestorAlmacenamientoInterno(Context cont){
         this.contexto=cont;
@@ -60,7 +61,7 @@ public class GestorAlmacenamientoInterno {
     }
 
     //Método para guardar la imagen
-    public void guardarImagen(Bitmap b){
+    public String guardarImagen(Bitmap b){
 
         String directorioAlmcto;//Para darle el nombre a la imagen
         File fichero;
@@ -72,7 +73,7 @@ public class GestorAlmacenamientoInterno {
             directorioAlmcto = cogerDirectorio();
             //Creamos el fichero con el nombre equivalente a los ms del sistema para que no se repita
             fichero = new File(directorioAlmcto + "/imagenVision.png");
-            //Log.d("directorio", ""+ directorioAlmcto + "/Camera/.nomedia/imagenVision.png");
+            Log.d("seguimiento", ""+ fichero.getAbsolutePath());
             //Log.i("fichero", "Creado fichero de imagen");
             //Almacenamos el fichero que hemos creado
             try {
@@ -80,6 +81,7 @@ public class GestorAlmacenamientoInterno {
                 bytearrayoutputstream = new ByteArrayOutputStream();
                 b.compress(Bitmap.CompressFormat.PNG, 50, bytearrayoutputstream);
                 fileoutputstream.write(bytearrayoutputstream.toByteArray());
+                path = MediaStore.Images.Media.insertImage(contexto.getContentResolver(), b, "cosa", null);
             } catch (FileNotFoundException e) {
                 Toast.makeText(contexto, "No se ha podido almacenar la imagen, no se encuntra el fichero de destino", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
@@ -95,6 +97,7 @@ public class GestorAlmacenamientoInterno {
         } else {
             Toast.makeText(contexto, "Almacenamiento externo no disponible", Toast.LENGTH_SHORT).show();
         }
+        return path;
     }
 
 }

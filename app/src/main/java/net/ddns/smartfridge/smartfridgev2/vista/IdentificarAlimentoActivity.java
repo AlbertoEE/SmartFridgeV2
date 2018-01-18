@@ -32,14 +32,21 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.vision.v1.Vision;
 import com.google.api.services.vision.v1.VisionRequest;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
+import com.google.api.services.vision.v1.model.AnnotateImageRequest;
+import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
+import com.google.api.services.vision.v1.model.Feature;
+import com.google.api.services.vision.v1.model.Image;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.CustomDialogProgressBar;
+import net.ddns.smartfridge.smartfridgev2.modelo.Firma;
 import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorAlmacenamientoInterno;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class IdentificarAlimentoActivity extends AppCompatActivity {
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
@@ -52,8 +59,14 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
     private static final int DIMENSION_BITMAP = 1000;//Para redimensionar el bitmap de la imagen
     private CustomDialogProgressBar customDialogProgressBar;//Para el progressbar personalizado
-    private static final String HEADER = "X-Android-Package";//Para general el header de solicitudes http
-
+    private static final String HEADER = "X-Android-Package";//Para general el header de la solicitud http
+    private static final String CERT = "X-Android-Cert";//Para el certificado en la validación
+    private static final int CALIDAD = 90;//Calidad de la imagen para pasarla de bitmap a jpeg
+    private Bitmap imagenEscalada;//Para escalar el bitmap de la foto hecha por la cámara
+    private static final int NUM_RESULTADOS=10;//Para el número máximo de resultados que nos da el API Vision
+    private static final String[] FEATURES = {"LABEL_DETECTION", "CROP_HINTS", "DOCUMENT_TEXT_DETECTION", "FACE_DETECTION", "IMAGE_PROPERTIES", "LANDMARK_DETECTION",
+    "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "TEXT_DETECTION", "TYPE_UNSPECIFIED", "WEB_ANNOTATION"};//Parámetro a detectar en la imagen
+    private static Feature labelDetection;//Para darle las características del label_detection
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +169,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             startActivityForResult(iHacerFotografia, Permiso.PERM_FOTO);
         }
     }
-
+    //Abre el intent de la inserción manual de alimentos
     public void insertarManualmenteButton(View view){
         Intent intent = new Intent(this, InsertarManualmenteActivity.class);
         startActivity(intent);
@@ -174,7 +187,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         if (uri != null){
             //Primero escalamos la imagen
             try {
-                Bitmap imagenEscalada = escalarImagen(MediaStore.Images.Media.getBitmap
+                //Ojo que puede ar fallo y sea esclarImagen(imagenCamara)
+                imagenEscalada = escalarImagen(MediaStore.Images.Media.getBitmap
                         (getContentResolver(), uri), DIMENSION_BITMAP);
                 //LLAMADA AL ASYNC TASK PASANDO COMO PARÁMETRO ESTE BITMAP
                 if (conexion()){
@@ -234,10 +248,11 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Object... objects) {
+            //Construimos la instancia de Vision API
             HttpTransport ht = AndroidHttp.newCompatibleTransport();
             //Para trabajar con el Json que nos devuelve la consulta
             com.google.api.client.json.JsonFactory jsf = GsonFactory.getDefaultInstance();
-            //Metemos la clave y creamos el objeto que va a hacer las consultas
+            //Metemos la clave y creamos el objeto que va a hacer las consultas, pasándole lo necesario para inicializarla
             //Le asignamos la clave del producto
             VisionRequestInitializer ri = new VisionRequestInitializer(API_KEY){
                 //Hacemos la peticion para inicializar el servicio Cloud Api Vision
@@ -245,19 +260,65 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 protected void initializeVisionRequest(VisionRequest<?> request) throws IOException {
                     super.initializeVisionRequest(request);
                     //Cogemos el nombre del package
-                    String packageName = getPackageName();
+                    String nombrePackage = getPackageName();
                     //Para el header de HTTP usado para las solicitudes a las apis de Google
-                    request.getRequestHeaders().set(HEADER, packageName);
-                    //String signature = PackageManagerUtils.getSignature
+                    request.getRequestHeaders().set(HEADER, nombrePackage);
+                    //Recogemos en un string la firma del proyecto
+                    String firma = Firma.getFirma(getPackageManager(), nombrePackage);
+                    //Le pasamos a los headers la cte con el valor del certificado para la app  y la firma que hemos obtenido antes
+                    request.getRequestHeaders().set(CERT, firma);
                 }
             };
+            /*Una vez que ya tenemos inicializado el objeto sobre el que haremos las consultas, creamos el Vision.Builder
+            para trabajar con el json que nos devuelve la consulta*/
+            Vision.Builder builder = new Vision.Builder(ht, jsf, null);
+            //Le pasamos como argumento el objeto VisionRequestInitializer inicializado al builder
+            builder.setVisionRequestInitializer(ri);
+            /*Creamos el objeto Vision con el builder. Este objeto se va a encargar de manejar internamente el transporte HTTP
+            y la lógica de análisis JSON para cada solicitud y cada respuesta que hagamos*/
+            Vision vision = builder.build();
 
-
+            /*Ahora vamos a codificar los datos de la imagen, ya que el API no puede usar Bitmap directamente, y vamos a crear un objeto Imagen. Se lo pasaremos como argumento a
+            AnnotateImageRequest y activaremos la función LABEL_DETECTION*/
+            BatchAnnotateImagesRequest bair = new BatchAnnotateImagesRequest();
+            bair.setRequests(new ArrayList<AnnotateImageRequest>(){{
+                AnnotateImageRequest air = new AnnotateImageRequest();
+                //Convertimos la imagen escalada
+                convertirBitmap(imagenEscalada);
+                //Le damos las características al AnnotateImageRequest. Le vamos a dar la detección de etiquetas
+                air.setFeatures(new ArrayList<Feature>(){{
+                    add(caracteristicasVision(FEATURES, NUM_RESULTADOS));
+                }});
+            }});
             return null;
         }
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
         }
+    }
+
+    //Metodo para crear un objeto Imagen a partir del Bitmap obtenido de la camara
+    public static Image convertirBitmap(Bitmap b){
+        //Instanciamos el objeto Image
+        Image base64 = new Image();
+        //Creamos el stream
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //Comprimimos el bitmap, lo pasamos a jpeg con calidad 90
+        b.compress(Bitmap.CompressFormat.JPEG, CALIDAD, baos);
+        //Almacenamos el nuevo archivo en un array de bytes
+        byte [] imBytes = baos.toByteArray();
+        //Lo pasamos a Base64(representación del array de bytes en base 64)
+        return base64.encodeContent(imBytes);
+    }
+
+    //Metodo para asignar las características de búsqueda
+    public static Feature caracteristicasVision(String[] FEATURES, int NUM_RESULTADOS){
+        labelDetection = new Feature();
+        //Podemos añadirle la que queramos, como por ejemplo FACE_DETECTION, LOGO_DETECTION...
+        labelDetection.setType(FEATURES[0]);
+        //Le asignamos el número de resultados que nos va a devolver
+        labelDetection.setMaxResults(NUM_RESULTADOS);
+        return  labelDetection;
     }
 }

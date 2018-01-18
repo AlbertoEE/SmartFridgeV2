@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,41 +39,52 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         //_id", "nombre", "cantidad", "dias_caducidad", "fecha_registro", "fecha_caducidad", "imagen_alimento", "id_alimento_creado
         //int id, String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro, String fecha_caducidad, Bitmap imagen
         cargarArray();
+        Log.d("RAQUEL", "CustomRecyclerViewAdapter: " + Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 
     private void cargarArray(){
-        cursor.moveToFirst();
-        byte[] byteArrayFoto;
-        Bitmap bm;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        for (int i = 0; i < cursor.getCount(); i++) {
-            byteArrayFoto = cursor.getBlob(6);
-            bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0 ,byteArrayFoto.length);
-            bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            alimentos.add(new Alimento(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getInt(2),
-                    cursor.getInt(3),
-                    cursor.getString(4),
-                    cursor.getString(5),
-                    bm));
+        if(cursor.moveToFirst()){
+            byte[] byteArrayFoto;
+            Bitmap bm;
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                byteArrayFoto = cursor.getBlob(6);
+                if(byteArrayFoto != null) {
+                    byteArrayFoto = cursor.getBlob(6);
+                    bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
+                    bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    alimentos.add(new Alimento(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            bm));
+                }else{
+                    alimentos.add(new Alimento(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            null));
+                }
+            }
         }
     }
 
     private void llenarFila(CustomRecyclerViewAdapter.ViewHolder holder, int position){
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setText(String.valueOf(alimentos.get(position).getCantidad()));
-        holder.tvDiasCaducidad.setText(alimentos.get);
-        holder.tvFechaCaducidad.setText(formatearFecha());
+        holder.tvDiasCaducidad.setText(alimentos.get(position).getDias_caducidad());
+        holder.tvFechaCaducidad.setText(formatearFecha(alimentos.get(position).getFecha_caducidad()));
 
-        if(byteArrayFoto != null){
-            Bitmap bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0 ,byteArrayFoto.length);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        if(alimentos.get(position).getImagen() != null){
             try {
                 Glide.with(this.activity.getApplicationContext())
-                        .load(stream.toByteArray())
+                        .load(alimentos.get(position).getImagen())
                         .asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)

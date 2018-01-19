@@ -45,6 +45,8 @@ public class CaducidadAlimento extends AppCompatActivity {
     private Alimento al;//Para construir el objeto de tipo alimento que se almacenará en la bbdd
     private Intent intent;
     private ImageView dd;
+    private String nombreAlimento;//Para almacenar el nomber del alimento
+    private Bitmap imagenAlimento;//Para almacenar la imagen del alimento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +66,22 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     private void comprobarPadre(){
         if(intent.getExtras().get("ClasePadre").equals("InsertarManualmenteActivity")){
-            String nombre = String.valueOf(intent.getExtras().get("NombreAlimento"));
+            nombreAlimento = String.valueOf(intent.getExtras().get("NombreAlimento"));
             Bitmap foto = (Bitmap) intent.getExtras().get("FotoBitMap");
-            a = new Alimento(nombre, foto);
+            a = new Alimento(nombreAlimento, foto);
             if (ac.getImagen() != null){
                 dd.setImageBitmap(a.getImagen());
             }
         }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
+            //Intentamos coger el objeto
             ac = ConfirmarAlimentoActivity.getAlimento();
-            dd.setImageBitmap(ac.getImagen());
+            if (ac == null){
+                Bitmap cloud = ConfirmarAlimentoActivity.getImagenCloud();
+                dd.setImageBitmap(cloud);
+                nombreAlimento = ConfirmarAlimentoActivity.getNombreCloud();
+            } else {
+                dd.setImageBitmap(ac.getImagen());
+            }
         }
     }
 
@@ -151,7 +160,15 @@ public class CaducidadAlimento extends AppCompatActivity {
             //Significa que se ha seleccionado la caducidad por medio del drag and drop
             String fecha_caducidad_alimento = fecha.diasAFecha(tiempo_Caducidad);
             //Creamos el objeto Alimento
-            al = new Alimento(ac.getNomAlimento(), unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, ac.getImagen());
+            try{
+                //Almacenamos en las variables los valores. Si venimos del escaner, tendremos el objeto. Si no, tendremos un NullPointer
+                nombreAlimento = ac.getNomAlimento();
+                imagenAlimento = ac.getImagen();
+            } catch (NullPointerException e){
+                //Entrará por aquí cuando vengamos de Cloud Vision
+                imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+            }
+            al = new Alimento(nombreAlimento, unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, imagenAlimento);
             //Mostramos el dialog con los datos
             dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al);
         } else if (controlDragAndDrop==1){
@@ -160,7 +177,15 @@ public class CaducidadAlimento extends AppCompatActivity {
             int diasCaducidad = fecha.fechaDias(fecha_final);
             //Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
             //Creamos el objeto Alimento
-            al = new Alimento(ac.getNomAlimento(), unidadesWheel, diasCaducidad, fecha_actual, fecha_final, ac.getImagen());
+            try{
+                //Almacenamos en las variables los valores. Si venimos del escaner, tendremos el objeto. Si no, tendremos un NullPointer
+                nombreAlimento = ac.getNomAlimento();
+                imagenAlimento = ac.getImagen();
+            } catch (NullPointerException e){
+                //Entrará por aquí cuando vengamos de Cloud Vision
+                imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+            }
+            al = new Alimento(nombreAlimento, unidadesWheel, diasCaducidad, fecha_actual, fecha_final, imagenAlimento);
             //Mostramos el dialog con los datos
             dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al);
         } else if (controlDragAndDrop==0){

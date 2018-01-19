@@ -34,7 +34,8 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private Dialogos dialogos;//Para tener acceso a los dialogs que se mostrarán en la app
     private static Alimento_Codigo al=null;//Para el objeto de tipo Alimento
     private CustomDialogProgressBar customDialogProgressBar;
-    private Bitmap imagenCloud;//Para recuperar la imagen del intent cuando viene del Cloud Vision
+    private static Bitmap imagenCloud;//Para recuperar la imagen del intent cuando viene del Cloud Vision
+    private static String nombreCloud;//Para poner el nombre del alimento identificado
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,8 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
             texto_alimento = (TextView)findViewById(R.id.tvCloud);
             imagenCloud = (Bitmap) escaner.getExtras().get("imagenCloud");
-            texto_alimento.setText(escaner.getStringExtra("nombreCloud"));
+            nombreCloud = escaner.getStringExtra("nombreCloud");
+            texto_alimento.setText(nombreCloud);
             imagen_alimento.setImageBitmap(imagenCloud);
         } else if(escaner.getStringExtra("ClasePadre").equals("EscanerActivity")){
             String s = escaner.getStringExtra("string");
@@ -128,5 +130,13 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
 
     public static Alimento_Codigo getAlimento() {
         return al;
+    }
+
+    public static Bitmap getImagenCloud() {
+        return imagenCloud;
+    }
+
+    public static String getNombreCloud() {
+        return nombreCloud;
     }
 }

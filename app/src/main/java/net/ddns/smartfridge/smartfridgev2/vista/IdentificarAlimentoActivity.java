@@ -59,7 +59,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     //de que el usuario no haya concedido los permisos necesarios
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
     private Bitmap imagenCamara = null;//Para almacenar la imagen
-    private static final String API_KEY= "AIzaSyDnjuzwlVTlgcubURXS3xhFwmuKBEvxGGQ";
+    private static final String API_KEY = "AIzaSyDnjuzwlVTlgcubURXS3xhFwmuKBEvxGGQ";
     private GestorAlmacenamientoInterno gai;//Para almacenar la foto
     private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";//Nombre de la foto creada
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
@@ -69,10 +69,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static final String CERT = "X-Android-Cert";//Para el certificado en la validación
     private static final int CALIDAD = 90;//Calidad de la imagen para pasarla de bitmap a jpeg
     private Bitmap imagenEscalada;//Para escalar el bitmap de la foto hecha por la cámara
-    private static final int NUM_RESULTADOS=10;//Para el número máximo de resultados que nos da el API Vision
+    private static final int NUM_RESULTADOS = 10;//Para el número máximo de resultados que nos da el API Vision
     private static final String[] FEATURES = {"LABEL_DETECTION", "CROP_HINTS", "DOCUMENT_TEXT_DETECTION", "FACE_DETECTION", "IMAGE_PROPERTIES", "LANDMARK_DETECTION",
-    "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "TEXT_DETECTION", "TYPE_UNSPECIFIED", "WEB_ANNOTATION"};//Parámetro a detectar en la imagen
+            "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "TEXT_DETECTION", "TYPE_UNSPECIFIED", "WEB_ANNOTATION"};//Parámetro a detectar en la imagen
     private static Feature labelDetection;//Para darle las características del label_detection
+    private int cloudOk;//Lo vamos a usar para saber si ha habido algún resultado o no en la consulta al Cloud Vision. En función de este parámetro, se cargará
+    //una funcionalidad u otra en el activity que se inicia. Si es 0, será que no ha habido resultados
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             }
             //Si viene del api vision
         } else {
-            if(resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
                 imagenCamara = (Bitmap) extras.get(KEY);
                 //Comprobamos si se ha hecho una foto
@@ -172,7 +174,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     }
 
     //Para llamar a la cámara para hacer la foto del Cloud
-    public void llamarHacerFoto(){
+    public void llamarHacerFoto() {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Miramos si hay alguna aplicación que pueda hacer la foto
         if (iHacerFotografia.resolveActivity(this.getPackageManager()) != null) {
@@ -181,14 +183,15 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             startActivityForResult(iHacerFotografia, Permiso.PERM_FOTO);
         }
     }
+
     //Abre el intent de la inserción manual de alimentos
-    public void insertarManualmenteButton(View view){
+    public void insertarManualmenteButton(View view) {
         Intent intent = new Intent(this, InsertarManualmenteActivity.class);
         startActivity(intent);
     }
 
     //Metodo para coger el fichero con la imagen hecha con la cámara
-    public File cogerArchivoCamara(){
+    public File cogerArchivoCamara() {
 
         File archivo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String directorioAlmcto;//Para darle el nombre a la imagen
@@ -203,16 +206,16 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     }
 
     //Metodo para cargar la imagen
-    public void cargarImagen(Uri uri){
+    public void cargarImagen(Uri uri) {
         //Comprobamos que no esté vacía
-        if (uri != null){
+        if (uri != null) {
             //Primero escalamos la imagen
             try {
                 //Ojo que puede ar fallo y sea esclarImagen(imagenCamara)
                 imagenEscalada = escalarImagen(MediaStore.Images.Media.getBitmap
                         (getContentResolver(), uri), DIMENSION_BITMAP);
                 //LLAMADA AL ASYNC TASK PASANDO COMO PARÁMETRO ESTE BITMAP
-                if (conexion()){
+                if (conexion()) {
                     new CloudVisionTask().execute(imagenEscalada);
                 } else {
                     Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
@@ -229,17 +232,17 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     }
 
     //Metodo para escalar la imagen y darle el tamaño de 1000x1000
-    public Bitmap escalarImagen(Bitmap bitmap, int dimension){
+    public Bitmap escalarImagen(Bitmap bitmap, int dimension) {
         int anchoOriginal = bitmap.getWidth();
         int altoOriginal = bitmap.getHeight();
         int anchoRed = DIMENSION_BITMAP;
         int altoRed = DIMENSION_BITMAP;
         //Creamos los if para que se ajuste el tamaño
-        if (altoOriginal > anchoOriginal){
+        if (altoOriginal > anchoOriginal) {
             //Si el alto original es mayor que el ancho original
             altoRed = DIMENSION_BITMAP;
             anchoRed = (int) ((altoRed * (float) anchoOriginal) / (float) altoOriginal);
-        } else if (anchoOriginal > altoOriginal){
+        } else if (anchoOriginal > altoOriginal) {
             //Si el ancho original es mayor que el alto original
             anchoRed = DIMENSION_BITMAP;
             altoOriginal = (int) ((anchoRed * (float) altoOriginal) / (float) anchoOriginal);
@@ -250,15 +253,16 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
         return Bitmap.createScaledBitmap(bitmap, anchoRed, altoRed, false);
     }
+
     //Comrpobamos si hay conexión
     public boolean conexion() {
-        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
 
     //Creamos el AsyncTask para hacer la consulta a la web
-    public class CloudVisionTask extends AsyncTask<Object,Void, String> {
+    public class CloudVisionTask extends AsyncTask<Object, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -270,35 +274,35 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Object... objects) {
             try {
-            //Construimos la instancia de Vision API
-            HttpTransport ht = AndroidHttp.newCompatibleTransport();
-            //Para trabajar con el Json que nos devuelve la consulta
-            JsonFactory jsf = GsonFactory.getDefaultInstance();
-            //Metemos la clave y creamos el objeto que va a hacer las consultas, pasándole lo necesario para inicializarla
-            //Le asignamos la clave del producto
-            VisionRequestInitializer ri = new VisionRequestInitializer(API_KEY){
-                //Hacemos la peticion para inicializar el servicio Cloud Api Vision
-                @Override
-                protected void initializeVisionRequest(VisionRequest<?> request) throws IOException {
-                    super.initializeVisionRequest(request);
-                    //Cogemos el nombre del package
-                    String nombrePackage = getPackageName();
-                    //Para el header de HTTP usado para las solicitudes a las apis de Google
-                    request.getRequestHeaders().set(HEADER, nombrePackage);
-                    //Recogemos en un string la firma del proyecto
-                    String firma = Firma.getFirma(getPackageManager(), nombrePackage);
-                    //Le pasamos a los headers la cte con el valor del certificado para la app  y la firma que hemos obtenido antes
-                    request.getRequestHeaders().set(CERT, firma);
-                }
-            };
+                //Construimos la instancia de Vision API
+                HttpTransport ht = AndroidHttp.newCompatibleTransport();
+                //Para trabajar con el Json que nos devuelve la consulta
+                JsonFactory jsf = GsonFactory.getDefaultInstance();
+                //Metemos la clave y creamos el objeto que va a hacer las consultas, pasándole lo necesario para inicializarla
+                //Le asignamos la clave del producto
+                VisionRequestInitializer ri = new VisionRequestInitializer(API_KEY) {
+                    //Hacemos la peticion para inicializar el servicio Cloud Api Vision
+                    @Override
+                    protected void initializeVisionRequest(VisionRequest<?> request) throws IOException {
+                        super.initializeVisionRequest(request);
+                        //Cogemos el nombre del package
+                        String nombrePackage = getPackageName();
+                        //Para el header de HTTP usado para las solicitudes a las apis de Google
+                        request.getRequestHeaders().set(HEADER, nombrePackage);
+                        //Recogemos en un string la firma del proyecto
+                        String firma = Firma.getFirma(getPackageManager(), nombrePackage);
+                        //Le pasamos a los headers la cte con el valor del certificado para la app  y la firma que hemos obtenido antes
+                        request.getRequestHeaders().set(CERT, firma);
+                    }
+                };
             /*Una vez que ya tenemos inicializado el objeto sobre el que haremos las consultas, creamos el Vision.Builder
             para trabajar con el json que nos devuelve la consulta*/
-            Vision.Builder builder = new Vision.Builder(ht, jsf, null);
-            //Le pasamos como argumento el objeto VisionRequestInitializer inicializado al builder
-            builder.setVisionRequestInitializer(ri);
+                Vision.Builder builder = new Vision.Builder(ht, jsf, null);
+                //Le pasamos como argumento el objeto VisionRequestInitializer inicializado al builder
+                builder.setVisionRequestInitializer(ri);
             /*Creamos el objeto Vision con el builder. Este objeto se va a encargar de manejar internamente el transporte HTTP
             y la lógica de análisis JSON para cada solicitud y cada respuesta que hagamos*/
-            Vision vision = builder.build();
+                Vision vision = builder.build();
 
             /*Ahora vamos a codificar los datos de la imagen, ya que el API no puede usar Bitmap directamente, y vamos a crear un objeto Imagen. Se lo pasaremos como argumento a
             AnnotateImageRequest y activaremos la función LABEL_DETECTION
@@ -322,25 +326,30 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
                 //Almacenamos la respuesta en un BatchAnnotateImagesResponse
                 BatchAnnotateImagesResponse respuesta = aRespuesta.execute();*/
 
-                // Create the image request
-                AnnotateImageRequest imageRequest = new AnnotateImageRequest();
-                Image image = convertirBitmap(imagenEscalada);
-                //image.encodeContent(imageBytes);
-                imageRequest.setImage(image);
+            /*Ahora vamos a codificar los datos de la imagen, ya que el API no puede usar Bitmap directamente, y vamos a crear un objeto Imagen. Se lo pasaremos como argumento a
+            AnnotateImageRequest y activaremos la función LABEL_DETECTION*/
+                //Creamos la solicitud con la imagen escalada
+                AnnotateImageRequest air = new AnnotateImageRequest();
+                //Escalamos la imagen
+                Image imagen = convertirBitmap(imagenEscalada);
+                //Le asignamos la imagen escalada al AnnotateImageRequest
+                air.setImage(imagen);
+                // Añadimos las características de la petición
+                labelDetection = new Feature();
+                //Añadimos qué queremos identificar en la fotografía
+                labelDetection.setType(FEATURES[0]);
+                //Añadimos el número máximo de resultados que queremos que nos devuelva la respuesta
+                labelDetection.setMaxResults(NUM_RESULTADOS);
+                air.setFeatures(Collections.singletonList(labelDetection));
 
-                // Add the features we want
-                Feature labelDetection = new Feature();
-                labelDetection.setType("LABEL_DETECTION");
-                labelDetection.setMaxResults(10);
-                imageRequest.setFeatures(Collections.singletonList(labelDetection));
-
-                // Batch and execute the request
-                BatchAnnotateImagesRequest requestBatch = new BatchAnnotateImagesRequest();
-                requestBatch.setRequests(Collections.singletonList(imageRequest));
-                BatchAnnotateImagesResponse response = vision.images()
-                        .annotate(requestBatch)
-                        .setDisableGZipContent(true)
-                        .execute();
+                //Ejecutamos la petición al servicio.
+                BatchAnnotateImagesRequest bair = new BatchAnnotateImagesRequest();
+                //Le pasamos el AnnotateImageRequest con las caraceterísticas que le hemos dado anteriormente
+                bair.setRequests(Collections.singletonList(air));
+            /*Ahora tratamos la respuesta que nos envíe el API Vision.Si el tamaño de la imagen es muy grande, puede darnos error
+            cuando intentemos comprimirlo a GZIP, lo inhabilitamos. Almacenamos la respuesta en un BatchAnnotateImagesResponse*/
+                BatchAnnotateImagesResponse response = vision.images().annotate(bair).setDisableGZipContent(true).execute();
+                Log.d("seguimiento", "creada Cloud Vision request objetc, enviando consulta");
                 //El metodo de tratarRespuesta nos devuelve un String
                 return tratarRespuesta(response);
             } catch (IOException e) {
@@ -348,6 +357,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -362,7 +372,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     }
 
     //Metodo para crear un objeto Imagen a partir del Bitmap obtenido de la camara
-    public static Image convertirBitmap(Bitmap b){
+    public static Image convertirBitmap(Bitmap b) {
         //Instanciamos el objeto Image
         Image base64 = new Image();
         //Creamos el stream
@@ -370,35 +380,42 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         //Comprimimos el bitmap, lo pasamos a jpeg con calidad 90
         b.compress(Bitmap.CompressFormat.JPEG, CALIDAD, baos);
         //Almacenamos el nuevo archivo en un array de bytes
-        byte [] imBytes = baos.toByteArray();
+        byte[] imBytes = baos.toByteArray();
         //Lo pasamos a Base64(representación del array de bytes en base 64)
         return base64.encodeContent(imBytes);
     }
 
-    //Metodo para asignar las características de búsqueda
-    public static Feature caracteristicasVision(String[] FEATURES, int NUM_RESULTADOS){
-        labelDetection = new Feature();
-        //Podemos añadirle la que queramos, como por ejemplo FACE_DETECTION, LOGO_DETECTION...
-        labelDetection.setType(FEATURES[0]);
-        //Le asignamos el número de resultados que nos va a devolver
-        labelDetection.setMaxResults(NUM_RESULTADOS);
-        return  labelDetection;
+    //Método para tratar la respuesta obtenida por el API
+    public String tratarRespuesta(BatchAnnotateImagesResponse respuesta) {
+        /*Nos devuelve un EntityAnnotation. Almacenamos todos los datos en un List. Por cada "coincidencia" que encuentre va a tener un objeto de tipo Label
+        Vamos a almacenar todas estas etiquetas en un List*/
+        String [] clave = {"pen", "bottle", "lemon", "tomato", "egg"};
+        String mensaje="";//Para almacenar el mensaje que se mostrará al usuario
+        List<EntityAnnotation> etiquetas = respuesta.getResponses().get(0).getLabelAnnotations();
+        //Comprobamos si hemos recibido respuesta
+        if (etiquetas != null){
+            //Recorremos la lista
+            for (EntityAnnotation etiqueta : etiquetas){
+                mensaje = String.format(Locale.US, etiqueta.getDescription());
+                mensaje += "\n";
+                //Hacemos un bucle con el array de objetos y miramos si hay alguna coincidencia
+                for (int j=0; j<5;j++){
+                    if(mensaje.contains(clave[j])){
+                        Log.d("json", "El objeto es: " + clave[j]);
+                    }
+                }
+                Log.d("json", mensaje);
+            }
+            cloudOk=1;
+        } else {
+            mensaje = "Lo sentimos, no se ha encontrado ninguna coincidencia.";
+            cloudOk=0;
+        }
+        String mensaje2 = "Prueba";
+        return mensaje2;
     }
 
-    //Método para tratar la respuesta obtenida por el API
-    public String tratarRespuesta(BatchAnnotateImagesResponse respuesta){
-        //Programar!!!!!!!!!!!!!!!!!!!!!!!
-        String message = "I found these things:\n\n";
-        List<EntityAnnotation> labels = respuesta.getResponses().get(0).getLabelAnnotations();
-        if (labels != null) {
-            for (EntityAnnotation label : labels) {
-                message += String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription());
-                message += "\n";
-            }
-        } else {
-            message += "nothing";
-        }
-        return message;
-        //Log.d("json", "mensaje: " + message);
+    public int getCloudOk() {
+        return cloudOk;
     }
 }

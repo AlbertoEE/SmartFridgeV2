@@ -65,19 +65,19 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     private void comprobarPadre(){
+        //Comprobamos si venimos de insertar manualmente o no
         if(intent.getExtras().get("ClasePadre").equals("InsertarManualmenteActivity")){
             nombreAlimento = String.valueOf(intent.getExtras().get("NombreAlimento"));
-            Bitmap foto = (Bitmap) intent.getExtras().get("FotoBitMap");
-            a = new Alimento(nombreAlimento, foto);
-            if (ac.getImagen() != null){
-                dd.setImageBitmap(a.getImagen());
-            }
+            imagenAlimento = (Bitmap) intent.getExtras().get("FotoBitMap");
+            dd.setImageBitmap(imagenAlimento);
         }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
+            //Si venimos de confirmar alimento debemos ver si venimos desde el scaner o desde el Cloud Vision
             //Intentamos coger el objeto
             ac = ConfirmarAlimentoActivity.getAlimento();
             if (ac == null){
-                Bitmap cloud = ConfirmarAlimentoActivity.getImagenCloud();
-                dd.setImageBitmap(cloud);
+                //Si es null, venimos del cloud vision
+                imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+                dd.setImageBitmap(imagenAlimento);
                 nombreAlimento = ConfirmarAlimentoActivity.getNombreCloud();
             } else {
                 dd.setImageBitmap(ac.getImagen());
@@ -165,8 +165,8 @@ public class CaducidadAlimento extends AppCompatActivity {
                 nombreAlimento = ac.getNomAlimento();
                 imagenAlimento = ac.getImagen();
             } catch (NullPointerException e){
-                //Entrará por aquí cuando vengamos de Cloud Vision
-                imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+                //Cogerá los valores por defecto
+                Log.d("seguimiento", "No venimos del escaner");
             }
             al = new Alimento(nombreAlimento, unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, imagenAlimento);
             //Mostramos el dialog con los datos

@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.vista;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.CustomRecyclerViewAdapter;
 import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
 
@@ -46,6 +48,13 @@ public class MiNeveraActivity extends AppCompatActivity {
 
         rvMiNevera.setLayoutManager(layoutManager);
         rvMiNevera.setAdapter(recyclerViewAdapter);
+    }
+
+    public void detalles(int posicion, Alimento alimento){
+        Intent intent = new Intent(this, DetallesActivity.class);
+        intent.putExtra("Alimento", alimento);
+        intent.putExtra("ClasePadre", "MiNeveraActivity");
+        startActivity(intent);
     }
 
     @Override

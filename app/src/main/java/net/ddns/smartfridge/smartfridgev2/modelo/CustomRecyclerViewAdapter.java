@@ -115,11 +115,8 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         notifyDataSetChanged();
     }
 
-    private void detalles(int posicion){
-        Intent intent = new Intent(activity, SugerirRecetaActivity.class);
-        intent.putExtra("Alimento", alimentos.get(posicion));
-        intent.putExtra("ClasePadre", "MiNeveraActivity");
-        activity.getApplicationContext().startActivity(intent);
+    public void sortRecyclerView(){
+
     }
 
     @Override
@@ -136,7 +133,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detalles(position);
+                activity.detalles(position, alimentos.get(position));
             }
         });
     }

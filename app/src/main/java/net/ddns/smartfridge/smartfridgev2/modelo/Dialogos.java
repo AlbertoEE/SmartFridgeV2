@@ -1,8 +1,11 @@
 package net.ddns.smartfridge.smartfridgev2.modelo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
@@ -20,11 +23,11 @@ import net.ddns.smartfridge.smartfridgev2.vista.InitialActivity;
  */
 
 public class Dialogos {
-    private Context contexto;//El contexto del dialog
-    private Intent intent;//Para llamar a otras Activitys
+    private static Context contexto;//El contexto del dialog
+    private static Intent intent;//Para llamar a otras Activitys
     private Alimento acod;//Para crear un objeto que sea un alimento
     //private AlertDialog.Builder builder;//El builder para crear los dialogs
-    private Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
+    private static Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
     private static final String DIA = " día";//Cte para el mensaje del dialog
     private static final String DIAS = " días";//Cte para el mensaje del dialog
 
@@ -95,31 +98,7 @@ public class Dialogos {
     }
     //Se mostrará el dialog cuando el alimento encontrado en la bbdd sí sea el que tiene el cliente
     public void dialogAlimentoEncontrado(){
-        /*
-        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
-        //Mensaje del Alert
-        builder.setMessage("A cotinuación pasarás a la pantalla para añadir la caducidad del producto");
-        //Título
-        builder.setTitle("¡¡¡¡Bieeeeeeeeeeen, somos los mejores!!!!");
-        //Añadimos los botones
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                intent = new Intent(contexto, CaducidadAlimento.class);
-                contexto.startActivity(intent);
-                ConfirmarAlimentoActivity ca = (ConfirmarAlimentoActivity) clase;
-                //Finalizamos el activity
-                ca.finishAffinity();
-            }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //No hacemos nada
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();*/
+
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡¡¡¡Bieeeeeeeeeeen, somos los mejores!!!!")
@@ -156,7 +135,7 @@ public class Dialogos {
     }
 
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
-    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento){
+    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual){
         String day=null;//Para poner el mensaje del dialog
 
         if (caducidad==1){
@@ -164,33 +143,7 @@ public class Dialogos {
         } else {
             day = DIAS;
         }
-        /*
-        //Título
-        builder.setTitle("CONFIRMAR CADUCIDAD Y CANTIDAD");
-        //Mensaje del Alert
-        builder.setMessage("El alimento caducará en: " + caducidad + day + ".\nLas unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?");
-        //Añadimos los botones
-        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Metodo para almacenar los datos en la nevera local
-                Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
-                intent = new Intent(contexto, InitialActivity.class);
-                contexto.startActivity(intent);
-                CaducidadAlimento ia = (CaducidadAlimento) clase;
-                //Finalizamos el activity
-                ia.finish();
-                ia.finishAffinity();
-            }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //No hacemos nada
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();*/
+
         new FancyGifDialog.Builder(clase)
                 .setTitle("CONFIRMAR CADUCIDAD Y CANTIDAD")
                 .setMessage("El alimento caducará en: " + caducidad + day + ".\nLas unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?")
@@ -207,14 +160,17 @@ public class Dialogos {
                         AlimentoDB adb = new AlimentoDB(contexto);
                         adb.guardarAlimento(alimento);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(contexto, InitialActivity.class);
-                        contexto.startActivity(intent);
                         adb.cerrarConexion();
-                        CaducidadAlimento ia = (CaducidadAlimento) clase;
-                        //Finalizamos el activity
-                        ia.finish();
-                        ia.finishAffinity();
-
+                        if (manual){
+                            dialogNotificarSF(alimento);
+                        } else {
+                            intent = new Intent(contexto, InitialActivity.class);
+                            contexto.startActivity(intent);
+                            CaducidadAlimento ia = (CaducidadAlimento) clase;
+                            //Finalizamos el activity
+                            ia.finish();
+                            ia.finishAffinity();
+                        }
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
@@ -249,5 +205,40 @@ public class Dialogos {
                     }
                 })
                 .build();
+    }
+
+    //Dialog para notificar a SF un alimento nuevo
+    public static void dialogNotificarSF(Alimento alimento){
+        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+        //Mensaje del Alert
+        builder.setMessage("¿Desea informar a Smart Fridge sobre el nuevo producto?");
+        //Título
+        builder.setTitle("¡¡¡Elemento Nuevo!!!");
+        //Añadimos los botones
+        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Enviamos un mensaje a SFç
+                Toast.makeText(contexto, "Mensaje enviado, gracias por su colaboración.", Toast.LENGTH_SHORT).show();
+                Log.d("sf", "Mensaje a SF");
+                intent = new Intent(contexto, InitialActivity.class);
+                contexto.startActivity(intent);
+                CaducidadAlimento ia = (CaducidadAlimento) clase;
+                //Finalizamos el activity
+                ia.finish();
+                ia.finishAffinity();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CaducidadAlimento ia = (CaducidadAlimento) clase;
+                //Finalizamos el activity
+                ia.finish();
+                ia.finishAffinity();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

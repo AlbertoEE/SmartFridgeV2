@@ -36,7 +36,7 @@
         <activity android:name=".vista.ProductoNoEncontradoActivity" />
         <activity android:name=".vista.CaducidadAlimento" />
         <activity android:name=".vista.InsertarManualmenteActivity" />
-        <activity android:name=".vista.MiNeveraActivity"></activity>
+        <activity android:name=".vista.MiNeveraActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -45,8 +45,11 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths_cloud"/>/>
+                android:resource="@xml/paths_cloud" />
+            />
         </provider>
+
+        <activity android:name=".vista.DetallesActivity"></activity>
     </application>
 
 </manifest>

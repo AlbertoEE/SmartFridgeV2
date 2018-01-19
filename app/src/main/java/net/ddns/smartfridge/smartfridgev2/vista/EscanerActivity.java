@@ -57,6 +57,7 @@ public class EscanerActivity extends AppCompatActivity implements ZXingScannerVi
         //Pasamos el código de barras y el formato para comprobar que se encuentra en la bbdd
         confirmar.putExtra(TAG_CODIGO, resultado.getText());
         confirmar.putExtra(TAG_TIPO_CODIGO, resultado.getBarcodeFormat().toString());
+        confirmar.putExtra("ClasePadre", "EscanerActivity");
         startActivity(confirmar);
         finish();
     }

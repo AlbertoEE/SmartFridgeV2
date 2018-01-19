@@ -75,6 +75,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static Feature labelDetection;//Para darle las características del label_detection
     private int cloudOk;//Lo vamos a usar para saber si ha habido algún resultado o no en la consulta al Cloud Vision. En función de este parámetro, se cargará
     //una funcionalidad u otra en el activity que se inicia. Si es 0, será que no ha habido resultados
+    private static final String [] clave = {"pen", "bottle", "lemon", "tomato", "egg"};//Array con palabras clave
+    private static final String [] claveEsp = {"bolígrafo", "botella", "limón", "tomate", "huevo"};//Array con palabras clave en español
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -366,7 +368,21 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             Toast.makeText(IdentificarAlimentoActivity.this, "" + s, Toast.LENGTH_SHORT).show();
             //Vamos a crear el Intent para abrir el activity de ConfirmarAlimentoActivity
             Intent i = new Intent(getApplicationContext(), ConfirmarAlimentoActivity.class);
+            //Le pasamos el nombre de la clase padre
             i.putExtra("ClasePadre", "IdentificarAlimentoActivity");
+            if (s!=null){
+                //Le pasamos el nombre del elemento
+                i.putExtra("nombreCloud", s);
+                //Si hemos detectado algún nombre, cambiaremos la variable a true
+                i.putExtra("elementoEncontrado", true);
+            } else {
+                //Controlamos que haya algún dato
+                i.putExtra("nombreCloud", "Elemento desconido");
+                //Si no hemos detectado el nombre, cambiaremos la variable a false
+                i.putExtra("elementoEncontrado", false);
+            }
+            //Le pasamos la imagen
+            i.putExtra("imagenCloud", imagenCamara);
             startActivity(i);
         }
     }
@@ -389,30 +405,31 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     public String tratarRespuesta(BatchAnnotateImagesResponse respuesta) {
         /*Nos devuelve un EntityAnnotation. Almacenamos todos los datos en un List. Por cada "coincidencia" que encuentre va a tener un objeto de tipo Label
         Vamos a almacenar todas estas etiquetas en un List*/
-        String [] clave = {"pen", "bottle", "lemon", "tomato", "egg"};
-        String mensaje="";//Para almacenar el mensaje que se mostrará al usuario
+        String label="";//Para almacenar la etiqueta leida
+        String mostrar=null;//Para almacenar el mensaje que se mostrará al usuario
         List<EntityAnnotation> etiquetas = respuesta.getResponses().get(0).getLabelAnnotations();
         //Comprobamos si hemos recibido respuesta
         if (etiquetas != null){
             //Recorremos la lista
             for (EntityAnnotation etiqueta : etiquetas){
-                mensaje = String.format(Locale.US, etiqueta.getDescription());
-                mensaje += "\n";
+                label = String.format(Locale.US, etiqueta.getDescription());
+                label += "\n";
                 //Hacemos un bucle con el array de objetos y miramos si hay alguna coincidencia
                 for (int j=0; j<5;j++){
-                    if(mensaje.contains(clave[j])){
-                        Log.d("json", "El objeto es: " + clave[j]);
+                    if(label.contains(clave[j])){
+                        Log.d("json", "El objeto es: " + claveEsp[j]);
+                        mostrar = claveEsp[j];
+                        break;
                     }
                 }
-                Log.d("json", mensaje);
+                Log.d("json", label);
             }
-            cloudOk=1;
+            cloudOk=1;//Si se ha ejecutado la consulta y hemos obtenido respuesta, tomará el valor de 1
         } else {
-            mensaje = "Lo sentimos, no se ha encontrado ninguna coincidencia.";
-            cloudOk=0;
+            mostrar = "Lo sentimos, no se ha encontrado ninguna coincidencia.";
+            cloudOk=0;//Tomará el valor de 0 si no hemos obtenido respuesta por parte del API
         }
-        String mensaje2 = "Prueba";
-        return mensaje2;
+        return mostrar;
     }
 
     public int getCloudOk() {

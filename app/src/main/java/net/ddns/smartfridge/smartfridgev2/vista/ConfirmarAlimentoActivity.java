@@ -25,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 
 public class ConfirmarAlimentoActivity extends AppCompatActivity {
-    private Intent escaner;//Para recoger el Intent del Activity Escaner
+    private Intent escaner;//Para recoger el Intent
     private String cod_barrras = null;//Variable para almacenar el código de barras que recibimos el Escaner
     private String formato_codigo = null;//Para recoger el formato del código leído
     private MySQLHelper myHelper;
@@ -34,27 +34,30 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private Dialogos dialogos;//Para tener acceso a los dialogs que se mostrarán en la app
     private static Alimento_Codigo al=null;//Para el objeto de tipo Alimento
     private CustomDialogProgressBar customDialogProgressBar;
+    private Bitmap imagenCloud;//Para recuperar la imagen del intent cuando viene del Cloud Vision
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         escaner = getIntent();
-        String s = escaner.getStringExtra("string");
-        TextView t = (TextView)findViewById(R.id.tvCloud) ;
-        cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
-        formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
+        //TextView t = (TextView)findViewById(R.id.tvCloud) ;
         ProgressBar progressBar = findViewById(R.id.spin_kit);
-        Log.d("NOFUNCIONA", "onCreate: " + progressBar);
+        //Log.d("NOFUNCIONA", "onCreate: " + progressBar);
         customDialogProgressBar = new CustomDialogProgressBar(this);
-
         dialogos = new Dialogos(this, this);
-        //t.setText(s);
+        //Comprobamos el activity desde el que viene
         if(escaner.getStringExtra("ClasePadre").equals("IdentificarAlimentoActivity")){
             setContentView(R.layout.activity_confirmar_alimento);
-            texto_alimento = (TextView)findViewById(R.id.tvNombreProducto_ConfirmarAlimento);
-            texto_alimento.setText("Api Cloud Vision");
-        } else {
+            imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
+            texto_alimento = (TextView)findViewById(R.id.tvCloud);
+            imagenCloud = (Bitmap) escaner.getExtras().get("imagenCloud");
+            texto_alimento.setText(escaner.getStringExtra("nombreCloud"));
+            imagen_alimento.setImageBitmap(imagenCloud);
+        } else if(escaner.getStringExtra("ClasePadre").equals("EscanerActivity")){
+            String s = escaner.getStringExtra("string");
+            cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
+            formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
             new Verificador().execute(cod_barrras);
         }
 

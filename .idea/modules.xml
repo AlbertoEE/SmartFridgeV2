@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SmartFridgeV2.iml" filepath="$PROJECT_DIR$/SmartFridgeV2.iml" />
       <module fileurl="file://C:\Users\Alberto\git\SmartFridgeV3\SmartFridgeV2.iml" filepath="C:\Users\Alberto\git\SmartFridgeV3\SmartFridgeV2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartFridgeV3.iml" filepath="$PROJECT_DIR$/SmartFridgeV3.iml" />
       <module fileurl="file://C:\Users\raque\Desktop\Android\SmartFridgeV2\SmartFridgeV3.iml" filepath="C:\Users\raque\Desktop\Android\SmartFridgeV2\SmartFridgeV3.iml" />
       <module fileurl="file://C:\Users\ether\Desktop\SmartFridgeV2\SmartFridgeV3.iml" filepath="C:\Users\ether\Desktop\SmartFridgeV2\SmartFridgeV3.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelPicker-1.1.2/WheelPicker-1.1.2.iml" filepath="$PROJECT_DIR$/WheelPicker-1.1.2/WheelPicker-1.1.2.iml" />

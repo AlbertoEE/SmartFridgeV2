@@ -145,7 +145,7 @@
         app:layout_constraintVertical_bias="0.385" />
 
     <com.aigestudio.wheelpicker.WheelPicker
-        android:id="@+id/wheelUds"
+        android:id="@+id/wheelUdsDetalles"
         android:layout_width="36dp"
         android:layout_height="116dp"
         android:layout_marginBottom="8dp"

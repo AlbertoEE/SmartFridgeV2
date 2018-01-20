@@ -221,17 +221,16 @@ public class Dialogos {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Enviamos un mensaje a SF. Creamos un Intent implícito
-                Intent compartir = new Intent(Intent.ACTION_SEND);
+                Intent compartir = new Intent();
+                compartir.setAction(Intent.ACTION_SEND);
                 compartir.putExtra(Intent.EXTRA_EMAIL, new String[]{"raquel.menciac@gmail.com"});
                 compartir.putExtra(Intent.EXTRA_SUBJECT, "Alimento no reconocido: " + cod_barras);
                 compartir.putExtra(Intent.EXTRA_TEXT, "Hola,\nEl siguiente código de barras no ha sido reconido por el Smart Fridge: " + cod_barras +
-                "\n. El nombre del producto es: " + alimento.getNombreAlimento() + "\nGracias.");
-                compartir.setType("message/rfc822");
+                ".\nEl nombre del producto es: " + alimento.getNombreAlimento() + "\nGracias.");
+                compartir.setType("*/*");
                 contexto.startActivity(Intent.createChooser(compartir, "Enviar Email a Smart Fridge"));
                 Toast.makeText(contexto, "Mensaje enviado, gracias por su colaboración.", Toast.LENGTH_SHORT).show();
                 Log.d("sf", "Mensaje a SF");
-                intent = new Intent(contexto, InitialActivity.class);
-                contexto.startActivity(intent);
                 CaducidadAlimento ia = (CaducidadAlimento) clase;
                 //Finalizamos el activity
                 ia.finish();

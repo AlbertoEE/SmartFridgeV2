@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
@@ -17,15 +18,21 @@ public class DetallesActivity extends AppCompatActivity {
     private int unidadesWheel;
     private static int MAXUDS = 50;
     private WheelPicker wheelPicker;
-    TextView tvNombreAlimento;
-    TextView tvFechaCaducidad;
-    TextView tvDiasRestantes;
+    private TextView tvNombreAlimento;
+    private TextView tvFechaCaducidad;
+    private TextView tvDiasRestantes;
+    private ImageView ivAlimento;
+    private MiNeveraActivity miNeveraActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles);
         wheelPicker = findViewById(R.id.wheelUdsDetalles);
         wheel(wheelPicker);
+
+        miNeveraActivity = new MiNeveraActivity();
+        cargarDetallesAlimento();
     }
     public void wheel(WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
@@ -58,35 +65,16 @@ public class DetallesActivity extends AppCompatActivity {
 
     private void cargarDetallesAlimento(){
         Intent intentRecyclerView = getIntent();
-        Alimento alimento = (Alimento) intentRecyclerView.getExtras().get("Alimento");
+        Alimento alimento = (Alimento) intentRecyclerView.getSerializableExtra("Alimento");
 
-        TextView textView = (TextView)findViewById(R.id.tvNombreAlimentoDetalles);
-        textView.setText("");
+        tvNombreAlimento = (TextView)findViewById(R.id.tvNombreAlimentoDetalles);
+        tvFechaCaducidad = (TextView)findViewById(R.id.tvFechaCaducidadDetalles);
+        tvDiasRestantes = (TextView)findViewById(R.id.tvDiasRestantesDetalles);
+        ivAlimento = (ImageView)findViewById(R.id.ivAlimentoDetalles);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        tvNombreAlimento.setText(alimento.getNombreAlimento());
+        tvFechaCaducidad.setText(alimento.getFecha_caducidad());
+        tvDiasRestantes.setText(alimento.getDias_caducidad());
+        ivAlimento.setImageBitmap(miNeveraActivity.getImagenDetalles());
     }
 }

@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapter;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
+import java.io.Serializable;
+
 public class MiNeveraActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
     private Cursor cursor;
@@ -24,6 +27,7 @@ public class MiNeveraActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SearchView searchView;
+    private static Bitmap imagenDetalles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,6 @@ public class MiNeveraActivity extends AppCompatActivity {
 
         alimentoDB = new AlimentoDB(this);
         cursor = alimentoDB.getAlimentos();
-
-
 
         iniciarRecyclerView();
     }
@@ -48,11 +50,22 @@ public class MiNeveraActivity extends AppCompatActivity {
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    public void detalles(int posicion, Alimento alimento){
+    public void iniciardetalles(int posicion, Alimento alimento){
+        Alimento alimentoSinImagen = new Alimento(
+                        alimento.getNombreAlimento(),
+                        alimento.getCantidad(),
+                        alimento.getDias_caducidad(),
+                        alimento.getFecha_registro(),
+                        alimento.getFecha_caducidad());
+        this.imagenDetalles = alimento.getImagen();
         Intent intent = new Intent(this, DetallesActivity.class);
-        intent.putExtra("Alimento", alimento);
+        intent.putExtra("Alimento", (Serializable) alimentoSinImagen);
         intent.putExtra("ClasePadre", "MiNeveraActivity");
         startActivity(intent);
+    }
+
+    public Bitmap getImagenDetalles(){
+        return this.imagenDetalles;
     }
 
     @Override

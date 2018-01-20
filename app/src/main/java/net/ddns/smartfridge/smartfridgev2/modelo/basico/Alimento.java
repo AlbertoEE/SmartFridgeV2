@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 
 /**
  * Clase que representa un alimento de la bbdd de sqlite
@@ -18,7 +19,8 @@ public class Alimento implements Serializable {
     private Bitmap imagen;//Imagen del alimento
 
     //Constructor 1
-    public Alimento(int id, String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro, String fecha_caducidad, Bitmap imagen) {
+    public Alimento(int id, String nombreAlimento, int cantidad, int dias_caducidad,
+                    String fecha_registro, String fecha_caducidad, Bitmap imagen) {
         this.id = id;
         this.nombreAlimento = nombreAlimento;
         this.cantidad = cantidad;
@@ -29,13 +31,33 @@ public class Alimento implements Serializable {
     }
 
     //Constructor 2
-    public Alimento(String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro, String fecha_caducidad, Bitmap imagen) {
+    public Alimento(String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro,
+            String fecha_caducidad, Bitmap imagen) {
         this.nombreAlimento = nombreAlimento;
         this.cantidad = cantidad;
         this.fecha_registro = fecha_registro;
         this.fecha_caducidad = fecha_caducidad;
         this.dias_caducidad = dias_caducidad;
         this.imagen = imagen;
+    }
+
+    /**
+     * Constructor sin imagen para pasar un alimento via intent al activity detalles sin que de el
+     * error de parcelable
+     *
+     * @param nombreAlimento
+     * @param cantidad
+     * @param dias_caducidad
+     * @param fecha_registro
+     * @param fecha_caducidad
+     */
+    public Alimento(String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro,
+                    String fecha_caducidad) {
+        this.nombreAlimento = nombreAlimento;
+        this.cantidad = cantidad;
+        this.fecha_registro = fecha_registro;
+        this.fecha_caducidad = fecha_caducidad;
+        this.dias_caducidad = dias_caducidad;
     }
 
     //Constructor que recibe como parámetros el nombre y la imagen

@@ -130,7 +130,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.detalles(position, alimentos.get(position));
+                activity.iniciardetalles(position, alimentos.get(position));
             }
         });
     }

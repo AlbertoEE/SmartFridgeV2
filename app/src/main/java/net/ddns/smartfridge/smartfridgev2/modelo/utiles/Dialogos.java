@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -137,7 +138,7 @@ public class Dialogos {
 
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
     public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual){
-        String day=null;//Para poner el mensaje del dialog
+        String day;//Para poner el mensaje del dialog
 
         if (caducidad==1){
             day = DIA;
@@ -219,7 +220,10 @@ public class Dialogos {
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Enviamos un mensaje a SFç
+                //Enviamos un mensaje a SF. Creamos un Intent implícito
+                Intent compartir = new Intent(Intent.ACTION_SEND);
+
+                contexto.startActivity(intent);
                 Toast.makeText(contexto, "Mensaje enviado, gracias por su colaboración.", Toast.LENGTH_SHORT).show();
                 Log.d("sf", "Mensaje a SF");
                 intent = new Intent(contexto, InitialActivity.class);

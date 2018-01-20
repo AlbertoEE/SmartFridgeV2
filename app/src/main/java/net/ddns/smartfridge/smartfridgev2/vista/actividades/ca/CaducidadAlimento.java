@@ -48,6 +48,7 @@ public class CaducidadAlimento extends AppCompatActivity {
     private String nombreAlimento;//Para almacenar el nomber del alimento
     private Bitmap imagenAlimento;//Para almacenar la imagen del alimento
     private boolean manual=false;//Será true cuando venga de inserción manual
+    private String cod_barras;//Para el código de barras del alimento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +173,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             }
             al = new Alimento(nombreAlimento, unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, imagenAlimento);
             //Mostramos el dialog con los datos
-            dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al, manual);
+            dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al, manual, cod_barras);
         } else if (controlDragAndDrop==1){
             //Significa que se ha seleccionado la caducidad por medio del calendario
             //Metemos en la variable los dias que faltan para la caducidad
@@ -189,7 +190,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             }
             al = new Alimento(nombreAlimento, unidadesWheel, diasCaducidad, fecha_actual, fecha_final, imagenAlimento);
             //Mostramos el dialog con los datos
-            dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al, manual);
+            dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al, manual, cod_barras);
         } else if (controlDragAndDrop==0){
             //Programar
             dialogos.dialogNoCaducidad();

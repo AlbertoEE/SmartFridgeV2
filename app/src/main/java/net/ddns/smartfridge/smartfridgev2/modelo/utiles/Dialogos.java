@@ -137,7 +137,7 @@ public class Dialogos {
     }
 
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
-    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual){
+    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual, final String cod_barras){
         String day;//Para poner el mensaje del dialog
 
         if (caducidad==1){
@@ -164,7 +164,7 @@ public class Dialogos {
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
                         if (manual){
-                            dialogNotificarSF(alimento);
+                            dialogNotificarSF(alimento, cod_barras);
                         } else {
                             intent = new Intent(contexto, InitialActivity.class);
                             contexto.startActivity(intent);
@@ -210,7 +210,7 @@ public class Dialogos {
     }
 
     //Dialog para notificar a SF un alimento nuevo
-    public void dialogNotificarSF(Alimento alimento){
+    public void dialogNotificarSF(final Alimento alimento, final String cod_barras){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
         builder.setMessage("¿Desea informar a Smart Fridge sobre el nuevo producto?");
@@ -222,8 +222,12 @@ public class Dialogos {
             public void onClick(DialogInterface dialog, int which) {
                 //Enviamos un mensaje a SF. Creamos un Intent implícito
                 Intent compartir = new Intent(Intent.ACTION_SEND);
-
-                contexto.startActivity(intent);
+                compartir.putExtra(Intent.EXTRA_EMAIL, new String[]{"raquel.menciac@gmail.com"});
+                compartir.putExtra(Intent.EXTRA_SUBJECT, "Alimento no reconocido: " + cod_barras);
+                compartir.putExtra(Intent.EXTRA_TEXT, "Hola,\nEl siguiente código de barras no ha sido reconido por el Smart Fridge: " + cod_barras +
+                "\n. El nombre del producto es: " + alimento.getNombreAlimento() + "\nGracias.");
+                compartir.setType("message/rfc822");
+                contexto.startActivity(Intent.createChooser(compartir, "Enviar Email a Smart Fridge"));
                 Toast.makeText(contexto, "Mensaje enviado, gracias por su colaboración.", Toast.LENGTH_SHORT).show();
                 Log.d("sf", "Mensaje a SF");
                 intent = new Intent(contexto, InitialActivity.class);

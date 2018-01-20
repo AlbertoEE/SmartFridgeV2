@@ -108,7 +108,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 dialogos.dialogNoCodBarras();
                 finishAffinity();
             }
-            //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();h
             try {
                 myHelper.cerrarConexion();
                 customDialogProgressBar.endDialog();

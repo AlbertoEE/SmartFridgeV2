@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
@@ -19,7 +20,7 @@ public class AlimentoDB {
     private MiNeveraDB miNevera;//Para la instancia de MiNeveraDB
     private SQLiteDatabase sql;//Para crear la instancia de SQLiteDatabase para escritura
     private SQLiteDatabase sqe;//Para crear la instancia de SQLiteDatabase para lectura
-    private static final String QUERYBBDDCOMPLETA = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTOS;
+    private static final String QUERYBBDDCOMPLETA = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTOS;//Sentencia para sacar todos los datos de la bbdd
 
     //Constructor
     public AlimentoDB(Context contexto){
@@ -61,5 +62,13 @@ public class AlimentoDB {
     //Metodo para borrar un alimento de la bbdd a partir de su id
     public void borrarAlimento(int id){
         sql.execSQL("DELETE FROM " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id + ";");
+    }
+
+    //Método para actualizar las uds de un registro a partir de su id
+    public void actualizarUnidades(int id, int uds){
+        //Creamos la sentencia con la consulta
+        String updateUds = "UPDATE " + MiNeveraDB.TABLA_ALIMENTOS + " SET " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + "=" + uds + " WHERE ID=" + id;
+        sql.execSQL(updateUds);
+        //Log.d("sql", "update: " + updateUds);
     }
 }

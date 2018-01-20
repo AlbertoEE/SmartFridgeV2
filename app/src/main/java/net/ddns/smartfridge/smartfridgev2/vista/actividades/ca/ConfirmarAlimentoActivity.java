@@ -1,6 +1,8 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +28,12 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private MySQLHelper myHelper;
     private static ImageView imagen_alimento;//ImageView para mostrar la imagen de la bbdd
     private static TextView texto_alimento; //TextView para mostrar el nombre de la bbdd
-    private Dialogos dialogos;//Para tener acceso a los dialogs que se mostrarán en la app
+    //Para tener acceso a los dialogs que se mostrarán en la app
     private static Alimento_Codigo al=null;//Para el objeto de tipo Alimento
     private CustomDialogProgressBar customDialogProgressBar;
     private static Bitmap imagenCloud;//Para recuperar la imagen del intent cuando viene del Cloud Vision
     private static String nombreCloud;//Para poner el nombre del alimento identificado
+    private Dialogos dialogos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
             new Verificador().execute(cod_barrras);
         }
-
+        dialogos = new Dialogos(this, this);
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
@@ -99,7 +102,11 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 texto_alimento.setText(al.getNomAlimento());
                 texto_alimento.setSelected(true);//Para las animaciones de los textos
             } else {
-                setContentView(R.layout.activity_producto_no_encontrado);
+                Intent intent = new Intent(getApplicationContext(), IdentificarAlimentoActivity.class);
+                intent.putExtra("CODIGO_BARRAS", cod_barrras);
+                startActivity(intent);
+                dialogos.dialogNoCodBarras();
+                finishAffinity();
             }
             //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();
             try {

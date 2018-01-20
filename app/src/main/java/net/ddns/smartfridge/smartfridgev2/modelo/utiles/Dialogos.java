@@ -258,11 +258,11 @@ public class Dialogos {
                 //Ponemos el mensaje
                 .setMessage("No hemos encontrado tu producto en nuestra base de datos.\\nPor favor, inténtalo a través de una fotografía o introduce los datos manualmente.")
                 //Asignamos el botón de negativo
-                //.setNegativeBtnText("Cancelar")
+                .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
                 .setPositiveBtnBackground("#FF4081")
                 .setPositiveBtnText("Aceptar")
-                //.setNegativeBtnBackground("#FFA9A7A8")
+                .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
                 .setGifResource(R.drawable.gif1)
                 .isCancellable(false)
@@ -271,19 +271,19 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         intent = new Intent(contexto, InitialActivity.class);
-                        contexto.startActivity(intent);
-                        ConfirmarAlimentoActivity ca = (ConfirmarAlimentoActivity) clase;
+                        //contexto.startActivity(intent);
+                        IdentificarAlimentoActivity ca = (IdentificarAlimentoActivity) clase;
                         //Finalizamos el activity
                         ca.finish();
                         ca.finishAffinity();
                     }
                 })
-                /*.OnNegativeClicked(new FancyGifDialogListener() {
+                .OnNegativeClicked(new FancyGifDialogListener() {
                     @Override
                     public void OnClick() {
                         //No hacemos nada
                     }
-                })*/
+                })
                 .build();
     }
 }

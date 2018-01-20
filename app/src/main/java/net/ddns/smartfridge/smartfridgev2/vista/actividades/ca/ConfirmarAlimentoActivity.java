@@ -104,8 +104,9 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
             } else {
                 Intent intent = new Intent(getApplicationContext(), IdentificarAlimentoActivity.class);
                 intent.putExtra("CODIGO_BARRAS", cod_barrras);
+                intent.putExtra("ClasePadre", "ConfirmarAlmientoActivity");
                 startActivity(intent);
-                dialogos.dialogNoCodBarras();
+                //dialogos.dialogNoCodBarras();
                 finishAffinity();
             }
             //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();h

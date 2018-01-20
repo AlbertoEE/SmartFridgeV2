@@ -37,6 +37,7 @@ import com.google.api.services.vision.v1.model.Image;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.CloudVision;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Firma;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestorAlmacenamientoInterno;
@@ -64,6 +65,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static final String[] FEATURES = {"LABEL_DETECTION", "CROP_HINTS", "DOCUMENT_TEXT_DETECTION", "FACE_DETECTION", "IMAGE_PROPERTIES", "LANDMARK_DETECTION",
             "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "TEXT_DETECTION", "TYPE_UNSPECIFIED", "WEB_ANNOTATION"};//Parámetro a detectar en la imagen
     private static Feature labelDetection;//Para darle las características del label_detection
+    private Intent i;//Para recoger el intent de otra activity
+    private Dialogos dialogos;//Para utilizar la clase con los diálogos
 
 
     private CloudVision cvision;//Para crear una instancia y usar los métodos
@@ -72,9 +75,18 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
+        dialogos = new Dialogos(this, this);
         gai = new GestorAlmacenamientoInterno(this);
         customDialogProgressBar = new CustomDialogProgressBar(this);
         cvision = new CloudVision();
+        try {
+            i = getIntent();
+            if (i.getStringExtra("ClasePadre").equals("ConfirmarAlmientoActivity")) {
+                dialogos.dialogNoCodBarras();
+            }
+        } catch (NullPointerException e){
+            //No hacemos nada
+        }
     }
 
     public void escanear() {

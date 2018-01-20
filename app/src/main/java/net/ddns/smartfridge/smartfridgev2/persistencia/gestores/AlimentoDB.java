@@ -67,7 +67,7 @@ public class AlimentoDB {
     //Método para actualizar las uds de un registro a partir de su id
     public void actualizarUnidades(int id, int uds){
         //Creamos la sentencia con la consulta
-        String updateUds = "UPDATE " + MiNeveraDB.TABLA_ALIMENTOS + " SET " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + "=" + uds + " WHERE ID=" + id;
+        String updateUds = "UPDATE " + MiNeveraDB.TABLA_ALIMENTOS + " SET " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + "=" + uds + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id;
         sql.execSQL(updateUds);
         //Log.d("sql", "update: " + updateUds);
     }

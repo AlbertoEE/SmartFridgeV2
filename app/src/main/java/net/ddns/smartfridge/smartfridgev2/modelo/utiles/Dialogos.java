@@ -249,4 +249,41 @@ public class Dialogos {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    //Dialog para cuando no se encuentra el producto escaneado en la bbdd de códigos de barras
+    public void dialogNoCodBarras(){
+        new FancyGifDialog.Builder(clase)
+                //Ponemos el título
+                .setTitle("¡Vaya, que pena!")
+                //Ponemos el mensaje
+                .setMessage("No hemos encontrado tu producto en nuestra base de datos.\\nPor favor, inténtalo a través de una fotografía o introduce los datos manualmente.")
+                //Asignamos el botón de negativo
+                //.setNegativeBtnText("Cancelar")
+                //Asignamos el color de fondo del boton positivo
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Aceptar")
+                //.setNegativeBtnBackground("#FFA9A7A8")
+                //Asignamos el gif
+                .setGifResource(R.drawable.gif1)
+                .isCancellable(false)
+                //Añadimos los listener
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        intent = new Intent(contexto, InitialActivity.class);
+                        contexto.startActivity(intent);
+                        ConfirmarAlimentoActivity ca = (ConfirmarAlimentoActivity) clase;
+                        //Finalizamos el activity
+                        ca.finish();
+                        ca.finishAffinity();
+                    }
+                })
+                /*.OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //No hacemos nada
+                    }
+                })*/
+                .build();
+    }
 }

@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.modelo;
+package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,11 +12,12 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
-import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
-import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.InitialActivity;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 
 /**
  * Clase para mostrar los diferentes tipos de dialogs en la app

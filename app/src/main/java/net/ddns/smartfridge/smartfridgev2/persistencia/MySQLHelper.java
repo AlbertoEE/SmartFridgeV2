@@ -2,25 +2,17 @@ package net.ddns.smartfridge.smartfridgev2.persistencia;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.util.Log;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
-import net.ddns.smartfridge.smartfridgev2.vista.ConfirmarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.sql.Blob;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Clase creada para manejar las conexiones a la BBDD externa escrita en MySQL, para el correcto

@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.persistencia;
+package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
 import java.io.ByteArrayOutputStream;
 

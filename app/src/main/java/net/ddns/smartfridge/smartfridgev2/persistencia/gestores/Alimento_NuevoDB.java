@@ -1,8 +1,10 @@
-package net.ddns.smartfridge.smartfridgev2.persistencia;
+package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
 /**
  * Clase para trabajar con los objetos de tipo Alimento_Nuevo insertados en la bbdd

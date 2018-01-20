@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,12 +6,14 @@ import android.os.Bundle;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 
-public class SugerirRecetaActivity extends AppCompatActivity {
+public class CrearListaCompraActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sugerir_receta);
+        setContentView(R.layout.activity_crear_lista_compra);
         Intent intent = getIntent();
     }
+
+
 }

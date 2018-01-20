@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.modelo;
+package net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones;
 
 import android.app.Activity;
 import android.app.Dialog;

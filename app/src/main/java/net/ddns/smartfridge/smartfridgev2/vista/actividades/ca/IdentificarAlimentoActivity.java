@@ -1,11 +1,10 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -14,46 +13,37 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.vision.v1.Vision;
 import com.google.api.services.vision.v1.VisionRequest;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
-import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.CloudVision;
-import net.ddns.smartfridge.smartfridgev2.modelo.CustomDialogProgressBar;
-import net.ddns.smartfridge.smartfridgev2.modelo.Firma;
-import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
-import net.ddns.smartfridge.smartfridgev2.persistencia.GestorAlmacenamientoInterno;
+import net.ddns.smartfridge.smartfridgev2.modelo.servicios.CloudVision;
+import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Firma;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestorAlmacenamientoInterno;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 public class IdentificarAlimentoActivity extends AppCompatActivity {
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso

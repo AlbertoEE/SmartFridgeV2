@@ -1,10 +1,9 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,14 +22,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Nuevo;
-import net.ddns.smartfridge.smartfridgev2.modelo.Permiso;
-import net.ddns.smartfridge.smartfridgev2.persistencia.Alimento_NuevoDB;
-import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 
 import java.io.ByteArrayOutputStream;
 
-import static net.ddns.smartfridge.smartfridgev2.modelo.Permiso.PERM_FOTO2;
+import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO2;
 
 public class InsertarManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;

@@ -1,6 +1,6 @@
 //Clase con los métodos para guardar una imagen realizada con la cámara en el almacenamieno interno
 
-package net.ddns.smartfridge.smartfridgev2.persistencia;
+package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;

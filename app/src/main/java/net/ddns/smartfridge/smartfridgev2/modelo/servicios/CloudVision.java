@@ -1,16 +1,11 @@
-package net.ddns.smartfridge.smartfridgev2.modelo;
+package net.ddns.smartfridge.smartfridgev2.modelo.servicios;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Image;
-
-import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;

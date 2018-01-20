@@ -1,17 +1,14 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
+
 import com.google.zxing.Result;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-
-import net.ddns.smartfridge.smartfridgev2.R;
 
 public class EscanerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 

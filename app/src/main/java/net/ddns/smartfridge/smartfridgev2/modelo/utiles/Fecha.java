@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.modelo;
+package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 
 import android.net.ParseException;
 

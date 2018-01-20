@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,14 +18,14 @@ import android.widget.Toast;
 import com.aigestudio.wheelpicker.WheelPicker;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
-import net.ddns.smartfridge.smartfridgev2.modelo.CustomDatePicker;
-import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
-import net.ddns.smartfridge.smartfridgev2.modelo.Fecha;
-import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
-import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnLongClickListener;
-import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDatePicker;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
+import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomOnDragListener;
+import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomOnLongClickListener;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.text.ParseException;
 import java.util.ArrayList;

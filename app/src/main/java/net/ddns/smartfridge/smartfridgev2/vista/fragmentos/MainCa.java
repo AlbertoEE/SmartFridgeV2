@@ -5,12 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
-import net.ddns.smartfridge.smartfridgev2.vista.IdentificarAlimentoActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.MiNeveraActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 /**
  * A simple {@link Fragment} subclass.

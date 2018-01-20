@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento">
+    tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento">
 
     <ImageButton
         android:id="@+id/ivCadMas"

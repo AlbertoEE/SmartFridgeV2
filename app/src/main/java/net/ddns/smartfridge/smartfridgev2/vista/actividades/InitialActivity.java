@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

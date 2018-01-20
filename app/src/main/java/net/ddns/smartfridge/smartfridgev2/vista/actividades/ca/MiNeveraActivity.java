@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -10,15 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
-import android.view.View;
-import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
-import net.ddns.smartfridge.smartfridgev2.modelo.CustomRecyclerViewAdapter;
-import net.ddns.smartfridge.smartfridgev2.persistencia.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapter;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 public class MiNeveraActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
@@ -36,9 +33,9 @@ public class MiNeveraActivity extends AppCompatActivity {
         alimentoDB = new AlimentoDB(this);
         cursor = alimentoDB.getAlimentos();
 
+
+
         iniciarRecyclerView();
-
-
     }
 
     private void iniciarRecyclerView(){
@@ -48,6 +45,7 @@ public class MiNeveraActivity extends AppCompatActivity {
 
         rvMiNevera.setLayoutManager(layoutManager);
         rvMiNevera.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
     public void detalles(int posicion, Alimento alimento){

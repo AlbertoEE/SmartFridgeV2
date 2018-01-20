@@ -1,28 +1,21 @@
-package net.ddns.smartfridge.smartfridgev2.modelo;
+package net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.escuchadores.CustomOnDragListener;
-import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Alberto on 14/01/2018.
@@ -52,6 +45,7 @@ public class CustomDatePicker {
                 ca.setFechas(fechasConverter(dia, mes, anio), fechasConverter(dayOfMonth, month, year));
                 comprobarFecha();
                 ca.setControlDragAndDrop(1);
+
             }
         }, anio, mes, dia);
         //date= format.parse(diaRecogido+mesRecogido+anioRecogido);

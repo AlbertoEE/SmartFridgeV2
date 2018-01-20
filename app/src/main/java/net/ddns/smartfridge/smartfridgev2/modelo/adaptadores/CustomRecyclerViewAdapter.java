@@ -1,6 +1,5 @@
-package net.ddns.smartfridge.smartfridgev2.modelo;
+package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,17 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.vista.MiNeveraActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.SugerirRecetaActivity;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -65,7 +62,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                         cursor.getString(4),
                         cursor.getString(5),
                         bm));
-
+                cursor.moveToNext();
             }
         }
     }

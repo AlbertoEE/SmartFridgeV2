@@ -1,10 +1,9 @@
-package net.ddns.smartfridge.smartfridgev2.modelo.escuchadores;
+package net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.view.View;
 
-import net.ddns.smartfridge.smartfridgev2.vista.CaducidadAlimento;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 
 /**
  * Created by Alberto on 10/01/2018.

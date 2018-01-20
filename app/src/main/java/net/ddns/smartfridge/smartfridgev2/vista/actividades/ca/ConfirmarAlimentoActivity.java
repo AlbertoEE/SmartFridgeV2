@@ -1,11 +1,10 @@
-package net.ddns.smartfridge.smartfridgev2.vista;
+package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -13,15 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento;
-import net.ddns.smartfridge.smartfridgev2.modelo.Alimento_Codigo;
-import net.ddns.smartfridge.smartfridgev2.modelo.CustomDialogProgressBar;
-import net.ddns.smartfridge.smartfridgev2.modelo.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQLHelper;
 
-import org.w3c.dom.Text;
-
-import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 
 public class ConfirmarAlimentoActivity extends AppCompatActivity {

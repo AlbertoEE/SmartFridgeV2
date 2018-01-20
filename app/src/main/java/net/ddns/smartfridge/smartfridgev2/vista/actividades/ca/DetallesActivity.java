@@ -31,7 +31,6 @@ public class DetallesActivity extends AppCompatActivity {
         wheelPicker = findViewById(R.id.wheelUdsDetalles);
         wheel(wheelPicker);
 
-        miNeveraActivity = new MiNeveraActivity();
         cargarDetallesAlimento();
     }
     public void wheel(WheelPicker wheelPicker){
@@ -74,7 +73,7 @@ public class DetallesActivity extends AppCompatActivity {
 
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
-        tvDiasRestantes.setText(alimento.getDias_caducidad());
-        ivAlimento.setImageBitmap(miNeveraActivity.getImagenDetalles());
+        tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
+        ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
     }
 }

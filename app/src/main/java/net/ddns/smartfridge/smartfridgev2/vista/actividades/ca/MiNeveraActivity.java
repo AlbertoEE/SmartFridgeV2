@@ -51,21 +51,24 @@ public class MiNeveraActivity extends AppCompatActivity {
     }
 
     public void iniciardetalles(int posicion, Alimento alimento){
-        Alimento alimentoSinImagen = new Alimento(
-                        alimento.getNombreAlimento(),
-                        alimento.getCantidad(),
-                        alimento.getDias_caducidad(),
-                        alimento.getFecha_registro(),
-                        alimento.getFecha_caducidad());
         this.imagenDetalles = alimento.getImagen();
+        alimento = new Alimento(
+                alimento.getId(),
+                alimento.getNombreAlimento(),
+                alimento.getCantidad(),
+                alimento.getDias_caducidad(),
+                alimento.getFecha_registro(),
+                alimento.getFecha_caducidad(),
+                null);
+        imagenDetalles = alimento.getImagen();
         Intent intent = new Intent(this, DetallesActivity.class);
-        intent.putExtra("Alimento", (Serializable) alimentoSinImagen);
+        intent.putExtra("Alimento", alimento);
         intent.putExtra("ClasePadre", "MiNeveraActivity");
         startActivity(intent);
     }
 
-    public Bitmap getImagenDetalles(){
-        return this.imagenDetalles;
+    public static Bitmap getImagenDetalles(){
+        return imagenDetalles;
     }
 
     @Override

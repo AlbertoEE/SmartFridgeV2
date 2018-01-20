@@ -41,25 +41,6 @@ public class Alimento implements Serializable {
         this.imagen = imagen;
     }
 
-    /**
-     * Constructor sin imagen para pasar un alimento via intent al activity detalles sin que de el
-     * error de parcelable
-     *
-     * @param nombreAlimento
-     * @param cantidad
-     * @param dias_caducidad
-     * @param fecha_registro
-     * @param fecha_caducidad
-     */
-    public Alimento(String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro,
-                    String fecha_caducidad) {
-        this.nombreAlimento = nombreAlimento;
-        this.cantidad = cantidad;
-        this.fecha_registro = fecha_registro;
-        this.fecha_caducidad = fecha_caducidad;
-        this.dias_caducidad = dias_caducidad;
-    }
-
     //Constructor que recibe como parámetros el nombre y la imagen
     public Alimento (String nombreA, Bitmap bm){
         this.nombreAlimento = nombreA;

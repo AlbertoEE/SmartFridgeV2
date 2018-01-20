@@ -24,7 +24,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
  */
 
 public class Dialogos {
-    private static Context contexto;//El contexto del dialog
+    private Context contexto;//El contexto del dialog
     private static Intent intent;//Para llamar a otras Activitys
     private Alimento acod;//Para crear un objeto que sea un alimento
     //private AlertDialog.Builder builder;//El builder para crear los dialogs
@@ -209,7 +209,7 @@ public class Dialogos {
     }
 
     //Dialog para notificar a SF un alimento nuevo
-    public static void dialogNotificarSF(Alimento alimento){
+    public void dialogNotificarSF(Alimento alimento){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
         builder.setMessage("¿Desea informar a Smart Fridge sobre el nuevo producto?");

@@ -139,7 +139,7 @@ public class Dialogos {
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
     public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual, final String cod_barras){
         String day;//Para poner el mensaje del dialog
-        Log.d("cod", "codigo 9: " + cod_barras);
+        Log.d("manual", "manual: " + manual);
         if (caducidad==1){
             day = DIA;
         } else {
@@ -164,8 +164,9 @@ public class Dialogos {
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
                         if (manual){
-                            Log.d("cod", "codigo 10: " + cod_barras);
+                            Log.d("manual", "manual: " + manual);
                             dialogNotificarSF(alimento, cod_barras);
+                            CaducidadAlimento.setManual(false);
                         } else {
                             intent = new Intent(contexto, InitialActivity.class);
                             contexto.startActivity(intent);
@@ -225,7 +226,7 @@ public class Dialogos {
                 //Enviamos un mensaje a SF. Creamos un Intent implícito
                 Intent compartir = new Intent();
                 compartir.setAction(Intent.ACTION_SEND);
-                compartir.putExtra(Intent.EXTRA_EMAIL, new String[]{"raquel.menciac@gmail.com"});
+                compartir.putExtra(Intent.EXTRA_EMAIL, new String[]{"raquel.menciac@gmail.com", "albertolopezdam@gmail.com"});
                 Log.d("cod", "codigo 12: " + cod_barras);
                 compartir.putExtra(Intent.EXTRA_SUBJECT, "Alimento no reconocido: " + cod_barras);
                 Log.d("cod", "codigo 12: " + cod_barras);
@@ -268,7 +269,7 @@ public class Dialogos {
                 .setPositiveBtnText("Aceptar")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
-                .setGifResource(R.drawable.gif1)
+                .setGifResource(R.drawable.desepsio)
                 .isCancellable(true)
                 //Añadimos los listener
                 .OnPositiveClicked(new FancyGifDialogListener() {

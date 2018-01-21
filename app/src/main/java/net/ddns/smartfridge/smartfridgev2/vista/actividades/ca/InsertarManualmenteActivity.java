@@ -32,12 +32,13 @@ import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO
 public class InsertarManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
-    private Bitmap foto = null;
+    private static Bitmap foto;
     private AutoCompleteTextView etNombreAlimento;
     private final static int COD_CAMARA = 1;
     private Alimento_NuevoDB alimento_nuevoDB;
     private Intent intent;//Para recoger el intent lanzado desde otro activity
     private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
+    boolean manual;
 
 
     @Override
@@ -151,12 +152,20 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         //Al volver de hacer la foto la colocamos en el lugar del botón de la cámara
         if (requestCode == COD_CAMARA && resultCode != RESULT_CANCELED && data != null) {
             //Bundle extras = data.getExtras();
-            this.foto = (Bitmap) data.getExtras().get("data");
+            foto = (Bitmap) data.getExtras().get("data");
             if(foto != null){
                 mostrarFoto();
             } else{
                 Toast.makeText(this, "Error al tomar la foto", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static Bitmap getFoto() {
+        return foto;
+    }
+
+    public static void setFoto(Bitmap foto) {
+        foto = foto;
     }
 }

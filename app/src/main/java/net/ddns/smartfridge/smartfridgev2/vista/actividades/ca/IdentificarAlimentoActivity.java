@@ -65,7 +65,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private Intent i;//Para recoger el intent de otra activity
     private Dialogos dialogos;//Para utilizar la clase con los diálogos
     private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
-
+    boolean manual;
     private CloudVision cvision;//Para crear una instancia y usar los métodos
 
     @Override

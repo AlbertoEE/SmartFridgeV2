@@ -47,11 +47,12 @@ public class CaducidadAlimento extends AppCompatActivity {
     private ImageView dd;
     private String nombreAlimento;//Para almacenar el nomber del alimento
     private Bitmap imagenAlimento;//Para almacenar la imagen del alimento
-    private boolean manual=false;//Será true cuando venga de inserción manual
+    private static boolean manual=false;//Será true cuando venga de inserción manual
     private String cod_barras;//Para el código de barras del alimento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("manual", "manual:" + manual);
         super.onCreate(savedInstanceState);
         intent = getIntent();
         try{
@@ -194,6 +195,10 @@ public class CaducidadAlimento extends AppCompatActivity {
             } catch (NullPointerException e){
                 //Entrará por aquí cuando vengamos de Cloud Vision
                 imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+                if (imagenAlimento==null){
+                    //imagenAlimento = InsertarManualmenteActivity.getFoto();
+                    imagenAlimento = (Bitmap)intent.getExtras().get("FotoBitMap");
+                }
             }
             al = new Alimento(nombreAlimento, unidadesWheel, diasCaducidad, fecha_actual, fecha_final, imagenAlimento);
             //Mostramos el dialog con los datos
@@ -278,5 +283,13 @@ public class CaducidadAlimento extends AppCompatActivity {
         redondo = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         ImageView iv8 = (ImageView)findViewById(R.id.ivCadMas);
         iv8.setImageDrawable(redondo);
+    }
+
+    public static boolean isManual() {
+        return manual;
+    }
+
+    public static void setManual(boolean manual) {
+        manual = manual;
     }
 }

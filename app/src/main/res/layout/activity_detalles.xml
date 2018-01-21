@@ -8,15 +8,15 @@
 
     <ImageView
         android:id="@+id/ivAlimentoDetalles"
-        android:layout_width="132dp"
-        android:layout_height="127dp"
+        android:layout_width="219dp"
+        android:layout_height="221dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -24,16 +24,16 @@
 
     <TextView
         android:id="@+id/tvNombreAlimentoDetalles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="205dp"
+        android:layout_height="71dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivAlimentoDetalles"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toEndOf="@+id/ivAlimentoDetalles"
-        app:layout_constraintTop_toTopOf="@+id/ivAlimentoDetalles" />
+        app:layout_constraintEnd_toEndOf="@+id/ivAlimentoDetalles"
+        app:layout_constraintStart_toStartOf="@+id/ivAlimentoDetalles"
+        app:layout_constraintTop_toBottomOf="@+id/ivAlimentoDetalles" />
 
     <com.aigestudio.wheelpicker.WheelPicker
         android:id="@+id/wheelUdsDetalles"
@@ -43,10 +43,10 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintHorizontal_bias="0.782"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41000003"
+        app:layout_constraintVertical_bias="0.713"
         app:wheel_atmospheric="true"
         app:wheel_curved="true"
         app:wheel_cyclic="false"
@@ -87,39 +87,40 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66999996"
+        app:layout_constraintVertical_bias="0.778"
         app:srcCompat="@drawable/ic_date_range_24dp" />
 
     <TextView
         android:id="@+id/tvFechaCaducidadDetalles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="103dp"
+        android:layout_height="38dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="363dp" />
 
     <TextView
         android:id="@+id/tvDiasRestantesDetalles"
-        android:layout_width="53dp"
+        android:layout_width="244dp"
         android:layout_height="41dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:text="33 días restantes"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibOkDetalles"
-        app:layout_constraintHorizontal_bias="0.751"
+        app:layout_constraintHorizontal_bias="0.657"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.369" />
 
     <ImageButton
         android:id="@+id/ibOkDetalles"

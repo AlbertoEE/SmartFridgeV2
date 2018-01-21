@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="150dp"
     android:layout_margin="8dp">
 
     <android.support.constraint.ConstraintLayout
@@ -12,55 +12,56 @@
 
         <ImageView
             android:id="@+id/ivFotoAlimentoFila"
-            android:layout_width="90dp"
-            android:layout_height="88dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.242"
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/tvNombreAlimentoFila"
             android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="22dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/ivFotoAlimentoFila"
-            app:layout_constraintTop_toTopOf="@+id/ivFotoAlimentoFila" />
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            app:layout_constraintEnd_toEndOf="@+id/ivFotoAlimentoFila"
+            app:layout_constraintHorizontal_bias="0.61"
+            app:layout_constraintStart_toStartOf="@+id/ivFotoAlimentoFila"
+            app:layout_constraintTop_toBottomOf="@+id/ivFotoAlimentoFila" />
 
         <TextView
             android:id="@+id/tvUnidadesFila"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginStart="16dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/ivFotoAlimentoFila"
-            app:layout_constraintStart_toEndOf="@+id/ivFotoAlimentoFila" />
-
-        <TextView
-            android:id="@+id/tvFechaCaducidadFila"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="144dp"
-            android:layout_marginTop="4dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/ivFotoAlimentoFila"
+            android:layout_width="25dp"
+            android:layout_height="21dp"
+            android:background="#8888"
+            android:text="50"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@android:color/holo_orange_dark"
+            app:layout_constraintEnd_toEndOf="@+id/ivFotoAlimentoFila"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/ivFotoAlimentoFila"
             app:layout_constraintTop_toTopOf="@+id/ivFotoAlimentoFila" />
 
         <TextView
             android:id="@+id/tvDiasCaducidadFila"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginStart="144dp"
-            android:text="TextView"
+            android:layout_width="36dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="8dp"
+            android:text="9999 días"
+            android:background="#8888"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/ivFotoAlimentoFila"
-            app:layout_constraintStart_toEndOf="@+id/ivFotoAlimentoFila" />
+            app:layout_constraintEnd_toEndOf="@+id/ivFotoAlimentoFila"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/ivFotoAlimentoFila" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

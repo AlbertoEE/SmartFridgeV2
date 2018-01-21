@@ -73,8 +73,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     private void llenarFila(CustomRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setText(String.valueOf(alimentos.get(position).getCantidad()));
-        holder.tvDiasCaducidad.setText(String.valueOf(alimentos.get(position).getDias_caducidad()));
-        holder.tvFechaCaducidad.setText(formatearFecha(alimentos.get(position).getFecha_caducidad()));
+        holder.tvDiasCaducidad.setText(String.valueOf(alimentos.get(position).getDias_caducidad()) + "\n días");
 
         if (alimentos.get(position).getImagen() != null) {
             try {
@@ -93,11 +92,11 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     private String formatearFecha(String fecha) {
         String fechaFinal;
 
-        fechaFinal = fecha.substring(0, 2) + "/";
+        /*fechaFinal = fecha.substring(0, 2) + "/";
         fechaFinal += fecha.substring(2, 4) + "/";
-        fechaFinal += fecha.substring(4, 8);
+        fechaFinal += fecha.substring(4, 8);*/
 
-        return fechaFinal;
+        return fecha;
     }
 
     public void filter(String text) {
@@ -166,7 +165,6 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
             tvNombre = itemView.findViewById(R.id.tvNombreAlimentoFila);
             tvUnidades = itemView.findViewById(R.id.tvUnidadesFila);
             tvDiasCaducidad = itemView.findViewById(R.id.tvDiasCaducidadFila);
-            tvFechaCaducidad = itemView.findViewById(R.id.tvFechaCaducidadFila);
             ivFotoAlimento = itemView.findViewById(R.id.ivFotoAlimentoFila);
         }
     }

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -45,7 +46,7 @@ public class MiNeveraActivity extends AppCompatActivity {
 
     private void iniciarRecyclerView(){
         rvMiNevera = (RecyclerView)findViewById(R.id.rvMiNevera);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerViewAdapter = new CustomRecyclerViewAdapter(cursor, this);
 
         rvMiNevera.setLayoutManager(layoutManager);

@@ -21,6 +21,8 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Alberto on 17/01/2018.
@@ -42,7 +44,8 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         Log.d("RAQUEL", "CustomRecyclerViewAdapter: " + Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 
-    private void cargarArray() {
+    public void cargarArray() {
+        alimentos.clear();
         if (cursor.moveToFirst()) {
             byte[] byteArrayFoto;
             Bitmap bm = null;
@@ -112,8 +115,17 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         notifyDataSetChanged();
     }
 
-    public void sortRecyclerView(){
+    public void sortRecyclerView(final int az){
+        Collections.sort(alimentos, new Comparator<Alimento>() {
+            public int compare(Alimento v1, Alimento v2) {
+                return v1.getNombreAlimento().compareToIgnoreCase(v2.getNombreAlimento()) * az;
+            }
+        });
+        notifyDataSetChanged();
+    }
 
+    public void setCursor(Cursor cursor){
+        this.cursor = cursor;
     }
 
     @Override

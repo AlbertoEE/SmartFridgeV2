@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.support.v7.widget.SearchView;
+import android.view.MenuItem;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
@@ -28,6 +29,8 @@ public class MiNeveraActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private SearchView searchView;
     private static Bitmap imagenDetalles;
+    private static final int DETALLES_ACTIVITY = 16;
+    private int sort = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class MiNeveraActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
         intent.putExtra("ClasePadre", "MiNeveraActivity");
-        startActivity(intent);
+        startActivityForResult(intent, DETALLES_ACTIVITY);
     }
 
     public static Bitmap getImagenDetalles(){
@@ -97,4 +100,34 @@ public class MiNeveraActivity extends AppCompatActivity {
         });
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == DETALLES_ACTIVITY ){
+                cursor = alimentoDB.getAlimentos();
+                recyclerViewAdapter.setCursor(cursor);
+                recyclerViewAdapter.cargarArray();
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menuSort:
+                if(sort == 1){
+                    sort = -1;
+                } else if(sort == -1){
+                    sort = 1;
+                }
+                recyclerViewAdapter.sortRecyclerView(sort);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

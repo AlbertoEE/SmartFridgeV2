@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -77,7 +78,7 @@ public class Dialogos {
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
-                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnBackground("#1CACCC")
                 .setPositiveBtnText("Aceptar")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
@@ -113,7 +114,7 @@ public class Dialogos {
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
-                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnBackground("#1CACCC")
                 .setPositiveBtnText("Aceptar")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
@@ -154,7 +155,7 @@ public class Dialogos {
                 .setTitle("CONFIRMAR CADUCIDAD Y CANTIDAD")
                 .setMessage("El alimento caducará en: " + caducidad + day + ".\nLas unidades seleccionadas son: " + udsSeleccionadas + ", ¿Es correcto?")
                 .setNegativeBtnText("Cancelar")
-                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnBackground("#1CACCC")
                 .setPositiveBtnText("Aceptar")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 .setGifResource(R.drawable.gif3)
@@ -194,7 +195,7 @@ public class Dialogos {
                 .setTitle("¡NO SE HA SELECCIONADO LA CADUCIDAD!")
                 .setMessage("Por favor, selecciona una fecha de caducidad para este alimento.")
                 .setNegativeBtnText("Cancelar")
-                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnBackground("#1CACCC")
                 .setPositiveBtnText("Aceptar")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 .setGifResource(R.drawable.gif4)
@@ -268,7 +269,7 @@ public class Dialogos {
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
-                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnBackground("#1CACCC")
                 .setPositiveBtnText("Aceptar")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
@@ -291,7 +292,7 @@ public class Dialogos {
     }
 
     //Dialog para cuando se van a eliminar todas las uds de un alimento
-    public void dialogCeroUnidades(final View vista, final int id, final int position, final Context contexto){
+    public void dialogCeroUnidades(final View vista, final int id, final int position, final Context contexto, final Bitmap foto, final String nombre){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡Cuidado!")
@@ -300,7 +301,7 @@ public class Dialogos {
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("No, me he equivocado")
                 //Asignamos el color de fondo del boton positivo
-                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnBackground("#1CACCC")
                 .setPositiveBtnText("Dale, sin miedo")
                 .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
@@ -311,7 +312,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //Mostramos el SnackBar
-                        mostrarSnack(vista, id, position, contexto);
+                        mostrarSnack(vista, id, position, contexto, foto, nombre);
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
@@ -323,7 +324,7 @@ public class Dialogos {
                 .build();
     }
     //SnackBar para deshacer la eliminación del elimento
-    public static void mostrarSnack(View vista, final int id, int position, final Context contexto){
+    public static void mostrarSnack(View vista, final int id, int position, final Context contexto, final Bitmap foto, final String nombre){
         //Creamos el SnackBar con el texto que indiquemos
         Snackbar sb = Snackbar.make(vista, "Eliminando alimento", Snackbar.LENGTH_SHORT);
         //La opción que va a tener es la de deshacer. Programamos el listener
@@ -352,6 +353,7 @@ public class Dialogos {
                          /*   cursor = gbp.getBocatas();
                             ba.setCursor(cursor);
                             ba.notifyItemRemoved(position);*/
+                            dialogAnadirLista(contexto, foto, nombre);
                             break;
                         }catch (SQLException e){
                             Toast.makeText(contexto, "Error al eliminar el elemento. Por favor, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();
@@ -359,5 +361,39 @@ public class Dialogos {
                 }
             }
         });
+    }
+
+    //Dialog para cuando se van a eliminar todas las uds de un alimento
+    public static void dialogAnadirLista(final Context contexto, Bitmap foto, String nombre){
+        new FancyGifDialog.Builder(clase)
+                //Ponemos el título
+                .setTitle("Agregar a MiLista")
+                //Ponemos el mensaje
+                .setMessage("¿Quieres aprovechar y agregar este producto a MiLista?")
+                //Asignamos el botón de negativo
+                .setNegativeBtnText("No, gracias")
+                //Asignamos el color de fondo del boton positivo
+                .setPositiveBtnBackground("#1CACCC")
+                .setPositiveBtnText("Sí, por favor")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                //Asignamos el gif
+                .setGifResource(R.drawable.gif6)
+                .isCancellable(true)
+                //Añadimos los listener
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //Llamamos al método que agrega el elemento en la lista de la compra
+                        //agregarMiLista(foto, nombre);
+                        Toast.makeText(contexto, "Se ha agregado el producto a MiLista", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //No hacemos nada
+                    }
+                })
+                .build();
     }
 }

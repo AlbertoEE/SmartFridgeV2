@@ -52,6 +52,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
                     try{
                         diasParaCaducidad = fecha.fechaDias(fechaCaducidad, this);
                     } catch (ParseException e){
+                        //Lanz
                         Log.d("servicio", "alimento caducado");
                     }
 

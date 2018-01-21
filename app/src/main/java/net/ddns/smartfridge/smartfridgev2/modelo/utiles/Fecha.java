@@ -56,7 +56,7 @@ public class Fecha {
             fechaInicial = dateFormat.parse(dia_hoy);
             //Log.d("fecha", "dia hoy 2: " + dia_hoy);
             fechaFinal=dateFormat.parse(fechaCalendarioMas);
-            Toast.makeText(context, "fechaCalendarioMas: " + fechaCalendarioMas, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "fechaCalendarioMas: " + fechaCalendarioMas, Toast.LENGTH_SHORT).show();
             //Hacemos la operación y lo pasamos de milisegundos a dias
             diasParaCaducidad =(int) ((fechaFinal.getTime()-fechaInicial.getTime())/MILISEGUNDOS);
         } catch (NullPointerException e){

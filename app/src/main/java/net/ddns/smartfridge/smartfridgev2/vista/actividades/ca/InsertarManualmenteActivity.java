@@ -38,7 +38,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     private Alimento_NuevoDB alimento_nuevoDB;
     private Intent intent;//Para recoger el intent lanzado desde otro activity
     private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
-    boolean manual;
+
 
 
     @Override

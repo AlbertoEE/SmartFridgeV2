@@ -103,7 +103,6 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 imagen_alimento.setImageBitmap(al.getImagen());
                 texto_alimento.setText(al.getNomAlimento());
                 texto_alimento.setSelected(true);//Para las animaciones de los textos
-                CaducidadAlimento.setManual(false);
             } else {
                 Intent intent = new Intent(getApplicationContext(), IdentificarAlimentoActivity.class);
                 intent.putExtra("CODIGO_BARRAS", cod_barrras);
@@ -112,7 +111,6 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 Log.d("cod", "codigo 1: " + cod_barrras);
                 //dialogos.dialogNoCodBarras();
                 finishAffinity();
-                CaducidadAlimento.setManual(true);
             }
             //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();h
             try {

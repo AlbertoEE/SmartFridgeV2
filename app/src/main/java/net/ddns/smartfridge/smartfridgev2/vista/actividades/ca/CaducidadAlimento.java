@@ -52,7 +52,7 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("manual", "manual:" + manual);
+        Log.d("manual", "manual inicion onCreate Caducidad Alimento:" + manual);
         super.onCreate(savedInstanceState);
         intent = getIntent();
         try{
@@ -79,10 +79,14 @@ public class CaducidadAlimento extends AppCompatActivity {
             nombreAlimento = String.valueOf(intent.getExtras().get("NombreAlimento"));
             imagenAlimento = (Bitmap) intent.getExtras().get("FotoBitMap");
             dd.setImageBitmap(imagenAlimento);
-            manual = true;
+            if (cod_barras!=null){
+                manual = true;
+            }
         }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
+            manual = false;
             //Si venimos de confirmar alimento debemos ver si venimos desde el scaner o desde el Cloud Vision
             //Intentamos coger el objeto
+
             ac = ConfirmarAlimentoActivity.getAlimento();
             if (ac == null){
                 //Si es null, venimos del cloud vision
@@ -285,11 +289,4 @@ public class CaducidadAlimento extends AppCompatActivity {
         iv8.setImageDrawable(redondo);
     }
 
-    public static boolean isManual() {
-        return manual;
-    }
-
-    public static void setManual(boolean manual) {
-        manual = manual;
-    }
 }

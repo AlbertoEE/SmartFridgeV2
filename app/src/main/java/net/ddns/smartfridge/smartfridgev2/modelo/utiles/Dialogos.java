@@ -5,8 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
@@ -32,6 +35,7 @@ public class Dialogos {
     private static Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
     private static final String DIA = " día";//Cte para el mensaje del dialog
     private static final String DIAS = " días";//Cte para el mensaje del dialog
+    private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
 
     public Dialogos(Context context, Activity clase){
         this.contexto=context;
@@ -166,7 +170,6 @@ public class Dialogos {
                         if (manual){
                             Log.d("manual", "manual: " + manual);
                             dialogNotificarSF(alimento, cod_barras);
-                            CaducidadAlimento.setManual(false);
                         } else {
                             intent = new Intent(contexto, InitialActivity.class);
                             contexto.startActivity(intent);
@@ -275,13 +278,7 @@ public class Dialogos {
                 .OnPositiveClicked(new FancyGifDialogListener() {
                     @Override
                     public void OnClick() {
-                        /*
-                        intent = new Intent(contexto, InitialActivity.class);
-                        //contexto.startActivity(intent);
-                        IdentificarAlimentoActivity ca = (IdentificarAlimentoActivity) clase;
-                        //Finalizamos el activity
-                        ca.finish();
-                        ca.finishAffinity();*/
+                       //No codificamos
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
@@ -291,5 +288,76 @@ public class Dialogos {
                     }
                 })
                 .build();
+    }
+
+    //Dialog para cuando se van a eliminar todas las uds de un alimento
+    public void dialogCeroUnidades(final View vista, final int id, final int position, final Context contexto){
+        new FancyGifDialog.Builder(clase)
+                //Ponemos el título
+                .setTitle("¡Cuidado!")
+                //Ponemos el mensaje
+                .setMessage("Si dejas las unidades a 0, tu Smart Fridge, que es muy listo, borrará completamente el elemento de tu nevera. ¿Estás segur@?")
+                //Asignamos el botón de negativo
+                .setNegativeBtnText("No, me he equivocado")
+                //Asignamos el color de fondo del boton positivo
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Dale, sin miedo")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                //Asignamos el gif
+                .setGifResource(R.drawable.gif5)
+                .isCancellable(true)
+                //Añadimos los listener
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //Mostramos el SnackBar
+                        mostrarSnack(vista, id, position, contexto);
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //No hacemos nada
+                    }
+                })
+                .build();
+    }
+    //SnackBar para deshacer la eliminación del elimento
+    public static void mostrarSnack(View vista, final int id, int position, final Context contexto){
+        //Creamos el SnackBar con el texto que indiquemos
+        Snackbar sb = Snackbar.make(vista, "Eliminando alimento", Snackbar.LENGTH_SHORT);
+        //La opción que va a tener es la de deshacer. Programamos el listener
+        sb.setAction("Deshacer", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //No hacemos nada
+            }
+        });
+        sb.show();
+        //Programamos el método callback para cuando desaparezca
+        sb.addCallback(new Snackbar.Callback(){
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                switch (event) {
+                    //Si pulsamos el botón de deshacer
+                    case Snackbar.Callback.DISMISS_EVENT_ACTION:
+                        Toast.makeText(contexto, "Se ha cancelado la eliminación del alimento", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        try {
+                            //Si no se pulsa deshacer, eliminamos el alimento y refrescamos la lista
+                            alimentoDB.borrarAlimento(id);
+                            Toast.makeText(contexto, "Elemento eliminado", Toast.LENGTH_SHORT).show();
+                            //Aquí tienes que actualizar el recyclerview
+                         /*   cursor = gbp.getBocatas();
+                            ba.setCursor(cursor);
+                            ba.notifyItemRemoved(position);*/
+                            break;
+                        }catch (SQLException e){
+                            Toast.makeText(contexto, "Error al eliminar el elemento. Por favor, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();
+                        }
+                }
+            }
+        });
     }
 }

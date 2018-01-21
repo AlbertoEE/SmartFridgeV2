@@ -43,6 +43,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        foto = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar_manualmente);
         alimento_nuevoDB = new Alimento_NuevoDB(this);

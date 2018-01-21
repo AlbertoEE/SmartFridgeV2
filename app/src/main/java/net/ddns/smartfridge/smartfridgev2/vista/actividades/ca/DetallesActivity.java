@@ -68,7 +68,6 @@ public class DetallesActivity extends AppCompatActivity {
 
     private void cargarDetallesAlimento(){
 
-
         tvNombreAlimento = (TextView)findViewById(R.id.tvNombreAlimentoDetalles);
         tvFechaCaducidad = (TextView)findViewById(R.id.tvFechaCaducidadDetalles);
         tvDiasRestantes = (TextView)findViewById(R.id.tvDiasRestantesDetalles);

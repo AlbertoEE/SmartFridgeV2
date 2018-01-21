@@ -39,11 +39,17 @@ public class AlimentoDB {
 
     //Metodo para insertar un nuevo objeto de tipo Alimento en la bbdd
     public void guardarAlimento(Alimento alimento){
+        byte[] blob;
         ContentValues cv = new ContentValues();
         Bitmap bitmap = alimento.getImagen();
         ByteArrayOutputStream baos = new ByteArrayOutputStream(20480);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 , baos);
-        byte[] blob = baos.toByteArray();
+        if(bitmap != null){
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , baos);
+            blob = baos.toByteArray();
+        }else{
+            blob = null;
+        }
+
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[1], alimento.getNombreAlimento());
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[2], alimento.getCantidad());
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[3], alimento.getDias_caducidad());

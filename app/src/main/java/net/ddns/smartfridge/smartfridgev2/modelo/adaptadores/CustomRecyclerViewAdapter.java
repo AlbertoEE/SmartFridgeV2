@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +34,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     private MiNeveraActivity activity;
     private ArrayList<Alimento> alimentos;
     private ArrayList<Alimento> alimentosCopia;
+    private Fecha fecha;
 
     public CustomRecyclerViewAdapter(Cursor cursor, MiNeveraActivity activity) {
         this.cursor = cursor;
@@ -41,6 +43,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         cargarArray();
         alimentosCopia = new ArrayList<>();
         alimentosCopia.addAll(alimentos);
+        fecha = new Fecha();
         Log.d("RAQUEL", "CustomRecyclerViewAdapter: " + Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 
@@ -48,23 +51,34 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         alimentos.clear();
         if (cursor.moveToFirst()) {
             byte[] byteArrayFoto;
-            Bitmap bm = null;
+            Bitmap bm;
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             for (int i = 0; i < cursor.getCount(); i++) {
                 byteArrayFoto = cursor.getBlob(6);
                 if (byteArrayFoto != null) {
+                    Log.d("PENE", "cargarArray: PENE");
                     byteArrayFoto = cursor.getBlob(6);
                     bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
                     bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    alimentos.add(new Alimento(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            bm));
+                }else{
+                    alimentos.add(new Alimento(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            null));
                 }
-                alimentos.add(new Alimento(
-                        cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getInt(2),
-                        cursor.getInt(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        bm));
+
                 cursor.moveToNext();
             }
         }
@@ -73,12 +87,16 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     private void llenarFila(CustomRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setText(String.valueOf(alimentos.get(position).getCantidad()));
-        holder.tvDiasCaducidad.setText(String.valueOf(alimentos.get(position).getDias_caducidad()) + "\n días");
-
+        Log.d("hola?", "llenarFila: "+ alimentos.get(position).getFecha_caducidad());
+        holder.tvDiasCaducidad.setText(fecha.fechaDias(alimentos.get(position).getFecha_caducidad(), activity.getApplicationContext()) + "\n días");
+        Log.d("ImagenRecycler", "llenarFila: " + alimentos.get(position).getImagen());
         if (alimentos.get(position).getImagen() != null) {
+            Log.d("alfa", "llenarFila: peaeaeaeae");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            alimentos.get(position).getImagen().compress(Bitmap.CompressFormat.PNG, 100, stream);
             try {
                 Glide.with(this.activity.getApplicationContext())
-                        .load(alimentos.get(position).getImagen())
+                        .load(stream.toByteArray())
                         .asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)

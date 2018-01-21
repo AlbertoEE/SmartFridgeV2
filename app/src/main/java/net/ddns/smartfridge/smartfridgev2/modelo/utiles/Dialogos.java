@@ -291,7 +291,7 @@ public class Dialogos {
     }
 
     //Dialog para cuando se van a eliminar todas las uds de un alimento
-    public void dialogCeroUnidades(final View vista, final int id, final int position, final Context contexto){
+    public void dialogCeroUnidades(final View vista, final int id, final int position, final Context contexto, final Activity activity){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡Cuidado!")
@@ -311,7 +311,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //Mostramos el SnackBar
-                        mostrarSnack(vista, id, position, contexto);
+                        mostrarSnack(vista, id, position, contexto, activity);
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
@@ -323,7 +323,7 @@ public class Dialogos {
                 .build();
     }
     //SnackBar para deshacer la eliminación del elimento
-    public static void mostrarSnack(View vista, final int id, int position, final Context contexto){
+    public static void mostrarSnack(View vista, final int id, int position, final Context contexto, Activity activity){
         //Creamos el SnackBar con el texto que indiquemos
         Snackbar sb = Snackbar.make(vista, "Eliminando alimento", Snackbar.LENGTH_SHORT);
         //La opción que va a tener es la de deshacer. Programamos el listener
@@ -352,6 +352,7 @@ public class Dialogos {
                          /*   cursor = gbp.getBocatas();
                             ba.setCursor(cursor);
                             ba.notifyItemRemoved(position);*/
+
                             break;
                         }catch (SQLException e){
                             Toast.makeText(contexto, "Error al eliminar el elemento. Por favor, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();

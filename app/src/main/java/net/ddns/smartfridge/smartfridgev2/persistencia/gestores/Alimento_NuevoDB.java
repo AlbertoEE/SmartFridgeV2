@@ -1,9 +1,12 @@
 package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
 /**
@@ -35,5 +38,13 @@ public class Alimento_NuevoDB {
         //El resultado se almacena en un cursor
         Cursor cursor = sqe.rawQuery(QUERYBBDDCOMPLETA, new String[]{});
         return cursor;
+    }
+
+    public void guardarAlimento(Alimento alimento){
+        ContentValues cv = new ContentValues();
+
+        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[1], alimento.getNombreAlimento());
+        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[2], alimento.getFecha_registro());
+        sql.insert(MiNeveraDB.TABLA_ALIMENTOS_CREADOS, null, cv);
     }
 }

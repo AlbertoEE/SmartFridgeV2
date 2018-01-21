@@ -19,6 +19,7 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
@@ -165,7 +166,9 @@ public class Dialogos {
                     public void OnClick() {
                         //Metodo para almacenar los datos en la nevera local
                         AlimentoDB adb = new AlimentoDB(contexto);
+                        Alimento_NuevoDB andb = new Alimento_NuevoDB(contexto);
                         adb.guardarAlimento(alimento);
+                        andb.guardarAlimento(alimento);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
                         if (manual){

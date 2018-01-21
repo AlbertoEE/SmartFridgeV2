@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.support.v7.widget.SearchView;
@@ -35,6 +36,7 @@ public class MiNeveraActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        imagenDetalles = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_nevera);
 
@@ -54,7 +56,11 @@ public class MiNeveraActivity extends AppCompatActivity {
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    public void iniciardetalles(int posicion, Alimento alimento){
+    public static void setImagenDetalles(Bitmap bitmap) {
+        imagenDetalles = bitmap;
+    }
+
+    public void iniciardetalles(Alimento alimento){
         this.imagenDetalles = alimento.getImagen();
         alimento = new Alimento(
                 alimento.getId(),
@@ -64,7 +70,7 @@ public class MiNeveraActivity extends AppCompatActivity {
                 alimento.getFecha_registro(),
                 alimento.getFecha_caducidad(),
                 null);
-        imagenDetalles = alimento.getImagen();
+        Log.d("peneeee", "iniciardetalles: " + imagenDetalles);
         Intent intent = new Intent(this, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
         intent.putExtra("ClasePadre", "MiNeveraActivity");

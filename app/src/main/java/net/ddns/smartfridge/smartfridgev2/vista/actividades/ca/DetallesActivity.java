@@ -77,6 +77,7 @@ public class DetallesActivity extends AppCompatActivity {
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
         tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
         ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
+        MiNeveraActivity.setImagenDetalles(null);
 
     }
 

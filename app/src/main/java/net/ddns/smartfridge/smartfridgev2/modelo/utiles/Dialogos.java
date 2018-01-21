@@ -69,7 +69,7 @@ public class Dialogos {
                 //Ponemos el título
                 .setTitle("Ups...")
                 //Ponemos el mensaje
-                .setMessage("¡Vaya! El producto no es correcto.\\nPor favor, vuelve a intentar localizar tu producto.")
+                .setMessage("¡Vaya! El producto no es correcto.\nPor favor, vuelve a intentar localizar tu producto.")
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
@@ -139,7 +139,7 @@ public class Dialogos {
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
     public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual, final String cod_barras){
         String day;//Para poner el mensaje del dialog
-
+        Log.d("cod", "codigo 9: " + cod_barras);
         if (caducidad==1){
             day = DIA;
         } else {
@@ -164,6 +164,7 @@ public class Dialogos {
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
                         if (manual){
+                            Log.d("cod", "codigo 10: " + cod_barras);
                             dialogNotificarSF(alimento, cod_barras);
                         } else {
                             intent = new Intent(contexto, InitialActivity.class);
@@ -211,6 +212,7 @@ public class Dialogos {
 
     //Dialog para notificar a SF un alimento nuevo
     public void dialogNotificarSF(final Alimento alimento, final String cod_barras){
+        Log.d("cod", "codigo 11: " + cod_barras);
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
         builder.setMessage("¿Desea informar a Smart Fridge sobre el nuevo producto?");
@@ -224,7 +226,9 @@ public class Dialogos {
                 Intent compartir = new Intent();
                 compartir.setAction(Intent.ACTION_SEND);
                 compartir.putExtra(Intent.EXTRA_EMAIL, new String[]{"raquel.menciac@gmail.com"});
+                Log.d("cod", "codigo 12: " + cod_barras);
                 compartir.putExtra(Intent.EXTRA_SUBJECT, "Alimento no reconocido: " + cod_barras);
+                Log.d("cod", "codigo 12: " + cod_barras);
                 compartir.putExtra(Intent.EXTRA_TEXT, "Hola,\nEl siguiente código de barras no ha sido reconido por el Smart Fridge: " + cod_barras +
                 ".\nEl nombre del producto es: " + alimento.getNombreAlimento() + "\nGracias.");
                 compartir.setType("*/*");
@@ -256,7 +260,7 @@ public class Dialogos {
                 //Ponemos el título
                 .setTitle("¡Vaya, que pena!")
                 //Ponemos el mensaje
-                .setMessage("No hemos encontrado tu producto en nuestra base de datos.\\nPor favor, inténtalo a través de una fotografía o introduce los datos manualmente.")
+                .setMessage("No hemos encontrado tu producto en nuestra base de datos.\nPor favor, inténtalo a través de una fotografía o introduce los datos manualmente.")
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
@@ -265,17 +269,18 @@ public class Dialogos {
                 .setNegativeBtnBackground("#FFA9A7A8")
                 //Asignamos el gif
                 .setGifResource(R.drawable.gif1)
-                .isCancellable(false)
+                .isCancellable(true)
                 //Añadimos los listener
                 .OnPositiveClicked(new FancyGifDialogListener() {
                     @Override
                     public void OnClick() {
+                        /*
                         intent = new Intent(contexto, InitialActivity.class);
                         //contexto.startActivity(intent);
                         IdentificarAlimentoActivity ca = (IdentificarAlimentoActivity) clase;
                         //Finalizamos el activity
                         ca.finish();
-                        ca.finishAffinity();
+                        ca.finishAffinity();*/
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {

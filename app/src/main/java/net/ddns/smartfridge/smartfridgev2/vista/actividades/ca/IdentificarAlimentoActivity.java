@@ -53,13 +53,10 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private Bitmap imagenCamara = null;//Para almacenar la imagen
     private static final String API_KEY = "AIzaSyDnjuzwlVTlgcubURXS3xhFwmuKBEvxGGQ";
     private GestorAlmacenamientoInterno gai;//Para almacenar la foto
-    private static final String NOMBRE_FOTO_CAMARA = "imagenVision.png";//Nombre de la foto creada
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
-
     private CustomDialogProgressBar customDialogProgressBar;//Para el progressbar personalizado
     private static final String HEADER = "X-Android-Package";//Para general el header de la solicitud http
     private static final String CERT = "X-Android-Cert";//Para el certificado en la validación
-
     private Bitmap imagenEscalada;//Para escalar el bitmap de la foto hecha por la cámara
     private static final int NUM_RESULTADOS = 10;//Para el número máximo de resultados que nos da el API Vision
     private static final String[] FEATURES = {"LABEL_DETECTION", "CROP_HINTS", "DOCUMENT_TEXT_DETECTION", "FACE_DETECTION", "IMAGE_PROPERTIES", "LANDMARK_DETECTION",
@@ -67,7 +64,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static Feature labelDetection;//Para darle las características del label_detection
     private Intent i;//Para recoger el intent de otra activity
     private Dialogos dialogos;//Para utilizar la clase con los diálogos
-
+    private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
 
     private CloudVision cvision;//Para crear una instancia y usar los métodos
 
@@ -83,6 +80,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             i = getIntent();
             if (i.getStringExtra("ClasePadre").equals("ConfirmarAlmientoActivity")) {
                 dialogos.dialogNoCodBarras();
+                codigo_barras = i.getStringExtra("CODIGO_BARRAS");
+                Log.d("cod", "codigo 2: " + codigo_barras);
             }
         } catch (NullPointerException e){
             //No hacemos nada
@@ -186,7 +185,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
     //Abre el intent de la inserción manual de alimentos
     public void insertarManualmenteButton(View view) {
+        Log.d("cod", "codigo 3_A: " + codigo_barras);
         Intent intent = new Intent(this, InsertarManualmenteActivity.class);
+       // if(codigo_barras!=null){
+            intent.putExtra("CODIGO_BARRAS", codigo_barras);
+            Log.d("cod", "codigo 3: " + codigo_barras);
+        //}
         startActivity(intent);
     }
 

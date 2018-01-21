@@ -54,6 +54,12 @@ public class CaducidadAlimento extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         intent = getIntent();
+        try{
+            cod_barras = intent.getStringExtra("CODIGO_BARRAS");
+            Log.d("cod", "codigo 6: " + cod_barras);
+        } catch (NullPointerException e){
+            //No hacemos nada
+        }
         customDatePicker = new CustomDatePicker(this, this);
 
         setContentView(R.layout.activity_caducidad_alimento);
@@ -174,6 +180,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             al = new Alimento(nombreAlimento, unidadesWheel, tiempo_Caducidad, fecha_actual, fecha_caducidad_alimento, imagenAlimento);
             //Mostramos el dialog con los datos
             dialogos.dialogCaducidad(unidadesWheel, tiempo_Caducidad, al, manual, cod_barras);
+            Log.d("cod", "codigo 7: " + cod_barras);
         } else if (controlDragAndDrop==1){
             //Significa que se ha seleccionado la caducidad por medio del calendario
             //Metemos en la variable los dias que faltan para la caducidad
@@ -191,6 +198,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             al = new Alimento(nombreAlimento, unidadesWheel, diasCaducidad, fecha_actual, fecha_final, imagenAlimento);
             //Mostramos el dialog con los datos
             dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al, manual, cod_barras);
+            Log.d("cod", "codigo 8: " + cod_barras);
         } else if (controlDragAndDrop==0){
             //Programar
             dialogos.dialogNoCaducidad();

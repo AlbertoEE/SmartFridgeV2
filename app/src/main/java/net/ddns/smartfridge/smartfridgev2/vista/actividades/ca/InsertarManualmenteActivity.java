@@ -36,6 +36,8 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     private AutoCompleteTextView etNombreAlimento;
     private final static int COD_CAMARA = 1;
     private Alimento_NuevoDB alimento_nuevoDB;
+    private Intent intent;//Para recoger el intent lanzado desde otro activity
+    private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
 
 
     @Override
@@ -48,8 +50,13 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         cargarMarquee();
         etNombreAlimento = (AutoCompleteTextView) findViewById(R.id.etNombreAlimento);
         etNombreAlimento.setAdapter(adapter);
-        Log.d("RAQUEL", "CustomRecyclerViewAdapter: " + Environment.getExternalStorageDirectory().getAbsolutePath());
-        Log.d("RAQUEL", "CustomRecyclerViewAdapter: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
+        try{
+            intent = getIntent();
+            codigo_barras = intent.getStringExtra("CODIGO_BARRAS");
+            Log.d("cod", "codigo 4: " + codigo_barras);
+        } catch (NullPointerException e){
+            //No hacemos nada
+        }
     }
 
     private void cargarMarquee(){
@@ -98,6 +105,8 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
             intent.putExtra("FotoBitMap", foto);
             intent.putExtra("ClasePadre", "InsertarManualmenteActivity");
             intent.putExtra("NombreAlimento" , etNombreAlimento.getText());
+            intent.putExtra("CODIGO_BARRAS", codigo_barras);
+            Log.d("cod", "codigo 5: " + codigo_barras);
             startActivity(intent);
             //finish();
         }else{

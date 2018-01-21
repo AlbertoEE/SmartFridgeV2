@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -106,6 +107,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 intent.putExtra("CODIGO_BARRAS", cod_barrras);
                 intent.putExtra("ClasePadre", "ConfirmarAlmientoActivity");
                 startActivity(intent);
+                Log.d("cod", "codigo 1: " + cod_barrras);
                 //dialogos.dialogNoCodBarras();
                 finishAffinity();
             }

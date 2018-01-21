@@ -295,12 +295,12 @@ public class Dialogos {
     }
 
     //Dialog para cuando se van a eliminar todas las uds de un alimento
-    public void dialogCeroUnidades(final View vista, final int id, final int position, final Context contexto, final Bitmap foto, final String nombre){
+    public void dialogCeroUnidades(final View vista, final int id, final Context contexto, final Bitmap foto, final String nombre){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡Cuidado!")
                 //Ponemos el mensaje
-                .setMessage("Si dejas las unidades a 0, tu Smart Fridge, que es muy listo, borrará completamente el elemento de tu nevera. ¿Estás segur@?")
+                .setMessage("¿Estás segur@ de que quieres eliminar este producto?")
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("No, me he equivocado")
                 //Asignamos el color de fondo del boton positivo
@@ -315,7 +315,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //Mostramos el SnackBar
-                        mostrarSnack(vista, id, position, contexto, foto, nombre);
+                        mostrarSnack(vista, id, contexto, foto, nombre);
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
@@ -327,7 +327,7 @@ public class Dialogos {
                 .build();
     }
     //SnackBar para deshacer la eliminación del elimento
-    public static void mostrarSnack(View vista, final int id, int position, final Context contexto, final Bitmap foto, final String nombre){
+    public static void mostrarSnack(View vista, final int id, final Context contexto, final Bitmap foto, final String nombre){
         //Creamos el SnackBar con el texto que indiquemos
         Snackbar sb = Snackbar.make(vista, "Eliminando alimento", Snackbar.LENGTH_SHORT);
         //La opción que va a tener es la de deshacer. Programamos el listener

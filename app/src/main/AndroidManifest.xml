@@ -49,7 +49,11 @@
             />
         </provider>
 
-        <activity android:name=".vista.actividades.ca.DetallesActivity"></activity>
+        <activity android:name=".vista.actividades.ca.DetallesActivity" />
+
+        <service
+            android:name=".modelo.servicios.ComprobarCaducidadIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

@@ -1,15 +1,19 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainClc;
@@ -19,6 +23,8 @@ import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainSr;
 public class InitialActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private Intent intentServicio;//Para iniciar el IntentService
+    private static final String NOMBRE_SERVICIO= "net.ddns.smartfridge.smartfridgev2.ComprobarCaducidadIntentService";
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -72,10 +78,34 @@ public class InitialActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content, ca, "CA");
         fragmentTransaction.commit();
+        //Comprobamos si está activo el IntentService
+        if (!servicioEjecutando()){
+            //Si no está activo, lo iniciamos
+            intentServicio = new Intent(this,ComprobarCaducidadIntentService.class); //serv de tipo Intent
+            this.startService(intentServicio); //ctx de tipo Context
+            Log.d("servicio", "Arranca el servicio");
+        } else {
+            Log.d("servicio", "El servicio ya está ejecutándose!!!");
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    //Método para comprobar si ya está iniciado el servicio
+    private boolean servicioEjecutando() {
+        //Cogemos los servicios activos
+        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        //Los recorremos con un foreach
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            Log.d("servicio", "servicio: " + service.service.getClassName());
+            //Comprobamos que en los servicios activos coincida el nombre con el servicio que queremos comprobar
+            if (NOMBRE_SERVICIO.equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

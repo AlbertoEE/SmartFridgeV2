@@ -189,7 +189,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         } else if (controlDragAndDrop==1){
             //Significa que se ha seleccionado la caducidad por medio del calendario
             //Metemos en la variable los dias que faltan para la caducidad
-            int diasCaducidad = fecha.fechaDias(fecha_final, this);
+            int diasCaducidad = 0;
+            try {
+                diasCaducidad = fecha.fechaDias(fecha_final, this);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
             //Creamos el objeto Alimento
             try{

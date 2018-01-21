@@ -11,6 +11,7 @@ import com.aigestudio.wheelpicker.WheelPicker;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class DetallesActivity extends AppCompatActivity {
     private TextView tvFechaCaducidad;
     private TextView tvDiasRestantes;
     private ImageView ivAlimento;
+    private Dialogos dialogos;
+    private View constraintLayout;
     private MiNeveraActivity miNeveraActivity;
     private Alimento alimento;
     private AlimentoDB adb;
@@ -32,6 +35,7 @@ public class DetallesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles);
+        dialogos = new Dialogos(this, this);
         adb = new AlimentoDB(this);
         wheelPicker = findViewById(R.id.wheelUdsDetalles);
         Intent intentRecyclerView = getIntent();
@@ -72,6 +76,7 @@ public class DetallesActivity extends AppCompatActivity {
         tvFechaCaducidad = (TextView)findViewById(R.id.tvFechaCaducidadDetalles);
         tvDiasRestantes = (TextView)findViewById(R.id.tvDiasRestantesDetalles);
         ivAlimento = (ImageView)findViewById(R.id.ivAlimentoDetalles);
+        constraintLayout = (View) findViewById(R.id.constraintLayout);
 
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
@@ -84,9 +89,15 @@ public class DetallesActivity extends AppCompatActivity {
     public void okButton(View view){
         if(unidadesWheel > 0){
             adb.actualizarUnidades(alimento.getId(), unidadesWheel);
+            finish();
         }else if (unidadesWheel == 0){
-            adb.borrarAlimento(alimento.getId());
+            dialogos.dialogCeroUnidades(
+                    constraintLayout,
+                    alimento.getId(),
+                    this,
+                    MiNeveraActivity.getImagenDetalles(),
+                    alimento.getNombreAlimento());
         }
-        finish();
+
     }
 }

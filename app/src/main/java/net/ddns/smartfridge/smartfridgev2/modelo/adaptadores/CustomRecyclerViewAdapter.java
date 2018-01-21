@@ -21,6 +21,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -88,7 +89,11 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setText(String.valueOf(alimentos.get(position).getCantidad()));
         Log.d("hola?", "llenarFila: "+ alimentos.get(position).getFecha_caducidad());
-        holder.tvDiasCaducidad.setText(fecha.fechaDias(alimentos.get(position).getFecha_caducidad(), activity.getApplicationContext()) + "\n días");
+        try {
+            holder.tvDiasCaducidad.setText(fecha.fechaDias(alimentos.get(position).getFecha_caducidad(), activity.getApplicationContext()) + "\n días");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Log.d("ImagenRecycler", "llenarFila: " + alimentos.get(position).getImagen());
         if (alimentos.get(position).getImagen() != null) {
             Log.d("alfa", "llenarFila: peaeaeaeae");

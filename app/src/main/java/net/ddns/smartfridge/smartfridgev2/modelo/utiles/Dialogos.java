@@ -39,10 +39,10 @@ public class Dialogos {
     private static final String DIAS = " días";//Cte para el mensaje del dialog
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
 
-    public Dialogos(Context context, Activity clase){
+    public Dialogos(Context context, Activity activity){
         this.contexto=context;
         //builder = new AlertDialog.Builder(contexto);
-        this.clase = clase;
+        this.clase = activity;
     }
     //Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
     public void dialogAlimentoNoEncontrado(){
@@ -350,13 +350,15 @@ public class Dialogos {
                     default:
                         try {
                             //Si no se pulsa deshacer, eliminamos el alimento y refrescamos la lista
+                            alimentoDB = new AlimentoDB(contexto);
                             alimentoDB.borrarAlimento(id);
                             Toast.makeText(contexto, "Elemento eliminado", Toast.LENGTH_SHORT).show();
                             //Aquí tienes que actualizar el recyclerview
-                         /*   cursor = gbp.getBocatas();
+                         /*   cursor = alimentoDB.getBocatas();
                             ba.setCursor(cursor);
                             ba.notifyItemRemoved(position);*/
                             dialogAnadirLista(contexto, foto, nombre);
+                            clase.finish();
                             break;
                         }catch (SQLException e){
                             Toast.makeText(contexto, "Error al eliminar el elemento. Por favor, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();

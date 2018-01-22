@@ -28,37 +28,51 @@ import java.util.Comparator;
 
 /**
  * Created by Alberto on 17/01/2018.
+ * Esta clase servirá para adaptar el recycler view que se encuentra la clase de "MiNeveraActivity"
+ * Este adaptador funciona con un cursor pero su principal fuente de datos es un arrayList cargado
+ * con la información del cursor.
  */
 
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
     private Cursor cursor;
     private MiNeveraActivity activity;
-    private ArrayList<Alimento> alimentos;
-    private ArrayList<Alimento> alimentosCopia;
+    private ArrayList<Alimento> alimentos; //Este array es el principal
+    private ArrayList<Alimento> alimentosCopia; //Este otro tan solo se usa para el método de filtrar
     private Fecha fecha;
 
     public CustomRecyclerViewAdapter(Cursor cursor, MiNeveraActivity activity) {
         this.cursor = cursor;
         this.activity = activity;
+
         alimentos = new ArrayList();
-        cargarArray();
         alimentosCopia = new ArrayList<>();
-        alimentosCopia.addAll(alimentos);
         fecha = new Fecha();
-        Log.d("RAQUEL", "CustomRecyclerViewAdapter: " + Environment.getExternalStorageDirectory().getAbsolutePath());
+
+        //Después de obtener el cursor lo pasamos a ArrayList para que el manejo de datos sea más fácil
+        cargarArray();
+
     }
 
+    /**
+     * Este método sirve para refrescar el arrayList en el que se basa el adaptador, se debe usar
+     * justo después de usar el métoedo "setCursor" por lo tanto para refrescar el recyclerView
+     * necesitariamos seguir este orden. setCursor --> cargarArray --> notify...(el notify que necesitemos)
+     */
     public void cargarArray() {
+        //Limpiamos el array
         alimentos.clear();
+
+        //Comprobamos si hay datos en el cursor
         if (cursor.moveToFirst()) {
+            //Variables necesarias para convertir el blob de la foto a bitmap
             byte[] byteArrayFoto;
             Bitmap bm;
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            for (int i = 0; i < cursor.getCount(); i++) {
+
+            for (int i = 0; i < cursor.getCount(); i++) { //Recorremos el cursor (no sé por qué puse un for)
                 byteArrayFoto = cursor.getBlob(6);
-                if (byteArrayFoto != null) {
-                    Log.d("PENE", "cargarArray: PENE");
-                    byteArrayFoto = cursor.getBlob(6);
+                if (byteArrayFoto != null) { //Comprobamos si el blob que nos da es null
+                    //no lo es por lo tanto comprimimos la foto y añadimos un nuevo alimento a nuestro array
                     bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
                     bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     alimentos.add(new Alimento(
@@ -70,6 +84,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                             cursor.getString(5),
                             bm));
                 }else{
+                    //el blob es null por lo tanto añadimos un alimento a nuestro array pero con la imagen null
                     alimentos.add(new Alimento(
                             cursor.getInt(0),
                             cursor.getString(1),
@@ -79,24 +94,33 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                             cursor.getString(5),
                             null));
                 }
-
+                //siguiente registro del cursor
                 cursor.moveToNext();
             }
         }
+        //Cuando ya tenemos nuestro array entero, hacemos una copia de el porque nos va a hacer falta
+        //para el método de filtrar
+        alimentosCopia.addAll(alimentos);
     }
 
+    /**
+     * Este método sirve para rellenar la fila con los datos del arrayList, posteriormente será
+     * llamado en el "onBindViewHolder"
+     *
+     * @param holder ViewHolder donde vamos a asignar los datos a la UI de usuario
+     * @param position posición de la lista
+     */
     private void llenarFila(CustomRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setText(String.valueOf(alimentos.get(position).getCantidad()));
-        Log.d("hola?", "llenarFila: "+ alimentos.get(position).getFecha_caducidad());
         try {
+            //En el mismo set text hacemos el calculo de los dias que quedan de caducidad
             holder.tvDiasCaducidad.setText(fecha.fechaDias(alimentos.get(position).getFecha_caducidad(), activity.getApplicationContext()) + "\n días");
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Log.d("ImagenRecycler", "llenarFila: " + alimentos.get(position).getImagen());
+        //Si el alimento que estamos usando tiene imagen usamos glide para cargar la imagen
         if (alimentos.get(position).getImagen() != null) {
-            Log.d("alfa", "llenarFila: peaeaeaeae");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             alimentos.get(position).getImagen().compress(Bitmap.CompressFormat.PNG, 100, stream);
             try {
@@ -112,21 +136,18 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         }
     }
 
-    private String formatearFecha(String fecha) {
-        String fechaFinal;
-
-        /*fechaFinal = fecha.substring(0, 2) + "/";
-        fechaFinal += fecha.substring(2, 4) + "/";
-        fechaFinal += fecha.substring(4, 8);*/
-
-        return fecha;
-    }
-
+    /**
+     * Método para filtrar en el recycler view
+     *
+     * @param text
+     */
     public void filter(String text) {
+        //limpiamos todos los alimentos, por eso antes hicimos una copia
         alimentos.clear();
+        //Si el string que pasamos está vacio añadimos toda la copia
         if(text.isEmpty()){
             alimentos.addAll(alimentosCopia);
-        } else{
+        } else{ //Si tiene algo buscamos las coincidencias
             text = text.toLowerCase();
             for(Alimento item: alimentosCopia){
                 if(item.getNombreAlimento().toLowerCase().contains(text)){
@@ -134,9 +155,14 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                 }
             }
         }
+        //notificamos que el recycler view ha cambiado
         notifyDataSetChanged();
     }
 
+    /**
+     * Método para ordenar el recycler view alfabeticamente
+     * @param az este int será un 1 o un -1 según el orden que queramos
+     */
     public void sortRecyclerView(final int az){
         Collections.sort(alimentos, new Comparator<Alimento>() {
             public int compare(Alimento v1, Alimento v2) {
@@ -146,6 +172,10 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         notifyDataSetChanged();
     }
 
+    /**
+     * Setter del cursor
+     * @param cursor
+     */
     public void setCursor(Cursor cursor){
         this.cursor = cursor;
     }

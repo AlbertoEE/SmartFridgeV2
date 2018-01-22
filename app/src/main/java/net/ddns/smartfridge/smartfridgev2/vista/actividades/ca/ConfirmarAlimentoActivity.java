@@ -1,8 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -70,7 +68,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            customDialogProgressBar.showDialog();
+            customDialogProgressBar.showDialogOndas();
         }
 
         @Override

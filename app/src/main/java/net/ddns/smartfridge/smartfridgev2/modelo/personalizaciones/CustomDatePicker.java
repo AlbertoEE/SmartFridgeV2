@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
@@ -19,43 +17,62 @@ import java.util.Calendar;
 
 /**
  * Created by Alberto on 14/01/2018.
+ * Clase para el calendario
  */
 
 public class CustomDatePicker {
     public final Calendar calendar = Calendar.getInstance();
-    private final int mes = calendar.get(Calendar.MONTH) + 1;
+
+    //Obtenemos el mes, dia y año actual
+    private final int mes = calendar.get(Calendar.MONTH) + 1; //Sumamos uno porque empiezan en el mes 0
     private final int dia = calendar.get(Calendar.DAY_OF_MONTH);
     private final int anio = calendar.get(Calendar.YEAR);
-    private Activity clase;
+
+    private Activity activity;
     private Context c;
     private CaducidadAlimento ca;
-    RelativeLayout relativeLayout;
+    private RelativeLayout relativeLayout;
 
-    public CustomDatePicker(Context context, Activity clase){
-        c = context;
-        this.clase = clase;
-        ca = (CaducidadAlimento) clase;
+    public CustomDatePicker(Context context, Activity activity){
+        this.c = context;
+        this.activity = activity;
+        this.ca = (CaducidadAlimento) activity;
     }
 
+    /**
+     * Método para instanciar al calendario
+     *
+     * @throws ParseException
+     */
     public void obtenerFecha() throws ParseException {
+        //Creamos el diálogo
         DatePickerDialog datePickerDialog = new DatePickerDialog(c, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                //Sumamos 1 al mes porque empieza en 0
                 month = month + 1;
+                //hacemos el set de la fecha inicial y final en la clase caducidadAlimento
                 ca.setFechas(fechasConverter(dia, mes, anio), fechasConverter(dayOfMonth, month, year));
                 comprobarFecha();
+                //Ponemos la bandera a 1 porque hemos elegido la fecha via calendario
                 ca.setControlDragAndDrop(1);
 
             }
         }, anio, mes, dia);
-        //date= format.parse(diaRecogido+mesRecogido+anioRecogido);
+        //Fecha mínima
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        //Mostramos el diálogo
         datePickerDialog.show();
+        //Asignamos un listener al cancelar
         datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 relativeLayout = ca.findViewById(R.id.relativeLayout);
-                Log.d("mamamammaam", "onDismiss: " + relativeLayout.getChildCount());
+
+                //Si la drop zone tiene hijos asignados significa que ya hay fecha en el drag and
+                //drop por lo tanto nos quedamos con la del drag and drop, si no tiene hijos significa
+                //que al cancelar no tiene ni drag and drop ni calendario por lo tanto la bandera
+                //se pone a 0
                 if(relativeLayout.getChildCount() != 0){
                     ca.setControlDragAndDrop(-1);
                 }else{
@@ -65,17 +82,31 @@ public class CustomDatePicker {
         });
     }
 
+    /**
+     * Pasamos los int de el dia mes y anio un String con forma de fecha
+     *
+     * @param dia
+     * @param mes
+     * @param anio
+     * @return
+     */
     private String fechasConverter(int dia, int mes, int anio){
         String fecha;
-
         fecha = (dia < 10)? String.valueOf("0" + dia) : String.valueOf(dia);
         fecha += "-" + ((mes < 10)? String.valueOf("0" + mes) : String.valueOf(mes));
         fecha += "-" + String.valueOf(anio);
-        Toast.makeText(c, fecha, Toast.LENGTH_SHORT).show();
         return fecha;
     }
 
+    /**
+     * Comprobamos si la bandera está afirmando que hay una fecha elegida en el drag and drop
+     * y si la hay la desasignamos de la zona del drag and drop debido a que lo comprobamos justo
+     * antes de asignar una fecha desde el calendario.
+     *
+     */
     private void comprobarFecha(){
+        //Este método recoge los layout del drag and drop y limpia la zona del drop y asigna el hijo
+        //de la drop zone a su layout original
         if (ca.getControlDragAndDrop() == -1){
             View children[];
 

@@ -1,8 +1,10 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import com.aigestudio.wheelpicker.WheelPicker;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
@@ -30,6 +33,8 @@ public class DetallesActivity extends AppCompatActivity {
     private MiNeveraActivity miNeveraActivity;
     private Alimento alimento;
     private AlimentoDB adb;
+    private Bitmap bitmapService;//Para almacenar el bitmap del alimento que recibimos en el intent
+    private boolean notificacion;//Para ver de donde viene el intent
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +43,24 @@ public class DetallesActivity extends AppCompatActivity {
         dialogos = new Dialogos(this, this);
         adb = new AlimentoDB(this);
         wheelPicker = findViewById(R.id.wheelUdsDetalles);
-        Intent intentRecyclerView = getIntent();
-        alimento = (Alimento) intentRecyclerView.getSerializableExtra("Alimento");
+        Intent intent = getIntent();
+        alimento = (Alimento) intent.getSerializableExtra("Alimento");
+        //Log.d("servicio", "clasepadre " + intent.getStringExtra("ClasePadre").equals("Dialogos"));
+        if(intent.getStringExtra("ClasePadre").equals("Dialogos")){
+            notificacion = true;
+            bitmapService = ComprobarCaducidadIntentService.getBm();
+            alimento.setImagen(bitmapService);
+          /*  int id = intentRecyclerView.getIntExtra("id", 0);
+            String nombreAlimento = intentRecyclerView.getStringExtra("nombre");
+            int cantidad = intentRecyclerView.getIntExtra("cantidad", 8);
+            String fecha_registro = intentRecyclerView.getStringExtra("fecha_registro");
+            String fecha_caducidad = intentRecyclerView.getStringExtra("fecha_caducidad");
+            int dias_caducidad = intentRecyclerView.getIntExtra("dias_caducidad", 88);
+            Bitmap imagen = (Bitmap)intentRecyclerView.getExtras().get("imagen");*/
+        } else {
+            notificacion = false;
+        }
+
         wheel(wheelPicker);
         cargarDetallesAlimento();
     }
@@ -55,6 +76,8 @@ public class DetallesActivity extends AppCompatActivity {
         //Le ponemos las mismas dimensiones a todos los elementos
         wheelPicker.setSameWidth(true);
         //Indicamos que al inciarse esté apuntando a un elemento, en este caso, el primero
+
+
         wheelPicker.setSelectedItemPosition(alimento.getCantidad());
         //Iniciamos la variable a 1, ya que empezará en el primer elemento, que tendrá valor 1
         unidadesWheel = 1;
@@ -77,13 +100,20 @@ public class DetallesActivity extends AppCompatActivity {
         tvDiasRestantes = (TextView)findViewById(R.id.tvDiasRestantesDetalles);
         ivAlimento = (ImageView)findViewById(R.id.ivAlimentoDetalles);
         constraintLayout = (View) findViewById(R.id.constraintLayout);
-
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
         tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
-        ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
-        MiNeveraActivity.setImagenDetalles(null);
 
+        //Controlamos la imagen que hay que poner
+        if (notificacion){
+            //Si viene de la notificación, cogemos la imagen del service
+            ivAlimento.setImageBitmap(bitmapService);
+            notificacion = false;
+        } else {
+            //Si no, lo cogemos de MiNeveraActivity
+            ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
+            MiNeveraActivity.setImagenDetalles(null);
+        }
     }
 
     public void okButton(View view){

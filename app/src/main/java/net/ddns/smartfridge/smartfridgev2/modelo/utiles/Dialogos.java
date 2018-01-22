@@ -2,6 +2,9 @@ package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,8 +25,11 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Clase para mostrar los diferentes tipos de dialogs en la app
@@ -38,11 +44,16 @@ public class Dialogos {
     private static final String DIA = " día";//Cte para el mensaje del dialog
     private static final String DIAS = " días";//Cte para el mensaje del dialog
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
+    private static Bitmap imagenDetalles;//Para recoger el bitmap de la bbdd
 
     public Dialogos(Context context, Activity activity){
         this.contexto=context;
         //builder = new AlertDialog.Builder(contexto);
         this.clase = activity;
+    }
+
+    public Dialogos(Context context){
+        this.contexto=context;
     }
     //Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
     public void dialogAlimentoNoEncontrado(){
@@ -400,5 +411,39 @@ public class Dialogos {
                     }
                 })
                 .build();
+    }
+
+    //Método para enviar la notificación
+    public void enviarNotificacionCaducado(Alimento alimento, Context contexto){
+        Intent i = new Intent(contexto, DetallesActivity.class);
+        i.putExtra("Alimento", alimento);
+        /*int id = alimento.getId();
+        String nombreAlimento = alimento.getNombreAlimento();
+        int cantidad = alimento.getCantidad();
+        String fecha_registro = alimento.getFecha_registro();
+        String fecha_caducidad = alimento.getFecha_caducidad();
+        int dias_caducidad = alimento.getDias_caducidad();
+        imagen = alimento.getImagen();
+        i.putExtra("id", id);
+        i.putExtra("nombre", nombreAlimento);
+        i.putExtra("cantidad", cantidad);
+        i.putExtra("fecha_registro", fecha_registro);
+        i.putExtra("fecha_caducidad", fecha_caducidad);
+        i.putExtra("dias_caducidad", dias_caducidad);
+        i.putExtra("imagen", imagen);
+        i.putExtra("alimento", alimento);*/
+        i.putExtra("ClasePadre", "Dialogos");
+        Notification.Builder nb = new Notification.Builder(contexto);
+        nb.setSmallIcon(R.mipmap.ic_launcher_f);
+        nb.setContentTitle("Alimento Caducado");
+        nb.setContentText("¡Vaya! " + alimento.getNombreAlimento() + "ha caducado." +
+                " para ver los detalles.");
+        nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
+                i, PendingIntent.FLAG_UPDATE_CURRENT));
+        nb.setAutoCancel(true);
+        Notification notificacion = nb.build();
+        NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
+        //Emisión de la notificación
+        nm.notify(1, notificacion);
     }
 }

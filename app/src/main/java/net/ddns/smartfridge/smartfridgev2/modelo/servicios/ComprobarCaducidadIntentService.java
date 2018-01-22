@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
@@ -27,10 +28,12 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private static final int DIAS_CADUCIDAD=2;//La diferencia máxima que puede haber entre la fecha actual y la de caducidad, para que salte así la notificación
     private int diasParaCaducidad;//Vamos a almacenar los días que falten para que caduque el alimento
     private Fecha fecha;//Para usar el método que calcula los días que hay de diferencia entre dos fechas
-    private Bitmap bm;//Para construir el Bitmap a partir de los datos de la bbdd
+    private static Bitmap bm;//Para construir el Bitmap a partir de los datos de la bbdd
+    private Dialogos dialogos;//Para crear las notificaciones
 
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
+        dialogos = new Dialogos(this);
     }
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -48,44 +51,59 @@ public class ComprobarCaducidadIntentService extends IntentService {
                     //Recogemos la fecha de caducidad del alimento de la bbdd
                     fechaCaducidad = cursor.getString(5);
                     Log.d("servicio", "fecha de caducidad: " + fechaCaducidad);
+                    byte[] byteArrayFoto;
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    byteArrayFoto = cursor.getBlob(6);
+                    try {
+                        bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
+                        bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    } catch (NullPointerException e){
+                        //No hay imagen en la bbdd
+                    }
                     //Calculamos los días de diferencia
                     try{
                         diasParaCaducidad = fecha.fechaDias(fechaCaducidad, this);
                     } catch (ParseException e){
-                        //Lanz
-                        Log.d("servicio", "alimento caducado");
-                    }
-
-                    Log.d("servicio", "dias para caducidad: " + diasParaCaducidad);
-                    //Comprobamos si quedan <2 días para que caduque. Si es así, se lanzará la notificación
-                    if (diasParaCaducidad<=DIAS_CADUCIDAD) {
-                        byte[] byteArrayFoto;
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        byteArrayFoto = cursor.getBlob(6);
-                        try {
-                            bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
-                            bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        } catch (NullPointerException e){
-                            //No hay imagen en la bbdd
-                        }
-                        //Creamos el objeto alimento
+                        //Lanzamos la notificación de alimento caducado
                         alimento = new Alimento(cursor.getInt(0),
                                 cursor.getString(1),
                                 cursor.getInt(2),
                                 cursor.getInt(3),
                                 cursor.getString(4),
                                 cursor.getString(5),
-                                bm);
+                                null);
+                        dialogos.enviarNotificacionCaducado(alimento, getApplicationContext());
+                        Log.d("servicio", "alimento caducado");
+                    }
+                    Log.d("servicio", "dias para caducidad: " + diasParaCaducidad);
+                    //Comprobamos si quedan <2 días para que caduque. Si es así, se lanzará la notificación
+                    if (diasParaCaducidad<=DIAS_CADUCIDAD) {
+
+                        //Creamos el objeto alimento
+                        alimento = new Alimento(cursor.getInt(0),
+                                cursor.getString(1),
+                                cursor.getInt(2),
+                                cursor.getInt(3),
+                                cursor.getString(4),
+                                cursor.getString(5), null);
                         //Lanzamos la notificación
                         Log.d("servicio", "Faltan: " + diasParaCaducidad + " días para que caduque.");
                     }
                     try {
-                        sleep(1000);
+                        sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } while(cursor.moveToNext());
             }
         }
+    }
+
+    public static Bitmap getBm() {
+        return bm;
+    }
+
+    public static void setBm(Bitmap bm) {
+        bm = bm;
     }
 }

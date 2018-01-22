@@ -415,8 +415,8 @@ public class Dialogos {
 
     //Método para enviar la notificación
     public void enviarNotificacionCaducado(Alimento alimento, Context contexto){
-        Intent i = new Intent(contexto, DetallesActivity.class);
-        i.putExtra("Alimento", alimento);
+        intent = new Intent(contexto, DetallesActivity.class);
+        intent.putExtra("Alimento", alimento);
         /*int id = alimento.getId();
         String nombreAlimento = alimento.getNombreAlimento();
         int cantidad = alimento.getCantidad();
@@ -432,18 +432,43 @@ public class Dialogos {
         i.putExtra("dias_caducidad", dias_caducidad);
         i.putExtra("imagen", imagen);
         i.putExtra("alimento", alimento);*/
-        i.putExtra("ClasePadre", "Dialogos");
+        intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
-        nb.setContentTitle("Alimento Caducado");
-        nb.setContentText("¡Vaya! " + alimento.getNombreAlimento() + "ha caducado." +
-                " para ver los detalles.");
+        nb.setContentTitle("¡¡¡Alimento Caducado!!!");
+        nb.setContentText("¡Vaya! " + alimento.getNombreAlimento() + " ha caducado." +
+                " Pulsa para ver los detalles.");
         nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
-                i, PendingIntent.FLAG_UPDATE_CURRENT));
+                intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
-        Notification notificacion = nb.build();
+        //Permitimos que se pueda expandir la notificación
+        Notification notificacion = new Notification.BigTextStyle(nb).bigText("¡Vaya! " + alimento.getNombreAlimento() +
+                " ha caducado. Pulsa para ver los detalles.").build();
         NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
         //Emisión de la notificación
         nm.notify(1, notificacion);
+    }
+
+    //Método para enviar la notificación cuando falten menos de dos días para la caducidad
+    public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto){
+        //intent = new Intent (contexto, Listadelacompraactivity.class);
+        //intent.putExtra("Alimento", alimento);
+        //intent.putExtra("ClasePadre", "Dialogos");
+        Notification.Builder nb = new Notification.Builder(contexto);
+        nb.setSmallIcon(R.mipmap.ic_launcher_f);
+        nb.setContentTitle("Alimento próximo a caducar");
+        nb.setContentText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
+                " Ver los detalles.");
+       // nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
+                //intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        nb.setAutoCancel(true);
+        //Permitimos que se pueda expandir la notificación
+        Notification notificacion = new Notification.BigTextStyle(nb).bigText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
+                " Ver los detalles.").build();
+        //Notification notificacion = nb.build();
+        NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
+
+        //Emisión de la notificación
+        nm.notify(2, notificacion);
     }
 }

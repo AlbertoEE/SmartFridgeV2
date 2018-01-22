@@ -12,6 +12,7 @@ import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -445,18 +446,21 @@ public class Dialogos {
         Notification notificacion = new Notification.BigTextStyle(nb).bigText("¡Vaya! " + alimento.getNombreAlimento() +
                 " ha caducado. Pulsa para ver los detalles.").build();
         NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
-        //Emisión de la notificación
-        nm.notify(1, notificacion);
+        //Emisión de la notificación. Le damos - el id del alimento
+        nm.notify(alimento.getId()*-1, notificacion);
+
     }
 
     //Método para enviar la notificación cuando falten menos de dos días para la caducidad
     public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto){
-        //intent = new Intent (contexto, Listadelacompraactivity.class);
+        //Completar cuando esté creado el BuscarReceta por alimento
+
+        //intent = new Intent (contexto, BuscarRecetaActivity.class);
         //intent.putExtra("Alimento", alimento);
         //intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
-        nb.setContentTitle("Alimento próximo a caducar");
+        nb.setContentTitle("Va a caducar...");
         nb.setContentText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
                 " Ver los detalles.");
        // nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
@@ -464,11 +468,10 @@ public class Dialogos {
         nb.setAutoCancel(true);
         //Permitimos que se pueda expandir la notificación
         Notification notificacion = new Notification.BigTextStyle(nb).bigText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
-                " Ver los detalles.").build();
-        //Notification notificacion = nb.build();
+                " Pulsa para buscar recetas que contengan este alimento.").build();
         NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
 
-        //Emisión de la notificación
-        nm.notify(2, notificacion);
+        //Emisión de la notificación. Le damos el id del alimento
+        nm.notify(alimento.getId(), notificacion);
     }
 }

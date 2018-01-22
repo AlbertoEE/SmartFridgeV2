@@ -14,6 +14,8 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static java.lang.Thread.sleep;
 
@@ -30,6 +32,9 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private Fecha fecha;//Para usar el método que calcula los días que hay de diferencia entre dos fechas
     private static Bitmap bm;//Para construir el Bitmap a partir de los datos de la bbdd
     private Dialogos dialogos;//Para crear las notificaciones
+    //private static final long OCHO_HORAS=28800000;//Milisegundos que hay en 8 horas
+    private static final long OCHO_HORAS=120000;//Milisegundos que hay en 2 minutos
+    private static final int DELAY = 1000;//Delay usado para distintas partes del código
 
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
@@ -38,8 +43,75 @@ public class ComprobarCaducidadIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         //Hacemos la conexión a la bbddd
-        AlimentoDB alimentoDB = new AlimentoDB(this);
+        final AlimentoDB alimentoDB = new AlimentoDB(this);
         fecha = new Fecha();
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                //Hacemos el while(true) para que siempre esté en ejecución
+                //while(true){
+                    //Recogemos todos los alimentos y los almacenamos en el cursor
+                    cursor = alimentoDB.getAlimentos();
+                    //Recorremos el cursor
+                    if (cursor.moveToFirst()) {
+                        //Recorremos el cursor hasta que no haya más registros
+                        do {
+                            //Recogemos la fecha de caducidad del alimento de la bbdd
+                            fechaCaducidad = cursor.getString(5);
+                            Log.d("servicio", "fecha de caducidad: " + fechaCaducidad);
+                            byte[] byteArrayFoto;
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            byteArrayFoto = cursor.getBlob(6);
+                            try {
+                                bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
+                                bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            } catch (NullPointerException e){
+                                //No hay imagen en la bbdd
+                            }
+                            //Calculamos los días de diferencia
+                            try{
+                                diasParaCaducidad = fecha.fechaDias(fechaCaducidad, getApplicationContext());
+                            } catch (ParseException e){
+                                //Lanzamos la notificación de alimento caducado
+                                alimento = new Alimento(cursor.getInt(0),
+                                        cursor.getString(1),
+                                        cursor.getInt(2),
+                                        cursor.getInt(3),
+                                        cursor.getString(4),
+                                        cursor.getString(5),
+                                        null);
+                                dialogos.enviarNotificacionCaducado(alimento, getApplicationContext());
+                            }
+                            Log.d("servicio", "dias para caducidad: " + diasParaCaducidad);
+                            //Comprobamos si quedan <2 días para que caduque. Si es así, se lanzará la notificación
+                            if (diasParaCaducidad<=DIAS_CADUCIDAD) {
+                                //Creamos el objeto alimento
+                                alimento = new Alimento(cursor.getInt(0),
+                                        cursor.getString(1),
+                                        cursor.getInt(2),
+                                        cursor.getInt(3),
+                                        cursor.getString(4),
+                                        cursor.getString(5), null);
+                                //Lanzamos la notificación
+                                dialogos.enviarNotificacionProximaCaducidad(alimento, getApplicationContext());
+                                Log.d("servicio", "Faltan: " + diasParaCaducidad + " días para que caduque.");
+                            }
+                            try {
+                                sleep(DELAY);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        } while(cursor.moveToNext());
+                    }
+                }
+         //   }
+        };
+
+
+
+/*
+
         //Hacemos el while(true) para que siempre esté en ejecución
         while(true){
             //Recogemos todos los alimentos y los almacenamos en el cursor
@@ -85,7 +157,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
                                 cursor.getString(4),
                                 cursor.getString(5), null);
                         //Lanzamos la notificación
-                        dialogos.enviarNotificacionProximaCaducidad(alimento, getApplicationContext());
                         Log.d("servicio", "Faltan: " + diasParaCaducidad + " días para que caduque.");
                     }
                     try {
@@ -95,14 +166,12 @@ public class ComprobarCaducidadIntentService extends IntentService {
                     }
                 } while(cursor.moveToNext());
             }
-        }
+        }*/
+        Timer timer = new Timer();
+        timer.schedule(timerTask,DELAY,OCHO_HORAS);
     }
 
     public static Bitmap getBm() {
         return bm;
-    }
-
-    public static void setBm(Bitmap bm) {
-        bm = bm;
     }
 }

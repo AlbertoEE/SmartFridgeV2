@@ -35,11 +35,13 @@ import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.CloudVision;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Firma;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestorAlmacenamientoInterno;
 
 import java.io.File;
@@ -71,6 +73,9 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
+        AlimentoDB alimentoDB = new AlimentoDB(this);
+        Alimento a = new Alimento("pruevas", 2, 0, "22/01/2018", "22/01/2018", null);
+        alimentoDB.guardarAlimento(a);
         dialogos = new Dialogos(this, this);
         gai = new GestorAlmacenamientoInterno(this);
         customDialogProgressBar = new CustomDialogProgressBar(this);

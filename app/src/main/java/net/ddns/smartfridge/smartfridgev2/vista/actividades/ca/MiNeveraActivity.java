@@ -70,7 +70,6 @@ public class MiNeveraActivity extends AppCompatActivity {
                 alimento.getFecha_registro(),
                 alimento.getFecha_caducidad(),
                 null);
-        Log.d("peneeee", "iniciardetalles: " + imagenDetalles);
         Intent intent = new Intent(this, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
         intent.putExtra("ClasePadre", "MiNeveraActivity");

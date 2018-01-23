@@ -129,10 +129,12 @@ public class CustomOnDragListener implements View.OnDragListener {
                             = (LinearLayout.LayoutParams) myLinearLayout.getChildAt(0).getLayoutParams();
                     //A la vista que se encuentra en la drop-zone le damos reglas de linearLayout
                     hijaDeRelative.setLayoutParams(ll);
+                    //Añadimos la vista que estaba en la drop zone a su lugar original
                     myLinearLayout.addView(hijaDeRelative);
-
+                    //le damos visibilidad
                     hijaDeRelative.setVisibility(View.VISIBLE);
 
+                    //A partir de aqui ya tenemos la drop zone vacia por lo tanto
                     ViewGroup owner = (ViewGroup) draggedView.getParent();
                     owner.removeView(draggedView);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(w*2, h*2);

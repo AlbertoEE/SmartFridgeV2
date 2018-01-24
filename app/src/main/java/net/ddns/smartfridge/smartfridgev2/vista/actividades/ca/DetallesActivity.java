@@ -38,8 +38,6 @@ public class DetallesActivity extends FragmentActivity {
         posicion = getIntent().getExtras().getInt("posicion");
         imagenes = MiNeveraActivity.getImagenDetalles();
 
-        Log.d("SWIPE", "onCreate: primigenio2 " + alimentos.size());
-
         CustomPageAdapter pageAdapter = new CustomPageAdapter(getSupportFragmentManager(), alimentos, imagenes);
         viewPager.setAdapter(pageAdapter);
         viewPager.setCurrentItem(posicion);

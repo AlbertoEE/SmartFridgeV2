@@ -21,15 +21,12 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
 
     public CustomPageAdapter(FragmentManager fm, ArrayList<Alimento> alimentos, ArrayList<Bitmap> imagenAlimento) {
         super(fm);
-        Log.d("SWIPE", "onCreate: estoy aqui en el CustomPageAdapter" );
         this.alimentos = alimentos;
-        Log.d("SWIPE", "CustomPageAdapter: " + alimentos.size());
         this.imagen = imagenAlimento;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Log.d("SWIPE", "onCreate: estoy aqui en el CustomPageAdapter GETITME" );
         return Fragment_detalles.newInstance(alimentos.get(position), imagen.get(position));
     }
 

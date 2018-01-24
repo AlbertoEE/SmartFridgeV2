@@ -22,6 +22,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewA
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MiNeveraActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
@@ -30,24 +31,24 @@ public class MiNeveraActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SearchView searchView;
-    private static Bitmap imagenDetalles;
+    private static ArrayList<Bitmap> imagenesDetalles;
     private static final int DETALLES_ACTIVITY = 16;
     private int sort = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        imagenDetalles = null;
+        imagenesDetalles = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_nevera);
-
+        imagenesDetalles = new ArrayList<>();
         alimentoDB = new AlimentoDB(this);
         cursor = alimentoDB.getAlimentos();
 
         iniciarRecyclerView();
     }
 
-    private void iniciarRecyclerView(){
-        rvMiNevera = (RecyclerView)findViewById(R.id.rvMiNevera);
+    private void iniciarRecyclerView() {
+        rvMiNevera = (RecyclerView) findViewById(R.id.rvMiNevera);
         layoutManager = new GridLayoutManager(this, 2);
         recyclerViewAdapter = new CustomRecyclerViewAdapter(cursor, this);
 
@@ -56,12 +57,12 @@ public class MiNeveraActivity extends AppCompatActivity {
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    public static void setImagenDetalles(Bitmap bitmap) {
-        imagenDetalles = bitmap;
+    public static void setImagenDetalles(ArrayList<Bitmap> bitmaps) {
+        imagenesDetalles = bitmaps;
     }
 
-    public void iniciardetalles(Alimento alimento){
-        this.imagenDetalles = alimento.getImagen();
+    public void iniciardetalles(Alimento alimento) {
+        //this.imagenDetalles = alimento.getImagen();
         alimento = new Alimento(
                 alimento.getId(),
                 alimento.getNombreAlimento(),
@@ -76,8 +77,31 @@ public class MiNeveraActivity extends AppCompatActivity {
         startActivityForResult(intent, DETALLES_ACTIVITY);
     }
 
-    public static Bitmap getImagenDetalles(){
-        return imagenDetalles;
+    public void iniciardetalles(ArrayList<Alimento> alimentos, int position) {
+        ArrayList<Alimento> alimentosSinFoto = new ArrayList<>();
+        for (Alimento item : alimentos) {
+            this.imagenesDetalles.add(item.getImagen());
+            alimentosSinFoto.add(
+                    new Alimento(
+                            item.getId(),
+                            item.getNombreAlimento(),
+                            item.getCantidad(),
+                            item.getDias_caducidad(),
+                            item.getFecha_registro(),
+                            item.getFecha_caducidad(),
+                            null));
+        }
+
+        Intent intent = new Intent(this, DetallesActivity.class);
+        Log.d("SWIPE", "iniciardetalles: primegenio  " + alimentos.size());
+        intent.putExtra("alimentosSinFoto", alimentosSinFoto);
+        intent.putExtra("posicion", position);
+        intent.putExtra("ClasePadre", "MiNeveraActivity");
+        startActivityForResult(intent, DETALLES_ACTIVITY);
+    }
+
+    public static ArrayList<Bitmap> getImagenDetalles() {
+        return imagenesDetalles;
     }
 
     @Override
@@ -100,7 +124,7 @@ public class MiNeveraActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                    recyclerViewAdapter.filter(s);
+                recyclerViewAdapter.filter(s);
                 return false;
             }
         });
@@ -110,12 +134,12 @@ public class MiNeveraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == DETALLES_ACTIVITY ){
-                cursor = alimentoDB.getAlimentos();
-                recyclerViewAdapter.setCursor(cursor);
-                recyclerViewAdapter.cargarArray();
-                recyclerViewAdapter.notifyDataSetChanged();
-            }
+        if (requestCode == DETALLES_ACTIVITY) {
+            cursor = alimentoDB.getAlimentos();
+            recyclerViewAdapter.setCursor(cursor);
+            recyclerViewAdapter.cargarArray();
+            recyclerViewAdapter.notifyDataSetChanged();
+        }
 
     }
 
@@ -124,9 +148,9 @@ public class MiNeveraActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menuSort:
-                if(sort == 1){
+                if (sort == 1) {
                     sort = -1;
-                } else if(sort == -1){
+                } else if (sort == -1) {
                     sort = 1;
                 }
                 recyclerViewAdapter.sortRecyclerView(sort);

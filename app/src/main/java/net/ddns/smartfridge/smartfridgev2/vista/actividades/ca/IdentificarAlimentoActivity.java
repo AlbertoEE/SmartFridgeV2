@@ -74,8 +74,6 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
         AlimentoDB alimentoDB = new AlimentoDB(this);
-        Alimento a = new Alimento("pruevas", 2, 0, "22/01/2018", "22/01/2018", null);
-        alimentoDB.guardarAlimento(a);
         dialogos = new Dialogos(this, this);
         gai = new GestorAlmacenamientoInterno(this);
         customDialogProgressBar = new CustomDialogProgressBar(this);

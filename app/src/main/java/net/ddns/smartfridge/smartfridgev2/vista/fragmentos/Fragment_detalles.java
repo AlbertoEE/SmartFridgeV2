@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,17 +41,20 @@ public class Fragment_detalles extends Fragment {
     private Bitmap bitmapService;//Para almacenar el bitmap del alimento que recibimos en el intent
     private boolean notificacion;//Para ver de donde viene el intent
     private Alimento alimento;
+    private Bitmap imagen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalles, container, false);
+        wheelPicker = view.findViewById(R.id.wheelUdsDetalles);
         readBundle(getArguments());
+        Log.d("SWIPE", "onCreate: estoy aqui en el Fragment_detalles" );
 
         dialogos = new Dialogos(getActivity().getApplicationContext(), getActivity());
         adb = new AlimentoDB(this.getActivity().getApplicationContext());
-        wheelPicker = view.findViewById(R.id.wheelUdsDetalles);
+
         Intent intent = getActivity().getIntent();
-        alimento = (Alimento) intent.getSerializableExtra("Alimento");
+        //alimento = (Alimento) intent.getSerializableExtra("Alimento");
         //Log.d("servicio", "clasepadre " + intent.getStringExtra("ClasePadre").equals("Dialogos"));
         if(intent.getStringExtra("ClasePadre").equals("Dialogos")){
             notificacion = true;
@@ -67,15 +71,15 @@ public class Fragment_detalles extends Fragment {
             notificacion = false;
         }
 
-        wheel(wheelPicker);
         cargarDetallesAlimento(view);
 
         return view;
     }
 
-    public static Fragment_detalles newInstance(Alimento alimento) {
+    public static Fragment_detalles newInstance(Alimento alimento, Bitmap imagen) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("alimento", alimento);
+        bundle.putParcelable("imagen", imagen);
 
         Fragment_detalles fragment = new Fragment_detalles();
         fragment.setArguments(bundle);
@@ -86,7 +90,11 @@ public class Fragment_detalles extends Fragment {
     private void readBundle(Bundle bundle) {
         if (bundle != null) {
             this.alimento = (Alimento) bundle.getSerializable("alimento");
+            this.imagen = (Bitmap) bundle.getParcelable("imagen");
+
+            wheel(wheelPicker);
         }
+
     }
 
     public void wheel(WheelPicker wheelPicker){
@@ -136,8 +144,9 @@ public class Fragment_detalles extends Fragment {
             notificacion = false;
         } else {
             //Si no, lo cogemos de MiNeveraActivity
-            ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
-            MiNeveraActivity.setImagenDetalles(null);
+            //ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
+            ivAlimento.setImageBitmap(imagen);
+            //MiNeveraActivity.setImagenDetalles(null);
         }
     }
 
@@ -150,7 +159,7 @@ public class Fragment_detalles extends Fragment {
                     constraintLayout,
                     alimento.getId(),
                     this.getActivity().getApplicationContext(),
-                    MiNeveraActivity.getImagenDetalles(),
+                    imagen,
                     alimento.getNombreAlimento());
         }
 

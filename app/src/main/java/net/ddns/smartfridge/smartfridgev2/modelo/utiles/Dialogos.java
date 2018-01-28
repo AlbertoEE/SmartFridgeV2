@@ -418,7 +418,7 @@ public class Dialogos {
     public void enviarNotificacionCaducado(Alimento alimento, Context contexto, int posicion){
         intent = new Intent(contexto, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
-        intent.putExtra("posicionCursor", posicion);
+        intent.putExtra("posicion", posicion);
         /*int id = alimento.getId();
         String nombreAlimento = alimento.getNombreAlimento();
         int cantidad = alimento.getCantidad();
@@ -458,7 +458,7 @@ public class Dialogos {
 
         //intent = new Intent (contexto, BuscarRecetaActivity.class);
         //intent.putExtra("Alimento", alimento);
-        //intent.putExtra("posicionCursor", posicion);
+        //intent.putExtra("posicion", posicion);
         //intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
@@ -483,7 +483,7 @@ public class Dialogos {
 
         //intent = new Intent (contexto, AñadirAListaActivity.class);
         //intent.putExtra("Alimento", alimento);
-        //intent.putExtra("posicionCursor", posicion);
+        //intent.putExtra("posicion", posicion);
         //intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
@@ -27,7 +28,8 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private Cursor cursor;//Para almacenar la consulta a la bbdd
     private String fechaCaducidad;//La fecha de caducidad recuperada de la bbdd
     private Alimento alimento;//Para construir el objeto Alimento y trabajar con él
-    private static final int DIAS_CADUCIDAD=2;//La diferencia máxima que puede haber entre la fecha actual y la de caducidad, para que salte así la notificación
+    private static final int DIAS_CADUCIDAD=2;//La diferencia máxima que puede haber entre la fecha actual y la de caducidad, para que salte así la notificación o el número mínimo
+    //de unidades que debe haber de un producto
     private int diasParaCaducidad;//Vamos a almacenar los días que falten para que caduque el alimento
     private Fecha fecha;//Para usar el método que calcula los días que hay de diferencia entre dos fechas
     private static Bitmap bm;//Para construir el Bitmap a partir de los datos de la bbdd
@@ -35,6 +37,8 @@ public class ComprobarCaducidadIntentService extends IntentService {
     //private static final long OCHO_HORAS=28800000;//Milisegundos que hay en 8 horas
     private static final long OCHO_HORAS=120000;//Milisegundos que hay en 2 minutos
     private static final int DELAY = 1000;//Delay usado para distintas partes del código
+    private int unidades;//Representa el número de unidades de cada producto almacenado en MiNevera
+    private int posicionCursor;//Para indicar la posición del elemento en el cursor de la bbdd
 
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
@@ -81,7 +85,8 @@ public class ComprobarCaducidadIntentService extends IntentService {
                                         cursor.getString(4),
                                         cursor.getString(5),
                                         null);
-                                dialogos.enviarNotificacionCaducado(alimento, getApplicationContext());
+                                posicionCursor = cursor.getPosition();
+                                dialogos.enviarNotificacionCaducado(alimento, getApplicationContext(), posicionCursor);
                             }
                             Log.d("servicio", "dias para caducidad: " + diasParaCaducidad);
                             //Comprobamos si quedan <2 días para que caduque. Si es así, se lanzará la notificación
@@ -94,7 +99,8 @@ public class ComprobarCaducidadIntentService extends IntentService {
                                         cursor.getString(4),
                                         cursor.getString(5), null);
                                 //Lanzamos la notificación
-                                dialogos.enviarNotificacionProximaCaducidad(alimento, getApplicationContext());
+                                posicionCursor = cursor.getPosition();
+                                dialogos.enviarNotificacionProximaCaducidad(alimento, getApplicationContext(), posicionCursor);
                                 Log.d("servicio", "Faltan: " + diasParaCaducidad + " días para que caduque.");
                             }
                             try {
@@ -102,6 +108,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            comprobarCantidad(cursor);
                         } while(cursor.moveToNext());
                     }
                 }
@@ -173,5 +180,25 @@ public class ComprobarCaducidadIntentService extends IntentService {
 
     public static Bitmap getBm() {
         return bm;
+    }
+
+    //Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
+    public void comprobarCantidad(Cursor cursor){
+        //Almacenamos en la variable el número de unidades de cada elemento
+        unidades = cursor.getInt(2);
+        if (unidades < DIAS_CADUCIDAD){
+            //Creamos el objeto alimento
+            alimento = new Alimento(cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getInt(2),
+                    cursor.getInt(3),
+                    cursor.getString(4),
+                    cursor.getString(5), null);
+            posicionCursor = cursor.getPosition();
+            Log.d("servicio", "posicion: " + posicionCursor);
+            //Lanzamos la notificación
+            dialogos.enviarNotificacionProximaEscasez(alimento, getApplicationContext(), posicionCursor);
+            Log.d("servicio", "cantidad: " + unidades);
+        }
     }
 }

@@ -415,9 +415,10 @@ public class Dialogos {
     }
 
     //Método para enviar la notificación
-    public void enviarNotificacionCaducado(Alimento alimento, Context contexto){
+    public void enviarNotificacionCaducado(Alimento alimento, Context contexto, int posicion){
         intent = new Intent(contexto, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
+        intent.putExtra("posicionCursor", posicion);
         /*int id = alimento.getId();
         String nombreAlimento = alimento.getNombreAlimento();
         int cantidad = alimento.getCantidad();
@@ -452,11 +453,12 @@ public class Dialogos {
     }
 
     //Método para enviar la notificación cuando falten menos de dos días para la caducidad
-    public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto){
+    public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto, int posicion){
         //Completar cuando esté creado el BuscarReceta por alimento
 
         //intent = new Intent (contexto, BuscarRecetaActivity.class);
         //intent.putExtra("Alimento", alimento);
+        //intent.putExtra("posicionCursor", posicion);
         //intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
@@ -469,6 +471,31 @@ public class Dialogos {
         //Permitimos que se pueda expandir la notificación
         Notification notificacion = new Notification.BigTextStyle(nb).bigText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
                 " Pulsa para buscar recetas que contengan este alimento.").build();
+        NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
+
+        //Emisión de la notificación. Le damos el id del alimento
+        nm.notify(alimento.getId(), notificacion);
+    }
+
+    //Método para enviar la notificación cuando haya menos de dos unidades de alimento
+    public void enviarNotificacionProximaEscasez(Alimento alimento, Context contexto, int posicion){
+        //Completar cuando esté creado el AñadirALista
+
+        //intent = new Intent (contexto, AñadirAListaActivity.class);
+        //intent.putExtra("Alimento", alimento);
+        //intent.putExtra("posicionCursor", posicion);
+        //intent.putExtra("ClasePadre", "Dialogos");
+        Notification.Builder nb = new Notification.Builder(contexto);
+        nb.setSmallIcon(R.mipmap.ic_launcher_f);
+        nb.setContentTitle("Escasez de alimento");
+        nb.setContentText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
+                " Pulsa para añadirlo a su lista de la compra.");
+        // nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
+        //intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        nb.setAutoCancel(true);
+        //Permitimos que se pueda expandir la notificación
+        Notification notificacion = new Notification.BigTextStyle(nb).bigText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
+                " Pulsa para añadirlo a su lista de la compra.").build();
         NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
 
         //Emisión de la notificación. Le damos el id del alimento

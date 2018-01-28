@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.persistencia;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
@@ -29,6 +30,7 @@ public class MySQLHelper {
     private String servidor = "jdbc:mysql://" + IP + ":" + PUERTO + "/" + NOMBRE_BBDD;
     private Connection conexion;
     private static final String TABLA_COD_ALI = "CODIGO_ALIMENTO";//Nombre de la tabla con los códigos de los alimentos
+    private static final String TABLA_INGREDIENTES = "INGREDIENTES";//Nombre de la tabla con los datos de todos los alimentos
 
     /**
      * Abre la conexión con la BBDD
@@ -52,26 +54,49 @@ public class MySQLHelper {
 
     //Consulta para comprobar si el código de barras escaneado está en la bbdd
     public Alimento_Codigo consultaCodBarras(String cod_barras) throws SQLException {
+        Log.d("codigo", "codigo de barras: " + cod_barras);
         Alimento_Codigo ac=null;//Para almacenar los datos de la bbdd
-        int id;//Para almacenar el id de la bbdd
+        //int id;//Para almacenar el id de la bbdd
         String nombre;//Para almacenar le nombre de la bbdd
-        String cod_ba;//Para almacenar el código de barras de la bbdd
+        Blob blob;//Para almacenar la imagne de la bbdd
+        //String cod_ba;//Para almacenar el código de barras de la bbdd
+        int id_ingrediente = 0;//Para almacenar el id del ingrediente
         Bitmap imagen;//Para almacenar la imagen de la bbdd
         String query_cod_barras = "SELECT * from " + TABLA_COD_ALI + " where cod_barras = \'" + cod_barras + "\'";
+
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(query_cod_barras);
         while (rs.next()) {
-            id = rs.getInt(1);
-            nombre = rs.getString(2);
-            cod_ba = rs.getString(3);
+            //cod_ba = rs.getString(1);
+            id_ingrediente = rs.getInt(2);
+            Log.d("codigo", "id: " + id_ingrediente);
+            /*nombre = rs.getString(2);
+
             //Recogemos el blob de la bbdd
             Blob blob = rs.getBlob(4);
             //Lo pasamos a array de bytes
             byte[] data = blob.getBytes(1, (int)blob.length());
             ByteArrayInputStream bais = new ByteArrayInputStream(data);
             imagen = BitmapFactory.decodeStream(bais);
-            ac = new Alimento_Codigo(id, nombre, cod_ba, imagen);
+            ac = new Alimento_Codigo(id, nombre, cod_ba, imagen);*/
         }
+        String query_alimento = "SELECT * from " + TABLA_INGREDIENTES + " where id_ingrediente = " + id_ingrediente;
+        rs = st.executeQuery(query_alimento);
+        Log.d("codigo", "query: " + query_alimento);
+        while (rs.next()) {
+            //cod_ba = rs.getString(1);
+            //id_ingrediente = rs.getInt(2);
+            nombre = rs.getString(2);
+
+            //Recogemos el blob de la bbdd
+            blob = rs.getBlob(3);
+            //Lo pasamos a array de bytes
+            byte[] data = blob.getBytes(1, (int)blob.length());
+            ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            imagen = BitmapFactory.decodeStream(bais);
+            ac = new Alimento_Codigo(id_ingrediente, nombre, cod_barras, imagen);
+        }
+
         return ac;
     }
     /**

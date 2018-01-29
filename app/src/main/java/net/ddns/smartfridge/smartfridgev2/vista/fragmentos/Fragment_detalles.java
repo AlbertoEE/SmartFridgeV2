@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 
@@ -21,6 +24,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.util.ArrayList;
@@ -42,11 +46,14 @@ public class Fragment_detalles extends Fragment {
     private boolean notificacion;//Para ver de donde viene el intent
     private Alimento alimento;
     private Bitmap imagen;
+    private DetallesActivity detallesActivity;
+    private AlimentoDB alimentoDB;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalles, container, false);
         wheelPicker = view.findViewById(R.id.wheelUdsDetalles);
+        alimentoDB = new AlimentoDB(getContext());
         readBundle(getArguments());
         Log.d("SWIPE", "onCreate: estoy aqui en el Fragment_detalles" );
 
@@ -54,7 +61,7 @@ public class Fragment_detalles extends Fragment {
         adb = new AlimentoDB(this.getActivity().getApplicationContext());
 
         Intent intent = getActivity().getIntent();
-        //alimento = (Alimento) intent.getSerializableExtra("Alimento");
+        /*//alimento = (Alimento) intent.getSerializableExtra("Alimento");
         //Log.d("servicio", "clasepadre " + intent.getStringExtra("ClasePadre").equals("Dialogos"));
         if(intent.getStringExtra("ClasePadre").equals("Dialogos")){
             notificacion = true;
@@ -67,9 +74,9 @@ public class Fragment_detalles extends Fragment {
             String fecha_caducidad = intentRecyclerView.getStringExtra("fecha_caducidad");
             int dias_caducidad = intentRecyclerView.getIntExtra("dias_caducidad", 88);
             Bitmap imagen = (Bitmap)intentRecyclerView.getExtras().get("imagen");*/
-        } else {
+        /*} else {
             notificacion = false;
-        }
+        }*/
 
         cargarDetallesAlimento(view);
 
@@ -122,6 +129,8 @@ public class Fragment_detalles extends Fragment {
                 int itemSel = picker.getCurrentItemPosition();
                 //Las uds van a ser la posición del wheel picker + 1
                 unidadesWheel = itemSel;
+                alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);
+
             }
         });
     }
@@ -137,17 +146,12 @@ public class Fragment_detalles extends Fragment {
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
         tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
 
-        //Controlamos la imagen que hay que poner
-        if (notificacion){
-            //Si viene de la notificación, cogemos la imagen del service
-            ivAlimento.setImageBitmap(bitmapService);
-            notificacion = false;
-        } else {
-            //Si no, lo cogemos de MiNeveraActivity
-            //ivAlimento.setImageBitmap(MiNeveraActivity.getImagenDetalles());
+
+        if(imagen != null){
             ivAlimento.setImageBitmap(imagen);
-            //MiNeveraActivity.setImagenDetalles(null);
         }
+
+        //Controlamos la imagen que hay que pon
     }
 
     public void okButton(View view){

@@ -23,8 +23,8 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     private static final String CREATE_TABLA_ALIMENTOS_CREADOS = "CREATE TABLE " + TABLA_ALIMENTOS_CREADOS + " (" + CAMPOS_ALI_CREADOS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + CAMPOS_ALI_CREADOS[1] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[2] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[3] + " INTEGER" +
             " FOREIGN KEY (" + CAMPOS_ALI_CREADOS[3] + ") REFERENCES " + TABLA_ALIMENTOS + "(" + CAMPOS_ALIMENTOS[0] + "));";//Tabla alimentos_creados
-    public static final String INSERT_ALIMENTO = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'manzana\', 3, 6, \'13012018\', \'19012018\')";
-    public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre_ali_nuevo, fecha_creado) VALUES (\'pomelo\', \'13012018\', 1)";
+    public static final String INSERT_ALIMENTO = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'manzana\', 3, 6, \'13-01-2018\', \'19-01-2018\')";
+    public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre_ali_nuevo, fecha_creado) VALUES (\'pomelo\', \'13-01-2018\', 1)";
 
     //Constructor de la clase
     public MiNeveraDB (Context context) {

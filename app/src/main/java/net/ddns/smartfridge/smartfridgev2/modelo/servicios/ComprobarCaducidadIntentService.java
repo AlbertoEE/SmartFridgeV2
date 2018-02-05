@@ -90,7 +90,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
                             }
                             Log.d("servicio", "dias para caducidad: " + diasParaCaducidad);
                             //Comprobamos si quedan <2 días para que caduque. Si es así, se lanzará la notificación
-                            if (diasParaCaducidad<=DIAS_CADUCIDAD) {
+                            if ((diasParaCaducidad<=DIAS_CADUCIDAD) && (diasParaCaducidad > 0)) {
                                 //Creamos el objeto alimento
                                 alimento = new Alimento(cursor.getInt(0),
                                         cursor.getString(1),

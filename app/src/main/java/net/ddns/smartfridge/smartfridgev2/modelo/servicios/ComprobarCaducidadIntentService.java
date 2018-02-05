@@ -76,6 +76,18 @@ public class ComprobarCaducidadIntentService extends IntentService {
                             //Calculamos los días de diferencia
                             try{
                                 diasParaCaducidad = fecha.fechaDias(fechaCaducidad, getApplicationContext());
+                                if(diasParaCaducidad<=0){
+                                    //Lanzamos la notificación de alimento caducado
+                                    alimento = new Alimento(cursor.getInt(0),
+                                            cursor.getString(1),
+                                            cursor.getInt(2),
+                                            cursor.getInt(3),
+                                            cursor.getString(4),
+                                            cursor.getString(5),
+                                            null);
+                                    posicionCursor = cursor.getPosition();
+                                    dialogos.enviarNotificacionCaducado(alimento, getApplicationContext(), posicionCursor);
+                                }
                             } catch (ParseException e){
                                 //Lanzamos la notificación de alimento caducado
                                 alimento = new Alimento(cursor.getInt(0),

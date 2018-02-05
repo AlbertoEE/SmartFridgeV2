@@ -53,7 +53,9 @@
 
         <service
             android:name=".modelo.servicios.ComprobarCaducidadIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".vista.actividades.clc.NuevaLista"></activity>
     </application>
 
 </manifest>

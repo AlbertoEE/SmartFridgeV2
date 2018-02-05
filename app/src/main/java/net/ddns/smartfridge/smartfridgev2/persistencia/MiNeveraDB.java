@@ -21,10 +21,13 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     public static final String [] CAMPOS_ALI_CREADOS = {"_id", "nombre_ali_nuevo", "fecha_creado", "id_alimento"};//Nombre de los
     //campos de la tabla "alimentos_creados"
     private static final String CREATE_TABLA_ALIMENTOS_CREADOS = "CREATE TABLE " + TABLA_ALIMENTOS_CREADOS + " (" + CAMPOS_ALI_CREADOS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + CAMPOS_ALI_CREADOS[1] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[2] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[3] + " INTEGER" +
+            + CAMPOS_ALI_CREADOS[1] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[2] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[3] + " INTEGER," +
             " FOREIGN KEY (" + CAMPOS_ALI_CREADOS[3] + ") REFERENCES " + TABLA_ALIMENTOS + "(" + CAMPOS_ALIMENTOS[0] + "));";//Tabla alimentos_creados
     public static final String INSERT_ALIMENTO = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'manzana\', 3, 6, \'13-01-2018\', \'19-01-2018\')";
-    public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre_ali_nuevo, fecha_creado) VALUES (\'pomelo\', \'13-01-2018\', 1)";
+    public static final String INSERT_ALIMENTO2 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'tomate\', 5, 10, \'05-02-2018\', \'16-03-2019\')";
+    public static final String INSERT_ALIMENTO3 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'coliflor\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
+    public static final String INSERT_ALIMENTO4 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'limón\', 2, 0, \'13-01-2018\', \'06-02-2018\')";
+    public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre_ali_nuevo, fecha_creado, id_alimento) VALUES (\'pomelo\', \'13-01-2018\', 1)";
 
     //Constructor de la clase
     public MiNeveraDB (Context context) {
@@ -35,6 +38,9 @@ public class MiNeveraDB extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLA_ALIMENTOS);
         db.execSQL(CREATE_TABLA_ALIMENTOS_CREADOS);
         db.execSQL(INSERT_ALIMENTO);
+        db.execSQL(INSERT_ALIMENTO2);
+        db.execSQL(INSERT_ALIMENTO3);
+        db.execSQL(INSERT_ALIMENTO4);
         db.execSQL(INSERT_ALI_CREADO);
         Log.d("insert", "sql: " + INSERT_ALI_CREADO);
     }

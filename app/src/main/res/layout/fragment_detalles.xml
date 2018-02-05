@@ -1,16 +1,26 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.fragmentos.Fragment_detalles">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity">
+
+        <ImageView
+            android:id="@+id/ivFondoBlur"
+            android:layout_width="wrap_content"
+            android:layout_height="289dp"
+            android:src="@drawable/inside_fridge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/ivAlimentoDetalles"
@@ -18,14 +28,13 @@
             android:layout_height="177dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.050000012"
             app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
@@ -52,7 +61,7 @@
             app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintVertical_bias="0.83"
             app:wheel_atmospheric="true"
             app:wheel_curved="true"
             app:wheel_cyclic="false"
@@ -82,36 +91,17 @@
             app:layout_constraintTop_toBottomOf="@+id/tvNombreAlimentoDetalles"
             app:layout_constraintVertical_bias="0.07999998" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="50dp"
-            android:layout_height="39dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.267"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNombreAlimentoDetalles"
-            app:layout_constraintVertical_bias="0.07999998"
-            app:srcCompat="@drawable/ic_date_range_24dp" />
-
         <TextView
             android:id="@+id/tvFechaCaducidadDetalles"
             android:layout_width="103dp"
             android:layout_height="38dp"
-            android:layout_marginTop="28dp"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="295dp" />
 
         <TextView
             android:id="@+id/tvDiasRestantesDetalles"
@@ -127,9 +117,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ibOkDetalles"
             app:layout_constraintHorizontal_bias="0.761"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:layout_constraintVertical_bias="0.797" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/ibOkDetalles"

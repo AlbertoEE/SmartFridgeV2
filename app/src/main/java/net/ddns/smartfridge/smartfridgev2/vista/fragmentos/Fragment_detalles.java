@@ -3,6 +3,8 @@ package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,12 +32,15 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.blurry.Blurry;
+
 public class Fragment_detalles extends Fragment {
     private int unidadesWheel;
     private static int MAXUDS = 50;
     private WheelPicker wheelPicker;
     private TextView tvNombreAlimento;
     private TextView tvFechaCaducidad;
+    private ImageView ivFondoBlur;
     private TextView tvDiasRestantes;
     private ImageView ivAlimento;
     private Dialogos dialogos;
@@ -129,6 +134,7 @@ public class Fragment_detalles extends Fragment {
                 int itemSel = picker.getCurrentItemPosition();
                 //Las uds van a ser la posición del wheel picker + 1
                 unidadesWheel = itemSel;
+                alimento.setCantidad(unidadesWheel);
                 alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);
 
             }
@@ -142,13 +148,17 @@ public class Fragment_detalles extends Fragment {
         tvDiasRestantes = (TextView)view.findViewById(R.id.tvDiasRestantesDetalles);
         ivAlimento = (ImageView)view.findViewById(R.id.ivAlimentoDetalles);
         constraintLayout = (View) view.findViewById(R.id.constraintLayout);
+        ivFondoBlur = (ImageView) view.findViewById(R.id.ivFondoBlur);
+
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
         tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
-
+        Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(), R.drawable.inside_fridge)).into(ivFondoBlur);
 
         if(imagen != null){
             ivAlimento.setImageBitmap(imagen);
+        } else {
+            ivAlimento.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found));
         }
 
         //Controlamos la imagen que hay que pon

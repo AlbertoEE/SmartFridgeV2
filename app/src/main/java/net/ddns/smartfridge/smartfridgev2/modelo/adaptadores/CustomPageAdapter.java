@@ -33,6 +33,10 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
         return Fragment_detalles.newInstance(alimentos.get(position), imagen.get(position));
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
     @Override
     public int getCount() {

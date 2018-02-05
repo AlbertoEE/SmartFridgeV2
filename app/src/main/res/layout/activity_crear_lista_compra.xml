@@ -6,30 +6,29 @@
     android:layout_height="match_parent"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.CrearListaCompraActivity">
 
-    <Button
-        android:id="@+id/bNuevaLista"
-        android:layout_width="263dp"
-        android:layout_height="196dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="crearNuevaLista"
-        android:text="Nueva Lista"
-        app:layout_constraintBottom_toTopOf="@+id/bListaExistente"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/bListaExistente"
-        android:layout_width="264dp"
-        android:layout_height="190dp"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Lista Existente"
+    <ImageButton
+        android:id="@+id/ibVerLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        app:srcCompat="@drawable/ver_lista" />
+
+    <ImageButton
+        android:id="@+id/ibNuevaLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        app:srcCompat="@drawable/crear_lista_nueva" />
 </android.support.constraint.ConstraintLayout>

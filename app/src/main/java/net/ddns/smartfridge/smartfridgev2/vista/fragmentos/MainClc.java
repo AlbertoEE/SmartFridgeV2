@@ -24,7 +24,7 @@ public class MainClc extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_clc, container, false);
+        return inflater.inflate(R.layout.activity_crear_lista_compra, container, false);
     }
 
 }

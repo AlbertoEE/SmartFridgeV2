@@ -7,4 +7,62 @@
     android:background="@drawable/listacomprafondo"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.NuevaLista">
 
+    <!-- <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="157dp"
+        android:layout_height="87dp"
+        android:layout_gravity="bottom|end"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/floatlistacompra"
+        app:backgroundTint="@color/cardview_shadow_end_color"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.352" /-->
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab"
+        android:layout_width="106dp"
+        android:layout_height="87dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:backgroundTint="@color/cardview_shadow_end_color"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.748"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.497">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/floatlistacompra"
+            app:fab_size="normal"
+            app:fab_title="Manual" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/anadirAlimentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_listadoproductos"
+            app:fab_size="normal"
+            app:fab_title="Alimentos"
+            tools:layout_editor_absoluteX="294dp"
+            tools:layout_editor_absoluteY="233dp" />
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 </android.support.constraint.ConstraintLayout>

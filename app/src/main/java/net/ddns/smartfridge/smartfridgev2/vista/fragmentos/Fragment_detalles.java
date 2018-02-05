@@ -132,7 +132,7 @@ public class Fragment_detalles extends Fragment {
             @Override
             public void onItemSelected(WheelPicker picker, Object data, int position) {
                 int itemSel = picker.getCurrentItemPosition();
-                //Las uds van a ser la posición del wheel picker + 1
+                //Las uds van a ser la posición del wheel picker + 1 jejeje
                 unidadesWheel = itemSel;
                 alimento.setCantidad(unidadesWheel);
                 alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);

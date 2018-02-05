@@ -31,7 +31,7 @@ public class MainClc extends Fragment {
         view.findViewById(R.id.ibVerLista).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //pon codigo aqui si quieres que pase algo
+            //pon codigo aqui si quieres que pase algo!
             }
         });
 

@@ -502,31 +502,4 @@ public class Dialogos {
         //Emisión de la notificación. Le damos el id del alimento
         nm.notify(alimento.getId(), notificacion);
     }
-
-    //Método para crear un Dialog solicitando los alimentos de manera manual al usuario
-    public void dialogAgregarAlimentoManual(AlertDialog.Builder builder, LayoutInflater inflater){
-        //Mensaje del Alert
-        builder.setMessage("Introduzca el alimento que quiere añadir a la lista:");
-        //Título
-        builder.setTitle("Añadir manualmente");
-        //Añadimos el layout que hemos creado
-        builder.setView(inflater.inflate(R.layout.dialognewfood, null));
-        //Añadimos los botones
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Asignamos el valor introducido a la variable
-                //setAlimento =  dialog.toString();
-            }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //No hacemos nada
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
 }

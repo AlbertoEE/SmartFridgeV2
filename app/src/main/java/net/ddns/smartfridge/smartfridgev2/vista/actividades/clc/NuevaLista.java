@@ -25,12 +25,13 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 public class NuevaLista extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
     private String alimentoNuevo;//Para recoger el dato introducido por el usuario en el dialog
+    private Context context;//Para indicar el contexto del activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
-
+        context = this;
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonManual = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.manual);
         com.getbase.floatingactionbutton.FloatingActionButton botonAlimentos = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.anadirAlimentos);
@@ -42,19 +43,19 @@ public class NuevaLista extends AppCompatActivity {
                 public void onClick(View v) {
                     //Cuando pulsemos el botón, nos da la opción de añadir alimentos de manera manual
                     //Mensaje del Alert
-                    builder.setMessage("Introduzca el alimento que quiere añadir a la lista:");
+                    builder.setMessage("Introduzca el elemento que quiere añadir a la lista:");
                     //Título
                     builder.setTitle("Añadir manualmente");
                     //Añadimos el layout que hemos creado
-                    builder.setView(inflater.inflate(R.layout.dialognewfood, null));
+                    //builder.setView(inflater.inflate(R.layout.dialognewfood, null));
+                    final EditText input = new EditText(context);
+                    builder.setView(input);
                     //Añadimos los botones
                     builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
-                            EditText et = (EditText)findViewById(R.id.nuevoAlimento1);
-
-                            alimentoNuevo =  et.getText().toString();
+                            alimentoNuevo =  input.getText().toString();
                             Log.d("alimento", alimentoNuevo);
                         }
                     });

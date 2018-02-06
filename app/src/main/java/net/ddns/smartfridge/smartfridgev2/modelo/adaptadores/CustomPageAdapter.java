@@ -20,7 +20,7 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Alimento> alimentos;
     private ArrayList<Bitmap> imagen;
     private int id;
-    private boolean contador = false;
+    private static boolean cambio = false;
 
     public CustomPageAdapter(FragmentManager fm, ArrayList<Alimento> alimentos, ArrayList<Bitmap> imagenAlimento) {
         super(fm);
@@ -35,7 +35,20 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
+        /*if(cambio){
+            Log.d("PETA", "getItemPosition: " + cambio);
+            cambio = false;
+            Log.d("PETA", "getItemPosition: " + cambio);
+            return POSITION_NONE;
+        }else {
+            Log.d("PETA", "getItemPosition: " + cambio);
+            return POSITION_UNCHANGED;
+        }*/
         return POSITION_NONE;
+    }
+
+    public static void setCambio(boolean cambio1){
+        cambio = cambio1;
     }
 
     @Override

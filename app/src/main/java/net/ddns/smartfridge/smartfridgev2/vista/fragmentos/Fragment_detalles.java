@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.aigestudio.wheelpicker.WheelPicker;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
@@ -53,6 +54,7 @@ public class Fragment_detalles extends Fragment {
     private Bitmap imagen;
     private DetallesActivity detallesActivity;
     private AlimentoDB alimentoDB;
+    private CustomPageAdapter customPageAdapter;
 
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -132,11 +134,11 @@ public class Fragment_detalles extends Fragment {
             @Override
             public void onItemSelected(WheelPicker picker, Object data, int position) {
                 int itemSel = picker.getCurrentItemPosition();
-                //Las uds van a ser la posición del wheel picker + 1 jejeje
+                //Las uds van a ser la posición del wheel picker + 1
                 unidadesWheel = itemSel;
                 alimento.setCantidad(unidadesWheel);
                 alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);
-
+                CustomPageAdapter.setCambio(true);
             }
         });
     }
@@ -153,7 +155,7 @@ public class Fragment_detalles extends Fragment {
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
         tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
-        Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(), R.drawable.inside_fridge)).into(ivFondoBlur);
+        Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(), R.drawable.inside_fridge2)).into(ivFondoBlur);
 
         if(imagen != null){
             ivAlimento.setImageBitmap(imagen);

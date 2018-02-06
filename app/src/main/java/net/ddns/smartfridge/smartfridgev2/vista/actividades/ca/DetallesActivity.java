@@ -54,7 +54,6 @@ public class DetallesActivity extends FragmentActivity {
 
         posicion = getIntent().getExtras().getInt("posicion");
 
-
         CustomPageAdapter pageAdapter = new CustomPageAdapter(getSupportFragmentManager(), alimentos, imagenes);
         viewPager.setAdapter(pageAdapter);
 

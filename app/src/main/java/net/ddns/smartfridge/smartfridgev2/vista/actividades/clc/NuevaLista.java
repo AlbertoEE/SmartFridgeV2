@@ -22,16 +22,20 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
+import java.util.ArrayList;
+
 public class NuevaLista extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
     private String alimentoNuevo;//Para recoger el dato introducido por el usuario en el dialog
     private Context context;//Para indicar el contexto del activity
+    private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se van a mostrar en la lista
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
         context = this;
+        listaAlimentosCompra = new ArrayList<String>();
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonManual = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.manual);
         com.getbase.floatingactionbutton.FloatingActionButton botonAlimentos = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.anadirAlimentos);
@@ -56,6 +60,7 @@ public class NuevaLista extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
                             alimentoNuevo =  input.getText().toString();
+                            listaAlimentosCompra.add(alimentoNuevo);
                             Log.d("alimento", alimentoNuevo);
                         }
                     });

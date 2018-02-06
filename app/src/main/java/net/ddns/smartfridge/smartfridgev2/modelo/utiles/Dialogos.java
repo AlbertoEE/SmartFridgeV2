@@ -490,7 +490,7 @@ public class Dialogos {
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Escasez de alimento");
         nb.setContentText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
-                " Pulsa para añadirlo a su lista de la compra.");
+                " Pulsa para recordártelo cuando hagas la lista de la compra.");
         // nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
         //intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);

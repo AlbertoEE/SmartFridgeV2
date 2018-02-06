@@ -34,7 +34,9 @@ public class MiNeveraDB extends SQLiteOpenHelper {
             CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + " TEXT UNIQUE NOT NULL, " + CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + " INTEGER, FOREIGN KEY (" +
             CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + ") REFERENCES " + TABLA_LISTA + "(" + CAMPOS_LISTA[0] + "));";//Tabla alimento_externo_lista
     private static final String CREATE_TABLA_ALIMENTO_INTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_INTERNO_LISTA + " (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " INTEGER, " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] +
-            " INTEGER, PRIMARY KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ", " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ", FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ") REFERENCES " + TABLA_LISTA +
+            " INTEGER, PRIMARY KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ", " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ")" +
+            "" +
+            ", FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ") REFERENCES " + TABLA_LISTA +
             " (" + CAMPOS_LISTA[0] + "), FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ") REFERENCES " + TABLA_ALIMENTOS + " (" + CAMPOS_ALIMENTOS[0] + "));";//Tabla alimento_interno_lista
     public static final String INSERT_ALIMENTO = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'manzana\', 3, 6, \'13-01-2018\', \'19-01-2018\')";
     public static final String INSERT_ALIMENTO2 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'tomate\', 5, 10, \'05-02-2018\', \'16-03-2019\')";

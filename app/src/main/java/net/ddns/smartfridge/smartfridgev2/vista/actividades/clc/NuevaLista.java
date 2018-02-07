@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,9 @@ public class NuevaLista extends AppCompatActivity {
     private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se van a mostrar en la lista
     private ListaCompra listaNueva;//Para trabajar con el objeto ListaCompra
     private Fecha fecha;//Para usar los métodos para obtener la fecha de hoy
-    private String[] listaDatos;//Para almacenar los datos leidos del SP
+    //private String[] listaDatos;//Para almacenar los datos leidos del SP
+    private ArrayList<String> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
+    private int elementos =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,29 +102,34 @@ public class NuevaLista extends AppCompatActivity {
         });
         //Comprobamos si hay algún alimento almacenado en el SP para notificárselo al usuario
         if(productosAlmacenados()){
-            //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
+            /*Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
+            intent = new Intent(this, Lista.class);
+            startActivity(intent);*/
         }
     }
 
     //Método para comprobar si hay algún elemento en el SP
     public boolean productosAlmacenados(){
+        elementos = 0;
         boolean hayElemento=false;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false
         //Comprobamos si hay algún elemento leyendo el SP
         File prefsdir = new File(getApplicationInfo().dataDir,"shared_prefs");
         //Comprobamos que haya un SP y que sea un directorio
         if(prefsdir.exists() && prefsdir.isDirectory()){
             //Guardamos en una lista los datos del sp
-            listaDatos = prefsdir.list();
-            int elementos = listaDatos.length;/*
-            for(int i = 0; i<elementos; i++){
-                String agua= listaDatos[i].toString();
-                Log.d("sp", "Elemento leido del sp: " + agua);
-            }*/
-
-
-            Log.d("sp", "elementos: " + elementos);
+            String[] listaDatos = prefsdir.list();
+            elementos = listaDatos.length;
+            Log.d("sp1", "elementos: " + elementos);
             if (elementos>0){
                 hayElemento=true;
+                SharedPreferences mySp = getPreferences(MODE_PRIVATE);
+                String alimentoSP= mySp.getString("1", "patata");
+                Log.d("sp1", "Elemento leido del sp: " + alimentoSP);
+                /*for(int i = 0; i<elementos; i++){
+                    String alimentoSP= mySp.getString(String.valueOf(i+1), "");
+                    alimentosLeidosSP.add(alimentoSP);
+                    Log.d("sp", "Elemento leido del sp: " + alimentoSP);
+                }*/
             }
         }
         return hayElemento;

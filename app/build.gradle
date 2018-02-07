@@ -54,6 +54,8 @@ dependencies {
     //Glide
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.google.http-client:google-http-client-gson:1.19.0'
+    //Para el dialog con los checkbox personalizados
+    compile 'com.github.andyxialm:SmoothCheckBox:4d4825562b'
     implementation project(':mysql-connector-java-5.1.44-binv3')
     //Blur
     compile 'jp.wasabeef:blurry:2.1.1'

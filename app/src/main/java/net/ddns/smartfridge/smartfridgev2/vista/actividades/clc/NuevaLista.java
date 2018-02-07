@@ -25,6 +25,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class NuevaLista extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class NuevaLista extends AppCompatActivity {
     private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se van a mostrar en la lista
     private ListaCompra listaNueva;//Para trabajar con el objeto ListaCompra
     private Fecha fecha;//Para usar los métodos para obtener la fecha de hoy
+    private String[] listaDatos;//Para almacenar los datos leidos del SP
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +98,34 @@ public class NuevaLista extends AppCompatActivity {
             }
         });
         //Comprobamos si hay algún alimento almacenado en el SP para notificárselo al usuario
-
+        if(productosAlmacenados()){
+            //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
         }
+    }
 
     //Método para comprobar si hay algún elemento en el SP
-    //public boolean
+    public boolean productosAlmacenados(){
+        boolean hayElemento=false;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false
+        //Comprobamos si hay algún elemento leyendo el SP
+        File prefsdir = new File(getApplicationInfo().dataDir,"shared_prefs");
+        //Comprobamos que haya un SP y que sea un directorio
+        if(prefsdir.exists() && prefsdir.isDirectory()){
+            //Guardamos en una lista los datos del sp
+            listaDatos = prefsdir.list();
+            int elementos = listaDatos.length;/*
+            for(int i = 0; i<elementos; i++){
+                String agua= listaDatos[i].toString();
+                Log.d("sp", "Elemento leido del sp: " + agua);
+            }*/
+
+
+            Log.d("sp", "elementos: " + elementos);
+            if (elementos>0){
+                hayElemento=true;
+            }
+        }
+        return hayElemento;
+    }
 
     }
 

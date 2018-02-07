@@ -338,6 +338,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //No hacemos nada
+                        wheelPicker.setSelectedItemPosition(uds);
                     }
                 })
                 .build();
@@ -518,8 +519,8 @@ public class Dialogos {
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                intent = new Intent(contexto, IdentificarAlimentoActivity.class);
-                contexto.startActivity(intent);
+                //intent = new Intent(contexto, IdentificarAlimentoActivity.class);
+                //contexto.startActivity(intent);
                 DialogActivity ca = (DialogActivity) clase;
                 //Finalizamos el activity
                 ca.finishAffinity();

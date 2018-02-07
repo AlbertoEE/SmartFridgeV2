@@ -11,4 +11,5 @@
     <color name="light_grey_superLight">#B6B5BA</color>
     <color name="dark_bg">#182031</color>
     <color name="white">#fff</color>
+    <color name="transparent">#00000000</color>
 </resources>

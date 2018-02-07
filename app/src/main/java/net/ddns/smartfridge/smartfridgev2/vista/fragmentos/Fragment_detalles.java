@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -26,10 +27,12 @@ import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,17 +51,24 @@ public class Fragment_detalles extends Fragment {
     private View constraintLayout;
     private MiNeveraActivity miNeveraActivity;
     private AlimentoDB adb;
-    private Bitmap bitmapService;//Para almacenar el bitmap del alimento que recibimos en el intent
     private boolean notificacion;//Para ver de donde viene el intent
     private Alimento alimento;
     private Bitmap imagen;
     private DetallesActivity detallesActivity;
     private AlimentoDB alimentoDB;
     private CustomPageAdapter customPageAdapter;
+    private ViewPager vp;
+    private int posicion;
+    private Fecha fecha;
 
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalles, container, false);
+        ViewPager vp=(ViewPager) getActivity().findViewById(R.id.viewpager);
+        fecha = new Fecha();
+        dialogos = new Dialogos(getContext(), getActivity());
+
+        customPageAdapter = (CustomPageAdapter) vp.getAdapter();
         wheelPicker = view.findViewById(R.id.wheelUdsDetalles);
         alimentoDB = new AlimentoDB(getContext());
         readBundle(getArguments());
@@ -68,32 +78,17 @@ public class Fragment_detalles extends Fragment {
         adb = new AlimentoDB(this.getActivity().getApplicationContext());
 
         Intent intent = getActivity().getIntent();
-        /*//alimento = (Alimento) intent.getSerializableExtra("Alimento");
-        //Log.d("servicio", "clasepadre " + intent.getStringExtra("ClasePadre").equals("Dialogos"));
-        if(intent.getStringExtra("ClasePadre").equals("Dialogos")){
-            notificacion = true;
-            bitmapService = ComprobarCaducidadIntentService.getBm();
-            alimento.setImagen(bitmapService);
-          /*  int id = intentRecyclerView.getIntExtra("id", 0);
-            String nombreAlimento = intentRecyclerView.getStringExtra("nombre");
-            int cantidad = intentRecyclerView.getIntExtra("cantidad", 8);
-            String fecha_registro = intentRecyclerView.getStringExtra("fecha_registro");
-            String fecha_caducidad = intentRecyclerView.getStringExtra("fecha_caducidad");
-            int dias_caducidad = intentRecyclerView.getIntExtra("dias_caducidad", 88);
-            Bitmap imagen = (Bitmap)intentRecyclerView.getExtras().get("imagen");*/
-        /*} else {
-            notificacion = false;
-        }*/
 
         cargarDetallesAlimento(view);
 
         return view;
     }
 
-    public static Fragment_detalles newInstance(Alimento alimento, Bitmap imagen) {
+    public static Fragment_detalles newInstance(Alimento alimento, Bitmap imagen, int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("alimento", alimento);
         bundle.putParcelable("imagen", imagen);
+        bundle.putInt("posicion", position);
 
         Fragment_detalles fragment = new Fragment_detalles();
         fragment.setArguments(bundle);
@@ -105,13 +100,14 @@ public class Fragment_detalles extends Fragment {
         if (bundle != null) {
             this.alimento = (Alimento) bundle.getSerializable("alimento");
             this.imagen = (Bitmap) bundle.getParcelable("imagen");
+            this.posicion = (int) bundle.getInt("posicion");
 
             wheel(wheelPicker);
         }
 
     }
 
-    public void wheel(WheelPicker wheelPicker){
+    public void wheel(final WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
         List<Integer> unidades = new ArrayList<>();
@@ -127,7 +123,6 @@ public class Fragment_detalles extends Fragment {
 
         wheelPicker.setSelectedItemPosition(alimento.getCantidad());
         //Iniciamos la variable a 1, ya que empezará en el primer elemento, que tendrá valor 1
-        unidadesWheel = 1;
         /*Para poner color de fondo
         wheelPicker.setBackgroundColor(getResources().getColor(R.color.viewfinder_laser));*/
         wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
@@ -135,10 +130,24 @@ public class Fragment_detalles extends Fragment {
             public void onItemSelected(WheelPicker picker, Object data, int position) {
                 int itemSel = picker.getCurrentItemPosition();
                 //Las uds van a ser la posición del wheel picker + 1
-                unidadesWheel = itemSel;
-                alimento.setCantidad(unidadesWheel);
-                alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);
-                CustomPageAdapter.setCambio(true);
+                if(itemSel != 0){
+                    unidadesWheel = itemSel;
+                    alimento.setCantidad(unidadesWheel);
+                    alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);
+                    //CustomPageAdapter.setCambio(true);
+                } else {
+                    dialogos.dialogCeroUnidades(
+                            constraintLayout,
+                            alimento.getId(),
+                            getActivity().getApplicationContext(),
+                            imagen,
+                            alimento.getNombreAlimento(),
+                            customPageAdapter,
+                            posicion,
+                            wheelPicker,
+                            alimento.getCantidad());
+                    wheelPicker.setSelectedItemPosition(alimento.getCantidad());
+                }
             }
         });
     }
@@ -154,7 +163,11 @@ public class Fragment_detalles extends Fragment {
 
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
-        tvDiasRestantes.setText(String.valueOf(alimento.getDias_caducidad()));
+        try {
+            tvDiasRestantes.setText(fecha.fechaDias(alimento.getFecha_caducidad(), getContext()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(), R.drawable.inside_fridge2)).into(ivFondoBlur);
 
         if(imagen != null){
@@ -164,20 +177,5 @@ public class Fragment_detalles extends Fragment {
         }
 
         //Controlamos la imagen que hay que pon
-    }
-
-    public void okButton(View view){
-        if(unidadesWheel > 0){
-            adb.actualizarUnidades(alimento.getId(), unidadesWheel);
-            this.getActivity().finish();
-        }else if (unidadesWheel == 0){
-            dialogos.dialogCeroUnidades(
-                    constraintLayout,
-                    alimento.getId(),
-                    this.getActivity().getApplicationContext(),
-                    imagen,
-                    alimento.getNombreAlimento());
-        }
-
     }
 }

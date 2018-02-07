@@ -30,7 +30,7 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return Fragment_detalles.newInstance(alimentos.get(position), imagen.get(position));
+        return Fragment_detalles.newInstance(alimentos.get(position), imagen.get(position), position);
     }
 
     @Override
@@ -49,6 +49,11 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
 
     public static void setCambio(boolean cambio1){
         cambio = cambio1;
+    }
+
+    public void removePage(int id){
+        alimentos.remove(id);
+        notifyDataSetChanged();
     }
 
     @Override

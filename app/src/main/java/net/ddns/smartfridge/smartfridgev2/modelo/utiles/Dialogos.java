@@ -18,10 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.aigestudio.wheelpicker.WheelPicker;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
@@ -309,7 +311,7 @@ public class Dialogos {
     }
 
     //Dialog para cuando se van a eliminar todas las uds de un alimento
-    public void dialogCeroUnidades(final View vista, final int id, final Context contexto, final Bitmap foto, final String nombre){
+    public void dialogCeroUnidades(final View vista, final int id, final Context contexto, final Bitmap foto, final String nombre, final CustomPageAdapter adapter, final int posicion, final WheelPicker wheelPicker, final int uds){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡Cuidado!")
@@ -329,7 +331,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //Mostramos el SnackBar
-                        mostrarSnack(vista, id, contexto, foto, nombre);
+                        mostrarSnack(vista, id, contexto, foto, nombre, adapter, posicion ,wheelPicker, uds);
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
@@ -341,7 +343,7 @@ public class Dialogos {
                 .build();
     }
     //SnackBar para deshacer la eliminación del elimento
-    public static void mostrarSnack(View vista, final int id, final Context contexto, final Bitmap foto, final String nombre){
+    public static void mostrarSnack(View vista, final int id, final Context contexto, final Bitmap foto, final String nombre, final CustomPageAdapter adapter, final int posicion, final WheelPicker wheelPicker, final int uds){
         //Creamos el SnackBar con el texto que indiquemos
         Snackbar sb = Snackbar.make(vista, "Eliminando alimento", Snackbar.LENGTH_SHORT);
         //La opción que va a tener es la de deshacer. Programamos el listener
@@ -360,6 +362,7 @@ public class Dialogos {
                     //Si pulsamos el botón de deshacer
                     case Snackbar.Callback.DISMISS_EVENT_ACTION:
                         Toast.makeText(contexto, "Se ha cancelado la eliminación del alimento", Toast.LENGTH_SHORT).show();
+                        wheelPicker.setSelectedItemPosition(uds);
                         break;
                     default:
                         try {
@@ -367,12 +370,8 @@ public class Dialogos {
                             alimentoDB = new AlimentoDB(contexto);
                             alimentoDB.borrarAlimento(id);
                             Toast.makeText(contexto, "Elemento eliminado", Toast.LENGTH_SHORT).show();
-                            //Aquí tienes que actualizar el recyclerview
-                         /*   cursor = alimentoDB.getBocatas();
-                            ba.setCursor(cursor);
-                            ba.notifyItemRemoved(position);*/
                             dialogAnadirLista(contexto, foto, nombre);
-                            clase.finish();
+                            adapter.removePage(posicion);
                             break;
                         }catch (SQLException e){
                             Toast.makeText(contexto, "Error al eliminar el elemento. Por favor, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();

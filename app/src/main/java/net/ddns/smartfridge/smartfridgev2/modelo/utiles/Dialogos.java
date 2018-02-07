@@ -490,6 +490,7 @@ public class Dialogos {
 
 
         intent = new Intent(contexto, DialogActivity.class);
+        intent.putExtra("Alimento", alimento.getNombreAlimento());
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Escasez de alimento");

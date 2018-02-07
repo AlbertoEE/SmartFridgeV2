@@ -95,7 +95,12 @@ public class NuevaLista extends AppCompatActivity {
                  */
             }
         });
+        //Comprobamos si hay algún alimento almacenado en el SP para notificárselo al usuario
+
         }
+
+    //Método para comprobar si hay algún elemento en el SP
+    //public boolean
 
     }
 

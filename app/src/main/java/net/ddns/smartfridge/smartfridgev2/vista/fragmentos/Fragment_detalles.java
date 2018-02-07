@@ -146,7 +146,6 @@ public class Fragment_detalles extends Fragment {
                             posicion,
                             wheelPicker,
                             alimento.getCantidad());
-                    wheelPicker.setSelectedItemPosition(alimento.getCantidad());
                 }
             }
         });
@@ -164,7 +163,7 @@ public class Fragment_detalles extends Fragment {
         tvNombreAlimento.setText(alimento.getNombreAlimento());
         tvFechaCaducidad.setText(alimento.getFecha_caducidad());
         try {
-            tvDiasRestantes.setText(fecha.fechaDias(alimento.getFecha_caducidad(), getContext()));
+            tvDiasRestantes.setText(String.valueOf(fecha.fechaDias(alimento.getFecha_caducidad(), getContext())));
         } catch (ParseException e) {
             e.printStackTrace();
         }

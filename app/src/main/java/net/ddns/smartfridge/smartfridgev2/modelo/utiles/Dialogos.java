@@ -25,6 +25,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
@@ -486,20 +487,46 @@ public class Dialogos {
         //intent.putExtra("Alimento", alimento);
         //intent.putExtra("posicion", posicion);
         //intent.putExtra("ClasePadre", "Dialogos");
+
+
+        intent = new Intent(contexto, DialogActivity.class);
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Escasez de alimento");
         nb.setContentText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
                 " Pulsa para recordártelo cuando hagas la lista de la compra.");
-        // nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
-        //intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
+        intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
+
         //Permitimos que se pueda expandir la notificación
         Notification notificacion = new Notification.BigTextStyle(nb).bigText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
-                " Pulsa para añadirlo a su lista de la compra.").build();
+                " Pulsa para recordártelo cuando hagas la lista de la compra.").build();
         NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
 
         //Emisión de la notificación. Le damos el id del alimento
         nm.notify(alimento.getId(), notificacion);
+    }
+
+    //Dialog para cuando se añadan productos a la lista de la compra
+    public void dialogListaCompra(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+        //Mensaje del Alert
+        builder.setMessage("Te recordaremos el producto cuando hagas la lista de la compra");
+        //Título
+        builder.setTitle("Producto almacenado");
+        //Añadimos los botones
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                intent = new Intent(contexto, IdentificarAlimentoActivity.class);
+                contexto.startActivity(intent);
+                DialogActivity ca = (DialogActivity) clase;
+                //Finalizamos el activity
+                ca.finishAffinity();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

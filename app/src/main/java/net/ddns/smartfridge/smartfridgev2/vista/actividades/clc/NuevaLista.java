@@ -20,7 +20,9 @@ import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 
 import java.util.ArrayList;
 
@@ -29,12 +31,21 @@ public class NuevaLista extends AppCompatActivity {
     private String alimentoNuevo;//Para recoger el dato introducido por el usuario en el dialog
     private Context context;//Para indicar el contexto del activity
     private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se van a mostrar en la lista
+    private ListaCompra listaNueva;//Para trabajar con el objeto ListaCompra
+    private Fecha fecha;//Para usar los métodos para obtener la fecha de hoy
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
+        //Creamos el nuevo objeto Lista
+        listaNueva = new ListaCompra();
+        fecha = new Fecha();
+        /*listaNueva.setFecha(fecha.fechaActual());
+        Log.d("fecha", "" + fecha.fechaActual());*/
+        //Fijamos el contexto del activity
         context = this;
+        //Instanciamos el arraylist
         listaAlimentosCompra = new ArrayList<String>();
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonManual = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.manual);

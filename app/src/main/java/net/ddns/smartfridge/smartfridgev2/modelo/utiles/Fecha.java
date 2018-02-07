@@ -28,6 +28,7 @@ public class Fecha {
         Date date = new Date();
         //Lo pasamos a un string
         String fecha_actual = dateFormat.format(date);
+        Log.d("fecha", "fecha actual111: " + fecha_actual);
         //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
         return fecha_actual;
     }

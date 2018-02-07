@@ -56,7 +56,10 @@
             android:exported="false" />
 
         <activity android:name=".vista.actividades.clc.NuevaLista" />
-        <activity android:name=".vista.actividades.DialogActivity" android:theme="@style/Theme.Transparent"></activity>
+        <activity
+            android:name=".vista.actividades.DialogActivity"
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentsoActivity"></activity>
     </application>
 
 </manifest>

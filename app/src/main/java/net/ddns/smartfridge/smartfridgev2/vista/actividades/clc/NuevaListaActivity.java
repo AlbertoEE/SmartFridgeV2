@@ -1,38 +1,25 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
-import android.animation.Animator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class NuevaLista extends AppCompatActivity {
+public class NuevaListaActivity extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
     private String alimentoNuevo;//Para recoger el dato introducido por el usuario en el dialog
     private Context context;//Para indicar el contexto del activity
@@ -112,8 +99,9 @@ public class NuevaLista extends AppCompatActivity {
         if(hayElemento){
             //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
             alimentosLeidosSP = recogerValores(elementos);
-            /*intent = new Intent(this, Lista.class);
-            startActivity(intent);*/
+            intent = new Intent(this, SugerenciaDeAlimentoActivity.class);
+            intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
+            startActivity(intent);
         }
     }
 

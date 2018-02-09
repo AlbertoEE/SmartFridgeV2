@@ -25,10 +25,9 @@ public class NuevaListaActivity extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
     private String alimentoNuevo;//Para recoger el dato introducido por el usuario en el dialog
     private Context context;//Para indicar el contexto del activity
-    private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se van a mostrar en la lista
+    private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se muestran en la lista
     private ListaCompra listaNueva;//Para trabajar con el objeto ListaCompra
     private Fecha fecha;//Para usar los métodos para obtener la fecha de hoy
-    //private String[] listaDatos;//Para almacenar los datos leidos del SP
     private ArrayList<String> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
     private GestorSharedP gsp;//Instancia de la clase para trabajar con el SharedPreferences
@@ -42,8 +41,8 @@ public class NuevaListaActivity extends AppCompatActivity {
         listaNueva = new ListaCompra();
         fecha = new Fecha();
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        /*listaNueva.setFecha(fecha.fechaActual());
-        Log.d("fecha", "" + fecha.fechaActual());*/
+        listaNueva.setFecha(fecha.fechaActual());
+        Log.d("fecha", "" + fecha.fechaActual());
         //Fijamos el contexto del activity
         context = this;
         //Instanciamos el arraylist
@@ -83,7 +82,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
                             alimentoNuevo =  input.getText().toString();
-                            listaAlimentosCompra.add(alimentoNuevo);
+                            //listaAlimentosCompra.add(alimentoNuevo);
                             Log.d("alimento", alimentoNuevo);
                         }
                     });
@@ -106,6 +105,14 @@ public class NuevaListaActivity extends AppCompatActivity {
                  */
             }
         });
+    }
+
+    //Método para crear el objeto lista
+    public void crearListaNueva(View v){
+        /*Recogemos los elementos de la lista y los almacenamos en un array
+        listaAlimentosCompra = customAdaptador.getArray();
+        listaNueva.setProductos(listaAlimentosCompra);
+         */
     }
 }
 

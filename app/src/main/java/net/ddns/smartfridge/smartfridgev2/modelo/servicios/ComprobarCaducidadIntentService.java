@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo.servicios;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +12,9 @@ import android.widget.Toast;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
+import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -41,6 +44,8 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private static final int DELAY = 1000;//Delay usado para distintas partes del código
     private int unidades;//Representa el número de unidades de cada producto almacenado en MiNevera
     private int posicionCursor;//Para indicar la posición del elemento en el cursor de la bbdd
+    private SharedPreferences mysp = DialogActivity.getMySp();//Cogemos el SP
+    private boolean hayElemento;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false
 
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
@@ -201,18 +206,22 @@ public class ComprobarCaducidadIntentService extends IntentService {
         //Almacenamos en la variable el número de unidades de cada elemento
         unidades = cursor.getInt(2);
         if (unidades < DIAS_CADUCIDAD){
-            //Creamos el objeto alimento
-            alimento = new Alimento(cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getInt(2),
-                    cursor.getInt(3),
-                    cursor.getString(4),
-                    cursor.getString(5), null);
-            posicionCursor = cursor.getPosition();
-            Log.d("servicio", "posicion: " + posicionCursor);
-            //Lanzamos la notificación
-            dialogos.enviarNotificacionProximaEscasez(alimento, getApplicationContext(), posicionCursor);
-            Log.d("servicio", "cantidad: " + unidades);
+            GestorSharedP gsp = new GestorSharedP();
+            gsp.isHayElemento();
+            //if(hayElemento) {
+                //Creamos el objeto alimento
+                alimento = new Alimento(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getInt(3),
+                        cursor.getString(4),
+                        cursor.getString(5), null);
+                posicionCursor = cursor.getPosition();
+                Log.d("servicio", "posicion: " + posicionCursor);
+                //Lanzamos la notificación
+                dialogos.enviarNotificacionProximaEscasez(alimento, getApplicationContext(), posicionCursor);
+                Log.d("servicio", "cantidad: " + unidades);
+            //}
         }
     }
 }

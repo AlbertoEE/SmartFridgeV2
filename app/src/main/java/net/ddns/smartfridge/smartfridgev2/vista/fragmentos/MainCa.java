@@ -16,6 +16,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
  * A simple {@link Fragment} subclass.
  */
 public class MainCa extends Fragment {
+
     public MainCa() {
         // Required empty public constructor
     }

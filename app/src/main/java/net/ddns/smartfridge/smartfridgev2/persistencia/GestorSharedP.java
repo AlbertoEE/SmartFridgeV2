@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class GestorSharedP {
     private int elementos;//Para contar el número de elementos que hay en el SP
     private boolean hayElemento;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false
     private Map<String, ?> totalElementos = null;//Map con los datos contenidos en el SP
-    private SharedPreferences sp= DialogActivity.getMySp();//Cogemos el SP que hemos usado antes
+    private SharedPreferences sp= InitialActivity.getSp();//Cogemos el SP que hemos usado antes
 
     //Método para comprobar si hay algún elemento en el SP
     public  int productosAlmacenados(){

@@ -501,7 +501,7 @@ public class Dialogos {
         nb.setContentTitle("Escasez de alimento");
         nb.setContentText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
                 " Pulsa para recordártelo cuando hagas la lista de la compra.");
-        nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
+        nb.setContentIntent(PendingIntent.getActivity(contexto, alimento.getId(),
         intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
 

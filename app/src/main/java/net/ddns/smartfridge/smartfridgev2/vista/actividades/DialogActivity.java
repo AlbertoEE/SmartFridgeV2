@@ -35,7 +35,8 @@ public class DialogActivity extends Activity {
         Log.d("sp", "intent: "+  nombreAlimentos.get(0).toString());
         Log.d("sp", "intent: "+  nombreAlimentos.get(1).toString());*/
         //Cogemos el SP.
-        mySp = getPreferences(MODE_PRIVATE);
+        //mySp = getPreferences(MODE_PRIVATE);
+        mySp = InitialActivity.getSp();
         /*
         Log.d("Alimento", "alimento: "+ nombreAlimentos.get(0).toString());
         Log.d("Alimento", "alimento: "+ nombreAlimentos.get(1).toString());*/

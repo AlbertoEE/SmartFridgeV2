@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -25,7 +26,7 @@ public class InitialActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private Intent intentServicio;//Para iniciar el IntentService
     private static final String NOMBRE_SERVICIO= "net.ddns.smartfridge.smartfridgev2.ComprobarCaducidadIntentService";
-
+    private static SharedPreferences sp;//Para recoger el SP de la app
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -87,6 +88,7 @@ public class InitialActivity extends AppCompatActivity {
         } else {
             Log.d("servicio", "El servicio ya está ejecutándose!!!");
         }
+        sp = getPreferences(Context.MODE_PRIVATE);
     }
 
     @Override
@@ -107,5 +109,9 @@ public class InitialActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    public static SharedPreferences getSp() {
+        return sp;
     }
 }

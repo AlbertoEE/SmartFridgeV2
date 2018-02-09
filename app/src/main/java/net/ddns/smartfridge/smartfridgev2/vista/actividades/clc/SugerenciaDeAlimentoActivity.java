@@ -29,7 +29,6 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
         gsp = new GestorSharedP();
         //Cogemos la referecencia al fab
         FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab1);
-        fab1.setCompatElevation(10f);
         alimentosSugeridos = getIntent().getStringArrayListExtra("AlimentosSugeridos");
 
         customArrayAdapter = new CustomArrayAdapter(this, alimentosSugeridos);

@@ -1,7 +1,9 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

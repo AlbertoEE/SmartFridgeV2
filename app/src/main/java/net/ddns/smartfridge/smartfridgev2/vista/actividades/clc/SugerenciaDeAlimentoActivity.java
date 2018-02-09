@@ -21,9 +21,6 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugerencia_de_alimento);
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab1);
-        fab.setCompatElevation(3.2f);
-
         alimentosSugeridos = new ArrayList<String>();
         alimentosSugeridos.add("Patata");
         alimentosSugeridos.add("Tomate");

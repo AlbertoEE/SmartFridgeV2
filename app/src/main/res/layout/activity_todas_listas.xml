@@ -8,6 +8,7 @@
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.TodasListasActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvListas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="8dp"

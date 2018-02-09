@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.NuevaLista;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.NuevaListaActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.SugerenciaDeAlimentoActivity;
 
 /**
@@ -41,7 +41,7 @@ public class MainClc extends Fragment {
         view.findViewById(R.id.ibNuevaLista).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), NuevaLista.class);
+                Intent intent = new Intent(getActivity(), NuevaListaActivity.class);
                 startActivity(intent);
             }
         });

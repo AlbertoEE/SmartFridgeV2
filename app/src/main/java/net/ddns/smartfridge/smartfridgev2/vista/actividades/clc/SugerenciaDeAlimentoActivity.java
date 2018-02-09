@@ -1,5 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -9,7 +10,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapter;
 
 import java.util.ArrayList;
 
-public class SugerenciaDeAlimentsoActivity extends AppCompatActivity {
+public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<String> alimentosSugeridos;
     private ArrayList<String> nuevaLista;
@@ -18,7 +19,10 @@ public class SugerenciaDeAlimentsoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sugerencia_de_alimentso);
+        setContentView(R.layout.activity_sugerencia_de_alimento);
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab1);
+        fab.setCompatElevation(3.2f);
 
         alimentosSugeridos = new ArrayList<String>();
         alimentosSugeridos.add("Patata");

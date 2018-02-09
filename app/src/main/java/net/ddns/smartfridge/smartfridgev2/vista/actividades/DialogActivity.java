@@ -28,14 +28,17 @@ public class DialogActivity extends Activity {
         setContentView(R.layout.activity_dialog);
         //Recogemos el intent
         i = getIntent();
+        String alimento = i.getStringExtra("Alimento");
+        Log.d("sp", alimento);
+        /*
         ArrayList<String> nombreAlimentos = i.getStringArrayListExtra("Alimento");
         Log.d("sp", "intent: "+  nombreAlimentos.get(0).toString());
-        Log.d("sp", "intent: "+  nombreAlimentos.get(1).toString());
+        Log.d("sp", "intent: "+  nombreAlimentos.get(1).toString());*/
         //Cogemos el SP.
         mySp = getPreferences(MODE_PRIVATE);
-
+        /*
         Log.d("Alimento", "alimento: "+ nombreAlimentos.get(0).toString());
-        Log.d("Alimento", "alimento: "+ nombreAlimentos.get(1).toString());
+        Log.d("Alimento", "alimento: "+ nombreAlimentos.get(1).toString());*/
         //Comprobamos el número de elementos que hay en el SP
         posicion = recogerPosicion(mySp);
         //Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
@@ -43,8 +46,8 @@ public class DialogActivity extends Activity {
         posicion++;
         Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
         //Añadimos el elemento
-        guardarSP(posicion, nombreAlimentos.get(0).toString());
-        guardarSP(posicion+1, nombreAlimentos.get(1).toString());
+        guardarSP(posicion, alimento);
+       // guardarSP(posicion+1, nombreAlimentos.get(1).toString());
         Dialogos d = new Dialogos(this, this);
         d.dialogListaCompra();
     }

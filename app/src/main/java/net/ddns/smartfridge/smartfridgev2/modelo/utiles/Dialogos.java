@@ -492,9 +492,9 @@ public class Dialogos {
         //intent.putExtra("posicion", posicion);
         //intent.putExtra("ClasePadre", "Dialogos");
 
-        listadoAlimentosEscasez.add(alimento.getNombreAlimento());
+        //listadoAlimentosEscasez.add(alimento.getNombreAlimento());
         intent = new Intent(contexto, DialogActivity.class);
-        intent.putExtra("Alimento", listadoAlimentosEscasez);
+        intent.putExtra("Alimento", alimento.getNombreAlimento());
         Log.d("Alimento", alimento.getNombreAlimento());
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);

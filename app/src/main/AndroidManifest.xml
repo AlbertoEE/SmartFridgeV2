@@ -59,7 +59,7 @@
         <activity
             android:name=".vista.actividades.DialogActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentosActivity" />
+        <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentoActivity" />
         <activity android:name=".vista.actividades.clc.TodasListasActivity"></activity>
     </application>
 

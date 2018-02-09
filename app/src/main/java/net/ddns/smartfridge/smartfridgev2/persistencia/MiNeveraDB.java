@@ -42,6 +42,8 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     public static final String INSERT_ALIMENTO2 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'tomate\', 5, 10, \'05-02-2018\', \'16-03-2019\')";
     public static final String INSERT_ALIMENTO3 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'coliflor\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
     public static final String INSERT_ALIMENTO4 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'limón\', 2, 0, \'13-01-2018\', \'06-02-2018\')";
+    public static final String INSERT_ALIMENTO5 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'mantequilla\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
+    public static final String INSERT_ALIMENTO6 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'nata\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
     public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre_ali_nuevo, fecha_creado, id_alimento) VALUES (\'pomelo\', \'13-01-2018\', 1)";
 
     //Constructor de la clase
@@ -59,6 +61,8 @@ public class MiNeveraDB extends SQLiteOpenHelper {
         db.execSQL(INSERT_ALIMENTO2);
         db.execSQL(INSERT_ALIMENTO3);
         db.execSQL(INSERT_ALIMENTO4);
+        db.execSQL(INSERT_ALIMENTO5);
+        db.execSQL(INSERT_ALIMENTO6);
         db.execSQL(INSERT_ALI_CREADO);
         Log.d("insert", "sql: " + INSERT_ALI_CREADO);
     }

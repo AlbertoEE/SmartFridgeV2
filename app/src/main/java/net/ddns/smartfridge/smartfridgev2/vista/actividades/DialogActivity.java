@@ -12,6 +12,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class DialogActivity extends Activity {
@@ -27,10 +28,14 @@ public class DialogActivity extends Activity {
         setContentView(R.layout.activity_dialog);
         //Recogemos el intent
         i = getIntent();
+        ArrayList<String> nombreAlimentos = i.getStringArrayListExtra("Alimento");
+        Log.d("sp", "intent: "+  nombreAlimentos.get(0).toString());
+        Log.d("sp", "intent: "+  nombreAlimentos.get(1).toString());
         //Cogemos el SP.
         mySp = getPreferences(MODE_PRIVATE);
-        String nombreAlimento = i.getStringExtra("Alimento");
-        Log.d("sp", "alimento: "+ nombreAlimento);
+
+        Log.d("Alimento", "alimento: "+ nombreAlimentos.get(0).toString());
+        Log.d("Alimento", "alimento: "+ nombreAlimentos.get(1).toString());
         //Comprobamos el número de elementos que hay en el SP
         posicion = recogerPosicion(mySp);
         //Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
@@ -38,7 +43,8 @@ public class DialogActivity extends Activity {
         posicion++;
         Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
         //Añadimos el elemento
-        guardarSP(posicion, nombreAlimento);
+        guardarSP(posicion, nombreAlimentos.get(0).toString());
+        guardarSP(posicion+1, nombreAlimentos.get(1).toString());
         Dialogos d = new Dialogos(this, this);
         d.dialogListaCompra();
     }

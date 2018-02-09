@@ -34,6 +34,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
@@ -50,6 +53,7 @@ public class Dialogos {
     private static final String DIAS = " días";//Cte para el mensaje del dialog
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
     private static Bitmap imagenDetalles;//Para recoger el bitmap de la bbdd
+    private ArrayList<String>listadoAlimentosEscasez = new ArrayList<String>();//Para almacenar todos los alimentos que tienen escasez
 
     public Dialogos(Context context, Activity activity){
         this.contexto=context;
@@ -488,9 +492,10 @@ public class Dialogos {
         //intent.putExtra("posicion", posicion);
         //intent.putExtra("ClasePadre", "Dialogos");
 
-
+        listadoAlimentosEscasez.add(alimento.getNombreAlimento());
         intent = new Intent(contexto, DialogActivity.class);
-        intent.putExtra("Alimento", alimento.getNombreAlimento());
+        intent.putExtra("Alimento", listadoAlimentosEscasez);
+        Log.d("Alimento", alimento.getNombreAlimento());
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Escasez de alimento");
@@ -507,6 +512,7 @@ public class Dialogos {
 
         //Emisión de la notificación. Le damos el id del alimento
         nm.notify(alimento.getId(), notificacion);
+        Log.d("Alimento", "id: " + alimento.getId());
     }
 
     //Dialog para cuando se añadan productos a la lista de la compra

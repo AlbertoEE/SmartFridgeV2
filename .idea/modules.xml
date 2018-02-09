@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\SmartFridgeV2.iml" filepath="C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\SmartFridgeV2.iml" />
-      <module fileurl="file://C:\Users\Alberto\git\SmartFridgeV3\SmartFridgeV2.iml" filepath="C:\Users\Alberto\git\SmartFridgeV3\SmartFridgeV2.iml" />
-      <module fileurl="file://C:\Users\raque\Desktop\Android\SmartFridgeV2\SmartFridgeV3.iml" filepath="C:\Users\raque\Desktop\Android\SmartFridgeV2\SmartFridgeV3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SmartFridgeV4.iml" filepath="$PROJECT_DIR$/SmartFridgeV4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartFridgeV2.iml" filepath="$PROJECT_DIR$/SmartFridgeV2.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelPicker-1.1.2/WheelPicker-1.1.2.iml" filepath="$PROJECT_DIR$/WheelPicker-1.1.2/WheelPicker-1.1.2.iml" />
-      <module fileurl="file://C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\WheelPicker-1.1.2\WheelPicker-1.1.2.iml" filepath="C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\WheelPicker-1.1.2\WheelPicker-1.1.2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\app\app.iml" filepath="C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.44-binv3/mysql-connector-java-5.1.44-binv3.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.44-binv3/mysql-connector-java-5.1.44-binv3.iml" />
-      <module fileurl="file://C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\mysql-connector-java-5.1.44-binv3\mysql-connector-java-5.1.44-binv3.iml" filepath="C:\Users\Alberto\git\SmartFridgeV4\SmartFridgeV4\mysql-connector-java-5.1.44-binv3\mysql-connector-java-5.1.44-binv3.iml" />
     </modules>
   </component>
 </project>

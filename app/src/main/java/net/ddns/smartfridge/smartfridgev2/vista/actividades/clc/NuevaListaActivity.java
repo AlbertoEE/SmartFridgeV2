@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
+import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.util.ArrayList;
@@ -29,13 +31,13 @@ public class NuevaListaActivity extends AppCompatActivity {
     //private String[] listaDatos;//Para almacenar los datos leidos del SP
     private ArrayList<String> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
-    private boolean hayElemento=false;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false
-    private Map<String, ?> totalElementos = null;;
+    private GestorSharedP gsp;//Instancia de la clase para trabajar con el SharedPreferences
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
+        gsp = new GestorSharedP();
         //Creamos el nuevo objeto Lista
         listaNueva = new ListaCompra();
         fecha = new Fecha();
@@ -47,6 +49,16 @@ public class NuevaListaActivity extends AppCompatActivity {
         //Instanciamos el arraylist
         listaAlimentosCompra = new ArrayList<String>();
         alimentosLeidosSP = new ArrayList<String>();
+        //Comprobamos si hay algún alimento almacenado en el SP para notificárselo al usuario
+        elementos = gsp.productosAlmacenados();
+        if(gsp.isHayElemento()){
+            //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
+            alimentosLeidosSP = gsp.recogerValores(elementos);
+            intent = new Intent(this, SugerenciaDeAlimentoActivity.class);
+            intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
+            startActivity(intent);
+            //borrarSP();
+        }
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonManual = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.manual);
         com.getbase.floatingactionbutton.FloatingActionButton botonAlimentos = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.anadirAlimentos);
@@ -94,48 +106,6 @@ public class NuevaListaActivity extends AppCompatActivity {
                  */
             }
         });
-        //Comprobamos si hay algún alimento almacenado en el SP para notificárselo al usuario
-        elementos = productosAlmacenados();
-        if(hayElemento){
-            //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
-            alimentosLeidosSP = recogerValores(elementos);
-            intent = new Intent(this, SugerenciaDeAlimentoActivity.class);
-            intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
-            startActivity(intent);
-        }
     }
-
-    //Método para comprobar si hay algún elemento en el SP
-    public  int productosAlmacenados(){
-        elementos = 0;
-        //Comprobamos si hay algún elemento leyendo el SP
-        try{
-            totalElementos = DialogActivity.getMySp().getAll();
-            for (Map.Entry<String, ?> entry : totalElementos.entrySet()) {
-                //alimentosLeidosSP.add((String)entry.getValue());
-                Log.d("sp", entry.getKey() + ": " + entry.getValue().toString());
-                elementos++;
-            }
-        } catch (NullPointerException e){
-            hayElemento = false;
-        }
-        Log.d("sp", "numero de elementos en la lista de la compra: " + elementos);
-        if (elementos>0){
-            hayElemento=true;
-        }
-        return elementos;
-    }
-    //Método para recoger los valores del SP
-    public ArrayList<String> recogerValores(int elem){
-        String valor;//Para almacenar el valor recogido del SP
-        for (int i=1; i<=elem;i++){
-            valor = DialogActivity.getMySp().getString(String.valueOf(i),"oooooo");
-            alimentosLeidosSP.add(valor);
-            Log.d("sp", "alimento leido: " + valor);
-        }
-
-        return alimentosLeidosSP;
-    }
-
-    }
+}
 

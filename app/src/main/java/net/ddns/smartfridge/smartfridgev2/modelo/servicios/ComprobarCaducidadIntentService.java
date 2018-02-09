@@ -15,6 +15,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,6 +37,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private Dialogos dialogos;//Para crear las notificaciones
     //private static final long OCHO_HORAS=28800000;//Milisegundos que hay en 8 horas
     private static final long OCHO_HORAS=120000;//Milisegundos que hay en 2 minutos
+    private static final long MINUTO=60000;//Milisegundos que hay en 1 minuto
     private static final int DELAY = 1000;//Delay usado para distintas partes del código
     private int unidades;//Representa el número de unidades de cada producto almacenado en MiNevera
     private int posicionCursor;//Para indicar la posición del elemento en el cursor de la bbdd
@@ -187,7 +189,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
             }
         }*/
         Timer timer = new Timer();
-        timer.schedule(timerTask,DELAY,OCHO_HORAS);
+        timer.schedule(timerTask,DELAY,MINUTO);
     }
 
     public static Bitmap getBm() {

@@ -21,9 +21,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugerencia_de_alimento);
 
-        alimentosSugeridos = new ArrayList<String>();
-        alimentosSugeridos.add("Patata");
-        alimentosSugeridos.add("Tomate");
+        alimentosSugeridos = getIntent().getStringArrayListExtra("AlimentosSugeridos");
 
         customArrayAdapter = new CustomArrayAdapter(this, alimentosSugeridos);
         nuevaLista = new ArrayList<String>();

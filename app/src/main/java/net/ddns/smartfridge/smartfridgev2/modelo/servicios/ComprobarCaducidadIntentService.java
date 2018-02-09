@@ -17,6 +17,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -44,8 +45,8 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private static final int DELAY = 1000;//Delay usado para distintas partes del código
     private int unidades;//Representa el número de unidades de cada producto almacenado en MiNevera
     private int posicionCursor;//Para indicar la posición del elemento en el cursor de la bbdd
-    private SharedPreferences mysp = DialogActivity.getMySp();//Cogemos el SP
-    private boolean hayElemento;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false
+    private ArrayList<String> alimentosLeidosSP = new ArrayList<String>();//Para leer los aliemntos que hay en el SP almacenados
+    private boolean alimentoRepetidoSP=false;//Booleano que nos indica si un alimento está ya incluido en el SP
 
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
@@ -203,12 +204,16 @@ public class ComprobarCaducidadIntentService extends IntentService {
 
     //Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
     public void comprobarCantidad(Cursor cursor){
+        alimentoRepetidoSP=false;
         //Almacenamos en la variable el número de unidades de cada elemento
         unidades = cursor.getInt(2);
         if (unidades < DIAS_CADUCIDAD){
             GestorSharedP gsp = new GestorSharedP();
-            gsp.isHayElemento();
-            //if(hayElemento) {
+            int elementos = gsp.productosAlmacenados();
+            Log.d("probandoSP", "num: " + elementos);
+            if(elementos>0) {
+                alimentosLeidosSP = gsp.recogerValores(elementos);
+                //Log.d("probandoSP", "alimentos");
                 //Creamos el objeto alimento
                 alimento = new Alimento(cursor.getInt(0),
                         cursor.getString(1),
@@ -218,10 +223,28 @@ public class ComprobarCaducidadIntentService extends IntentService {
                         cursor.getString(5), null);
                 posicionCursor = cursor.getPosition();
                 Log.d("servicio", "posicion: " + posicionCursor);
+                comprobarEscasezSharedP(alimentosLeidosSP, alimento);
+                if (alimentoRepetidoSP==false) {
+                    //Lanzamos la notificación
+                    dialogos.enviarNotificacionProximaEscasez(alimento, getApplicationContext(), posicionCursor);
+                    Log.d("servicio", "cantidad: " + unidades);
+                    Log.d("probandoSP", "variable: " + alimentoRepetidoSP);
+                }
+            } else {
                 //Lanzamos la notificación
                 dialogos.enviarNotificacionProximaEscasez(alimento, getApplicationContext(), posicionCursor);
-                Log.d("servicio", "cantidad: " + unidades);
-            //}
+            }
+        }
+    }
+
+    //Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
+    public void comprobarEscasezSharedP(ArrayList<String> lista, Alimento alimento){
+        for ( int i=0; i<lista.size(); i++){
+            if(lista.get(i).equals(alimento.getNombreAlimento())){
+                Log.d("probandoSP", "elemento lista: " + lista.get(i));
+                Log.d("probandoSP", "nombre alimento: " + alimento.getNombreAlimento());
+                alimentoRepetidoSP = true;
+            }
         }
     }
 }

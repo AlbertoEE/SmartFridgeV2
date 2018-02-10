@@ -16,11 +16,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
@@ -32,6 +35,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,11 +174,28 @@ public class Fragment_detalles extends Fragment {
         Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(), R.drawable.inside_fridge2)).into(ivFondoBlur);
 
         if(imagen != null){
-            ivAlimento.setImageBitmap(imagen);
+            //ivAlimento.setImageBitmap(imagen);
+            comprimirImagen(imagen, ivAlimento);
         } else {
-            ivAlimento.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found));
+            //ivAlimento.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found));
+            comprimirImagen(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found), ivAlimento);
         }
 
         //Controlamos la imagen que hay que pon
+    }
+
+    public void comprimirImagen(Bitmap bitmap, ImageView imageView){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        try {
+            Glide.with(this)
+                    .load(stream.toByteArray())
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imageView);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

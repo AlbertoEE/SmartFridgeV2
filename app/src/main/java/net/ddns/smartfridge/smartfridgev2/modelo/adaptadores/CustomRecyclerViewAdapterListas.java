@@ -36,7 +36,7 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
     }
 
     public void removeItem(int position) {
-        //listas.remove(position);
+        listas.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, listas.size());
     }
@@ -51,14 +51,13 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
 
     @Override
     public void onBindViewHolder(CustomRecyclerViewAdapterListas.ViewHolder2 holder, int position) {
-        holder.tvFechaLista.setText("hola");
-        holder.tvNumeroProductos.setText("hola");
+        holder.tvFechaLista.setText(listas.get(position).getFecha());
+        holder.tvNumeroProductos.setText(String.valueOf(listas.get(position).getProductos().size()));
     }
 
     @Override
     public int getItemCount() {
-        //return listas.size();
-        return 8;
+        return listas.size();
     }
 
     public static class ViewHolder2 extends RecyclerView.ViewHolder {

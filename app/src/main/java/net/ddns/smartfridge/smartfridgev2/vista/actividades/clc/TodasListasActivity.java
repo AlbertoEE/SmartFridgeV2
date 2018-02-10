@@ -1,6 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,8 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterListas;
@@ -27,6 +25,7 @@ public class TodasListasActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<ListaCompra> listas;
     private Paint p = new Paint();
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +45,10 @@ public class TodasListasActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        initSwipe();
+        cargarSwipe();
     }
 
-    private void initSwipe(){
+    private void cargarSwipe(){
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
@@ -64,7 +63,7 @@ public class TodasListasActivity extends AppCompatActivity {
                 if (direction == ItemTouchHelper.LEFT){
                    adapter.removeItem(position);
                 } else {
-                    //hacia derecha
+                    intent = new Intent(this, )
                 }
             }
 

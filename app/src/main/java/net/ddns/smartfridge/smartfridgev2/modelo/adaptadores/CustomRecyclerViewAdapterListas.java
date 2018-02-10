@@ -36,7 +36,7 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
     }
 
     public void removeItem(int position) {
-        listas.remove(position);
+        //listas.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, listas.size());
     }

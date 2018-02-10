@@ -62,7 +62,7 @@ public class TodasListasActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
 
                 if (direction == ItemTouchHelper.LEFT){
-                   // adapter.removeItem(position);
+                   adapter.removeItem(position);
                 } else {
                     //hacia derecha
                 }
@@ -100,8 +100,4 @@ public class TodasListasActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
-    private void removeView(){
-
-    }
-
 }

@@ -25,6 +25,7 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Nuevo;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
@@ -54,6 +55,8 @@ public class Dialogos {
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
     private static Bitmap imagenDetalles;//Para recoger el bitmap de la bbdd
     private ArrayList<String>listadoAlimentosEscasez = new ArrayList<String>();//Para almacenar todos los alimentos que tienen escasez
+    private int idAlimento;//Para guardar el id recogido de la bbdd
+    private Alimento_Nuevo aliNuevo;//Para crear un objeto alimento nuevo y guardarlo en la bbdd
 
     public Dialogos(Context context, Activity activity){
         this.contexto=context;
@@ -163,9 +166,9 @@ public class Dialogos {
     }
 
     //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
-    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manual, final String cod_barras){
+    public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manualCod, final String cod_barras){
         String day;//Para poner el mensaje del dialog
-        Log.d("manual", "manual: " + manual);
+        Log.d("manual", "manual: " + manualCod);
         if (caducidad==1){
             day = DIA;
         } else {
@@ -188,11 +191,14 @@ public class Dialogos {
                         AlimentoDB adb = new AlimentoDB(contexto);
                         Alimento_NuevoDB andb = new Alimento_NuevoDB(contexto);
                         adb.guardarAlimento(alimento);
-                        andb.guardarAlimento(alimento);
+                        idAlimento = adb.getIdAlimento(alimento);
+                        Log.d("ref", "dialog id: " + idAlimento);
+                        aliNuevo = new Alimento_Nuevo(alimento.getNombreAlimento(), alimento.getFecha_registro(), idAlimento);
+                        andb.guardarAlimento(aliNuevo);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
-                        if (manual){
-                            Log.d("manual", "manual: " + manual);
+                        if (manualCod){
+                            Log.d("manual", "manual: " + manualCod);
                             dialogNotificarSF(alimento, cod_barras);
                         } else {
                             intent = new Intent(contexto, InitialActivity.class);

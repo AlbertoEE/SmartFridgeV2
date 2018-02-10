@@ -5,15 +5,16 @@ package net.ddns.smartfridge.smartfridgev2.modelo.basico;
  */
 
 public class Alimento_Nuevo {
-    private int id;//Representa el id del alimento
+    private int id;//Representa el id del alimento que proviene de la tabla Alimentos de MiNevera(Foreign Key)
     private String nombre_ali_nuevo;//Representa el nombre del alimento
     private String fecha_alta;//Fecha en la que se insertó el alimento en la bbdd
 
     //Constructor 1
-    public Alimento_Nuevo(int id, String nombre_ali_nuevo, String fecha_alta) {
-        this.id = id;
+    public Alimento_Nuevo(String nombre_ali_nuevo, String fecha_alta, int id) {
+
         this.nombre_ali_nuevo = nombre_ali_nuevo;
         this.fecha_alta = fecha_alta;
+        this.id = id;
     }
 
     //Constructor 2

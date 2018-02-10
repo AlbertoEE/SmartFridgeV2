@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Nuevo;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
 /**
@@ -40,11 +41,11 @@ public class Alimento_NuevoDB {
         return cursor;
     }
 
-    public void guardarAlimento(Alimento alimento){
+    public void guardarAlimento(Alimento_Nuevo alimento){
         ContentValues cv = new ContentValues();
-
-        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[1], alimento.getNombreAlimento());
-        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[2], alimento.getFecha_registro());
+        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[1], alimento.getNombre_ali_nuevo());
+        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[2], alimento.getFecha_alta());
+        cv.put(MiNeveraDB.CAMPOS_ALI_CREADOS[3], alimento.getId());
         sql.insert(MiNeveraDB.TABLA_ALIMENTOS_CREADOS, null, cv);
     }
 }

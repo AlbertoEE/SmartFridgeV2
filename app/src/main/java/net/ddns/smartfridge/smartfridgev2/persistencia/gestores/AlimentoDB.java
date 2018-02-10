@@ -22,6 +22,7 @@ public class AlimentoDB {
     private SQLiteDatabase sqe;//Para crear la instancia de SQLiteDatabase para lectura
     private static final String QUERYBBDDCOMPLETA = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTOS;//Sentencia para sacar todos los datos de la bbdd
 
+
     //Constructor
     public AlimentoDB(Context contexto){
         miNevera = new MiNeveraDB(contexto);
@@ -76,5 +77,26 @@ public class AlimentoDB {
         String updateUds = "UPDATE " + MiNeveraDB.TABLA_ALIMENTOS + " SET " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + "=" + uds + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id;
         sql.execSQL(updateUds);
         //Log.d("sql", "update: " + updateUds);
+    }
+
+    //Método para seleccionar el id del alimento a partir de sus datos
+    public int getIdAlimento(Alimento alimento){
+        int id=0;//Para almacenar el resultado de la bbdd
+        String QUERYIDALIMENTO = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " FROM " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[1] + " = \'" + alimento.getNombreAlimento() +
+                "\' AND " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + " = " + alimento.getCantidad() + " AND " + MiNeveraDB.CAMPOS_ALIMENTOS[3] + " = " + alimento.getDias_caducidad() +
+                " AND " + MiNeveraDB.CAMPOS_ALIMENTOS[4] + " = \'" + alimento.getFecha_registro() + "\' AND " + MiNeveraDB.CAMPOS_ALIMENTOS[5] + " = \'" + alimento.getFecha_caducidad() + "\';";
+        //El resultado se almacena en un cursor
+        Cursor cursor = sqe.rawQuery(QUERYIDALIMENTO, new String[]{});
+        Log.d("ref", "Antes del if");
+        //Comprobamos si se ha recogido algún registro
+        if (cursor.moveToFirst()) {
+            Log.d("ref", "Entramos en el bucle");
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                id = cursor.getInt(0);
+                Log.d("ref", "Cursor id: " + id);
+            } while(cursor.moveToNext());
+        }
+        return id;
     }
 }

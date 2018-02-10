@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.NuevaListaActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.SugerenciaDeAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.TodasListasActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +36,7 @@ public class MainClc extends Fragment {
             @Override
             public void onClick(View view) {
             //pon codigo aqui si quieres que pase algo!
-            Intent intent = new Intent(getActivity(), SugerenciaDeAlimentoActivity.class);
+            Intent intent = new Intent(getActivity(), TodasListasActivity.class);
             startActivity(intent);
             }
         });

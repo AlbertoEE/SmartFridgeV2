@@ -19,4 +19,6 @@ public class CosasQueHacer {
     //la lista de la compra, en lugar de quedarse donde estaba
 
     //TODO organizar los recursos via nombre
+
+    //TODO cerrar conexiones a la bbdd en el onDestroy()
 }

@@ -294,4 +294,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         iv8.setImageDrawable(redondo);
     }
 
+    //En el onDestroy cerramos la bbdd
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adb.cerrarConexion();
+    }
 }

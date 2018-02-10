@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.util.ArrayList;
@@ -32,6 +34,9 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
     private GestorSharedP gsp;//Instancia de la clase para trabajar con el SharedPreferences
+    private ListaCompraDB listaCompraDB;//Para utilizar los métodos de persistencia del módulo de lista de la compra
+    private ComponenteListaCompra componente;//Para crear los items que van a ir en la lista
+    private int id_alimento_manual;//Para guardar el id que hay en la bbdd asociado al alimento que metemos de manera manual
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         //Creamos el nuevo objeto Lista
         listaNueva = new ListaCompra();
         fecha = new Fecha();
+        listaCompraDB = new ListaCompraDB(this);
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         listaNueva.setFecha(fecha.fechaActual());
         Log.d("fecha", "" + fecha.fechaActual());
@@ -63,6 +69,8 @@ public class NuevaListaActivity extends AppCompatActivity {
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonManual = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.manual);
         com.getbase.floatingactionbutton.FloatingActionButton botonAlimentos = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.anadirAlimentos);
+        com.getbase.floatingactionbutton.FloatingActionButton botonEditar = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.editar);
+        com.getbase.floatingactionbutton.FloatingActionButton botonAceptar = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.aceptar);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final LayoutInflater inflater = getLayoutInflater();
         //Le asignamos el listener a cada botón
@@ -84,8 +92,13 @@ public class NuevaListaActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
                             alimentoNuevo =  input.getText().toString();
-                            //listaAlimentosCompra.add(alimentoNuevo);
-                            Log.d("alimento", alimentoNuevo);
+                            //Lo añadimos a la bbdd
+                            listaCompraDB.insertarAlimentoManual(alimentoNuevo);
+                            //Leemos el id de ese objeto
+                            id_alimento_manual = listaCompraDB.getIdAlimento(alimentoNuevo);
+                            //Creamos el objeto que va a ser añadido a la vista de la lista
+                            componente = new ComponenteListaCompra(id_alimento_manual, alimentoNuevo,3);
+                            Log.d("alimento", "alimento: " + alimentoNuevo + ", id: " + id_alimento_manual);
                         }
                     });
                     builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -107,6 +120,18 @@ public class NuevaListaActivity extends AppCompatActivity {
                  */
             }
         });
+        botonEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cuando pulsemos el botón, nos va a permitir editar los elementos de la lista
+            }
+        });
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cuando pulsemos el botón, se va a guardar la lista
+            }
+        });
     }
 
     //Método para crear el objeto lista
@@ -115,6 +140,14 @@ public class NuevaListaActivity extends AppCompatActivity {
         listaAlimentosCompra = customAdaptador.getArray();
         listaNueva.setProductos(listaAlimentosCompra);
          */
+    }
+
+    //En el onDestroy cerramos la bbdd
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listaCompraDB.cerrarConexion();
     }
 }
 

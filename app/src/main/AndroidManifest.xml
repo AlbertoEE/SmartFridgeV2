@@ -61,7 +61,7 @@
             android:theme="@style/Theme.Transparent" />
         <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentoActivity" />
         <activity android:name=".vista.actividades.clc.TodasListasActivity" />
-        <activity android:name=".vista.actividades.clc.MostrarProductosListaActivity"></activity>
+        <activity android:name=".vista.actividades.clc.MostrarProductosListaActivity" />
     </application>
 
 </manifest>

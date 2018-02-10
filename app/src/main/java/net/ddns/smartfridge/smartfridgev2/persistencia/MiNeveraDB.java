@@ -25,18 +25,19 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     //campos de la tabla "alimentos_creados"
     private static final String CREATE_TABLA_ALIMENTOS_CREADOS = "CREATE TABLE " + TABLA_ALIMENTOS_CREADOS + " (" + CAMPOS_ALI_CREADOS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + CAMPOS_ALI_CREADOS[1] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[2] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[3] + " INTEGER," +
-            " FOREIGN KEY (" + CAMPOS_ALI_CREADOS[3] + ") REFERENCES " + TABLA_ALIMENTOS + "(" + CAMPOS_ALIMENTOS[0] + "));";//Tabla alimentos_creados
+            " FOREIGN KEY (" + CAMPOS_ALI_CREADOS[3] + ") REFERENCES " + TABLA_ALIMENTOS + "(" + CAMPOS_ALIMENTOS[0] + ") ON DELETE SET NULL);";//Tabla alimentos_creados
     public static final String [] CAMPOS_LISTA = {"id_lista", "fecha"};//Campos de la tabla lista
     public static final String [] CAMPOS_ALIMENTO_EXTERNO_LISTA = {"id_externo", "nombreAlimento", "id_lista"};//Campos de la talba alimento_externo_lista
     public static final String [] CAMPOS_ALIMENTO_INTERNO_LISTA = {"id_lista", "id_alimento"};//Campos de la tabla alimento_interno_lista
     private static final String CREATE_TABLA_LISTA = "CREATE TABLE " + TABLA_LISTA + " (" + CAMPOS_LISTA[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CAMPOS_LISTA[1] + " TEXT)";//Tabla lista
     private static final String CREATE_TABLA_ALIMENTO_EXTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO_LISTA + " (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + " TEXT UNIQUE NOT NULL, " + CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + " INTEGER, FOREIGN KEY (" +
-            CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + ") REFERENCES " + TABLA_LISTA + "(" + CAMPOS_LISTA[0] + "));";//Tabla alimento_externo_lista
+            CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + ") REFERENCES " + TABLA_LISTA + "(" + CAMPOS_LISTA[0] + ") ON DELETE SET NULL);";//Tabla alimento_externo_lista
     private static final String CREATE_TABLA_ALIMENTO_INTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_INTERNO_LISTA + " (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " INTEGER, " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] +
             " INTEGER, PRIMARY KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ", " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ")" +
             ", FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ") REFERENCES " + TABLA_LISTA +
-            " (" + CAMPOS_LISTA[0] + "), FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ") REFERENCES " + TABLA_ALIMENTOS + " (" + CAMPOS_ALIMENTOS[0] + "));";//Tabla alimento_interno_lista
+            " (" + CAMPOS_LISTA[0] + ") ON DELETE SET NULL, FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ") REFERENCES " + TABLA_ALIMENTOS + " (" + CAMPOS_ALIMENTOS[0] +
+            ")ON DELETE SET NULL);";//Tabla alimento_interno_lista
     public static final String INSERT_ALIMENTO = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'manzana\', 3, 6, \'13-01-2018\', \'19-01-2018\')";
     public static final String INSERT_ALIMENTO2 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'tomate\', 5, 10, \'05-02-2018\', \'16-03-2019\')";
     public static final String INSERT_ALIMENTO3 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'coliflor\', 1, 0, \'13-01-2018\', \'19-01-2018\')";

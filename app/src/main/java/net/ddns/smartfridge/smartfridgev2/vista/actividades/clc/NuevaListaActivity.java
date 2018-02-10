@@ -54,6 +54,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nueva_lista);
         gsp = new GestorSharedP();
         listaCompraDB = new ListaCompraDB(this);
+        cargarAdapter();
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         //Fijamos el contexto del activity

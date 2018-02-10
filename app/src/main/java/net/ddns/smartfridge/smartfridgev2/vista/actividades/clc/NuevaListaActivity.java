@@ -156,6 +156,18 @@ public class NuevaListaActivity extends AppCompatActivity {
         listaCompraDB.cerrarConexion();
     }
 
+    //Método para hacer los insert en las tablas correspondientes
+    public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a){
+        int tipo;//Para guardar el tipo de cada objeto del arrayList
+        //Recorremos el ArrayList
+        for (ComponenteListaCompra c : a){
+            tipo = c.getTipo();
+            if (tipo==ComponenteListaCompra.TIPOS[0]){
+
+            }
+        }
+    }
+
     //Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
     public ArrayList<ComponenteListaCompra> crearArray(){
         ComponenteListaCompra c = new ComponenteListaCompra(1, "patata", 1);

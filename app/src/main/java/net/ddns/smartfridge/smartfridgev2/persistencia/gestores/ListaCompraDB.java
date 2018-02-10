@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MiNeveraDB;
 
@@ -73,5 +74,10 @@ public class ListaCompraDB {
     public void insertarListaCompra(ListaCompra l){
         String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_LISTA + " (" + MiNeveraDB.CAMPOS_LISTA[1] + ") VALUES (\'" + l.getFecha() + "\');";
         sql.execSQL(sentencia);
+    }
+
+    //Método para insertar un componente de la lista en la tabla correspondiente
+    public void insertComponenteInterno(ComponenteListaCompra c){
+        //String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA[]
     }
 }

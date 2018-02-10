@@ -32,7 +32,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
         FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab1);
         //alimentosSugeridos = getIntent().getStringArrayListExtra("AlimentosSugeridos");
         alimentosSugeridos = (ArrayList<ComponenteListaCompra>)getIntent().getSerializableExtra("AlimentosSugeridos");
-        //customArrayAdapter = new CustomArrayAdapter(this, alimentosSugeridos);
+        customArrayAdapter = new CustomArrayAdapter(this, alimentosSugeridos);
         nuevaLista = new ArrayList<String>();
 
         listView = findViewById(R.id.listView);

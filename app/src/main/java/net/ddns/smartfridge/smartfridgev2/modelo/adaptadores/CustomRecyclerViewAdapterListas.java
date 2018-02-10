@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<CustomRecyclerViewAdapterListas.ViewHolder2> {
     private ArrayList<ListaCompra> listas;
-    private Paint p = new Paint();
 
     public CustomRecyclerViewAdapterListas(ArrayList<ListaCompra> listaCompras){
         this.listas = listaCompras;
@@ -71,5 +70,9 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
             tvFechaLista = itemView.findViewById(R.id.tvFechaListaCompra);
             tvNumeroProductos = itemView.findViewById(R.id.tvNumeroProductos);
         }
+    }
+
+    public ArrayList<String> getLista(int posicion){
+        return this.listas.get(posicion).getProductos();
     }
 }

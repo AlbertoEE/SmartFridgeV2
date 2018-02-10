@@ -63,7 +63,8 @@ public class TodasListasActivity extends AppCompatActivity {
                 if (direction == ItemTouchHelper.LEFT){
                    adapter.removeItem(position);
                 } else {
-                    intent = new Intent(this, )
+                    intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
+                    intent.putStringArrayListExtra("", adapter.getLista(position));
                 }
             }
 

@@ -19,6 +19,6 @@ public class MostrarProductosListaActivity extends AppCompatActivity {
     }
 
     private void cargarAdapter(){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>();
+        //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>();
     }
 }

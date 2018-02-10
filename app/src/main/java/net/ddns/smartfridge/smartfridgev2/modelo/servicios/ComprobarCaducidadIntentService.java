@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
@@ -45,7 +46,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private static final int DELAY = 1000;//Delay usado para distintas partes del código
     private int unidades;//Representa el número de unidades de cada producto almacenado en MiNevera
     private int posicionCursor;//Para indicar la posición del elemento en el cursor de la bbdd
-    private ArrayList<String> alimentosLeidosSP = new ArrayList<String>();//Para leer los aliemntos que hay en el SP almacenados
+    private ArrayList<ComponenteListaCompra> alimentosLeidosSP = new ArrayList<ComponenteListaCompra>();//Para leer los aliemntos que hay en el SP almacenados
     private boolean alimentoRepetidoSP=false;//Booleano que nos indica si un alimento está ya incluido en el SP
 
     public ComprobarCaducidadIntentService() {
@@ -212,7 +213,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
             int elementos = gsp.productosAlmacenados();
             Log.d("probandoSP", "num: " + elementos);
             if(elementos>0) {
-                alimentosLeidosSP = gsp.recogerValores(elementos);
+                alimentosLeidosSP = gsp.recogerValores();
                 //Log.d("probandoSP", "alimentos");
                 //Creamos el objeto alimento
                 alimento = new Alimento(cursor.getInt(0),
@@ -238,9 +239,9 @@ public class ComprobarCaducidadIntentService extends IntentService {
     }
 
     //Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
-    public void comprobarEscasezSharedP(ArrayList<String> lista, Alimento alimento){
+    public void comprobarEscasezSharedP(ArrayList<ComponenteListaCompra> lista, Alimento alimento){
         for ( int i=0; i<lista.size(); i++){
-            if(lista.get(i).equals(alimento.getNombreAlimento())){
+            if(lista.get(i).getNombreElemento().equals(alimento.getNombreAlimento())){
                 Log.d("probandoSP", "elemento lista: " + lista.get(i));
                 Log.d("probandoSP", "nombre alimento: " + alimento.getNombreAlimento());
                 alimentoRepetidoSP = true;

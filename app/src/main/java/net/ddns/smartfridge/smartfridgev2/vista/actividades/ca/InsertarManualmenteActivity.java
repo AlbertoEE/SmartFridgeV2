@@ -169,4 +169,12 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     public static void setFoto(Bitmap foto) {
         foto = foto;
     }
+
+    //Cerramos la bbdd en el onDestroy
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        alimento_nuevoDB.cerrarConexion();
+    }
 }

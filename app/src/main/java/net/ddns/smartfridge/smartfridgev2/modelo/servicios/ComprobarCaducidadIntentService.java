@@ -48,6 +48,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private int posicionCursor;//Para indicar la posición del elemento en el cursor de la bbdd
     private ArrayList<ComponenteListaCompra> alimentosLeidosSP = new ArrayList<ComponenteListaCompra>();//Para leer los aliemntos que hay en el SP almacenados
     private boolean alimentoRepetidoSP=false;//Booleano que nos indica si un alimento está ya incluido en el SP
+    private AlimentoDB alimentoDB=null;//Para establecer la conexión con la bbdd
 
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
@@ -56,7 +57,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         //Hacemos la conexión a la bbddd
-        final AlimentoDB alimentoDB = new AlimentoDB(this);
+        alimentoDB = new AlimentoDB(this);
         fecha = new Fecha();
 
         TimerTask timerTask = new TimerTask() {
@@ -197,6 +198,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
         }*/
         Timer timer = new Timer();
         timer.schedule(timerTask,DELAY,MINUTO);
+
     }
 
     public static Bitmap getBm() {

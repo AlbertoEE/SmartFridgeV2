@@ -159,5 +159,11 @@ public class MiNeveraActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    //Cerramos la conexión a la bbdd en el onDestroy
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        alimentoDB.cerrarConexion();
+    }
 }

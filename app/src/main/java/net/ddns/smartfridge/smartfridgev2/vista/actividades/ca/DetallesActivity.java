@@ -95,4 +95,11 @@ public class DetallesActivity extends FragmentActivity {
         //Cuando ya tenemos nuestro array entero, hacemos una copia de el porque nos va a hacer falta
         //para el método de filtrar
     }
+    //Cerramos la bbdd en el onDestroy
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        alimentoDB.cerrarConexion();
+    }
 }

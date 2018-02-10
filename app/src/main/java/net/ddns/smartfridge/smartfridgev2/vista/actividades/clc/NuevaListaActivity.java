@@ -37,19 +37,18 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ListaCompraDB listaCompraDB;//Para utilizar los métodos de persistencia del módulo de lista de la compra
     private ComponenteListaCompra componente;//Para crear los items que van a ir en la lista
     private int id_alimento_manual;//Para guardar el id que hay en la bbdd asociado al alimento que metemos de manera manual
+    ////////////////////////////
+    private ArrayList<ComponenteListaCompra> a = new ArrayList<ComponenteListaCompra>();
+    /////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
         gsp = new GestorSharedP();
-        //Creamos el nuevo objeto Lista
-        listaNueva = new ListaCompra();
-        fecha = new Fecha();
         listaCompraDB = new ListaCompraDB(this);
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        listaNueva.setFecha(fecha.fechaActual());
-        Log.d("fecha", "" + fecha.fechaActual());
+
         //Fijamos el contexto del activity
         context = this;
         //Instanciamos el arraylist
@@ -130,6 +129,13 @@ public class NuevaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a guardar la lista
+                a = crearArray();
+                //Creamos el nuevo objeto Lista
+                fecha = new Fecha();
+                listaNueva = new ListaCompra(fecha.fechaActual(), a);
+                //Guardamos los datos de la lista en la bbdd
+                listaCompraDB.insertarListaCompra(listaNueva);
+                Log.d("guardarLista", "Lista guardada");
             }
         });
     }
@@ -148,6 +154,29 @@ public class NuevaListaActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         listaCompraDB.cerrarConexion();
+    }
+
+    //Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
+    public ArrayList<ComponenteListaCompra> crearArray(){
+        ComponenteListaCompra c = new ComponenteListaCompra(1, "patata", 1);
+        ComponenteListaCompra c1 = new ComponenteListaCompra(2, "tomate", 1);
+        ComponenteListaCompra c2 = new ComponenteListaCompra(3, "lechuga", 1);
+        ComponenteListaCompra c3 = new ComponenteListaCompra(1, "nata", 2);
+        ComponenteListaCompra c4 = new ComponenteListaCompra(2, "mantequilla", 2);
+        ComponenteListaCompra c5 = new ComponenteListaCompra(3, "azúcar", 2);
+        ComponenteListaCompra c6 = new ComponenteListaCompra(1, "chorizo", 3);
+        ComponenteListaCompra c7 = new ComponenteListaCompra(2, "salchichón", 3);
+        ComponenteListaCompra c8 = new ComponenteListaCompra(3, "jamón serrano", 3);
+        a.add(c);
+        a.add(c1);
+        a.add(c2);
+        a.add(c3);
+        a.add(c4);
+        a.add(c5);
+        a.add(c6);
+        a.add(c7);
+        a.add(c8);
+        return a;
     }
 }
 

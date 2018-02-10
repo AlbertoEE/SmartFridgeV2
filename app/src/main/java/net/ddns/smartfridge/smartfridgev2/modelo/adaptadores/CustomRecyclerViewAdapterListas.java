@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
         }
     }
 
-    public ArrayList<String> getLista(int posicion){
+    public ArrayList<ComponenteListaCompra> getLista(int posicion){
         return this.listas.get(posicion).getProductos();
     }
 }

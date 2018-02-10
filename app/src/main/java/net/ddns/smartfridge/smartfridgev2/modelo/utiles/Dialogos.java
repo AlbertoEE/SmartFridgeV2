@@ -199,6 +199,7 @@ public class Dialogos {
                         andb.guardarAlimento(aliNuevo);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
+                        andb.cerrarConexion();
                         if (manualCod){
                             Log.d("manual", "manual: " + manualCod);
                             dialogNotificarSF(alimento, cod_barras);
@@ -385,6 +386,7 @@ public class Dialogos {
                             Toast.makeText(contexto, "Elemento eliminado", Toast.LENGTH_SHORT).show();
                             dialogAnadirLista(contexto, foto, nombre);
                             adapter.removePage(posicion);
+                            alimentoDB.cerrarConexion();
                             break;
                         }catch (SQLException e){
                             Toast.makeText(contexto, "Error al eliminar el elemento. Por favor, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();

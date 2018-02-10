@@ -68,4 +68,10 @@ public class ListaCompraDB {
         cursor.close();
         return id;
     }
+
+    //Método para crear una nueva lista de la compra
+    public void insertarListaCompra(ListaCompra l){
+        String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_LISTA + " (" + MiNeveraDB.CAMPOS_LISTA[1] + ") VALUES (\'" + l.getFecha() + "\');";
+        sql.execSQL(sentencia);
+    }
 }

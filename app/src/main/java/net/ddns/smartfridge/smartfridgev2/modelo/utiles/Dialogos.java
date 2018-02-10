@@ -199,7 +199,7 @@ public class Dialogos {
                         andb.guardarAlimento(aliNuevo);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();
                         adb.cerrarConexion();
-                        andb.cerrarConexion();
+
                         if (manualCod){
                             Log.d("manual", "manual: " + manualCod);
                             dialogNotificarSF(alimento, cod_barras);

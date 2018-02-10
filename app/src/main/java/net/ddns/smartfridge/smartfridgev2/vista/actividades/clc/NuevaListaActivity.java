@@ -154,6 +154,8 @@ public class NuevaListaActivity extends AppCompatActivity {
                 listaCompraDB.insertarListaCompra(listaNueva);
                 Log.d("guardarLista", "Lista guardada");
                 int id = listaCompraDB.getIdLista(fecha.fechaActual());
+                insertarComponentesLista(a, id);
+                Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,15 +177,24 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
     //Método para hacer los insert en las tablas correspondientes
-    public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a, String fecha){
+    public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a, int idLista){
         int tipo;//Para guardar el tipo de cada objeto del arrayList
-        int idLista;//Para recoger el id de la lista que hemos creado
-        idLista = listaCompraDB.getIdLista(fecha);
         //Recorremos el ArrayList
         for (ComponenteListaCompra c : a){
             tipo = c.getTipo();
-            if (tipo==ComponenteListaCompra.TIPOS[0]){
-
+            Log.d("tipo", "Tipo: " + tipo);
+            switch (tipo){
+                case 1:
+                    listaCompraDB.insertComponenteInterno(c, idLista);
+                    Log.d("tipo", "Entra por el 1: " + c.getNombreElemento() + " con tipo " + c.getTipo());
+                    break;
+                case 2:
+                    listaCompraDB.insertComponenteExterno(c, idLista);
+                    Log.d("tipo", "Entra por el 2: " + c.getNombreElemento() + " con tipo " + c.getTipo());
+                    break;
+                case 3:
+                    listaCompraDB.insertComponenteManual(c, idLista);
+                    Log.d("tipo", "Entra por el 3: " + c.getNombreElemento() + " con tipo " + c.getTipo());
             }
         }
     }

@@ -95,8 +95,21 @@ public class ListaCompraDB {
         return id;
     }
 
-    //Método para insertar un componente de la lista en la tabla correspondiente
+    //Método para insertar un componente de la lista en la tabla interna
     public void insertComponenteInterno(ComponenteListaCompra c, int idLista){
-        //String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " VALUES (" + MiNeveraDB.
+        String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
+        sql.execSQL(sentencia);
+    }
+
+    //Método para insertar un componente de la lista en la tabla externa
+    public void insertComponenteExterno(ComponenteListaCompra c, int idLista){
+        String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " VALUES (" + c.getId() + ", \'" + c.getNombreElemento() + "\', " + idLista + ");";
+        sql.execSQL(sentencia);
+    }
+
+    //Método para insertar un componente de la lista en la tabla de alimentos manuales
+    public void insertComponenteManual(ComponenteListaCompra c, int idLista){
+        String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_MANUAL_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
+        sql.execSQL(sentencia);
     }
 }

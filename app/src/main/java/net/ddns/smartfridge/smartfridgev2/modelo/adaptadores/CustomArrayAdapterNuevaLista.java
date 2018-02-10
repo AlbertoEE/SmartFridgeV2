@@ -32,7 +32,8 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         if(productosSugeridos != null){
             this.productos = productosSugeridos;
         } else {
-            this.productos = new ArrayList<>();
+            this.productos = new ArrayList<ComponenteListaCompra>();
+            this.auxiliar = new ArrayList<>();
         }
     }
 
@@ -68,6 +69,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public void addProducto(ComponenteListaCompra producto) {
         productos.add(producto);
+        Log.d("customer", productos.get(0).getNombreElemento());
         this.notifyDataSetChanged();
     }
 

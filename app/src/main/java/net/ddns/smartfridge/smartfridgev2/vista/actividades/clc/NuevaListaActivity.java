@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
@@ -28,7 +29,7 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ArrayList<String> listaAlimentosCompra;//ArrayList que lleva el nombre de los alimentos que se muestran en la lista
     private ListaCompra listaNueva;//Para trabajar con el objeto ListaCompra
     private Fecha fecha;//Para usar los métodos para obtener la fecha de hoy
-    private ArrayList<String> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
+    private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
     private GestorSharedP gsp;//Instancia de la clase para trabajar con el SharedPreferences
 
@@ -47,14 +48,15 @@ public class NuevaListaActivity extends AppCompatActivity {
         context = this;
         //Instanciamos el arraylist
         listaAlimentosCompra = new ArrayList<String>();
-        alimentosLeidosSP = new ArrayList<String>();
+        alimentosLeidosSP = new ArrayList<ComponenteListaCompra>();
         //Comprobamos si hay algún alimento almacenado en el SP para notificárselo al usuario
         elementos = gsp.productosAlmacenados();
         if(gsp.isHayElemento()){
             //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
-            alimentosLeidosSP = gsp.recogerValores(elementos);
+            alimentosLeidosSP = gsp.recogerValores();
             intent = new Intent(this, SugerenciaDeAlimentoActivity.class);
-            intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
+            //intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
+            intent.putExtra("AlimentosSugeridos", alimentosLeidosSP);
             startActivity(intent);
             //borrarSP();
         }

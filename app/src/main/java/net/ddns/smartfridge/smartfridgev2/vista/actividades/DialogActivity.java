@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
 import java.io.File;
@@ -19,7 +20,8 @@ public class DialogActivity extends Activity {
     private Intent i;//Para recoger el intent que nos llega de la notificación del service
     //private Map<Integer, String> datosSP;//Para guardar los datos recibidos del intent
     private int posicion;//Para poner la posición en el SP
-    private static SharedPreferences mySp;
+    private static SharedPreferences mySp;//Referencia al Sharedpreferences de la app
+    private ComponenteListaCompra componente;//Para crear un componente nuevo de la lista para añadirlo a esta
 
 
     @Override
@@ -28,8 +30,9 @@ public class DialogActivity extends Activity {
         setContentView(R.layout.activity_dialog);
         //Recogemos el intent
         i = getIntent();
-        String alimento = i.getStringExtra("Alimento");
-        Log.d("sp", alimento);
+        componente = (ComponenteListaCompra)i.getSerializableExtra("Alimento");
+        //String alimento = i.getStringExtra("Alimento");
+        Log.d("sp", componente.getNombreElemento());
         /*
         ArrayList<String> nombreAlimentos = i.getStringArrayListExtra("Alimento");
         Log.d("sp", "intent: "+  nombreAlimentos.get(0).toString());
@@ -41,13 +44,14 @@ public class DialogActivity extends Activity {
         Log.d("Alimento", "alimento: "+ nombreAlimentos.get(0).toString());
         Log.d("Alimento", "alimento: "+ nombreAlimentos.get(1).toString());*/
         //Comprobamos el número de elementos que hay en el SP
-        posicion = recogerPosicion(mySp);
+        //posicion = recogerPosicion(mySp);
         //Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
         //Añadimos el elemento en la posición siguiente
-        posicion++;
-        Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
+        //posicion++;
+        //Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
         //Añadimos el elemento
-        guardarSP(posicion, alimento);
+        //guardarSP(posicion, componente.getNombreElemento());
+        guardarSP(componente.getId(), componente.getNombreElemento());
        // guardarSP(posicion+1, nombreAlimentos.get(1).toString());
         Dialogos d = new Dialogos(this, this);
         d.dialogListaCompra();

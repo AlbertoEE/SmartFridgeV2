@@ -26,6 +26,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Nuevo;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
@@ -57,6 +58,7 @@ public class Dialogos {
     private ArrayList<String>listadoAlimentosEscasez = new ArrayList<String>();//Para almacenar todos los alimentos que tienen escasez
     private int idAlimento;//Para guardar el id recogido de la bbdd
     private Alimento_Nuevo aliNuevo;//Para crear un objeto alimento nuevo y guardarlo en la bbdd
+    private ComponenteListaCompra componente;//Para crear un componente nuevo de la lista para añadirlo a esta
 
     public Dialogos(Context context, Activity activity){
         this.contexto=context;
@@ -491,7 +493,8 @@ public class Dialogos {
 
     //Método para enviar la notificación cuando haya menos de dos unidades de alimento
     public void enviarNotificacionProximaEscasez(Alimento alimento, Context contexto, int posicion){
-        //Completar cuando esté creado el AñadirALista
+        //Creamos el objeto componente con todos los datos
+        componente = new ComponenteListaCompra(alimento.getId(), alimento.getNombreAlimento(),ComponenteListaCompra.TIPOS[0]);
 
         //intent = new Intent (contexto, AñadirAListaActivity.class);
         //intent.putExtra("Alimento", alimento);
@@ -500,25 +503,26 @@ public class Dialogos {
 
         //listadoAlimentosEscasez.add(alimento.getNombreAlimento());
         intent = new Intent(contexto, DialogActivity.class);
-        intent.putExtra("Alimento", alimento.getNombreAlimento());
-        Log.d("Alimento", alimento.getNombreAlimento());
+        //intent.putExtra("Alimento", alimento.getNombreAlimento());
+        intent.putExtra("Alimento", componente);
+        Log.d("Alimento", componente.getNombreElemento());
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Escasez de alimento");
-        nb.setContentText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
+        nb.setContentText("Tiene menos de 2 unidades de " + componente.getNombreElemento() + "." +
                 " Pulsa para recordártelo cuando hagas la lista de la compra.");
         nb.setContentIntent(PendingIntent.getActivity(contexto, alimento.getId(),
         intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
 
         //Permitimos que se pueda expandir la notificación
-        Notification notificacion = new Notification.BigTextStyle(nb).bigText("Tiene menos de 2 unidades de " + alimento.getNombreAlimento() + "." +
+        Notification notificacion = new Notification.BigTextStyle(nb).bigText("Tiene menos de 2 unidades de " + componente.getNombreElemento() + "." +
                 " Pulsa para recordártelo cuando hagas la lista de la compra.").build();
         NotificationManager nm =(NotificationManager)contexto.getSystemService(NOTIFICATION_SERVICE);
 
         //Emisión de la notificación. Le damos el id del alimento
-        nm.notify(alimento.getId(), notificacion);
-        Log.d("Alimento", "id: " + alimento.getId());
+        nm.notify(componente.getId(), notificacion);
+        Log.d("Alimento", "id: " + componente.getId());
     }
 
     //Dialog para cuando se añadan productos a la lista de la compra

@@ -26,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.352" /-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +48,6 @@
         android:layout_height="87dp"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:backgroundTint="@color/cardview_shadow_end_color"
@@ -61,20 +61,20 @@
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/manual"
-            app:fab_colorNormal="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_icon="@drawable/pencil"
             android:scaleType="centerInside"
+            app:fab_colorNormal="@color/transparent"
+            app:fab_icon="@drawable/pencil"
             app:fab_size="normal"
             app:fab_title="Manual" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/anadirAlimentos"
             android:layout_width="wrap_content"
-            app:fab_colorNormal="@color/transparent"
             android:layout_height="wrap_content"
             android:scaleType="center"
+            app:fab_colorNormal="@color/transparent"
             app:fab_icon="@drawable/alimentos"
             app:fab_size="normal"
             app:fab_title="Alimentos"
@@ -83,10 +83,10 @@
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/editar"
-            app:fab_colorNormal="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="center"
+            app:fab_colorNormal="@color/transparent"
             app:fab_icon="@drawable/ic_edit"
             app:fab_size="normal"
             app:fab_title="Editar"
@@ -95,10 +95,10 @@
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/aceptar"
-            app:fab_colorNormal="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="center"
+            app:fab_colorNormal="@color/transparent"
             app:fab_icon="@drawable/ic_aceptar_compra"
             app:fab_size="normal"
             app:fab_title="Editar"

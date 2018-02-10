@@ -29,7 +29,11 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos) {
         super(context, R.layout.fila_producto_nueva_lista);
-        this.productos = productosSugeridos;
+        if(productosSugeridos != null){
+            this.productos = productosSugeridos;
+        } else {
+            this.productos = new ArrayList<>();
+        }
     }
 
     @NonNull

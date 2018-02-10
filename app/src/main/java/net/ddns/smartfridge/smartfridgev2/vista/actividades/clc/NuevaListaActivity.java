@@ -52,9 +52,10 @@ public class NuevaListaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
+        cargarAdapter();
         gsp = new GestorSharedP();
         listaCompraDB = new ListaCompraDB(this);
-        cargarAdapter();
+
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         //Fijamos el contexto del activity
@@ -214,6 +215,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         adapter = new CustomArrayAdapterNuevaLista(this, alimentosLeidosSP);
         listView = (ListView)findViewById(R.id.lvNuevaLista);
         listView.setAdapter(adapter);
+        Log.d("elputo", "cargarAdapter: " + listView);
     }
 }
 

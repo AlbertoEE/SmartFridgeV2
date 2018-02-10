@@ -56,10 +56,8 @@ public class ListaCompraDB {
                 nombre_alimento + "\';";
         //El resultado se almacena en un cursor
         Cursor cursor = sqe.rawQuery(QUERYIDALIMENTO, new String[]{});
-        Log.d("ref", "Antes del if");
         //Comprobamos si se ha recogido algún registro
         if (cursor.moveToFirst()) {
-            Log.d("ref", "Entramos en el bucle");
             //Recorremos el cursor hasta que no haya más registros
             do {
                 id = cursor.getInt(0);
@@ -76,8 +74,29 @@ public class ListaCompraDB {
         sql.execSQL(sentencia);
     }
 
+    //Método para coger el id de la nueva lista creada
+    public int getIdLista(String fechaLista){
+        int id=0;//Para almacenar el resultado de la bbdd
+        String QUERYIDALIMENTO = "SELECT " + MiNeveraDB.CAMPOS_LISTA[0] + " FROM " + MiNeveraDB.TABLA_LISTA + " WHERE " + MiNeveraDB.CAMPOS_LISTA[1] + " = \'" +
+                fechaLista + "\';";
+        //El resultado se almacena en un cursor
+        Cursor cursor = sqe.rawQuery(QUERYIDALIMENTO, new String[]{});
+        Log.d("ref", "Antes del if");
+        //Comprobamos si se ha recogido algún registro
+        if (cursor.moveToFirst()) {
+            Log.d("ref", "Entramos en el bucle");
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                id = cursor.getInt(0);
+                Log.d("ref", "Cursor id: " + id);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        return id;
+    }
+
     //Método para insertar un componente de la lista en la tabla correspondiente
-    public void insertComponenteInterno(ComponenteListaCompra c){
-        //String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA[]
+    public void insertComponenteInterno(ComponenteListaCompra c, int idLista){
+        //String sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " VALUES (" + MiNeveraDB.
     }
 }

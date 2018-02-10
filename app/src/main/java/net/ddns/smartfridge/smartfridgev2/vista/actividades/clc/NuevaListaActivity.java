@@ -136,6 +136,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                 //Guardamos los datos de la lista en la bbdd
                 listaCompraDB.insertarListaCompra(listaNueva);
                 Log.d("guardarLista", "Lista guardada");
+                int id = listaCompraDB.getIdLista(fecha.fechaActual());
             }
         });
     }
@@ -157,8 +158,10 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
     //Método para hacer los insert en las tablas correspondientes
-    public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a){
+    public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a, String fecha){
         int tipo;//Para guardar el tipo de cada objeto del arrayList
+        int idLista;//Para recoger el id de la lista que hemos creado
+        idLista = listaCompraDB.getIdLista(fecha);
         //Recorremos el ArrayList
         for (ComponenteListaCompra c : a){
             tipo = c.getTipo();

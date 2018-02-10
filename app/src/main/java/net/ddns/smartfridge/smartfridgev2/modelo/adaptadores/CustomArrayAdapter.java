@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
 
@@ -20,11 +21,11 @@ import cn.refactor.library.SmoothCheckBox;
  * Created by Alberto on 07/02/2018.
  */
 
-public class CustomArrayAdapter extends ArrayAdapter<String> {
-    private ArrayList<String> alimentos;
-    private ArrayList<String> alimentosSeleccionados;
+public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
+    private ArrayList<ComponenteListaCompra> alimentos;
+    private ArrayList<ComponenteListaCompra> alimentosSeleccionados;
 
-    public CustomArrayAdapter(Context context, ArrayList<String> alimentos){
+    public CustomArrayAdapter(Context context, ArrayList<ComponenteListaCompra> alimentos){
         super(context, R.layout.fila_alimentos_sugeridos, alimentos);
         this.alimentos = alimentos;
         alimentosSeleccionados = new ArrayList<>();
@@ -33,7 +34,7 @@ public class CustomArrayAdapter extends ArrayAdapter<String> {
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final String alimento = alimentos.get(position);
+        final String alimento = alimentos.get(position).getNombreElemento();
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_alimentos_sugeridos, parent, false);
@@ -59,7 +60,7 @@ public class CustomArrayAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
-    public ArrayList<String> getNuevaLista(){
+    public ArrayList<ComponenteListaCompra> getNuevaLista(){
         return alimentosSeleccionados;
     }
 

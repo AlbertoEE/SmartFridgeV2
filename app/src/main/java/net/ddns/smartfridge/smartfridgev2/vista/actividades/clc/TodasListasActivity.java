@@ -64,7 +64,8 @@ public class TodasListasActivity extends AppCompatActivity {
                    adapter.removeItem(position);
                 } else {
                     intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
-                    intent.putStringArrayListExtra("", adapter.getLista(position));
+                    intent.putStringArrayListExtra("ListaProductos", adapter.getLista(position));
+                    startActivity(intent);
                 }
             }
 

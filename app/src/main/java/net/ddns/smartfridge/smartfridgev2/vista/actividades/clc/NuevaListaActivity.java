@@ -11,9 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.common.util.concurrent.AtomicDoubleArray;
+
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterNuevaLista;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
@@ -40,6 +44,9 @@ public class NuevaListaActivity extends AppCompatActivity {
     ////////////////////////////
     private ArrayList<ComponenteListaCompra> a = new ArrayList<ComponenteListaCompra>();
     /////////////////////////////
+    private CustomArrayAdapterNuevaLista adapter;
+    private ListView listView;
+    private boolean editando = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +98,15 @@ public class NuevaListaActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
                             alimentoNuevo =  input.getText().toString();
+
                             //Lo añadimos a la bbdd
                             listaCompraDB.insertarAlimentoManual(alimentoNuevo);
                             //Leemos el id de ese objeto
                             id_alimento_manual = listaCompraDB.getIdAlimento(alimentoNuevo);
                             //Creamos el objeto que va a ser añadido a la vista de la lista
                             componente = new ComponenteListaCompra(id_alimento_manual, alimentoNuevo,3);
+                            //Lo añadimos al adapter
+                            adapter.addProducto(componente);
                             Log.d("alimento", "alimento: " + alimentoNuevo + ", id: " + id_alimento_manual);
                         }
                     });
@@ -122,7 +132,12 @@ public class NuevaListaActivity extends AppCompatActivity {
         botonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cuando pulsemos el botón, nos va a permitir editar los elementos de la lista
+                editando = !editando;
+                if(editando){
+                    adapter.mostrarCheckboxes();
+                }else{
+                    adapter.ocultarrCheckboxes();
+                }
             }
         });
         botonAceptar.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +207,12 @@ public class NuevaListaActivity extends AppCompatActivity {
         a.add(c7);
         a.add(c8);
         return a;
+    }
+
+    private void cargarAdapter(){
+        adapter = new CustomArrayAdapterNuevaLista(this, alimentosLeidosSP);
+        listView = (ListView)findViewById(R.id.lvNuevaLista);
+        listView.setAdapter(adapter);
     }
 }
 

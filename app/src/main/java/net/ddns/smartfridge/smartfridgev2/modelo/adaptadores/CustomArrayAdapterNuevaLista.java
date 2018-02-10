@@ -76,4 +76,9 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             item.setVisibility(View.VISIBLE);
         }
     }
+    public void ocultarrCheckboxes(){
+        for (SmoothCheckBox item: this.checkBoxes) {
+            item.setVisibility(View.INVISIBLE);
+        }
+    }
 }

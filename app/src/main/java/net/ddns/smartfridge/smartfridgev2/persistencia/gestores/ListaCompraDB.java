@@ -106,7 +106,7 @@ public class ListaCompraDB {
     }
 
     //Método para insertar un componente de la lista en la tabla interna
-    public void insertComponenteInterno(ComponenteListaCompra c, int idLista){
+    public synchronized void insertComponenteInterno(ComponenteListaCompra c, int idLista){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
         Log.d("sentencia", "sentencia: " + sentencia);
         sql.execSQL(sentencia);

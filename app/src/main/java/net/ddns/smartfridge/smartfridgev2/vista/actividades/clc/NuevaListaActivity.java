@@ -48,6 +48,7 @@ public class NuevaListaActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ALIMENTOS_SUGERIDOS = 357;
     private ArrayList<ComponenteListaCompra> componenteListaCompras;
     private ArrayList<ComponenteListaCompra> listadoProductos;
+    private static ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +160,8 @@ public class NuevaListaActivity extends AppCompatActivity {
                 int id = listaCompraDB.getIdLista(fecha.fechaActualCompleta());
                 Log.d("guardarLista", "id: " + id);
                 insertarComponentesLista(listadoProductos, id);
+                listaNueva.setId(id);
+                todasLasListas.add(listaNueva);
                 Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -250,6 +253,12 @@ public class NuevaListaActivity extends AppCompatActivity {
         }
     }
 
+    public static ArrayList<ListaCompra> getTodasLasListas() {
+        return todasLasListas;
+    }
 
+    public static void setTodasLasListas(ArrayList<ListaCompra> todasLasListas) {
+        todasLasListas = todasLasListas;
+    }
 }
 

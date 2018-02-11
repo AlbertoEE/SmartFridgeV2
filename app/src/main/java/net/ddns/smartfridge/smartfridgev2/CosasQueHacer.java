@@ -7,8 +7,8 @@ package net.ddns.smartfridge.smartfridgev2;
 public class CosasQueHacer {
     //TODO Revisar pila de actividades en dialogActivity, cierra la transparente y vuelve a la anterior, linea 525
 
-    //TODO asignarle el metodo que recoge la lista nueva con los alimentos que
-    // ha elegido el usuario. El método ya está hecho, se llama "getNuevaLista" sobre el adapter
+    //TODO Tener en cuenta que, al borrar una lista en TodasListasActivity hay que borrar la lista del ArrayList de NuevaLista
+    // a partir del id y luego hacer un NuevaListaActivity.setArrayList(arraymodificado)
 
     //TODO poner título a la lista de alimentos: "Seleccione los alimentos que quiere eliminar a la lista de la compra"
     //o algo similar "definicion explicativa" "SUGERIDOS"
@@ -17,8 +17,6 @@ public class CosasQueHacer {
     //la lista de la compra, en lugar de quedarse donde estaba
 
     //TODO organizar los recursos via nombre
-
-    //TODO cerrar conexiones a la bbdd en el onDestroy()
 
     //TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade.
 }

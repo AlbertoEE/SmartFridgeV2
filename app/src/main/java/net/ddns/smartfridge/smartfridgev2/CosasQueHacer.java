@@ -13,8 +13,6 @@ public class CosasQueHacer {
     //TODO poner título a la lista de alimentos: "Seleccione los alimentos que quiere eliminar a la lista de la compra"
     //o algo similar "definicion explicativa" "SUGERIDOS"
 
-    //TODO poner opción en la lista de los alimentos de elimar todos / seleccionar todos "EN LA SUGERIDOS"
-
     //TODO mirar por qué se va hacia un fragment cuando sale el dialog de alimento preparado para incluirlo en
     //la lista de la compra, en lugar de quedarse donde estaba
 

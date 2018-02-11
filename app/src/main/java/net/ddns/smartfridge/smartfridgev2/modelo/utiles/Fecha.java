@@ -32,6 +32,19 @@ public class Fecha {
         //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
         return fecha_actual;
     }
+
+    //Método para conseguir la fecha actual
+    public String fechaActualCompleta(){
+        //Recogemos la fecha actual
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        //Lo pasamos a un string
+        String fecha_actual = dateFormat.format(date);
+        Log.d("fecha", "fecha actual111: " + fecha_actual);
+        //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
+        return fecha_actual;
+    }
+
     //Método para saber una fecha a partir de unos días dados
     public String diasAFecha(int tiempo_Caducidad){
         //Instanciamos un objeto Calendar

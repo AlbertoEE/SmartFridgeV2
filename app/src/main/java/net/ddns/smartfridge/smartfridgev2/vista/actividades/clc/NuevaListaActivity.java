@@ -149,11 +149,11 @@ public class NuevaListaActivity extends AppCompatActivity {
                 a = crearArray();
                 //Creamos el nuevo objeto Lista
                 fecha = new Fecha();
-                listaNueva = new ListaCompra(fecha.fechaActual(), a);
+                listaNueva = new ListaCompra(fecha.fechaActualCompleta(), a);
                 //Guardamos los datos de la lista en la bbdd
                 listaCompraDB.insertarListaCompra(listaNueva);
                 Log.d("guardarLista", "Lista guardada");
-                int id = listaCompraDB.getIdLista(fecha.fechaActual());
+                int id = listaCompraDB.getIdLista(fecha.fechaActualCompleta());
                 insertarComponentesLista(a, id);
                 Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
             }

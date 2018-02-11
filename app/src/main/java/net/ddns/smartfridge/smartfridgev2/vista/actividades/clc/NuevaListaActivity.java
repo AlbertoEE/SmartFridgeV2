@@ -223,7 +223,12 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
     private void cargarAdapter(){
-        adapter = new CustomArrayAdapterNuevaLista(this, crearArray());
+        if(alimentosLeidosSP != null){
+            adapter = new CustomArrayAdapterNuevaLista(this, alimentosLeidosSP);
+        } else {
+            adapter = new CustomArrayAdapterNuevaLista(this, new ArrayList<ComponenteListaCompra>());
+        }
+
         Log.d("elputo", "cargarAdapter: " + crearArray());
         Log.d("elputo", "cargarAdapter: " + adapter);
         listView = (ListView)findViewById(R.id.lvNuevaLista);

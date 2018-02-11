@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 
 import java.util.ArrayList;
 
@@ -79,6 +78,11 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public void confirmarCambios(){
         this.productos = this.auxiliar;
+        this.notifyDataSetChanged();
+    }
+
+    public ArrayList<ComponenteListaCompra> getListaFinal(){
+        return this.productos;
     }
 
     public void mostrarCheckboxes(){

@@ -24,7 +24,7 @@ public class ListaCompraDB {
     private ArrayList<Integer> ids = new ArrayList<Integer>();//Para almacenar los ids de todas las listas que hay creadas
     private String sentencia;//Para crear todas las sentencias de la bbdd
     private Cursor cursor;//Cursor para recorrer los datos de la bbdd
-    private ArrayList<ComponenteListaCompra> productos = new ArrayList<ComponenteListaCompra>();//ArrayList para guardar los ítems de la lista de la compra
+    private ArrayList<ComponenteListaCompra> productos = new ArrayList<ComponenteListaCompra>();;//ArrayList para guardar los ítems de la lista de la compra
     private ListaCompra lc;//Para generar objetos ListaCompra y mostrarlos en la lista
     private ComponenteListaCompra componenteListaCompra;//Para crear objetos a partir de los datos de la bbdd
     private ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
@@ -107,12 +107,13 @@ public class ListaCompraDB {
     //Método para insertar un componente de la lista en la tabla interna
     public void insertComponenteInterno(ComponenteListaCompra c, int idLista){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
+        Log.d("sentencia", "sentencia: " + sentencia);
         sql.execSQL(sentencia);
     }
 
     //Método para insertar un componente de la lista en la tabla externa
     public void insertComponenteExterno(ComponenteListaCompra c, int idLista){
-        sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " VALUES (" + c.getId() + ", \'" + c.getNombreElemento() + "\', " + idLista + ");";
+        sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
         sql.execSQL(sentencia);
     }
 
@@ -142,6 +143,7 @@ public class ListaCompraDB {
 
     //Método para recuperar todos los productos de una lista a partir del id de esa lista
     public ArrayList<ComponenteListaCompra> recuperarComponentesLista(int id){
+        ids.clear();
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " = " + id + ";";
         //El resultado se almacena en un cursor
         cursor = sqe.rawQuery(sentencia, new String[]{});
@@ -154,7 +156,22 @@ public class ListaCompraDB {
                 Log.d("ref", "id tabla interna: " + cursor.getInt(1));
             } while(cursor.moveToNext());
         }
-        //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos
+        cursor.close();
+        //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_interna
+        for (int numero : ids){
+            sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTOS[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " = " + numero + ";";
+            cursor = sqe.rawQuery(sentencia, new String[]{});
+            if (cursor.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+                    componenteListaCompra = new ComponenteListaCompra(numero, cursor.getString(0), 1);
+                    productos.add(componenteListaCompra);
+                    Log.d("ref", "nombre alimento interna: " + cursor.getString(0));
+                    Log.d("ref", "unidades en array: "+ productos.size());
+                } while(cursor.moveToNext());
+            }
+        }
+        //Recogemos ahora los datos de la lista externa
         for (int numero : ids){
             sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTOS[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " = " + numero + ";";
             cursor = sqe.rawQuery(sentencia, new String[]{});

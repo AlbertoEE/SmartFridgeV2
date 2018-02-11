@@ -37,7 +37,7 @@ public class TodasListasActivity extends AppCompatActivity {
         listaCompraDB = new ListaCompraDB(this);
         ids = listaCompraDB.recuperarIdListas();
         listaCompraDB.recuperarComponentesLista(ids.get(0));
-        //cargarRecyclerView();
+        cargarRecyclerView();
     }
 
     private void cargarRecyclerView(){

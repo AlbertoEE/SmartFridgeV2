@@ -147,6 +147,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a guardar la lista
+                a=new ArrayList<>();
                 a = crearArray();
                 //Creamos el nuevo objeto Lista
                 fecha = new Fecha();
@@ -155,6 +156,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                 listaCompraDB.insertarListaCompra(listaNueva);
                 Log.d("guardarLista", "Lista guardada");
                 int id = listaCompraDB.getIdLista(fecha.fechaActualCompleta());
+                Log.d("guardarLista", "id: " + id);
                 insertarComponentesLista(a, id);
                 Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
             }

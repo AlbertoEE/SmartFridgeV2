@@ -15,6 +15,7 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     public static final String TABLA_ALIMENTOS = "alimentos";//Para crear la tabla Alimentos
     public static final String TABLA_ALIMENTOS_CREADOS = "alimentos_creados";//Para crear la tabla Alimentos_Creados
     public static final String TABLA_LISTA= "lista";//Para crear la tabla Lista de la compra
+    public static final String TABLA_ALIMENTO_EXTERNO = "alimento_externo";//Para crear la tabla alimentos_externo
     public static final String TABLA_ALIMENTO_EXTERNO_LISTA = "alimento_externo_lista";//Para crear la tabla alimentos_externo_lista
     public static final String TABLA_ALIMENTO_INTERNO_LISTA = "alimento_interno_lista";//Para crear la tabla alimentos_interno_lista
     public static final String TABLA_ALIMENTO_MANUAL = "alimento_manual";//Para crear la tabla de los alimentos de la lista insertados manualmente
@@ -29,14 +30,18 @@ public class MiNeveraDB extends SQLiteOpenHelper {
             + CAMPOS_ALI_CREADOS[1] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[2] + " TEXT NOT NULL, " + CAMPOS_ALI_CREADOS[3] + " INTEGER," +
             " FOREIGN KEY (" + CAMPOS_ALI_CREADOS[3] + ") REFERENCES " + TABLA_ALIMENTOS + "(" + CAMPOS_ALIMENTOS[0] + ") ON DELETE SET NULL);";//Tabla alimentos_creados
     public static final String [] CAMPOS_LISTA = {"id_lista", "fecha"};//Campos de la tabla lista
-    public static final String [] CAMPOS_ALIMENTO_EXTERNO_LISTA = {"id_externo", "nombreAlimento", "id_lista"};//Campos de la talba alimento_externo_lista
-    public static final String [] CAMPOS_ALIMENTO_INTERNO_LISTA = {"id_lista", "id_alimento"};//Campos de la tabla alimento_interno_lista
+    public static final String [] CAMPOS_ALIMENTO_EXTERNO_LISTA = {"id_lista", "id_externo"};//Campos de la tabla alimento_externo_lista
+    public static final String [] CAMPOS_ALIMENTO_EXTERNO = {"id_externo", "id_alimento"};//Campos de la talba alimento_externo
+    public static final String [] CAMPOS_ALIMENTO_INTERNO_LISTA = {"id_listaC", "id_interno"};//Campos de la tabla alimento_interno_lista
     public static final String [] CAMPOS_ALIMENTO_MANUAL = {"id_manual", "nombre_alimento"};//Campos de la tabla alimento_manual
     public static final String [] CAMPOS_ALIMENTO_MANUAL_LISTA = {"id_lista", "id_manual"};//Campos de la tabla alimento_manual_lista
     private static final String CREATE_TABLA_LISTA = "CREATE TABLE " + TABLA_LISTA + " (" + CAMPOS_LISTA[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CAMPOS_LISTA[1] + " TEXT)";//Tabla lista
-    private static final String CREATE_TABLA_ALIMENTO_EXTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO_LISTA + " (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + " TEXT UNIQUE NOT NULL, " + CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + " INTEGER, FOREIGN KEY (" +
-            CAMPOS_ALIMENTO_EXTERNO_LISTA[2] + ") REFERENCES " + TABLA_LISTA + "(" + CAMPOS_LISTA[0] + ") ON DELETE SET NULL);";//Tabla alimento_externo_lista
+    private static final String CREATE_TABLA_ALIMENTO_EXTERNO = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO + " (" + CAMPOS_ALIMENTO_EXTERNO[0] + " INTEGER PRIMARY KEY, " +
+            CAMPOS_ALIMENTO_EXTERNO[1] + " TEXT);";//Tabla alimento_externo_lista
+    private static final String CREATE_TABLA_ALIMENTO_EXTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO_LISTA + " (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " INTEGER, " +
+            CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + " INTEGER, PRIMARY KEY (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + ", " + CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + ")" +
+            ", FOREIGN KEY (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + ") REFERENCES " + TABLA_LISTA + " (" + CAMPOS_LISTA[0] + ") ON DELETE SET NULL, FOREIGN KEY (" +
+            CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + ") REFERENCES " + TABLA_ALIMENTO_EXTERNO + " (" + CAMPOS_ALIMENTO_EXTERNO[0] + ")ON DELETE SET NULL);";//Tabla alimento_interno_lista
     private static final String CREATE_TABLA_ALIMENTO_INTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_INTERNO_LISTA + " (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " INTEGER, " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] +
             " INTEGER, PRIMARY KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ", " + CAMPOS_ALIMENTO_INTERNO_LISTA[1] + ")" +
             ", FOREIGN KEY (" + CAMPOS_ALIMENTO_INTERNO_LISTA[0] + ") REFERENCES " + TABLA_LISTA +
@@ -65,6 +70,7 @@ public class MiNeveraDB extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLA_ALIMENTOS);
         db.execSQL(CREATE_TABLA_ALIMENTOS_CREADOS);
         db.execSQL(CREATE_TABLA_LISTA);
+        db.execSQL(CREATE_TABLA_ALIMENTO_EXTERNO);
         db.execSQL(CREATE_TABLA_ALIMENTO_EXTERNO_LISTA);
         db.execSQL(CREATE_TABLA_ALIMENTO_INTERNO_LISTA);
         db.execSQL(CREATE_TABLA_ALIMENTO_MANUAL);

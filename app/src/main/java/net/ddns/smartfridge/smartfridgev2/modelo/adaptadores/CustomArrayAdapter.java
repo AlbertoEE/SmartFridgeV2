@@ -69,10 +69,12 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
             for (SmoothCheckBox item: smoothCheckBoxes) {
                 item.setChecked(true, true);
             }
+            alimentosSeleccionados = alimentos;
         } else {
             for (SmoothCheckBox item: smoothCheckBoxes) {
                 item.setChecked(false, true);
             }
+            alimentosSeleccionados.clear();
         }
     }
 

@@ -64,13 +64,17 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_sugerencia_de_alimentos, menu);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuSelect:
+                customArrayAdapter.cambiarCheckBoxes();
+        }
         return super.onOptionsItemSelected(item);
     }
 }

@@ -24,11 +24,14 @@ import cn.refactor.library.SmoothCheckBox;
 public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> alimentos;
     private ArrayList<ComponenteListaCompra> alimentosSeleccionados;
+    private ArrayList<SmoothCheckBox> smoothCheckBoxes;
+    private boolean cambio = false;
 
     public CustomArrayAdapter(Context context, ArrayList<ComponenteListaCompra> alimentos){
         super(context, R.layout.fila_alimentos_sugeridos, alimentos);
         this.alimentos = alimentos;
         alimentosSeleccionados = new ArrayList<>();
+        smoothCheckBoxes = new ArrayList<>();
     }
 
     @NonNull
@@ -42,7 +45,7 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
 
         TextView tvAlimentoSugerido = convertView.findViewById(R.id.textViewAlimentoSugerido);
         SmoothCheckBox scb = convertView.findViewById(R.id.smoothCheckBox);
-
+        smoothCheckBoxes.add(scb);
         tvAlimentoSugerido.setText(alimento);
         scb.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
@@ -58,6 +61,19 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
         });
 
         return convertView;
+    }
+
+    public void cambiarCheckBoxes(){
+        cambio = !cambio;
+        if(cambio){
+            for (SmoothCheckBox item: smoothCheckBoxes) {
+                item.setChecked(true, true);
+            }
+        } else {
+            for (SmoothCheckBox item: smoothCheckBoxes) {
+                item.setChecked(false, true);
+            }
+        }
     }
 
     public ArrayList<ComponenteListaCompra> getNuevaLista(){

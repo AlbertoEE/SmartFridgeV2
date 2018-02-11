@@ -28,13 +28,15 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     private ArrayList<SmoothCheckBox> checkBoxes;
 
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos) {
-        super(context, R.layout.fila_producto_nueva_lista);
+        super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
         if(productosSugeridos != null){
             this.productos = productosSugeridos;
+
         } else {
-            this.productos = new ArrayList<ComponenteListaCompra>();
-            this.auxiliar = new ArrayList<>();
+            this.productos = new ArrayList<>();
         }
+        this.auxiliar = new ArrayList<>();
+        this.checkBoxes = new ArrayList<>();
     }
 
     @NonNull
@@ -48,8 +50,9 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
         TextView tvAlimentoSugerido = convertView.findViewById(R.id.tvNombreroductoNuevaLista);
         SmoothCheckBox scb = convertView.findViewById(R.id.smoothCheckBoxNuevaLista);
-        scb.setVisibility(View.INVISIBLE);
         checkBoxes.add(scb);
+        scb.setVisibility(View.INVISIBLE);
+
 
         tvAlimentoSugerido.setText(alimento);
         scb.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
@@ -65,6 +68,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
         return convertView;
     }
+
 
 
     public void addProducto(ComponenteListaCompra producto) {

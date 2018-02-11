@@ -17,6 +17,7 @@ import android.view.View;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterListas;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 
 import java.util.ArrayList;
 
@@ -26,13 +27,17 @@ public class TodasListasActivity extends AppCompatActivity {
     private ArrayList<ListaCompra> listas;
     private Paint p = new Paint();
     private Intent intent;
+    private ListaCompraDB listaCompraDB;//Para trabajar con la bbdd de datos y la tabla de las listas
+    private ArrayList<Integer>ids;//Para almacenar los ids de la tabla listas
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_listas);
-
-        cargarRecyclerView();
+        listaCompraDB = new ListaCompraDB(this);
+        ids = listaCompraDB.recuperarIdListas();
+        listaCompraDB.recuperarComponentesLista(ids.get(0));
+        //cargarRecyclerView();
     }
 
     private void cargarRecyclerView(){

@@ -17,10 +17,10 @@ public class CrearListaCompraActivity extends AppCompatActivity {
         intent = getIntent();
     }
 
-    //Programamos el método para que cuando se pulse el botón, se abra el activiy correspondiente para crear una lista de la compra nueva
+    /*Programamos el método para que cuando se pulse el botón, se abra el activiy correspondiente para crear una lista de la compra nueva
     public void crearNuevaLista(View v){
         intent = new Intent(this, NuevaListaActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 }

@@ -78,6 +78,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public void confirmarCambios(){
         this.productos = this.auxiliar;
+        this.notifyDataSetChanged();
     }
 
     public ArrayList<ComponenteListaCompra> getListaFinal(){

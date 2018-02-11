@@ -27,6 +27,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NuevaListaActivity extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
@@ -147,7 +148,8 @@ public class NuevaListaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a guardar la lista
                 listadoProductos = new ArrayList<ComponenteListaCompra>();
-                //a = crearArray();
+                listadoProductos = adapter.getListaFinal();
+                //listadoProductos = crearArray();
                 //Creamos el nuevo objeto Lista
                 fecha = new Fecha();
                 listaNueva = new ListaCompra(fecha.fechaActualCompleta(), listadoProductos);
@@ -201,7 +203,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         }
     }
 
-    /*Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
+    //Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
     public ArrayList<ComponenteListaCompra> crearArray(){
         ComponenteListaCompra c = new ComponenteListaCompra(1, "patata", 1);
         ComponenteListaCompra c1 = new ComponenteListaCompra(2, "tomate", 1);
@@ -212,17 +214,17 @@ public class NuevaListaActivity extends AppCompatActivity {
         ComponenteListaCompra c6 = new ComponenteListaCompra(1, "chorizo", 3);
         ComponenteListaCompra c7 = new ComponenteListaCompra(2, "salchichón", 3);
         ComponenteListaCompra c8 = new ComponenteListaCompra(3, "jamón serrano", 3);
-        a.add(c);
-        a.add(c1);
-        a.add(c2);
-        a.add(c3);
-        a.add(c4);
-        a.add(c5);
-        a.add(c6);
-        a.add(c7);
-        a.add(c8);
-        return a;
-    }*/
+        listadoProductos.add(c);
+        listadoProductos.add(c1);
+        listadoProductos.add(c2);
+        listadoProductos.add(c3);
+        listadoProductos.add(c4);
+        listadoProductos.add(c5);
+        listadoProductos.add(c6);
+        listadoProductos.add(c7);
+        listadoProductos.add(c8);
+        return listadoProductos;
+    }
 
     private void cargarAdapter(){
         if(alimentosLeidosSP != null){

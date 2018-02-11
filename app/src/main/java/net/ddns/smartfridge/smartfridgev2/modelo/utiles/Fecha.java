@@ -45,6 +45,21 @@ public class Fecha {
         return fecha_actual;
     }
 
+    //Método para pasar de formato completo a formato corto de una fecha
+    public String fechaCorta(String fechaLarga){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date date = new Date();
+        try {
+            date = dateFormat.parse(fechaLarga);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        String fechaCorta = dateFormat2.format(date);
+        Log.d("fecha2", "fecha actual111: " + fechaCorta);
+        return fechaCorta;
+    }
+
     //Método para saber una fecha a partir de unos días dados
     public String diasAFecha(int tiempo_Caducidad){
         //Instanciamos un objeto Calendar

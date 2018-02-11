@@ -11,6 +11,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Clase que gestiona el almacenamiento del fichero Shared Preferences

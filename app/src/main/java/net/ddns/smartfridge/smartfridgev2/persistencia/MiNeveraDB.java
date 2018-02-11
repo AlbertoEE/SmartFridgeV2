@@ -31,12 +31,12 @@ public class MiNeveraDB extends SQLiteOpenHelper {
             " FOREIGN KEY (" + CAMPOS_ALI_CREADOS[3] + ") REFERENCES " + TABLA_ALIMENTOS + "(" + CAMPOS_ALIMENTOS[0] + ") ON DELETE SET NULL);";//Tabla alimentos_creados
     public static final String [] CAMPOS_LISTA = {"id_lista", "fecha"};//Campos de la tabla lista
     public static final String [] CAMPOS_ALIMENTO_EXTERNO_LISTA = {"id_lista", "id_externo"};//Campos de la tabla alimento_externo_lista
-    public static final String [] CAMPOS_ALIMENTO_EXTERNO = {"id_externo", "id_alimento"};//Campos de la talba alimento_externo
-    public static final String [] CAMPOS_ALIMENTO_INTERNO_LISTA = {"id_listaC", "id_interno"};//Campos de la tabla alimento_interno_lista
+    public static final String [] CAMPOS_ALIMENTO_EXTERNO = {"id_externo", "nombreExterno"};//Campos de la talba alimento_externo
+    public static final String [] CAMPOS_ALIMENTO_INTERNO_LISTA = {"id_lista", "id_alimento"};//Campos de la tabla alimento_interno_lista
     public static final String [] CAMPOS_ALIMENTO_MANUAL = {"id_manual", "nombre_alimento"};//Campos de la tabla alimento_manual
     public static final String [] CAMPOS_ALIMENTO_MANUAL_LISTA = {"id_lista", "id_manual"};//Campos de la tabla alimento_manual_lista
     private static final String CREATE_TABLA_LISTA = "CREATE TABLE " + TABLA_LISTA + " (" + CAMPOS_LISTA[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CAMPOS_LISTA[1] + " TEXT)";//Tabla lista
-    private static final String CREATE_TABLA_ALIMENTO_EXTERNO = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO + " (" + CAMPOS_ALIMENTO_EXTERNO[0] + " INTEGER PRIMARY KEY, " +
+    private static final String CREATE_TABLA_ALIMENTO_EXTERNO = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO + " (" + CAMPOS_ALIMENTO_EXTERNO[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CAMPOS_ALIMENTO_EXTERNO[1] + " TEXT);";//Tabla alimento_externo_lista
     private static final String CREATE_TABLA_ALIMENTO_EXTERNO_LISTA = "CREATE TABLE " + TABLA_ALIMENTO_EXTERNO_LISTA + " (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " INTEGER, " +
             CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + " INTEGER, PRIMARY KEY (" + CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + ", " + CAMPOS_ALIMENTO_EXTERNO_LISTA[1] + ")" +
@@ -60,6 +60,12 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     public static final String INSERT_ALIMENTO5 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'mantequilla\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
     public static final String INSERT_ALIMENTO6 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'nata\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
     public static final String INSERT_ALI_CREADO = "INSERT INTO alimentos_creados (nombre_ali_nuevo, fecha_creado, id_alimento) VALUES (\'pomelo\', \'13-01-2018\', 1)";
+    public static final String INSERT_EXTERNA = "INSERT INTO alimento_externo (nombreExterno) VALUES (\'pavo\');";
+    public static final String INSERT_EXTERNA2 = "INSERT INTO alimento_externo (nombreExterno) VALUES (\'queso\');";
+    public static final String INSERT_EXTERNA3 = "INSERT INTO alimento_externo (nombreExterno) VALUES (\'chocolate\');";
+    public static final String INSERT_MANUAL = "INSERT INTO alimento_manual (nombre_alimento) VALUES (\'chorizo\');";
+    public static final String INSERT_MANUAL2 = "INSERT INTO alimento_manual (nombre_alimento) VALUES (\'salchichón\');";
+    public static final String INSERT_MANUAL3 = "INSERT INTO alimento_manual (nombre_alimento) VALUES (\'jamón serrano\');";
 
     //Constructor de la clase
     public MiNeveraDB (Context context) {
@@ -82,6 +88,12 @@ public class MiNeveraDB extends SQLiteOpenHelper {
         db.execSQL(INSERT_ALIMENTO5);
         db.execSQL(INSERT_ALIMENTO6);
         db.execSQL(INSERT_ALI_CREADO);
+        db.execSQL(INSERT_EXTERNA);
+        db.execSQL(INSERT_EXTERNA2);
+        db.execSQL(INSERT_EXTERNA3);
+        db.execSQL(INSERT_MANUAL);
+        db.execSQL(INSERT_MANUAL2);
+        db.execSQL(INSERT_MANUAL3);
         Log.d("insert", "sql: " + INSERT_ALI_CREADO);
     }
 

@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Clase que representa una lista de la compra

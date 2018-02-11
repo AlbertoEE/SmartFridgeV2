@@ -14,6 +14,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.refactor.library.SmoothCheckBox;
 

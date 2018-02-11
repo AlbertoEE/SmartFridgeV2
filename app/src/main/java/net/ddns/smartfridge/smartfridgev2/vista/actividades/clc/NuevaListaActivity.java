@@ -41,14 +41,12 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ListaCompraDB listaCompraDB;//Para utilizar los métodos de persistencia del módulo de lista de la compra
     private ComponenteListaCompra componente;//Para crear los items que van a ir en la lista
     private int id_alimento_manual;//Para guardar el id que hay en la bbdd asociado al alimento que metemos de manera manual
-    ////////////////////////////
-    private ArrayList<ComponenteListaCompra> a = new ArrayList<ComponenteListaCompra>();
-    /////////////////////////////
     private CustomArrayAdapterNuevaLista adapter;
     private ListView listView;
     private boolean editando = false;
     private static final int REQUEST_CODE_ALIMENTOS_SUGERIDOS = 357;
     private ArrayList<ComponenteListaCompra> componenteListaCompras;
+    private ArrayList<ComponenteListaCompra> listadoProductos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +138,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                     adapter.mostrarCheckboxes();
                 }else{
                     adapter.ocultarrCheckboxes();
+                    adapter.confirmarCambios();
                 }
             }
         });
@@ -147,17 +146,17 @@ public class NuevaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a guardar la lista
-                a=new ArrayList<>();
-                a = crearArray();
+                listadoProductos = new ArrayList<ComponenteListaCompra>();
+                //a = crearArray();
                 //Creamos el nuevo objeto Lista
                 fecha = new Fecha();
-                listaNueva = new ListaCompra(fecha.fechaActualCompleta(), a);
+                listaNueva = new ListaCompra(fecha.fechaActualCompleta(), listadoProductos);
                 //Guardamos los datos de la lista en la bbdd
                 listaCompraDB.insertarListaCompra(listaNueva);
                 Log.d("guardarLista", "Lista guardada");
                 int id = listaCompraDB.getIdLista(fecha.fechaActualCompleta());
                 Log.d("guardarLista", "id: " + id);
-                insertarComponentesLista(a, id);
+                insertarComponentesLista(listadoProductos, id);
                 Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -202,7 +201,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         }
     }
 
-    //Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
+    /*Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
     public ArrayList<ComponenteListaCompra> crearArray(){
         ComponenteListaCompra c = new ComponenteListaCompra(1, "patata", 1);
         ComponenteListaCompra c1 = new ComponenteListaCompra(2, "tomate", 1);
@@ -223,7 +222,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         a.add(c7);
         a.add(c8);
         return a;
-    }
+    }*/
 
     private void cargarAdapter(){
         if(alimentosLeidosSP != null){
@@ -232,7 +231,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             adapter = new CustomArrayAdapterNuevaLista(this, new ArrayList<ComponenteListaCompra>());
         }
 
-        Log.d("elputo", "cargarAdapter: " + crearArray());
+        //Log.d("elputo", "cargarAdapter: " + crearArray());
         Log.d("elputo", "cargarAdapter: " + adapter);
         listView = (ListView)findViewById(R.id.lvNuevaLista);
         Log.d("elputo", "cargarAdapter: " + listView);

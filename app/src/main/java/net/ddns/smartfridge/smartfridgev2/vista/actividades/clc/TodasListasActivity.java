@@ -50,9 +50,6 @@ public class TodasListasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_listas);
         todasLasListas = NuevaListaActivity.getTodasLasListas();
-        for(int i = 0; i< todasLasListas.size(); i++){
-            Log.d("fecha2", "idLista: " + todasLasListas.get(i).getId());
-        }
   /*      listaCompraDB = new ListaCompraDB(this);
         fecha = new Fecha();
         //Recogemos todas las listas que hay en la bbdd

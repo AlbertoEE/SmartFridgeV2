@@ -142,7 +142,7 @@ public class ListaCompraDB {
         return ids;
     }
 
-    //Método para recuperar todos los productos de una lista a partir del id de esa lista
+    /*Método para recuperar todos los productos de una lista a partir del id de esa lista
     public ArrayList<ComponenteListaCompra> recuperarComponentesLista(Object id){
         ids.clear();
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " = " + id + ";";
@@ -246,5 +246,5 @@ public class ListaCompraDB {
         }
         cursor.close();
         return fecha;
-    }
+    }*/
 }

@@ -21,4 +21,6 @@ public class CosasQueHacer {
     //TODO organizar los recursos via nombre
 
     //TODO cerrar conexiones a la bbdd en el onDestroy()
+
+    //TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade.
 }

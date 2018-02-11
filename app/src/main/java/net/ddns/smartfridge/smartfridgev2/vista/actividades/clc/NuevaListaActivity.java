@@ -47,15 +47,16 @@ public class NuevaListaActivity extends AppCompatActivity {
     private CustomArrayAdapterNuevaLista adapter;
     private ListView listView;
     private boolean editando = false;
+    private static final int REQUEST_CODE_ALIMENTOS_SUGERIDOS = 357;
+    private ArrayList<ComponenteListaCompra> componenteListaCompras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
-        cargarAdapter();
         gsp = new GestorSharedP();
         listaCompraDB = new ListaCompraDB(this);
-
+        cargarAdapter();
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         //Fijamos el contexto del activity
@@ -71,7 +72,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             intent = new Intent(this, SugerenciaDeAlimentoActivity.class);
             //intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
             intent.putExtra("AlimentosSugeridos", alimentosLeidosSP);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_ALIMENTOS_SUGERIDOS);
             //borrarSP();
         }
         //Cogemos la referencia a los floating action buttons
@@ -235,5 +236,17 @@ public class NuevaListaActivity extends AppCompatActivity {
         Log.d("elputo", "cargarAdapter: " + listView);
         listView.setAdapter(adapter);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_ALIMENTOS_SUGERIDOS){
+            componenteListaCompras = new ArrayList<>();
+            componenteListaCompras = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
+            cargarAdapter();
+        }
+    }
+
+
 }
 

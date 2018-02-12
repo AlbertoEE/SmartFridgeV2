@@ -46,6 +46,7 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ListView listView;
     private boolean editando = false;
     private static final int REQUEST_CODE_ALIMENTOS_SUGERIDOS = 357;
+    private static final int REQUEST_CODE_REVISTA = 5465;
     private ArrayList<ComponenteListaCompra> componenteListaCompras;
     private ArrayList<ComponenteListaCompra> listadoProductos;
     private static ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
@@ -128,7 +129,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a abrir el activity con todos los alimentos
                 intent = new Intent(getApplicationContext(), CompraExternaActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_REVISTA);
             }
         });
         botonEditar.setOnClickListener(new View.OnClickListener() {

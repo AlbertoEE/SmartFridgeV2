@@ -62,6 +62,7 @@
         <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentoActivity" />
         <activity android:name=".vista.actividades.clc.TodasListasActivity" />
         <activity android:name=".vista.actividades.clc.MostrarProductosListaActivity" />
+        <activity android:name=".vista.actividades.clc.CompraExternaActivity"></activity>
     </application>
 
 </manifest>

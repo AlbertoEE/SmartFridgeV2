@@ -127,9 +127,8 @@ public class NuevaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a abrir el activity con todos los alimentos
-                /*intent = new Intent(this, ListadoAlimentos.class);
+                intent = new Intent(getApplicationContext(), CompraExternaActivity.class);
                 startActivity(intent);
-                 */
             }
         });
         botonEditar.setOnClickListener(new View.OnClickListener() {

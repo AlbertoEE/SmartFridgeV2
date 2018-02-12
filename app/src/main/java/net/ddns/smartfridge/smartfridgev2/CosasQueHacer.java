@@ -29,5 +29,6 @@ public class CosasQueHacer {
     10.TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade.
     11.TODO Solucionar NullPointer en NuevaListaActivity línea 251, cuando salen las sugerencias y se da para atrás sin seleccionar nada
     12.TODO organizar los productos de la lista via nombre
+    13.TODO Mirar por qué cuando no se selecciona nada de lo sugerido, se agrega a la lista
      */
 }

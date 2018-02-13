@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Semaphore;
 
 public class TodasListasActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapterListas adapter;
@@ -43,20 +44,28 @@ public class TodasListasActivity extends AppCompatActivity {
     private String fechaLista;//Para saber la fecha de una lista
     private Fecha fecha;//Para cambiar el formato de la fecha que recibimos de la bbdd
     private ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
+    private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
+    private final Semaphore semaphore = new Semaphore(MAX_AVAILABLE, true);
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_listas);
-        todasLasListas = NuevaListaActivity.getTodasLasListas();
-  /*      listaCompraDB = new ListaCompraDB(this);
+        //todasLasListas = NuevaListaActivity.getTodasLasListas();
+        listaCompraDB = new ListaCompraDB(this);
         fecha = new Fecha();
         //Recogemos todas las listas que hay en la bbdd
         ids = listaCompraDB.recuperarIdListas();
         Log.d("fecha2", "longitud array: " + ids.size());
+  /*      try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
         //Recuperamos los componentes de cada id, es decir, de cada lista y los guardamos en un objeto de tipo lista
-        for (int n : ids) {/*
+        for (int n : ids) {
             //Cogemos el ArrayList con todos los productos que componen la lista
             productos = listaCompraDB.recuperarComponentesLista(n);
             //Cogemos también la fecha de creación de la lista y la pasamos a su formato sin horas
@@ -70,7 +79,8 @@ public class TodasListasActivity extends AppCompatActivity {
                 productos = listaCompraDB.recuperarComponentesLista(n);
             }
             Log.d("fecha2", "valor de n: " + n);
-        }*/
+        }
+        //semaphore.release();
         cargarRecyclerView();
     }
 

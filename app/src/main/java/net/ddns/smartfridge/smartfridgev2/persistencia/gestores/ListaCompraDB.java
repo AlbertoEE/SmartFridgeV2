@@ -32,7 +32,7 @@ public class ListaCompraDB {
     private CopyOnWriteArrayList<ComponenteListaCompra>productosM = new CopyOnWriteArrayList<ComponenteListaCompra>();
     private ArrayList<ComponenteListaCompra>todosLosProductos = new ArrayList<ComponenteListaCompra>();//Para crear la lista con todos los productos
     private String fecha;//Para almacenar la fecha obtenida a partir del id de la lista
-    private ArrayList<Lista>todosLosProductos2 = new ArrayList<>();
+    //private ArrayList<Lista>todosLosProductos2 = new ArrayList<>();
 
     //Constructor
     public ListaCompraDB(Context contexto){

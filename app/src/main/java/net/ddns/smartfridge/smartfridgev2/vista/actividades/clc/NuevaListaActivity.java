@@ -57,9 +57,8 @@ public class NuevaListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nueva_lista);
         gsp = new GestorSharedP();
         listaCompraDB = new ListaCompraDB(this);
-        cargarAdapter();
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
+        cargarAdapter();
         //Fijamos el contexto del activity
         context = this;
         //Instanciamos el arraylist
@@ -230,8 +229,8 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
     private void cargarAdapter(){
-        if(alimentosLeidosSP != null){
-            adapter = new CustomArrayAdapterNuevaLista(this, alimentosLeidosSP);
+        if(componenteListaCompras != null){
+            adapter = new CustomArrayAdapterNuevaLista(this, componenteListaCompras);
         } else {
             adapter = new CustomArrayAdapterNuevaLista(this, new ArrayList<ComponenteListaCompra>());
         }
@@ -246,10 +245,12 @@ public class NuevaListaActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_ALIMENTOS_SUGERIDOS){
+        if(requestCode == REQUEST_CODE_ALIMENTOS_SUGERIDOS && resultCode == RESULT_OK){
             componenteListaCompras = new ArrayList<>();
             componenteListaCompras = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
             cargarAdapter();
+        } else if (requestCode == REQUEST_CODE_ALIMENTOS_SUGERIDOS && resultCode == RESULT_CANCELED){
+
         }
     }
 

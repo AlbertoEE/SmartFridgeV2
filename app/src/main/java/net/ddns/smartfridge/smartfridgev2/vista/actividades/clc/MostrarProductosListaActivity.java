@@ -10,20 +10,28 @@ import android.widget.ListView;
 import android.widget.ShareActionProvider;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MostrarProductosListaActivity extends AppCompatActivity {
     private Intent intent;
     private ListView listView;
     private ShareActionProvider mShareActionProvider;
+    private ArrayList<String> alimentos;
+    private ArrayList<ComponenteListaCompra> componentesListaCompra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_productos_lista);
-
+        alimentos = new ArrayList<>();
         intent = getIntent();
+        componentesListaCompra = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra("ListaProductos");
+        for (ComponenteListaCompra item: componentesListaCompra) {
+            alimentos.add(item.getNombreElemento());
+        }
         cargarAdapter();
     }
 
@@ -31,7 +39,7 @@ public class MostrarProductosListaActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this, (R.layout.fila_producto),
                 (R.id.tvNombreProductoFilaProducto),
-                intent.getStringArrayExtra("ListaProductos"));
+                alimentos);
 
         listView = (ListView) findViewById(R.id.lvMostrarProductos);
 
@@ -41,13 +49,13 @@ public class MostrarProductosListaActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate menu resource file.
-        getMenuInflater().inflate(R.menu.menu_mostrar_productos, menu);
+//        getMenuInflater().inflate(R.menu.menu_mostrar_productos, menu);
 
         // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.menu_item_share);
+      //  MenuItem item = menu.findItem(R.id.menu_item_share);
 
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
 
         // Return true to display menu
         return true;

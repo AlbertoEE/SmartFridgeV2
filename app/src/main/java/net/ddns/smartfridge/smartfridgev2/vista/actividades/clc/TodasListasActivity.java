@@ -77,7 +77,7 @@ public class TodasListasActivity extends AppCompatActivity {
     private void cargarRecyclerView(){
         listas = new ArrayList<>();
 
-        adapter = new CustomRecyclerViewAdapterListas(listas);
+        adapter = new CustomRecyclerViewAdapterListas(todasLasListas);
         recyclerView = (RecyclerView) findViewById(R.id.rvListas);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());

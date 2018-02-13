@@ -101,6 +101,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         //Cuando ya tenemos nuestro array entero, hacemos una copia de el porque nos va a hacer falta
         //para el método de filtrar
         alimentosCopia.addAll(alimentos);
+        cursor.close();
     }
 
     /**

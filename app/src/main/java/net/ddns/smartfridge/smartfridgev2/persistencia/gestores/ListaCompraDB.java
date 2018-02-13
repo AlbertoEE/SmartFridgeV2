@@ -125,7 +125,7 @@ public class ListaCompraDB {
     }
 
     //Método para recuperar todos los ids de todas las listas que hay
-    public ArrayList<Integer> recuperarIdListas(){
+    public synchronized ArrayList<Integer> recuperarIdListas(){
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_LISTA + ";";
         //El resultado se almacena en un cursor
         cursor = sqe.rawQuery(sentencia, new String[]{});
@@ -142,7 +142,45 @@ public class ListaCompraDB {
         return ids;
     }
 
-    //Método para recuperar todos los productos de una lista a partir del id de esa lista
+
+    //Método para recuperar los productos de la lista interna, a partir de un id
+    public ArrayList<ComponenteListaCompra> recuperarComponentesListaInterna(){
+        ids.clear();
+        ids = recuperarIdListas();
+        for (int n : ids) {
+            Log.d("fecha2", "id= " + n);
+            sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " = " + n + ";";
+            //El resultado se almacena en un cursor
+            cursor = sqe.rawQuery(sentencia, new String[]{});
+            //Comprobamos si se ha recogido algún registro
+            if (cursor.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+                    //Añadimos cada id al ArrayList
+                    ids.add(cursor.getInt(1));
+                    Log.d("ref", "id tabla interna: " + cursor.getInt(1));
+                } while (cursor.moveToNext());
+            }
+            //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_interna
+            for (int numero : ids) {
+                sentencia = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTOS[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " = " + numero + ";";
+                cursor = sqe.rawQuery(sentencia, new String[]{});
+                if (cursor.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        componenteListaCompra = new ComponenteListaCompra(numero, cursor.getString(0), 1);
+                        productos.add(componenteListaCompra);
+                        Log.d("ref", "nombre alimento interna: " + cursor.getString(0));
+                        Log.d("ref", "unidades en array: " + productos.size());
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+        cursor.close();
+        return productos;
+    }
+
+    /*Método para recuperar todos los productos de una lista a partir del id de esa lista
     public synchronized ArrayList<ComponenteListaCompra> recuperarComponentesLista(Object id){
         ids.clear();
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_INTERNO_LISTA[0] + " = " + id + ";";
@@ -172,7 +210,7 @@ public class ListaCompraDB {
                 } while(cursor.moveToNext());
             }
         }
-        //cursor.close();
+        cursor.close();
         //Recogemos ahora los datos de la lista externa
         ids.clear();
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " = " + id + ";";
@@ -217,7 +255,7 @@ public class ListaCompraDB {
                 Log.d("ref", "id tabla manual: " + cursor.getInt(1));
             } while(cursor.moveToNext());
         }
-        //cursor.close();
+        cursor.close();
         //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
         for (int numero : ids){
             sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_MANUAL + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[0] + " = " + numero + ";";
@@ -233,7 +271,7 @@ public class ListaCompraDB {
         }
         cursor.close();
         return productos;
-    }
+    }*/
 
     //Método para obtener la fecha de una lista almacenada en la bbdd
     public String obtenerFechaLista(Object id){

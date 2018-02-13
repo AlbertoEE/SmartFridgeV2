@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
+import net.ddns.smartfridge.smartfridgev2.BuildConfig;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterListas;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
@@ -39,6 +41,7 @@ public class TodasListasActivity extends AppCompatActivity {
     private Intent intent;
     private ListaCompraDB listaCompraDB;//Para trabajar con la bbdd de datos y la tabla de las listas
     private ArrayList<Integer> ids;//Para almacenar los ids de la tabla listas
+    private ArrayList<Integer> idsCopia;//Para almacenar los ids de la tabla listas
     private ArrayList<ComponenteListaCompra> productos;//Para almacenar los componentes de cada compra almacenada en la bbdd
     private ListaCompra lista;//Para generar cada objeto de tipo ListaCompra
     private String fechaLista;//Para saber la fecha de una lista
@@ -51,6 +54,14 @@ public class TodasListasActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_listas);
         //todasLasListas = NuevaListaActivity.getTodasLasListas();
@@ -59,27 +70,31 @@ public class TodasListasActivity extends AppCompatActivity {
         //Recogemos todas las listas que hay en la bbdd
         ids = listaCompraDB.recuperarIdListas();
         Log.d("fecha2", "longitud array: " + ids.size());
+
+        //int n = ids.get(0);
   /*      try {
             semaphore.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
         //Recuperamos los componentes de cada id, es decir, de cada lista y los guardamos en un objeto de tipo lista
-        for (int n : ids) {
+        //for (int n : idsCopia) {
             //Cogemos el ArrayList con todos los productos que componen la lista
-            productos = listaCompraDB.recuperarComponentesLista(n);
-            //Cogemos también la fecha de creación de la lista y la pasamos a su formato sin horas
+            //productos = listaCompraDB.recuperarComponentesLista(n);
+            productos = listaCompraDB.recuperarComponentesListaInterna();
+            Log.d("fecha2", "producto: " + productos.get(2).getNombreElemento());
+            /*Cogemos también la fecha de creación de la lista y la pasamos a su formato sin horas
             fechaLista = fecha.fechaCorta(listaCompraDB.obtenerFechaLista(n));
             lista = new ListaCompra(n, fechaLista, productos);
             //Guardamos todas las listas en un ArrayList que será el que usemos para mostrarlo
             todasLasListas.add(lista);
             Log.d("fecha2", "total listas: " + todasLasListas.size());
-            ListIterator<Integer> li = ids.listIterator();
+        /*    ListIterator<Integer> li = ids.listIterator();
             while( li.hasNext() ){
                 productos = listaCompraDB.recuperarComponentesLista(n);
-            }
-            Log.d("fecha2", "valor de n: " + n);
-        }
+            }*/
+            //Log.d("fecha2", "valor de n: " + n);
+        //}
         //semaphore.release();
         cargarRecyclerView();
     }

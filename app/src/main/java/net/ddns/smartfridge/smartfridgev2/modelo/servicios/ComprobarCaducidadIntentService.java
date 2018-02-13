@@ -135,6 +135,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
                         } while(cursor.moveToNext());
                         cursor.close();
                     }
+
                 }
          //   }
         };
@@ -200,7 +201,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
         }*/
         Timer timer = new Timer();
         timer.schedule(timerTask,DELAY,MINUTO);
-
     }
 
     public static Bitmap getBm() {
@@ -240,7 +240,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
                 dialogos.enviarNotificacionProximaEscasez(alimento, getApplicationContext(), posicionCursor);
             }
         }
-        cursor.close();
     }
 
     //Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP

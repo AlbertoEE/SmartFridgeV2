@@ -52,7 +52,7 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
 
     @Override
     public void onBindViewHolder(CustomRecyclerViewAdapterListas.ViewHolder2 holder, int position) {
-        holder.tvFechaLista.setText(listas.get(position).getFecha().substring(0,11));
+        //holder.tvFechaLista.setText(listas.get(position).getFecha().substring(0,11));
         holder.tvNumeroProductos.setText(String.valueOf(listas.get(position).getProductos().size()));
     }
 

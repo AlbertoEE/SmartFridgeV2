@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 
 import net.ddns.smartfridge.smartfridgev2.BuildConfig;
@@ -25,13 +24,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Semaphore;
 
 public class TodasListasActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapterListas adapter;
@@ -42,14 +35,16 @@ public class TodasListasActivity extends AppCompatActivity {
     private ListaCompraDB listaCompraDB;//Para trabajar con la bbdd de datos y la tabla de las listas
     private ArrayList<Integer> ids;//Para almacenar los ids de la tabla listas
     private ArrayList<Integer> idsCopia;//Para almacenar los ids de la tabla listas
-    private ArrayList<ComponenteListaCompra> productos;//Para almacenar los componentes de cada compra almacenada en la bbdd
+    //private ArrayList<Lista> productosInterna;//Para almacenar los componentes de cada compra almacenada en la bbdd
+    private CopyOnWriteArrayList<ComponenteListaCompra> productosExterna;//Para almacenar los componentes de cada compra almacenada en la bbdd
+    private CopyOnWriteArrayList<ComponenteListaCompra> productosManual;//Para almacenar los componentes de cada compra almacenada en la bbdd
     private ListaCompra lista;//Para generar cada objeto de tipo ListaCompra
     private String fechaLista;//Para saber la fecha de una lista
     private Fecha fecha;//Para cambiar el formato de la fecha que recibimos de la bbdd
     private ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
     private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
-    private final Semaphore semaphore = new Semaphore(MAX_AVAILABLE, true);
-
+    //private CopyOnWriteArrayList<CopyOnWriteArrayList>todosLosProductos = new CopyOnWriteArrayList<>();//Para crear la lista con todos los productos
+    //private ArrayList<Lista>todosLosProductos = new ArrayList<>();//Para crear la lista con todos los productos
 
 
     @Override
@@ -64,13 +59,43 @@ public class TodasListasActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_listas);
-        //todasLasListas = NuevaListaActivity.getTodasLasListas();
-        listaCompraDB = new ListaCompraDB(this);
+        todasLasListas = NuevaListaActivity.getTodasLasListas();
+       /* listaCompraDB = new ListaCompraDB(this);
         fecha = new Fecha();
         //Recogemos todas las listas que hay en la bbdd
         ids = listaCompraDB.recuperarIdListas();
         Log.d("fecha2", "longitud array: " + ids.size());
+        productosInterna = new ArrayList<Lista>();
+        productosExterna = new CopyOnWriteArrayList<ComponenteListaCompra>();
+        productosManual = new CopyOnWriteArrayList<>();
+        productosInterna = listaCompraDB.recuperarComponentesListaInterna();
 
+        todosLosProductos = listaCompraDB.recuperarComponentesListaExterna(productosInterna);
+
+        for(Lista l : todosLosProductos){
+            CopyOnWriteArrayList<ComponenteListaCompra> a = l.getProductos();
+            for (ComponenteListaCompra c : a){
+                int contador =1;
+                Log.d("lista2", "id: " + l.getId() + " componentes: " + c.getNombreElemento() + "contador: " + contador);
+                contador++;
+            }
+        }*/
+
+        //productosManual = listaCompraDB.recuperarComponentesListaManual();
+        /*
+        for(int i=0;i<productosInterna.size();i++){
+            todosLosProductos.add(productosInterna.get(i));
+        }
+        for(int i=0;i<productosExterna.size();i++){
+            todosLosProductos.add(productosExterna.get(i));
+        }
+        for(int i=0;i<productosManual.size();i++){
+            todosLosProductos.add(productosManual.get(i));
+        }
+        Log.d("lista", "Total productos: " + todosLosProductos.size());
+        for(int i=0;i<todosLosProductos.size();i++){
+            Log.d("lista", "Elementos de la lista: "+todosLosProductos.get(i).getNombreElemento());
+        }*/
         //int n = ids.get(0);
   /*      try {
             semaphore.acquire();
@@ -81,8 +106,8 @@ public class TodasListasActivity extends AppCompatActivity {
         //for (int n : idsCopia) {
             //Cogemos el ArrayList con todos los productos que componen la lista
             //productos = listaCompraDB.recuperarComponentesLista(n);
-            productos = listaCompraDB.recuperarComponentesListaInterna();
-            Log.d("fecha2", "producto: " + productos.get(2).getNombreElemento());
+            //productos = listaCompraDB.recuperarComponentesListaInterna();
+            //Log.d("fecha2", "producto: " + productos.get(2).getNombreElemento());
             /*Cogemos también la fecha de creación de la lista y la pasamos a su formato sin horas
             fechaLista = fecha.fechaCorta(listaCompraDB.obtenerFechaLista(n));
             lista = new ListaCompra(n, fechaLista, productos);

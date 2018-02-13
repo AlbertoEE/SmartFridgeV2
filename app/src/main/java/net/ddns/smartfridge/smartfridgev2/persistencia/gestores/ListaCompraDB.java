@@ -24,11 +24,15 @@ public class ListaCompraDB {
     private ArrayList<Integer> ids = new ArrayList<Integer>();//Para almacenar los ids de todas las listas que hay creadas
     private String sentencia;//Para crear todas las sentencias de la bbdd
     private Cursor cursor;//Cursor para recorrer los datos de la bbdd
-    private ArrayList<ComponenteListaCompra> productos = new ArrayList<ComponenteListaCompra>();//ArrayList para guardar los ítems de la lista de la compra
+    private Cursor cursor3;//Cursor para recorrer los datos de la bbdd
+    private CopyOnWriteArrayList<ComponenteListaCompra> productos = new CopyOnWriteArrayList<ComponenteListaCompra>();//ArrayList para guardar los ítems de la lista de la compra
     private ListaCompra lc;//Para generar objetos ListaCompra y mostrarlos en la lista
     private ComponenteListaCompra componenteListaCompra;//Para crear objetos a partir de los datos de la bbdd
-
+    private ArrayList<Integer> idsTabla = new ArrayList<Integer>();//Para recoger los ids de la tabla
+    private CopyOnWriteArrayList<ComponenteListaCompra>productosM = new CopyOnWriteArrayList<ComponenteListaCompra>();
+    private ArrayList<ComponenteListaCompra>todosLosProductos = new ArrayList<ComponenteListaCompra>();//Para crear la lista con todos los productos
     private String fecha;//Para almacenar la fecha obtenida a partir del id de la lista
+    private ArrayList<Lista>todosLosProductos2 = new ArrayList<>();
 
     //Constructor
     public ListaCompraDB(Context contexto){
@@ -143,8 +147,11 @@ public class ListaCompraDB {
     }
 
 
-    //Método para recuperar los productos de la lista interna, a partir de un id
-    public ArrayList<ComponenteListaCompra> recuperarComponentesListaInterna(){
+    /*Método para recuperar los productos de la lista interna, a partir de un id
+    public ArrayList<Lista> recuperarComponentesListaInterna(){
+        String fecha;
+        Lista listaCompra;
+        ArrayList<Lista>todasLasListas = new ArrayList<Lista>();
         ids.clear();
         ids = recuperarIdListas();
         for (int n : ids) {
@@ -157,12 +164,13 @@ public class ListaCompraDB {
                 //Recorremos el cursor hasta que no haya más registros
                 do {
                     //Añadimos cada id al ArrayList
-                    ids.add(cursor.getInt(1));
+                    idsTabla.add(cursor.getInt(1));
                     Log.d("ref", "id tabla interna: " + cursor.getInt(1));
                 } while (cursor.moveToNext());
             }
             //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_interna
-            for (int numero : ids) {
+            for (int numero : idsTabla) {
+                fecha = obtenerFechaLista(numero);
                 sentencia = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTOS[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " = " + numero + ";";
                 cursor = sqe.rawQuery(sentencia, new String[]{});
                 if (cursor.moveToFirst()) {
@@ -174,12 +182,152 @@ public class ListaCompraDB {
                         Log.d("ref", "unidades en array: " + productos.size());
                     } while (cursor.moveToNext());
                 }
+                listaCompra = new Lista(numero, fecha, productos);
+                todasLasListas.add(listaCompra);
             }
         }
         cursor.close();
-        return productos;
+        return todasLasListas;
     }
 
+    //Método para recuperar los productos de la lista interna, a partir de un id
+    public ArrayList<Lista> recuperarComponentesListaExterna(ArrayList<Lista> todasLasListas){
+        //Recogemos ahora los datos de la lista externa
+        CopyOnWriteArrayList<ComponenteListaCompra> auxiliar = new CopyOnWriteArrayList();
+        for (Lista l : todasLasListas){
+            int id = l.getId();
+            auxiliar = l.getProductos();
+            sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " = " + id + ";";
+            //El resultado se almacena en un cursor
+            cursor = sqe.rawQuery(sentencia, new String[]{});
+            //Comprobamos si se ha recogido algún registro
+            if (cursor.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+                    //Añadimos cada id al ArrayList
+                    idsTabla.add(cursor.getInt(1));
+                    Log.d("ref", "id tabla externa: " + cursor.getInt(1));
+                } while (cursor.moveToNext());
+            }
+            //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
+            for (int numero : idsTabla) {
+                sentencia = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO[0] + " = " + numero + ";";
+                cursor = sqe.rawQuery(sentencia, new String[]{});
+                if (cursor.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        componenteListaCompra = new ComponenteListaCompra(numero, cursor.getString(0), 2);
+                        auxiliar.add(componenteListaCompra);
+                        Log.d("ref", "nombre alimento externa: " + cursor.getString(0));
+                        Log.d("ref", "unidades en array: " + auxiliar.size());
+                    } while (cursor.moveToNext());
+                }
+            }
+            sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_MANUAL_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL_LISTA[0] + " = " + id + ";";
+            //El resultado se almacena en un cursor
+            cursor3 = sqe.rawQuery(sentencia, new String[]{});
+            //Comprobamos si se ha recogido algún registro
+            if (cursor3.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+                    //Añadimos cada id al ArrayList
+                    idsTabla.add(cursor3.getInt(1));
+                    Log.d("ref", "id tabla manual: " + cursor3.getInt(1));
+                } while(cursor3.moveToNext());
+            }
+            //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
+            for (int numero : idsTabla){
+                sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_MANUAL + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[0] + " = " + numero + ";";
+                cursor3 = sqe.rawQuery(sentencia, new String[]{});
+                if (cursor3.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        componenteListaCompra = new ComponenteListaCompra(numero, cursor3.getString(0), 3);
+                        auxiliar.add(componenteListaCompra);
+                        Log.d("ref", "nombre alimento manual: " + cursor3.getString(0));
+                    } while(cursor3.moveToNext());
+                }
+            }
+            l.setProductos(auxiliar);
+            todosLosProductos2.add(l);
+        }
+        cursor.close();
+        cursor3.close();
+        /*
+        ids.clear();
+        ids = recuperarIdListas();
+        productos.clear();
+        for (int n : ids) {
+            sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " = " + n + ";";
+            //El resultado se almacena en un cursor
+            cursor = sqe.rawQuery(sentencia, new String[]{});
+            //Comprobamos si se ha recogido algún registro
+            if (cursor.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+                    //Añadimos cada id al ArrayList
+                    idsTabla.add(cursor.getInt(1));
+                    Log.d("ref", "id tabla externa: " + cursor.getInt(1));
+                } while (cursor.moveToNext());
+            }
+            //cursor.close();
+            //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
+            for (int numero : idsTabla) {
+                sentencia = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO[0] + " = " + numero + ";";
+                cursor = sqe.rawQuery(sentencia, new String[]{});
+                if (cursor.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        componenteListaCompra = new ComponenteListaCompra(numero, cursor.getString(0), 2);
+                        productos.add(componenteListaCompra);
+                        Log.d("ref", "nombre alimento externa: " + cursor.getString(0));
+                        Log.d("ref", "unidades en array: " + productos.size());
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+        cursor.close();
+        return todosLosProductos2;
+    }
+*/
+    //Método para recuperar los productos de la lista interna, a partir de un id/*
+  /*  public synchronized CopyOnWriteArrayList<ComponenteListaCompra> recuperarComponentesListaManual(){
+        //Recogemos ahora los datos de la lista externa
+        ids.clear();
+        idsTabla.clear();
+        ids = recuperarIdListas();
+        productosM.clear();
+        for (int n : ids) {
+            sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_MANUAL_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL_LISTA[0] + " = " + n + ";";
+            //El resultado se almacena en un cursor
+            cursor3 = sqe.rawQuery(sentencia, new String[]{});
+            //Comprobamos si se ha recogido algún registro
+            if (cursor3.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+                    //Añadimos cada id al ArrayList
+                    idsTabla.add(cursor3.getInt(1));
+                    Log.d("ref", "id tabla manual: " + cursor3.getInt(1));
+                } while(cursor3.moveToNext());
+            }
+            //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
+            for (int numero : idsTabla){
+                sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_MANUAL + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[0] + " = " + numero + ";";
+                cursor3 = sqe.rawQuery(sentencia, new String[]{});
+                if (cursor3.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        componenteListaCompra = new ComponenteListaCompra(numero, cursor3.getString(0), 3);
+                        productosM.add(componenteListaCompra);
+                        Log.d("ref", "nombre alimento manual: " + cursor3.getString(0));
+                    } while(cursor3.moveToNext());
+                }
+            }
+        }
+        cursor3.close();
+        return productosM;
+    }
+*/
     /*Método para recuperar todos los productos de una lista a partir del id de esa lista
     public synchronized ArrayList<ComponenteListaCompra> recuperarComponentesLista(Object id){
         ids.clear();
@@ -274,7 +422,7 @@ public class ListaCompraDB {
     }*/
 
     //Método para obtener la fecha de una lista almacenada en la bbdd
-    public String obtenerFechaLista(Object id){
+    public String obtenerFechaLista(int id){
         sentencia = "SELECT " + MiNeveraDB.CAMPOS_LISTA[1] + " FROM " + MiNeveraDB.TABLA_LISTA + " WHERE " + MiNeveraDB.CAMPOS_LISTA[0] + " = " + id;
         //El resultado se almacena en un cursor
         cursor = sqe.rawQuery(sentencia, new String[]{});
@@ -290,4 +438,5 @@ public class ListaCompraDB {
         cursor.close();
         return fecha;
     }
+
 }

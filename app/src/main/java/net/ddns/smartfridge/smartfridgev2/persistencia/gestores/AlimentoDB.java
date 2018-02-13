@@ -63,6 +63,7 @@ public class AlimentoDB {
     public Cursor getAlimentos(){
         //El resultado se almacena en un cursor
         Cursor cursor = sqe.rawQuery(QUERYBBDDCOMPLETA, new String[]{});
+        cursor.close();
         return cursor;
     }
 
@@ -97,6 +98,7 @@ public class AlimentoDB {
                 Log.d("ref", "Cursor id: " + id);
             } while(cursor.moveToNext());
         }
+        cursor.close();
         return id;
     }
 }

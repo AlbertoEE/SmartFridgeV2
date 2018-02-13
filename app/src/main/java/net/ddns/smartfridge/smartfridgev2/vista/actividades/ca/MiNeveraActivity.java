@@ -51,7 +51,7 @@ public class MiNeveraActivity extends AppCompatActivity {
         rvMiNevera = (RecyclerView) findViewById(R.id.rvMiNevera);
         layoutManager = new GridLayoutManager(this, 2);
         recyclerViewAdapter = new CustomRecyclerViewAdapter(cursor, this);
-
+        cursor.close();
         rvMiNevera.setLayoutManager(layoutManager);
         rvMiNevera.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
@@ -139,6 +139,7 @@ public class MiNeveraActivity extends AppCompatActivity {
             recyclerViewAdapter.setCursor(cursor);
             recyclerViewAdapter.cargarArray();
             recyclerViewAdapter.notifyDataSetChanged();
+            cursor.close();
         }
 
     }

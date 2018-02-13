@@ -92,6 +92,7 @@ public class DetallesActivity extends FragmentActivity {
                 cursor.moveToNext();
             }
         }
+        cursor.close();
         //Cuando ya tenemos nuestro array entero, hacemos una copia de el porque nos va a hacer falta
         //para el método de filtrar
     }

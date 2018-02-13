@@ -130,6 +130,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
                 contador++;
             }while(cursor.moveToNext() && contador != count);
         }
+        cursor.close();
         return alimentos;
     }
 

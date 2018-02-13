@@ -157,7 +157,7 @@ public class ListaCompraDB {
                 Log.d("ref", "id tabla interna: " + cursor.getInt(1));
             } while(cursor.moveToNext());
         }
-        cursor.close();
+        //cursor.close();
         //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_interna
         for (int numero : ids){
             sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTOS[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " = " + numero + ";";
@@ -172,7 +172,7 @@ public class ListaCompraDB {
                 } while(cursor.moveToNext());
             }
         }
-        cursor.close();
+        //cursor.close();
         //Recogemos ahora los datos de la lista externa
         ids.clear();
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO_LISTA[0] + " = " + id + ";";
@@ -187,7 +187,7 @@ public class ListaCompraDB {
                 Log.d("ref", "id tabla externa: " + cursor.getInt(1));
             } while(cursor.moveToNext());
         }
-        cursor.close();
+        //cursor.close();
         //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
         for (int numero : ids){
             sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_EXTERNO[0] + " = " + numero + ";";
@@ -202,7 +202,7 @@ public class ListaCompraDB {
                 } while(cursor.moveToNext());
             }
         }
-        cursor.close();
+        //cursor.close();
         //Recogemos ahora los datos de la tabla manual
         ids.clear();
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTO_MANUAL_LISTA + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL_LISTA[0] + " = " + id + ";";
@@ -217,7 +217,7 @@ public class ListaCompraDB {
                 Log.d("ref", "id tabla manual: " + cursor.getInt(1));
             } while(cursor.moveToNext());
         }
-        cursor.close();
+        //cursor.close();
         //Una vez que tenemos los ids, necesitamos recuperar el nombre de esos alimentos de la tabla lista_externa
         for (int numero : ids){
             sentencia = "SELECT "+ MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[1] + " FROM  " + MiNeveraDB.TABLA_ALIMENTO_MANUAL + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[0] + " = " + numero + ";";

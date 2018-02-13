@@ -164,6 +164,7 @@ public class CaducidadAlimento extends AppCompatActivity {
                 Log.d("tag", "Mi Nevera: " + nombre + ", " + cantidad + ", " + caducidad + ", "+ f_hoy + ", " + f_cad);
             } while(c.moveToNext());
         }
+        c.close();
 
         Fecha fecha = new Fecha();
         //Convertimos en String la fecha del día de hoy

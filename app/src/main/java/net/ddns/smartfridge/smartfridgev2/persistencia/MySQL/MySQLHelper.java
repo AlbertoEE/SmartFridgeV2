@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.persistencia;
+package net.ddns.smartfridge.smartfridgev2.persistencia.MySQL;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +7,7 @@ import android.util.Log;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
 
 import java.io.ByteArrayInputStream;
@@ -14,6 +15,7 @@ import java.sql.Blob;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Clase creada para manejar las conexiones a la BBDD externa escrita en MySQL, para el correcto
@@ -31,6 +33,11 @@ public class MySQLHelper {
     private Connection conexion;
     private static final String TABLA_COD_ALI = "CODIGO_ALIMENTO";//Nombre de la tabla con los códigos de los alimentos
     private static final String TABLA_INGREDIENTES = "INGREDIENTES";//Nombre de la tabla con los datos de todos los alimentos
+    private ArrayList<Alimento> alimentosCategoria;//Para almacenar los alimentos recogidos de la bbdd según su categoría
+    private String sentencia;//Para recoger las sentcias sql de acceso a la bbdd
+    private Alimento alimento;//Para construir un objeto a partir de los datos de la bbdd
+    private Blob blob;//Para almacenar la imagne de la bbdd
+    private Bitmap imagen;//Para almacenar la imagen de la bbdd;
 
     /**
      * Abre la conexión con la BBDD
@@ -56,9 +63,8 @@ public class MySQLHelper {
     public Alimento_Codigo consultaCodBarras(String cod_barras) throws SQLException {
         Alimento_Codigo ac=null;//Para almacenar los datos de la bbdd
         String nombre;//Para almacenar le nombre de la bbdd
-        Blob blob;//Para almacenar la imagne de la bbdd
         int id_ingrediente = 0;//Para almacenar el id del ingrediente
-        Bitmap imagen;//Para almacenar la imagen de la bbdd
+
         String query_cod_barras = "SELECT * from " + TABLA_COD_ALI + " where cod_barras = \'" + cod_barras + "\'";
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(query_cod_barras);
@@ -80,19 +86,21 @@ public class MySQLHelper {
 
         return ac;
     }
-    /**
-     * Consulta de prueba
-     * @throws SQLException
-
-    public void consultar() throws SQLException {
-        String sqlQuery = "SELECT * FROM CLASIFICACION_TIEMPO";
+    //Método para seleccionar todos los ingredientes de una categoría determinada
+    public ArrayList<Alimento> recogerAlimentoPorCategoria(String categoria) throws SQLException {
+        alimentosCategoria = new ArrayList<Alimento>();
+        sentencia = "SELECT id_ingrediente, nombre, imagen FROM INGREDIENTES WHERE codificacion_compra = \'" + categoria + "\';";
         Statement st = (Statement) conexion.createStatement();
-        ResultSet rs = st.executeQuery(sqlQuery);
-
+        ResultSet rs = st.executeQuery(sentencia);
         while (rs.next()) {
-            String madre = rs.getString(1);
-            Log.d("Suerte", madre);
+            blob = rs.getBlob(2);
+            byte[] data = blob.getBytes(1, (int)blob.length());
+            ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            imagen = BitmapFactory.decodeStream(bais);
+            alimento = new Alimento(rs.getInt(0), rs.getString(1), imagen);
+            alimentosCategoria.add(alimento);
         }
-    } */
+        return alimentosCategoria;
+    }
 }
 

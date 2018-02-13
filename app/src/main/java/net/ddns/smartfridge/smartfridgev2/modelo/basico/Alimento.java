@@ -47,6 +47,13 @@ public class Alimento implements Serializable {
         this.imagen = bm;
     }
 
+    //Constructor que recibe como parámetros el id, el nombre y la imagen
+    public Alimento (int _id, String nombreA, Bitmap bm){
+        this.id = _id;
+        this.nombreAlimento = nombreA;
+        this.imagen = bm;
+    }
+
     public int getCantidad() {
         return cantidad;
     }

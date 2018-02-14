@@ -16,6 +16,7 @@ import android.widget.TextView;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -26,6 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<CustomRecyclerViewAdapterListas.ViewHolder2> {
     private ArrayList<ListaCompra> listas;
+    private Fecha fechaF = new Fecha();//Para formatear la fecha de la bbdd
 
     public CustomRecyclerViewAdapterListas(ArrayList<ListaCompra> listaCompras){
         this.listas = listaCompras;
@@ -52,7 +54,8 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
 
     @Override
     public void onBindViewHolder(CustomRecyclerViewAdapterListas.ViewHolder2 holder, int position) {
-        //holder.tvFechaLista.setText(listas.get(position).getFecha().substring(0,11));
+        String fecha = fechaF.fechaCorta(listas.get(position).getFecha());
+        holder.tvFechaLista.setText(fecha);
         holder.tvNumeroProductos.setText(String.valueOf(listas.get(position).getProductos().size()));
     }
 

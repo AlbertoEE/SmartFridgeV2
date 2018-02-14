@@ -69,12 +69,10 @@ public class TodasListasActivity extends AppCompatActivity {
             lista = todasLasListas.get(i);
             Log.d("listaTotalFinal", "id de la lista: " + lista.getId());
         }
-        cargarRecyclerView();
+        cargarRecyclerView(todasLasListas);
     }
 
-    private void cargarRecyclerView(){
-        listas = new ArrayList<>();
-
+    private void cargarRecyclerView(ArrayList<ListaCompra>array){
         adapter = new CustomRecyclerViewAdapterListas(todasLasListas);
         recyclerView = (RecyclerView) findViewById(R.id.rvListas);
 

@@ -1,5 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -7,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Clase que representa una lista de la compra
  */
 
-public class ListaCompra {
+public class ListaCompra implements Serializable{
     private int id;//Representa el identificador único de la lista
     private String fecha;//Para almacenar la fecha en la que se creó la lista
     private ArrayList<ComponenteListaCompra> productos;//ArrayList para guardar los ítems de la lista de la compra

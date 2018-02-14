@@ -21,6 +21,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterN
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
+import net.ddns.smartfridge.smartfridgev2.persistencia.GestorFicheroLista;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
@@ -50,12 +51,14 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> componenteListaCompras;
     private ArrayList<ComponenteListaCompra> listadoProductos;
     private static ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
+    private GestorFicheroLista gfl;//Para almacenar las listas en un fichero interno
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
         gsp = new GestorSharedP();
+        gfl = new GestorFicheroLista(this);
         listaCompraDB = new ListaCompraDB(this);
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         cargarAdapter();
@@ -160,7 +163,9 @@ public class NuevaListaActivity extends AppCompatActivity {
                 Log.d("guardarLista", "id: " + id);
                 insertarComponentesLista(listadoProductos, id);
                 listaNueva.setId(id);
-                todasLasListas.add(listaNueva);
+                //todasLasListas.add(listaNueva);
+                //Guardamos todas las listas que se generan en un fichero interno de la app
+                gfl.escribirLista(listaNueva);
                 Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -79,23 +79,9 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (position == 0){
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 1) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 2) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 3) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 4) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 5) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 6) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                } else if (position == 7) {
-                    activity.startActivity(new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class));
-                }
+                Intent intent = new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class);
+                intent.putExtra("Categoria", position);
+                activity.startActivity(intent);
             }
         });
     }

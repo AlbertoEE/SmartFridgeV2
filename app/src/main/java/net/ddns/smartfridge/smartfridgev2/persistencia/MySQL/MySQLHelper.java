@@ -9,6 +9,7 @@ import com.mysql.jdbc.Statement;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Blob;
@@ -38,6 +39,8 @@ public class MySQLHelper {
     private Alimento alimento;//Para construir un objeto a partir de los datos de la bbdd
     private Blob blob;//Para almacenar la imagne de la bbdd
     private Bitmap imagen;//Para almacenar la imagen de la bbdd;
+    private Ingrediente alimentoExterno;//Para recoger los datos de la bbdd
+    private ArrayList<Ingrediente>alimentosExternos;//Para meter todos los alimentos leidos de la bbdd en un array
 
     /**
      * Abre la conexión con la BBDD
@@ -101,6 +104,27 @@ public class MySQLHelper {
             alimentosCategoria.add(alimento);
         }
         return alimentosCategoria;
+    }
+
+    //Método para mostrar los alimentos en función de la categoría, para hacer la lista de la compra
+    public ArrayList<Ingrediente> mostrarAlimentos(String categoria){
+        alimentosExternos = new ArrayList<Ingrediente>();
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT * FROM INGREDIENTES WHERE clasificacion_compra = \'" + categoria + "\';";
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                //Construimos el objeto Ingrediente
+                alimentoExterno = new Ingrediente(rs.getInt(0), rs.getString(1));
+                alimentosExternos.add(alimentoExterno);
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return alimentosExternos;
     }
 }
 

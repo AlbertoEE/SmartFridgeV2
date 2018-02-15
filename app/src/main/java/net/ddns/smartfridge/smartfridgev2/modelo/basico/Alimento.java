@@ -54,6 +54,7 @@ public class Alimento implements Serializable {
         this.imagen = bm;
     }
 
+
     public int getCantidad() {
         return cantidad;
     }

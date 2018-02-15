@@ -40,6 +40,7 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
     }
 
     public static class ViewHolderRevistaCategorias extends RecyclerView.ViewHolder {
+
         public ViewHolderRevistaCategorias(View itemView) {
             super(itemView);
         }

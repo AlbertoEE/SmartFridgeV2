@@ -23,7 +23,8 @@ public class CosasQueHacer {
     9.TODO poner título a la lista de alimentos: "Seleccionelos alimentos que quiere eliminar a la lista de la compra" o algo similar "definicion explicativa" "SUGERIDOS" -ALBERTO-
     10.TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade. -RAQUEL Y ALBERTO-
     11.TODO Solucionar NullPointer en NuevaListaActivity línea 251, cuando salen las sugerencias y se da para atrás sin seleccionar nada -ALBERTO CREO QUE ESTA SOLUCIONADO-
-    12.TODO organizar los productos de la lista via nombre -ALBERTO TODAS LAS LISTAS ORDENAR ALFABETICAMENTE-
-    13.TODO Mirar por qué cuando no se selecciona nada de lo sugerido, se agrega a la lista -ALBERTO DESGRACIAO LIMPIA EL ARRAYLIST-
+    12.TODO organizar los productos de la lista via nombre -ALBERTO TODAS LAS LISTAS ORGANIZAR-
+    13.TODO Mirar por qué cuando no se selecciona nada de lo sugerido, se agrega a la lista
+    14.TODO Una vez que confirmas la lista nueva hacer un finish
      */
 }

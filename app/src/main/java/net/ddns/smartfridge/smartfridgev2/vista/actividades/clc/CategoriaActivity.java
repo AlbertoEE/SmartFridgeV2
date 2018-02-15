@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRevistaCategorias;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
@@ -22,6 +25,10 @@ public class CategoriaActivity extends AppCompatActivity {
     private ArrayList<Ingrediente> ingredientesCategoria;//Para recoger todos los ingredientes de una categoria
     private CustomDialogProgressBar customDialogProgressBar;//Para mostrar un progressBar cuando se ejecuta la consulta a la bbdd
     private static Ingrediente ingrediente=null;//Para recoger los ingredientes de la bbdd
+
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private CustomRecyclerViewAdapterRevistaCategorias adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,7 @@ public class CategoriaActivity extends AppCompatActivity {
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
+            cargarAdapter();
         }
     }
 
@@ -84,5 +92,15 @@ public class CategoriaActivity extends AppCompatActivity {
 
     public void setIngredientesCategoria(ArrayList<Ingrediente> ingredientesCategoria) {
         this.ingredientesCategoria = ingredientesCategoria;
+    }
+
+    private void cargarAdapter(){
+        this.adapter = new CustomRecyclerViewAdapterRevistaCategorias(ingredientesCategoria, this);
+        this.layoutManager = new GridLayoutManager(this, 2);
+        this.recyclerView = findViewById(R.id.rvCategoria);
+
+        this.recyclerView.setLayoutManager(layoutManager);
+        this.recyclerView.setAdapter(adapter);
+        this.adapter.notifyDataSetChanged();
     }
 }

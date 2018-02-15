@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.CompraExternaActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.SugerirRecetaActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -27,9 +28,11 @@ import java.io.ByteArrayOutputStream;
 
 public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<CustomRecyclerViewAdapterRevistaMain.ViewHolderRevistaMain> {
     private Activity activity;
+    private CompraExternaActivity compraExternaActivity;
 
-    public CustomRecyclerViewAdapterRevistaMain(Activity activity){
+    public CustomRecyclerViewAdapterRevistaMain(Activity activity, CompraExternaActivity compraExternaActivity){
         this.activity = activity;
+        this.compraExternaActivity = compraExternaActivity;
     }
 
     @Override
@@ -44,21 +47,21 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
     public void onBindViewHolder(CustomRecyclerViewAdapterRevistaMain.ViewHolderRevistaMain holder, final int position) {
         Drawable d = null;
         if (position == 0){
-            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.bebida);
+            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.verduras);
         } else if (position == 1) {
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.carne);
         } else if (position == 2) {
-            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.desayuno);
-        } else if (position == 3) {
-            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.embutido);
-        } else if (position == 4) {
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.fruta);
-        } else if (position == 5) {
-            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.frutos_secos);
-        } else if (position == 6) {
+        } else if (position == 3) {
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.pescado);
+        } else if (position == 4) {
+            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.bebida);
+        } else if (position == 5) {
+            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.embutido);
+        } else if (position == 6) {
+            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.frutos_secos);
         } else if (position == 7) {
-            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.verduras);
+            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.desayuno);
         }
         Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -79,9 +82,7 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent((activity.getApplicationContext()), SugerirRecetaActivity.class);
-                intent.putExtra("Categoria", position);
-                activity.startActivity(intent);
+                compraExternaActivity.abrirCategoria(position);
             }
         });
     }

@@ -4,9 +4,12 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRevistaMain;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
@@ -20,16 +23,28 @@ public class CompraExternaActivity extends AppCompatActivity {
     private Intent intent;//Para pasar información entre activitys
     private ArrayList<ComponenteListaCompra> alimentosExternos;//Para almacenar el resultado de la seleccion del usuario y pasárselo al intent que nos llamó
 
+    private CustomRecyclerViewAdapterRevistaMain adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compra_externa);
         alimentosExternos = new ArrayList<ComponenteListaCompra>();
+
+        adapter = new CustomRecyclerViewAdapterRevistaMain(this, this);
+        recyclerView = findViewById(R.id.rvCompraExterna);
+        layoutManager = new GridLayoutManager(this, 2);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     //Programamos el método que va a haber en cada botón. Programamos el de las verduras
-    public void abrirVerduras(View v){
-        seleccion = categorias[0];
+    public void abrirCategoria(int categoria){
+        seleccion = categorias[categoria];
         intent = new Intent(this, CategoriaActivity.class);
         //Le asignamos la categoría
         intent.putExtra("Categoria", seleccion);
@@ -37,7 +52,7 @@ public class CompraExternaActivity extends AppCompatActivity {
     }
 
     //Programamos el de la carne
-    public void abrirCarnes(View v){
+    /*public void abrirCarnes(View v){
         seleccion = categorias[1];
         intent = new Intent(this, CategoriaActivity.class);
         //Le asignamos la categoría
@@ -97,7 +112,7 @@ public class CompraExternaActivity extends AppCompatActivity {
         //Le asignamos la categoría
         intent.putExtra("Categoria", seleccion);
         startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
-    }
+    }*/
 
     //Programamos el onActivityResult para recoger el arraylist con los datos que ha seleccionado el usuario
     @Override

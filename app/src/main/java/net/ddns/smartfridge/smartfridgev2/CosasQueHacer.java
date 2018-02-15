@@ -17,9 +17,7 @@ public class CosasQueHacer {
     1.TODO Hacer toda la parte de lista externa -EN CURSO-
     2.TODO Borrar elementos de la lista -ALBERTO-
     3.TODO Modificar elementos de la lista -ALBERTO-
-    5.TODO Borrar una lista -ALBERTO Y RAQUEL-
     7.TODO Abrir una lista cuando se pulse en ella -RAQUEL Y ALBERTO-
-    8.TODO Compartir lista -RAQUEL POR EMAIL-
     9.TODO poner título a la lista de alimentos: "Seleccionelos alimentos que quiere eliminar a la lista de la compra" o algo similar "definicion explicativa" "SUGERIDOS" -ALBERTO-
     10.TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade. -RAQUEL Y ALBERTO-
     11.TODO Solucionar NullPointer en NuevaListaActivity línea 251, cuando salen las sugerencias y se da para atrás sin seleccionar nada -ALBERTO CREO QUE ESTA SOLUCIONADO-

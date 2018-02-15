@@ -31,7 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TodasListasActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapterListas adapter;
     private RecyclerView recyclerView;
-    private ArrayList<ListaCompra> listas;
+    private ArrayList<ListaCompra> listas;//ArrayList con todas las listas del adapter
     private Paint p = new Paint();
     private Intent intent;
     private ListaCompraDB listaCompraDB;//Para trabajar con la bbdd de datos y la tabla de las listas
@@ -45,7 +45,6 @@ public class TodasListasActivity extends AppCompatActivity {
     private Fecha fecha;//Para cambiar el formato de la fecha que recibimos de la bbdd
     private ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
     private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
-    //private CopyOnWriteArrayList<CopyOnWriteArrayList>todosLosProductos = new CopyOnWriteArrayList<>();//Para crear la lista con todos los productos
     //private ArrayList<Lista>todosLosProductos = new ArrayList<>();//Para crear la lista con todos los productos
 
 
@@ -96,7 +95,10 @@ public class TodasListasActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
 
                 if (direction == ItemTouchHelper.LEFT){
-                   adapter.removeItem(position);
+                    adapter.removeItem(position);
+                    listas = adapter.getListaCompra();
+                    gfl.actualizarListas(listas);
+                    //Log.d("swipe", "tamaño: " + listas.size());
                 } else {
                     intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
                     intent.putExtra("ListaProductos", adapter.getLista(position));

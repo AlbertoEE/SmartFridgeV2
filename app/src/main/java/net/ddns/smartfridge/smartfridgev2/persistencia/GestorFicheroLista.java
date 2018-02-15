@@ -99,4 +99,29 @@ public class GestorFicheroLista {
         }
         return listas;
     }
+
+    //Método para actualizar el fichero con las listas desde TodasListasActivity
+    public void actualizarListas(ArrayList<ListaCompra> alc){
+        FileOutputStream fos=null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = contexto.getApplicationContext().openFileOutput("Listas.obj", contexto.MODE_PRIVATE);
+            oos = new ObjectOutputStream(fos);
+            //Escribimos el objeto en el fichero
+            oos.writeObject(alc);
+        } catch (FileNotFoundException e) {
+            Toast.makeText(contexto, "Error al guardar la lista, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                //Cerramos los streams y el fichero
+                fos.close();
+                oos.close();
+            } catch (IOException e) {
+                Toast.makeText(contexto, "Error al guardar la lista, vuelva a intentarlo.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

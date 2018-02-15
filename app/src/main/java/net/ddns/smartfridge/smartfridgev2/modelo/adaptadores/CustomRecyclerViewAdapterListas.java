@@ -28,6 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<CustomRecyclerViewAdapterListas.ViewHolder2> {
     private ArrayList<ListaCompra> listas;
     private Fecha fechaF = new Fecha();//Para formatear la fecha de la bbdd
+    private ListaCompra lista;//Para recoger la lista de la posición seleccionada
 
     public CustomRecyclerViewAdapterListas(ArrayList<ListaCompra> listaCompras){
         this.listas = listaCompras;
@@ -79,5 +80,10 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
 
     public ArrayList<ComponenteListaCompra> getLista(int posicion){
         return this.listas.get(posicion).getProductos();
+    }
+
+    //Recogemos la lista de la posición seleccionada
+    public ArrayList<ListaCompra> getListaCompra(){
+        return this.listas;
     }
 }

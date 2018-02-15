@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
+import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
@@ -18,6 +20,8 @@ public class CategoriaActivity extends AppCompatActivity {
     private String categoria;//Para hacer la búsqueda en la bbdd
     private MySQLHelper myHelper;//Para acceder a la bbdd
     private ArrayList<Ingrediente> ingredientesCategoria;//Para recoger todos los ingredientes de una categoria
+    private CustomDialogProgressBar customDialogProgressBar;//Para mostrar un progressBar cuando se ejecuta la consulta a la bbdd
+    private static Ingrediente ingrediente=null;//Para recoger los ingredientes de la bbdd
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,45 +29,60 @@ public class CategoriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categoria);
         i = getIntent();
         categoria = i.getStringExtra("Categoria");
+        customDialogProgressBar = new CustomDialogProgressBar(this);
         ingredientesCategoria = new ArrayList<Ingrediente>();
-        myHelper = new MySQLHelper();
-        /*try {
-            myHelper.abrirConexion();
-        } catch (ClassNotFoundException e) {
-            Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
-        } catch (SQLException e) {
-            Log.d("SQL", "Error al establecer la conexión: " + e.getErrorCode());
-            Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
-        }*/
+        //Iniciamos la consulta a la bbdd
+        new ListadoExterno().execute(categoria);
     }
     //Programamos el onclick de los botones
     public void agregar(View view){
         //Hacemos el select a la bbdd con el parámetro de la categoría que hemos recibido de la
         //selección que ha hecho el usuario
-        try {
-            myHelper.abrirConexion();
-            ingredientesCategoria = myHelper.recogerAlimentoPorCategoria(categoria);
-            for(Ingrediente i : ingredientesCategoria){
-                Log.d("externa", "ingredientes: " + i.getNombreIngrediente());
+    }
+
+    //Creamos el AsyncTask para hacer la consulta a la bbdd
+    public class ListadoExterno extends AsyncTask<String,Void, ArrayList<Ingrediente>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            customDialogProgressBar.showDialogOndas();
+        }
+
+        @Override
+        protected ArrayList<Ingrediente> doInBackground(String... categoria) {
+            myHelper = new MySQLHelper();
+            try {
+                //Abrimos la conexión a la bbdd
+                myHelper.abrirConexion();
+                //Recogemos los ingredientes uno a uno
+                ingredientesCategoria = myHelper.recogerAlimentoPorCategoria(categoria[0]);
+            } catch (SQLException e) {
+                Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
+            } catch (ClassNotFoundException e) {
+                Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
             }
-            myHelper.cerrarConexion();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return ingredientesCategoria;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Ingrediente> ingredientesCategoria) {
+            super.onPostExecute(ingredientesCategoria);
+            try {
+                //Asignamos aqui el ArrayList al recyclerview
+                myHelper.cerrarConexion();
+                customDialogProgressBar.endDialog();
+            } catch (SQLException e) {
+                Log.d("SQL", "Error al cerrar la bbdd");
+            }
         }
     }
 
-    //Cerramos la conexión a la bbdd en el onDestroy
+    public ArrayList<Ingrediente> getIngredientesCategoria() {
+        return ingredientesCategoria;
+    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        /*try {
-            myHelper.cerrarConexion();
-        } catch (SQLException e) {
-            Log.d("SQL", "Error al cerrar la conexión: " + e.getErrorCode());
-        }*/
+    public void setIngredientesCategoria(ArrayList<Ingrediente> ingredientesCategoria) {
+        this.ingredientesCategoria = ingredientesCategoria;
     }
 }

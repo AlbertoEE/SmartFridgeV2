@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class CompraExternaActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ANTERIOR = 5465;//Código de respuesta para el activity que lo llamó
     private static final int REQUEST_CODE_SIGUIENTE = 468;//Código de respuesta para el activity que lo llamó
-    private static final String[] categorias = {"Verduras", "Carne", "Fruta", "Pescado", "Bebida", "Embutido", "Frutos secos", "Desayuno"};//Array con los nombres
+    private static final String[] categorias = {"Verdura", "Carne", "Fruta", "Pescado", "Bebida", "Embutido", "Frutos secos", "Desayuno"};//Array con los nombres
     //de las categorías de alimentos para coger el seleccionado por el usuario
     private String seleccion;//Seleccion hecha por el usuario
     private Intent intent;//Para pasar información entre activitys

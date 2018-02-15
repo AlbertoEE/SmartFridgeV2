@@ -97,11 +97,11 @@ public class MySQLHelper {
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(sentencia);
         while (rs.next()) {
-            blob = rs.getBlob(2);
+            blob = rs.getBlob(3);
             byte[] data = blob.getBytes(1, (int)blob.length());
             ByteArrayInputStream bais = new ByteArrayInputStream(data);
             imagen = BitmapFactory.decodeStream(bais);
-            alimentoExterno = new Ingrediente(rs.getInt(0), rs.getString(1), imagen);
+            alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2), imagen);
             alimentosCategoria.add(alimentoExterno);
         }
         return alimentosCategoria;

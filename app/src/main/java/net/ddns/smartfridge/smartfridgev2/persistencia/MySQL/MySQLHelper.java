@@ -34,13 +34,13 @@ public class MySQLHelper {
     private Connection conexion;
     private static final String TABLA_COD_ALI = "CODIGO_ALIMENTO";//Nombre de la tabla con los códigos de los alimentos
     private static final String TABLA_INGREDIENTES = "INGREDIENTES";//Nombre de la tabla con los datos de todos los alimentos
-    private ArrayList<Alimento> alimentosCategoria;//Para almacenar los alimentos recogidos de la bbdd según su categoría
+    private ArrayList<Ingrediente> alimentosCategoria;//Para almacenar los alimentos recogidos de la bbdd según su categoría
     private String sentencia;//Para recoger las sentcias sql de acceso a la bbdd
-    private Alimento alimento;//Para construir un objeto a partir de los datos de la bbdd
+    //private Alimento alimento;//Para construir un objeto a partir de los datos de la bbdd
     private Blob blob;//Para almacenar la imagne de la bbdd
     private Bitmap imagen;//Para almacenar la imagen de la bbdd;
     private Ingrediente alimentoExterno;//Para recoger los datos de la bbdd
-    private ArrayList<Ingrediente>alimentosExternos;//Para meter todos los alimentos leidos de la bbdd en un array
+    //private ArrayList<Ingrediente>alimentosExternos;//Para meter todos los alimentos leidos de la bbdd en un array
 
     /**
      * Abre la conexión con la BBDD
@@ -90,8 +90,8 @@ public class MySQLHelper {
         return ac;
     }
     //Método para seleccionar todos los ingredientes de una categoría determinada
-    public ArrayList<Alimento> recogerAlimentoPorCategoria(String categoria) throws SQLException {
-        alimentosCategoria = new ArrayList<Alimento>();
+    public ArrayList<Ingrediente> recogerAlimentoPorCategoria(String categoria) throws SQLException {
+        alimentosCategoria = new ArrayList<Ingrediente>();
         sentencia = "SELECT id_ingrediente, nombre, imagen FROM INGREDIENTES WHERE codificacion_compra = \'" + categoria + "\';";
         Statement st = (Statement) conexion.createStatement();
         ResultSet rs = st.executeQuery(sentencia);
@@ -100,13 +100,13 @@ public class MySQLHelper {
             byte[] data = blob.getBytes(1, (int)blob.length());
             ByteArrayInputStream bais = new ByteArrayInputStream(data);
             imagen = BitmapFactory.decodeStream(bais);
-            alimento = new Alimento(rs.getInt(0), rs.getString(1), imagen);
-            alimentosCategoria.add(alimento);
+            alimentoExterno = new Ingrediente(rs.getInt(0), rs.getString(1), imagen);
+            alimentosCategoria.add(alimentoExterno);
         }
         return alimentosCategoria;
     }
 
-    //Método para mostrar los alimentos en función de la categoría, para hacer la lista de la compra
+    /*Método para mostrar los alimentos en función de la categoría, para hacer la lista de la compra
     public ArrayList<Ingrediente> mostrarAlimentos(String categoria){
         alimentosExternos = new ArrayList<Ingrediente>();
         //Sacamos todos los datos de la bbdd
@@ -125,6 +125,6 @@ public class MySQLHelper {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
         }
         return alimentosExternos;
-    }
+    }*/
 }
 

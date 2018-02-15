@@ -19,9 +19,10 @@ public class Ingrediente {
         this.clasificacion_compra = clasificacion_compra;
     }
 
-    public Ingrediente(int idIngrediente, String nombreIngrediente) {
+    public Ingrediente(int idIngrediente, String nombreIngrediente, Bitmap imagenIngrediente) {
         this.idIngrediente = idIngrediente;
         this.nombreIngrediente = nombreIngrediente;
+        this.imagenIngrediente = imagenIngrediente;
     }
 
     public int getIdIngrediente() {

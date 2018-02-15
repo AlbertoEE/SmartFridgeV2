@@ -36,6 +36,69 @@ public class CompraExternaActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
     }
 
+    //Programamos el de la carne
+    public void abrirCarnes(View v){
+        seleccion = categorias[1];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
+    //Programamos el de la fruta
+    public void abrirFruta(View v){
+        seleccion = categorias[2];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
+    //Programamos el del pescado
+    public void abrirPescado(View v){
+        seleccion = categorias[3];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
+    //Programamos el de la bebida
+    public void abrirBebidas(View v){
+        seleccion = categorias[4];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
+    //Programamos el del embutido
+    public void abrirEmbutido(View v){
+        seleccion = categorias[5];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
+    //Programamos el de los frutos secos
+    public void abrirFrutosSecos(View v){
+        seleccion = categorias[6];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
+    //Programamos el del desayuno
+    public void abrirDesayuno(View v){
+        seleccion = categorias[7];
+        intent = new Intent(this, CategoriaActivity.class);
+        //Le asignamos la categoría
+        intent.putExtra("Categoria", seleccion);
+        startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
+    }
+
     //Programamos el onActivityResult para recoger el arraylist con los datos que ha seleccionado el usuario
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

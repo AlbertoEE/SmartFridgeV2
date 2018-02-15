@@ -27,26 +27,31 @@ public class CategoriaActivity extends AppCompatActivity {
         categoria = i.getStringExtra("Categoria");
         ingredientesCategoria = new ArrayList<Ingrediente>();
         myHelper = new MySQLHelper();
-        try {
+        /*try {
             myHelper.abrirConexion();
         } catch (ClassNotFoundException e) {
             Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
         } catch (SQLException e) {
             Log.d("SQL", "Error al establecer la conexión: " + e.getErrorCode());
             Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
-        }
+        }*/
     }
     //Programamos el onclick de los botones
     public void agregar(View view){
         //Hacemos el select a la bbdd con el parámetro de la categoría que hemos recibido de la
         //selección que ha hecho el usuario
         try {
+            myHelper.abrirConexion();
             ingredientesCategoria = myHelper.recogerAlimentoPorCategoria(categoria);
             for(Ingrediente i : ingredientesCategoria){
                 Log.d("externa", "ingredientes: " + i.getNombreIngrediente());
             }
+            myHelper.cerrarConexion();
         } catch (SQLException e) {
+            e.printStackTrace();
             Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -55,10 +60,10 @@ public class CategoriaActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
+        /*try {
             myHelper.cerrarConexion();
         } catch (SQLException e) {
             Log.d("SQL", "Error al cerrar la conexión: " + e.getErrorCode());
-        }
+        }*/
     }
 }

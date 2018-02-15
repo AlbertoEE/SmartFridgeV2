@@ -51,6 +51,7 @@ public class MySQLHelper {
     public void abrirConexion() throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
         conexion = (Connection) DriverManager.getConnection(servidor, USER, PASS);
+        Log.d("BUGAZO", "abrirConexion: "+ conexion);
     }
 
     /**

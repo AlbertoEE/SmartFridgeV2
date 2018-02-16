@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRevistaMain;
@@ -40,8 +40,7 @@ public class CompraExternaActivity extends AppCompatActivity {
         adapter = new CustomRecyclerViewAdapterRevistaMain(this, this);
         recyclerView = findViewById(R.id.rvCompraExterna);
         layoutManager = new GridLayoutManager(this, 2);
-
-        recyclerView.setLayoutManager(layoutManager);
+       recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/listacomprafondo"
+    android:background="@drawable/hoja_cuadros_fondo"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.DetalleListaExternaActivity">
 
     <LinearLayout

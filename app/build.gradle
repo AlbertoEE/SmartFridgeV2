@@ -60,7 +60,6 @@ dependencies {
     //Blur
     compile 'jp.wasabeef:blurry:2.1.1'
     //Bubble-Notification
-    compile 'com.etiya.etiyabadgetablib:etiyabadgetablib:0.0.3'
 }
 
 

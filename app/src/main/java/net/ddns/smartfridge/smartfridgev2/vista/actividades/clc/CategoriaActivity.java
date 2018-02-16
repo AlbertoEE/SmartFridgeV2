@@ -1,13 +1,18 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRevistaCategorias;
@@ -25,6 +30,7 @@ public class CategoriaActivity extends AppCompatActivity {
     private ArrayList<Ingrediente> ingredientesCategoria;//Para recoger todos los ingredientes de una categoria
     private CustomDialogProgressBar customDialogProgressBar;//Para mostrar un progressBar cuando se ejecuta la consulta a la bbdd
     private static Ingrediente ingrediente=null;//Para recoger los ingredientes de la bbdd
+    private boolean showRedIcon = false;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -41,6 +47,37 @@ public class CategoriaActivity extends AppCompatActivity {
         //Iniciamos la consulta a la bbdd
         new ListadoExterno().execute(categoria);
     }
+
+    /**
+     * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onCreateOptionsMenu(android.view.Menu)'
+     */
+    //Para crear el ActionBar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_categoria_shopping_carg, menu);
+        return true;
+    }
+
+    /**
+     * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onOptionsItemSelected(android.view.MenuItem)'
+     */
+    //Programamos el botón del ActionBAr
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //Programamos el botón de compartir
+            case R.id.shoppingCart:
+                //Cuando pulsemos en el carro, se nos mostrará la lista de los alimentos para añadir añadir a la lista de la compra
+
+                return true;
+            //Botón de retroceso
+            case R.id.homeAsUp:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //Programamos el onclick de los botones
     public void agregar(View view){
         //Hacemos el select a la bbdd con el parámetro de la categoría que hemos recibido de la

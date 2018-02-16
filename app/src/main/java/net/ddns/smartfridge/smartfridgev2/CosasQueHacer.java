@@ -12,6 +12,8 @@ public class CosasQueHacer {
 
     //TODO organizar los recursos via nombre
 
+    //TODO revisar permisos cámara módulo CA
+
     //TODO PARA TERMINAR LA PARTE DE CREAR LISTAS:
     /*
     1.TODO Hacer toda la parte de lista externa -EN CURSO-

@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapter;
@@ -26,6 +27,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     private ArrayList<String> nuevaLista;
     private CustomArrayAdapter customArrayAdapter;
     private GestorSharedP gsp;//Instacia para gestionar el Shared Preferences
+    private TextView tvMarqueeSugerenciaDeAlimento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,10 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        tvMarqueeSugerenciaDeAlimento = (TextView) findViewById(R.id.tvMarqueeSugerenciaDeAlimento);
+        tvMarqueeSugerenciaDeAlimento.setSelected(true);
+
     }
 
     @Override

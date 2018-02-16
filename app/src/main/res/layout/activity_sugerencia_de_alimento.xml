@@ -7,14 +7,43 @@
     android:orientation="vertical"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.SugerenciaDeAlimentoActivity">
 
-    <ListView
-        android:id="@+id/listView"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="525dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" >
+        android:layout_height="match_parent">
 
-    </ListView>
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="0dp"
+            android:layout_height="462dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/tvMarqueeSugerenciaDeAlimento"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Quedan pocas unidades de estos alimentos, selecciona los deseados"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip"
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toTopOf="@+id/listView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab1"

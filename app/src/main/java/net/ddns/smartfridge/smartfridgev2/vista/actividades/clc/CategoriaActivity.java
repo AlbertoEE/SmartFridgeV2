@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRevistaCategorias;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
@@ -30,7 +31,7 @@ public class CategoriaActivity extends AppCompatActivity {
     private ArrayList<Ingrediente> ingredientesCategoria;//Para recoger todos los ingredientes de una categoria
     private CustomDialogProgressBar customDialogProgressBar;//Para mostrar un progressBar cuando se ejecuta la consulta a la bbdd
     private static Ingrediente ingrediente=null;//Para recoger los ingredientes de la bbdd
-    private boolean showRedIcon = false;
+    private ArrayList<ComponenteListaCompra> componentes;//Para almacenar todos los elementos seleccionados
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -40,48 +41,26 @@ public class CategoriaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria);
+        //Para visualizar el botón de retroceso del actionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         i = getIntent();
         categoria = i.getStringExtra("Categoria");
         customDialogProgressBar = new CustomDialogProgressBar(this);
         ingredientesCategoria = new ArrayList<Ingrediente>();
+        componentes = new ArrayList<ComponenteListaCompra>();
         //Iniciamos la consulta a la bbdd
         new ListadoExterno().execute(categoria);
+
     }
 
     /**
      * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onCreateOptionsMenu(android.view.Menu)'
      */
-    //Para crear el ActionBar
+    //Para crear el Action Bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_categoria_shopping_carg, menu);
+        getMenuInflater().inflate(R.menu.actionbarlista, menu);
         return true;
-    }
-
-    /**
-     * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onOptionsItemSelected(android.view.MenuItem)'
-     */
-    //Programamos el botón del ActionBAr
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            //Programamos el botón de compartir
-            case R.id.shoppingCart:
-                //Cuando pulsemos en el carro, se nos mostrará la lista de los alimentos para añadir añadir a la lista de la compra
-
-                return true;
-            //Botón de retroceso
-            case R.id.homeAsUp:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    //Programamos el onclick de los botones
-    public void agregar(View view){
-        //Hacemos el select a la bbdd con el parámetro de la categoría que hemos recibido de la
-        //selección que ha hecho el usuario
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
@@ -132,12 +111,31 @@ public class CategoriaActivity extends AppCompatActivity {
     }
 
     private void cargarAdapter(){
-        this.adapter = new CustomRecyclerViewAdapterRevistaCategorias(ingredientesCategoria, this);
+        Log.d("componente", "longitud del array en el cargarAdapter: " + componentes.size());
+        this.adapter = new CustomRecyclerViewAdapterRevistaCategorias(ingredientesCategoria, this, componentes);
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView = findViewById(R.id.rvCategoria);
-
         this.recyclerView.setLayoutManager(layoutManager);
         this.recyclerView.setAdapter(adapter);
         this.adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //hago un case por si en un futuro agrego mas opciones
+                Log.d("componente", "Se pulsa botón hacia atrás");
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result",adapter.getComponentes());
+                for(int i=0; i<adapter.getComponentes().size();i++) {
+                    Log.d("componente", "nombre3: " + adapter.getComponentes().get(i).getNombreElemento());
+                }
+                setResult(this.RESULT_OK,returnIntent);
+                Toast.makeText(this, "Añadiendo los elementos seleccionados.", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

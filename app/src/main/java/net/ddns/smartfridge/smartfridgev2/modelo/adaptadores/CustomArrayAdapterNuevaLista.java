@@ -92,6 +92,10 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public void confirmarCambios() {
         this.productos = this.auxiliar;
+        for (ComponenteListaCompra item: auxiliar) {
+            Log.d("la que he liao", "confirmarCambios: " + item.getNombreElemento() );
+        }
+        auxiliar.clear();
         this.notifyDataSetChanged();
     }
 
@@ -100,8 +104,10 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     }
 
     public void mostrarCheckboxes() {
+        auxiliar = productos;
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.VISIBLE);
+            item.setChecked(true);
         }
     }
 

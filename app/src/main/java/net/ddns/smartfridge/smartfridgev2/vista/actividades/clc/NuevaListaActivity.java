@@ -167,6 +167,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                 //Guardamos todas las listas que se generan en un fichero interno de la app
                 gfl.escribirLista(listaNueva);
                 Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

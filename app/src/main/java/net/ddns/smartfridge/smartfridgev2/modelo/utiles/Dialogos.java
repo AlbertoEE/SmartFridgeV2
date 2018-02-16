@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,12 +11,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
@@ -547,5 +554,49 @@ public class Dialogos {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public String dialogoModificarBorrar(String texto){
+        final String[] componenteReturn = new String[1];
+
+        final EditText editText = clase.findViewById(R.id.etDialogEditar);
+        Button btn = clase.findViewById(R.id.btnCancelDialogEditar);
+        Button btn2 = clase.findViewById(R.id.btnOkDialogEditar);
+        Button btn3 = clase.findViewById(R.id.btnDeleteDialogoEditar);
+
+        final Dialog dialog = new Dialog(clase);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_progressbar_cuadrado);
+
+        editText.setText(texto);
+
+        componenteReturn[0] =  editText.getText().toString();
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                componenteReturn[0] = editText.getText().toString();
+                dialog.dismiss();
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                componenteReturn[0] = null;
+            }
+        });
+
+        dialog.show();
+
+        return componenteReturn[0];
     }
 }

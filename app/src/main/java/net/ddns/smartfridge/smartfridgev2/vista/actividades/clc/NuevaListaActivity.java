@@ -235,9 +235,9 @@ public class NuevaListaActivity extends AppCompatActivity {
 
     private void cargarAdapter(){
         if(componenteListaCompras != null){
-            adapter = new CustomArrayAdapterNuevaLista(this, componenteListaCompras);
+            adapter = new CustomArrayAdapterNuevaLista(this, componenteListaCompras, this);
         } else {
-            adapter = new CustomArrayAdapterNuevaLista(this, new ArrayList<ComponenteListaCompra>());
+            adapter = new CustomArrayAdapterNuevaLista(this, new ArrayList<ComponenteListaCompra>(), this);
         }
 
         //Log.d("elputo", "cargarAdapter: " + crearArray());

@@ -1,5 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -26,10 +28,13 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     private ArrayList<ComponenteListaCompra> productos;
     private ArrayList<ComponenteListaCompra> auxiliar;
     private ArrayList<SmoothCheckBox> checkBoxes;
+    private Dialogos dialogos;
+    private Activity activity;
+    private String modificacion;
 
-    public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos) {
+    public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
-        if(productosSugeridos != null){
+        if (productosSugeridos != null) {
             this.productos = productosSugeridos;
 
         } else {
@@ -37,6 +42,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         }
         this.auxiliar = new ArrayList<>();
         this.checkBoxes = new ArrayList<>();
+        dialogos = new Dialogos(context, activity);
     }
 
     @NonNull
@@ -44,7 +50,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final String alimento = productos.get(position).getNombreElemento();
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_producto_nueva_lista, parent, false);
         }
 
@@ -58,7 +64,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         scb.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
-                if(b){
+                if (b) {
                     auxiliar.add(productos.get(position));
                 } else {
                     auxiliar.remove(alimento);
@@ -66,9 +72,21 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             }
         });
 
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                modificacion = dialogos.dialogoModificarBorrar(alimento);
+                if (modificacion != null) {
+                    productos.get(position).setNombreElemento(modificacion);
+                } else {
+                    productos.remove(position);
+                }
+                return false;
+            }
+        });
+
         return convertView;
     }
-
 
 
     public void addProducto(ComponenteListaCompra producto) {
@@ -77,22 +95,23 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         this.notifyDataSetChanged();
     }
 
-    public void confirmarCambios(){
+    public void confirmarCambios() {
         this.productos = this.auxiliar;
         this.notifyDataSetChanged();
     }
 
-    public ArrayList<ComponenteListaCompra> getListaFinal(){
+    public ArrayList<ComponenteListaCompra> getListaFinal() {
         return this.productos;
     }
 
-    public void mostrarCheckboxes(){
-        for (SmoothCheckBox item: this.checkBoxes) {
+    public void mostrarCheckboxes() {
+        for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.VISIBLE);
         }
     }
-    public void ocultarrCheckboxes(){
-        for (SmoothCheckBox item: this.checkBoxes) {
+
+    public void ocultarrCheckboxes() {
+        for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.INVISIBLE);
         }
     }

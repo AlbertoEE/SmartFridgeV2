@@ -75,12 +75,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                modificacion = dialogos.dialogoModificarBorrar(alimento);
-                if (modificacion != null) {
-                    productos.get(position).setNombreElemento(modificacion);
-                } else {
-                    productos.remove(position);
-                }
+                dialogos.dialogoModificarBorrar(alimento, CustomArrayAdapterNuevaLista.this, position);
                 return false;
             }
         });
@@ -113,6 +108,16 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     public void ocultarrCheckboxes() {
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void modificar(int position, String modificacion){
+        if (modificacion != null) {
+            productos.get(position).setNombreElemento(modificacion);
+            notifyDataSetChanged();
+        } else {
+            productos.remove(position);
+            notifyDataSetChanged();
         }
     }
 }

@@ -30,6 +30,7 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterNuevaLista;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Nuevo;
@@ -556,27 +557,26 @@ public class Dialogos {
         dialog.show();
     }
 
-    public String dialogoModificarBorrar(String texto){
+    public void dialogoModificarBorrar(String texto, final CustomArrayAdapterNuevaLista adapter, final int position){
         final String[] componenteReturn = new String[1];
-
-        final EditText editText = clase.findViewById(R.id.etDialogEditar);
-        Button btn = clase.findViewById(R.id.btnCancelDialogEditar);
-        Button btn2 = clase.findViewById(R.id.btnOkDialogEditar);
-        Button btn3 = clase.findViewById(R.id.btnDeleteDialogoEditar);
 
         final Dialog dialog = new Dialog(clase);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_progressbar_cuadrado);
+        dialog.setContentView(R.layout.dialogo_editar);
 
-        editText.setText(texto);
+        dialog.show();
 
-        componenteReturn[0] =  editText.getText().toString();
+        final EditText editText = dialog.findViewById(R.id.etDialogEditar);
+        Button btn = dialog.findViewById(R.id.btnCancelDialogEditar);
+        Button btn2 = dialog.findViewById(R.id.btnOkDialogEditar);
+        Button btn3 = dialog.findViewById(R.id.btnDeleteDialogoEditar);
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 componenteReturn[0] = editText.getText().toString();
+                adapter.modificar(position, componenteReturn[0]);
                 dialog.dismiss();
             }
         });
@@ -592,11 +592,15 @@ public class Dialogos {
             @Override
             public void onClick(View view) {
                 componenteReturn[0] = null;
+                adapter.modificar(position, componenteReturn[0]);
+                dialog.dismiss();
             }
         });
 
-        dialog.show();
+        editText.setText(texto);
 
-        return componenteReturn[0];
+        componenteReturn[0] =  editText.getText().toString();
+
+        Log.d("tengen", "dialogoModificarBorrar: " + componenteReturn[0]);
     }
 }

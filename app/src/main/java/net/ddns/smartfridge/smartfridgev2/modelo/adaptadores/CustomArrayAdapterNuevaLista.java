@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
@@ -102,9 +103,12 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
 
     public void addProducto(ComponenteListaCompra producto) {
-        productos.add(producto);
-        Log.d("customer", productos.get(0).getNombreElemento());
-        this.notifyDataSetChanged();
+        if(this.productos.contains(producto)){
+            Toast.makeText(activity, "Ya está en la lista", Toast.LENGTH_SHORT).show();
+        } else {
+            productos.add(producto);
+            this.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -214,6 +218,15 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
                 return v1.getNombreElemento().compareToIgnoreCase(v2.getNombreElemento()) * az;
             }
         });
+        notifyDataSetChanged();
+    }
+
+    public void addProductosVarios(ArrayList<ComponenteListaCompra> productos){
+        for (ComponenteListaCompra item: productos) {
+            if (!this.productos.contains(item)) {
+                this.productos.add(item);
+            }
+        }
         notifyDataSetChanged();
     }
 }

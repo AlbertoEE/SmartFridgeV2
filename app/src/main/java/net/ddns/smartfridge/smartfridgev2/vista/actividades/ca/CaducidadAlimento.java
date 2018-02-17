@@ -50,6 +50,8 @@ public class CaducidadAlimento extends AppCompatActivity {
     private static boolean manual=false;//Será true cuando venga de inserción manual
     private String cod_barras;//Para el código de barras del alimento
 
+    public static Boolean isInFront = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("manual", "manual inicion onCreate Caducidad Alimento:" + manual);
@@ -302,5 +304,18 @@ public class CaducidadAlimento extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         adb.cerrarConexion();
+        isInFront = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isInFront = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isInFront = false;
     }
 }

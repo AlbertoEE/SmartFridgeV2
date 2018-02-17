@@ -42,4 +42,26 @@ public class ComponenteListaCompra implements Serializable{
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean iguales = false;
+
+        if (object != null && object instanceof ComponenteListaCompra)
+        {
+            iguales = this.nombreElemento == ((ComponenteListaCompra) object).nombreElemento;
+        }
+
+        return iguales;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = 17;
+
+        result = 31 * result + (this.nombreElemento == null ? 0 : this.nombreElemento.hashCode());
+
+        return result;
+    }
 }

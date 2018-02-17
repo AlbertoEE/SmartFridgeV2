@@ -250,6 +250,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             cargarAdapter();
         } else if (requestCode == REQUEST_CODE_REVISTA && resultCode == RESULT_OK){
             listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
+            adapter.addProductosVarios(listadoProductosExternos);
             Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
         }
     }

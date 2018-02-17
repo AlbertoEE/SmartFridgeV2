@@ -38,7 +38,7 @@ public class Alimento_NuevoDB {
     public Cursor getAlimentosNuevos(){
         //El resultado se almacena en un cursor
         Cursor cursor = sqe.rawQuery(QUERYBBDDCOMPLETA, new String[]{});
-        cursor.close();
+        //cursor.close();
         return cursor;
     }
 

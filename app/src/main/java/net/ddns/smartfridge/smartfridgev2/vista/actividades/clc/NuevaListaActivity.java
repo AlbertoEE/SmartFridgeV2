@@ -137,12 +137,14 @@ public class NuevaListaActivity extends AppCompatActivity {
         botonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editando = !editando;
-                if(editando){
-                    adapter.mostrarCheckboxes();
-                }else{
-                    adapter.ocultarrCheckboxes();
-                    adapter.confirmarCambios();
+                if(adapter.getSize() > 0){
+                    editando = !editando;
+                    if(editando && adapter.getSize() > 0){
+                        adapter.mostrarCheckboxes();
+                    }else if (!editando  && adapter.getSize() > 0){
+                        adapter.ocultarrCheckboxes();
+                        adapter.confirmarCambios();
+                    }
                 }
             }
         });

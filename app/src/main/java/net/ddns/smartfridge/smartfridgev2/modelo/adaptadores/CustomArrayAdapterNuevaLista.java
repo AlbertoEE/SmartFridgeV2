@@ -16,7 +16,6 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.refactor.library.SmoothCheckBox;
 
@@ -34,11 +33,13 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
+        Log.d("MECAGOENDIOS", "CustomArrayAdapterNuevaLista: " + productosSugeridos.size());
         if (productosSugeridos != null) {
             this.productos = productosSugeridos;
 
         } else {
-            this.productos = new ArrayList<>();
+            productosSugeridos = new ArrayList<>();
+            this.productos = productosSugeridos;
         }
         this.auxiliar = new ArrayList<>();
         this.checkBoxes = new ArrayList<>();
@@ -49,7 +50,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final String alimento = productos.get(position).getNombreElemento();
-
+        Log.d("MECAGOENDIOS", "getView: " + productos.size());
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_producto_nueva_lista, parent, false);
         }
@@ -61,13 +62,18 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
 
         tvAlimentoSugerido.setText(alimento);
+        //AQUI ESTA EL LISTENER DE LOS CHECKBOXES, SI SE CAMBIA A TRUE LO AÑADE A UN ARRAY LIST AUXILIAR Y SI SE CAMBIA A FALSE SE ELIMINA DE ESE ARRAYLIST AUXILIAR
+        //TODO ESTO SE CONFIRMA CUANDO LLAMAMOS AL METODO DE CONFIRMAR CAMBIOS
+        //AQUI PASA UNA COSA RARA QUE CUANDO PASA POR AQUI PASA 14 VECES
         scb.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
                 if (b) {
                     auxiliar.add(productos.get(position));
+                    Log.d("MECAGOENDIOS", "onCheckedChanged: TRUE; " + productos.get(position).getNombreElemento());
                 } else {
                     auxiliar.remove(alimento);
+                    Log.d("MECAGOENDIOS", "onCheckedChanged: false; " + alimento);
                 }
             }
         });
@@ -90,6 +96,9 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         this.notifyDataSetChanged();
     }
 
+    /**
+     * AQUÍ ASIGNAMOS LOS DATOS DEL ARRAYLIST AUXILIAR AL ARRAYLIST EN EL QUE SE BASA EL ADAPTER
+     */
     public void confirmarCambios() {
         this.productos = this.auxiliar;
         for (ComponenteListaCompra item: auxiliar) {
@@ -103,20 +112,33 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         return this.productos;
     }
 
+    /**
+     * Metodo para mostrar los checkboxes gracias al arrayList de checkboxes
+     */
     public void mostrarCheckboxes() {
         auxiliar = productos;
+        Log.d("MECAGOENDIOS", "mostrarCheckboxes: " + checkBoxes.size());
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.VISIBLE);
             item.setChecked(true);
         }
     }
 
+    /**
+     * Metodo para ocultar los checkboxes gracias al arrayList de checkboxes
+     */
     public void ocultarrCheckboxes() {
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.INVISIBLE);
         }
     }
 
+    /**
+     * Metodo para modificar el nombre de un alimento ya existente en el array
+     *
+     * @param position
+     * @param modificacion
+     */
     public void modificar(int position, String modificacion){
         if (modificacion != null) {
             productos.get(position).setNombreElemento(modificacion);
@@ -125,5 +147,9 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             productos.remove(position);
             notifyDataSetChanged();
         }
+    }
+
+    public int getSize(){
+        return productos.size();
     }
 }

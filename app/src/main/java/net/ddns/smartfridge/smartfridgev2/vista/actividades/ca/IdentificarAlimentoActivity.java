@@ -141,7 +141,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{
                             Manifest.permission.CAMERA},
-                    PERMISOS);
+                    320);
         }
     }
 
@@ -152,11 +152,22 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         switch (requestCode) {
             //Miramos el código de respuesta a qué permiso pertenece
             case PERMISOS: {
+                Log.d("PERMMM", "onRequestPermissionsResult: ESTOY AllI");
                 if ((grantResults.length > 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     llamarHacerFoto();
                 } else {
-                    Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permiso Denegado", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            }
+            case 320: {
+                Log.d("PERMMM", "onRequestPermissionsResult: ESTOY AQUI" + grantResults[0]);
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    escanear();
+                } else {
+                    Toast.makeText(this, "Permiso Denegado", Toast.LENGTH_SHORT).show();
+                }
+                break;
             }
         }
     }

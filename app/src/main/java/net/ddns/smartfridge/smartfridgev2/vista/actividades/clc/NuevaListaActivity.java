@@ -51,6 +51,7 @@ public class NuevaListaActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_REVISTA = 5465;
     private ArrayList<ComponenteListaCompra> componenteListaCompras;
     private ArrayList<ComponenteListaCompra> listadoProductos;
+    private ArrayList<ComponenteListaCompra> listadoProductosExternos;//ArrayList para almacenar todos los productos que vienen de la parte externa
     private static ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
     private GestorFicheroLista gfl;//Para almacenar las listas en un fichero interno
 
@@ -61,6 +62,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         gsp = new GestorSharedP();
         gfl = new GestorFicheroLista(this);
         listaCompraDB = new ListaCompraDB(this);
+        listadoProductosExternos = new ArrayList<>();
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         cargarAdapter();
         //Fijamos el contexto del activity
@@ -260,8 +262,11 @@ public class NuevaListaActivity extends AppCompatActivity {
             componenteListaCompras = new ArrayList<>();
             componenteListaCompras = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
             cargarAdapter();
-        } else if (requestCode == REQUEST_CODE_ALIMENTOS_SUGERIDOS && resultCode == RESULT_CANCELED){
-
+        } else if (requestCode == REQUEST_CODE_REVISTA && resultCode == RESULT_OK){
+            Log.d("hola", "requestCode: " + requestCode);
+            Log.d("hola", "resultCode: " + resultCode);
+            listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
+            Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
         }
     }
 

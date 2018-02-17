@@ -18,7 +18,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import java.util.ArrayList;
 
 public class CompraExternaActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_ANTERIOR = 5465;//Código de respuesta para el activity que lo llamó
+   //private static final int REQUEST_CODE_ANTERIOR = 5465;//Código de respuesta para el activity que lo llamó
     private static final int REQUEST_CODE_SIGUIENTE = 468;//Código de respuesta para el activity que al que va a llamar, el detalle de cada elemento
     private static final int REQUEST_CODE_CARRO = 834;//Código de respuesta para el activity que al que va a llamar, el carro de la compra
     private static final String[] categorias = {"Verdura", "Carne", "Fruta", "Pescado", "Bebida", "Embutido", "Frutos secos", "Desayuno"};//Array con los nombres
@@ -84,6 +84,7 @@ public class CompraExternaActivity extends AppCompatActivity {
                     alimentosDevueltos.add(alimentosExternos.get(i));
                     Log.d("componente", "alimento para incorporar a la lista de la compra: " + alimentosExternos.get(i).getNombreElemento());
                 }
+                clasePadre = data.getStringExtra("clasePadre");
             /*    intent = getIntent();
                 intent.putExtra("Categorias", alimentosExternosTotales);
                 //Devolvemos el ArrayList con el request_code del intent
@@ -159,5 +160,21 @@ public class CompraExternaActivity extends AppCompatActivity {
             alimentosExternosTotales.add(componenteNuevo);
             alimentosDevueltos.add(componenteNuevo);
         }
+    }
+
+    //Hacemos el setResult del intent aquí
+    @Override
+    public void onBackPressed() {
+        intent = new Intent();
+        if(clasePadre!=null) {
+            if (clasePadre.equals("Carro")) {
+                intent.putExtra("AlimentosSeleccionados", alimentosDevueltosCarro);
+            } else if (clasePadre.equals("Detalle")) {
+                intent.putExtra("AlimentosSeleccionados", alimentosDevueltos);
+            }
+        }
+        setResult(RESULT_OK, intent);
+        Log.d("hola", "ALIMENTOS DEVUELTOS: " + alimentosDevueltos.size());
+        super.onBackPressed();
     }
 }

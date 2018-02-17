@@ -127,6 +127,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 Log.d("componente", "Se pulsa botón hacia atrás");
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result",adapter.getComponentes());
+                returnIntent.putExtra("clasePadre", "Carro");
                 for(int i=0; i<adapter.getComponentes().size();i++) {
                     Log.d("componente", "nombre3: " + adapter.getComponentes().get(i).getNombreElemento());
                 }

@@ -76,7 +76,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             //intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
             intent.putExtra("AlimentosSugeridos", alimentosLeidosSP);
             startActivityForResult(intent, REQUEST_CODE_ALIMENTOS_SUGERIDOS);
-            //borrarSP();
+            gsp.borrarSP();
         }
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonManual = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.manual);

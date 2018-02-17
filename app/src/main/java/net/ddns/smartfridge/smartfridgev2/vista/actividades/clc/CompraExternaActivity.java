@@ -27,9 +27,12 @@ public class CompraExternaActivity extends AppCompatActivity {
     private Intent intent;//Para pasar información entre activitys
     private ArrayList<ComponenteListaCompra> alimentosExternos;//Para almacenar el resultado de la seleccion del usuario y pasárselo al intent que nos llamó
     private ArrayList<ComponenteListaCompra> alimentosExternosTotales;//Para almacenar todos los alimentos y enviarlos a la lista de la compra
-    private CustomRecyclerViewAdapterRevistaMain adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView recyclerView;
+    private ArrayList<ComponenteListaCompra> alimentosDevueltos;//Para recoger los alimentos que se van a devolver para incorporarlos a la lista de la compra
+    private ArrayList<ComponenteListaCompra> alimentosDevueltosCarro;//Para recoger los alimentos que se van a devolver para incorporarlos a la lista de la compra y que provienen del carro
+    private CustomRecyclerViewAdapterRevistaMain adapter; //Adaptador
+    private RecyclerView.LayoutManager layoutManager; //LayoutManager para el recyclerview
+    private RecyclerView recyclerView;//RecyclerView para visualizar los elementos
+    private String clasePadre;//Para ver de qué clase tenemos que enviar el array: si viene del carro de la compra, lo indicará, ya que podrá estar modificado al borrar algún elemento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class CompraExternaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compra_externa);
         alimentosExternos = new ArrayList<ComponenteListaCompra>();
         alimentosExternosTotales = new ArrayList<ComponenteListaCompra>();
+        alimentosDevueltos = new ArrayList<ComponenteListaCompra>();
+        alimentosDevueltosCarro = new ArrayList<ComponenteListaCompra>();
         adapter = new CustomRecyclerViewAdapterRevistaMain(this, this);
         recyclerView = findViewById(R.id.rvCompraExterna);
         layoutManager = new GridLayoutManager(this, 2);
@@ -59,7 +64,7 @@ public class CompraExternaActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("componente", "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-        //Comrpobamos el intent que viene de vuelta
+        //Comrpobamos el intent que viene de vuelta del activity CategoriaActivity
         if (requestCode == REQUEST_CODE_SIGUIENTE) {
             Log.d("componente", "onActivityResult dentro del if");
             // Vemos que el resultado esté correcto
@@ -67,30 +72,42 @@ public class CompraExternaActivity extends AppCompatActivity {
                 //Recogemos los datos del intent y se los asignamos al ArrayList
                 alimentosExternos = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra("result");
                 Log.d("componente", "tamaño alimentosExternos: " + alimentosExternos.size());
+                //Comprobamos si hay alguno repetido para enviárselo al activity del carro
                 for(int i=0; i<alimentosExternos.size(); i++){
                     //alimentosExternosTotales.add(alimentosExternos.get(i));
                     comprobarRepetidos(alimentosExternosTotales, alimentosExternos.get(i));
+                }
+                //Para el Array de esta clase
+                for(int i=0; i<alimentosExternos.size();i++) {
+                    comprobarRepetidos(alimentosDevueltos, alimentosExternos.get(i));
+                    Log.d("componente", "alimentos que van a la lista o al carro: " + alimentosExternos.get(i).getNombreElemento());
+                    alimentosDevueltos.add(alimentosExternos.get(i));
+                    Log.d("componente", "alimento para incorporar a la lista de la compra: " + alimentosExternos.get(i).getNombreElemento());
                 }
             /*    intent = getIntent();
                 intent.putExtra("Categorias", alimentosExternosTotales);
                 //Devolvemos el ArrayList con el request_code del intent
                 setResult(REQUEST_CODE_ANTERIOR, intent);*/
             }
-        } else if(requestCode == REQUEST_CODE_CARRO){/*
+            //Comprobamos el intent que viene de vuelta del activity DetalleListaActitivity
+        } else if(requestCode == REQUEST_CODE_CARRO){
             // Vemos que el resultado esté correcto
             if (resultCode == RESULT_OK) {
                 //Recogemos los datos del intent y se los asignamos al ArrayList
-                alimentosExternos = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra("result");
-                for(int i=0; i<alimentosExternos.size(); i++){
-                    alimentosExternosTotales.add(alimentosExternos.get(i));
+                alimentosDevueltosCarro = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra("elementosLista");
+                for(int i=0; i<alimentosDevueltosCarro.size(); i++){
+                    Log.d("vuelta", "alimentos: " + alimentosDevueltosCarro.get(i).getNombreElemento());
                 }
-                intent = getIntent();
+                clasePadre = data.getStringExtra("clasePadre");
+                Log.d("vuelta", clasePadre);
+
+
+
+/*
                 intent.putExtra("Categorias", alimentosExternosTotales);
                 //Devolvemos el ArrayList con el request_code del intent
-                setResult(REQUEST_CODE_ANTERIOR, intent);
-            }*/
-        } else {
-            Log.d("componente", "onActivityResult else");
+                setResult(REQUEST_CODE_ANTERIOR, intent);*/
+            }
         }
     }
 
@@ -140,6 +157,7 @@ public class CompraExternaActivity extends AppCompatActivity {
         }
         if(contador==0){
             alimentosExternosTotales.add(componenteNuevo);
+            alimentosDevueltos.add(componenteNuevo);
         }
     }
 }

@@ -26,15 +26,16 @@ import cn.refactor.library.SmoothCheckBox;
 public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> productos;
     private ArrayList<ComponenteListaCompra> auxiliar;
+    private ArrayList<ComponenteListaCompra> falseProducts; //ArrayList para almacenar los productos que se han deseleccionado con el checkbox
     private ArrayList<SmoothCheckBox> checkBoxes;
     private Dialogos dialogos;
     private Activity activity;
     private String modificacion;
-    int llamada=0;
+    private int contador;//Para ver si hay elementos que están repetidos
 
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
-        Log.d("MECAGOENDIOS", "CustomArrayAdapterNuevaLista: " + productosSugeridos.size());
+        //Log.d("MECAGOENDIOS", "CustomArrayAdapterNuevaLista: " + productosSugeridos.size());
         if (productosSugeridos != null) {
             this.productos = productosSugeridos;
 
@@ -44,13 +45,14 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         }
         this.auxiliar = new ArrayList<>();
         this.checkBoxes = new ArrayList<>();
+        this.falseProducts = new ArrayList<>();
         dialogos = new Dialogos(context, activity);
     }
 
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Log.d("MECAGOENDIOS", "llamadas: " + llamada++);
+        //Log.d("MECAGOENDIOS", "llamadas: " + llamada++);
         final String alimento = productos.get(position).getNombreElemento();
         //Log.d("MECAGOENDIOS", "getView: " + productos.size());
         if (convertView == null) {
@@ -59,9 +61,10 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         TextView tvAlimentoSugerido = convertView.findViewById(R.id.tvNombreroductoNuevaLista);
         SmoothCheckBox scb = convertView.findViewById(R.id.smoothCheckBoxNuevaLista);
         scb.setVisibility(View.INVISIBLE);
-        Log.d("MECAGOENDIOS", "dimensión checkboxes antes de añadir: " + checkBoxes.size());
+        //Log.d("MECAGOENDIOS", "dimensión checkboxes antes de añadir: " + checkBoxes.size());
+        //Añadimos el correspondiente checkbox al arrayList siempre y cuando sea único
         comprobarRepetidos(checkBoxes, scb);
-        Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
+        //Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
         tvAlimentoSugerido.setText(alimento);
         //AQUI ESTA EL LISTENER DE LOS CHECKBOXES, SI SE CAMBIA A TRUE LO AÑADE A UN ARRAY LIST AUXILIAR Y SI SE CAMBIA A FALSE SE ELIMINA DE ESE ARRAYLIST AUXILIAR
         //TODO ESTO SE CONFIRMA CUANDO LLAMAMOS AL METODO DE CONFIRMAR CAMBIOS
@@ -69,19 +72,17 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         scb.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
-                if (b) {
+                if (b) {//Si está marcado a true el checkbox
+                    //Se añade al auxiliar
                     comprobarRepetidosAlimentos(auxiliar, productos.get(position));
-                    //auxiliar.add(productos.get(position));
-                    for(int i=0;i<auxiliar.size();i++){
-                        Log.d("MECAGOENDIOS", "alimentos con checkbox a true antes de modificar: " + auxiliar.get(i).getNombreElemento());
+                    //Miramos si un alimento que estaba a false, se ha vuelto a poner a true para quitarlo del array correspondiente
+                    for(int i=0;i<falseProducts.size();i++){
+                        if(falseProducts.get(i).getNombreElemento().equals(productos.get(position)));
+                        falseProducts.remove(productos.get(position));
                     }
-                    Log.d("MECAGOENDIOS", "onCheckedChanged: TRUE; " + productos.get(position).getNombreElemento());
                 } else {
-                    auxiliar.remove(productos.get(position));
-                    Log.d("MECAGOENDIOS", "onCheckedChanged: false; " + alimento);
-                    for(int i=0;i<auxiliar.size();i++){
-                        Log.d("MECAGOENDIOS", "alimentos con checkbox a true después: " + auxiliar.get(i).getNombreElemento());
-                    }
+                    //Comprobamos que el elemento que queremos eliminar no está ya incluido en el arrayList. Si no está ni se mete en el array
+                    comprobarRepetidosAlimentos(falseProducts, productos.get(position));
                 }
             }
         });
@@ -105,14 +106,18 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     }
 
     /**
-     * AQUÍ ASIGNAMOS LOS DATOS DEL ARRAYLIST AUXILIAR AL ARRAYLIST EN EL QUE SE BASA EL ADAPTER
+     * Método para eliminar los alimentos que ha seleccionado el usuario
      */
     public void confirmarCambios() {
-        this.productos = this.auxiliar;
-        for (ComponenteListaCompra item: auxiliar) {
-            Log.d("la que he liao", "confirmarCambios: " + item.getNombreElemento() );
+        //Recorremos el auxiliar y lo comparamos con cada objeto del array falseProducts
+        for(int a=0; a < auxiliar.size(); a++){
+            for (int f=0; f < falseProducts.size(); f++){
+                //Si coinciden los elementos, se elimina del auxiliar
+                if (auxiliar.get(a).getNombreElemento().equals(falseProducts.get(f).getNombreElemento())){
+                    auxiliar.remove(falseProducts.get(f));
+                }
+            }
         }
-        auxiliar.clear();
         this.notifyDataSetChanged();
     }
 
@@ -163,24 +168,28 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     //Método para comprobar si hay algún checkbox repetido en la lista y no ponerlo
     public void comprobarRepetidos(ArrayList<SmoothCheckBox> checkbox, SmoothCheckBox scb){
-        int contador=0;
+        contador = 0;//Lo inicializamos
         for (SmoothCheckBox c : checkbox){
+            //Si coinciden los valores, se incrementa el contador
             if(c==scb){
                 contador++;
             }
         }
+        //Si no ha encontrado ninguna coincidencia, se añade al arrayList
         if(contador==0){
             checkbox.add(scb);
         }
     }
     //Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
     public void comprobarRepetidosAlimentos(ArrayList<ComponenteListaCompra> aux, ComponenteListaCompra componente){
-        int contador=0;
+        contador=0;//Iniciamos el contador
         for (ComponenteListaCompra c : aux){
+            //Recorremos el array viendo si coinciden los valores
             if(c.getNombreElemento().equals(componente.getNombreElemento())){
                 contador++;
             }
         }
+        //Si no hay coincidencias, se añade al arrayList correspondiente
         if(contador==0){
             aux.add(componente);
         }

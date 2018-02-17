@@ -28,5 +28,6 @@ public class CosasQueHacer {
     //14.TODO Una vez que confirmas la lista nueva hacer un finish HECHO
     15.TODO Optimizar la carga de imágenes cuando se de a CompraExterna IMPOSIBLE
     16.TODO arreglar error al editar y volver a dar editar en lista nueva
+    17.TODO hacer que no se puedan repetir los alimentos en la lista de la compra
      */
 }

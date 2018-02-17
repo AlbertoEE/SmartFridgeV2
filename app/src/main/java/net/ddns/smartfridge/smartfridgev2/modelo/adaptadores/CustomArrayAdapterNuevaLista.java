@@ -63,8 +63,6 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         comprobarRepetidos(checkBoxes, scb);
         Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
         tvAlimentoSugerido.setText(alimento);
-
-
         //AQUI ESTA EL LISTENER DE LOS CHECKBOXES, SI SE CAMBIA A TRUE LO AÑADE A UN ARRAY LIST AUXILIAR Y SI SE CAMBIA A FALSE SE ELIMINA DE ESE ARRAYLIST AUXILIAR
         //TODO ESTO SE CONFIRMA CUANDO LLAMAMOS AL METODO DE CONFIRMAR CAMBIOS
         //AQUI PASA UNA COSA RARA QUE CUANDO PASA POR AQUI PASA 14 VECES
@@ -72,11 +70,18 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
                 if (b) {
-                    auxiliar.add(productos.get(position));
+                    comprobarRepetidosAlimentos(auxiliar, productos.get(position));
+                    //auxiliar.add(productos.get(position));
+                    for(int i=0;i<auxiliar.size();i++){
+                        Log.d("MECAGOENDIOS", "alimentos con checkbox a true antes de modificar: " + auxiliar.get(i).getNombreElemento());
+                    }
                     Log.d("MECAGOENDIOS", "onCheckedChanged: TRUE; " + productos.get(position).getNombreElemento());
                 } else {
-                    auxiliar.remove(alimento);
+                    auxiliar.remove(productos.get(position));
                     Log.d("MECAGOENDIOS", "onCheckedChanged: false; " + alimento);
+                    for(int i=0;i<auxiliar.size();i++){
+                        Log.d("MECAGOENDIOS", "alimentos con checkbox a true después: " + auxiliar.get(i).getNombreElemento());
+                    }
                 }
             }
         });
@@ -166,6 +171,18 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         }
         if(contador==0){
             checkbox.add(scb);
+        }
+    }
+    //Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
+    public void comprobarRepetidosAlimentos(ArrayList<ComponenteListaCompra> aux, ComponenteListaCompra componente){
+        int contador=0;
+        for (ComponenteListaCompra c : aux){
+            if(c.getNombreElemento().equals(componente.getNombreElemento())){
+                contador++;
+            }
+        }
+        if(contador==0){
+            aux.add(componente);
         }
     }
 }

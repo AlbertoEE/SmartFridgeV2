@@ -6,12 +6,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+<!--    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="8dp"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="82dp">
+        tools:layout_editor_absoluteY="82dp">-->
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,5 +33,5 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
+ <!--   </android.support.v7.widget.CardView>-->
 </LinearLayout>

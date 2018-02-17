@@ -93,9 +93,12 @@ public class MostrarProductosListaActivity extends AppCompatActivity {
                     Toast.makeText(this, "No hay ninguna aplicación disponible para enviar la lista.", Toast.LENGTH_LONG).show();
                 }
                 return true;
-            //Botón de retroceso
-            case R.id.homeAsUp:
-                onBackPressed();
+            //Botón de ver cuánto le cuesta la compra
+            case R.id.miCompra:
+                intent = new Intent(this, PrecioCompraActivity.class);
+                //Le pasamos el arrayList con los productos que contiene esta lista de la compra
+                intent.putExtra("productos", componentesListaCompra);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

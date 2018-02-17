@@ -2,6 +2,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/miCompra"
+        android:icon="@drawable/ic_euro"
+        android:title="compra"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/miShare"
         android:icon="@android:drawable/ic_menu_share"
         android:title="Item"

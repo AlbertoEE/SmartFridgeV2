@@ -14,10 +14,7 @@ public class CosasQueHacer {
 
     //TODO PARA TERMINAR LA PARTE DE CREAR LISTAS:
     /*
-    1.TODO Hacer toda la parte de lista externa -EN CURSO-
-    7.TODO Abrir una lista cuando se pulse en ella -RAQUEL Y ALBERTO-
     10.TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade. -RAQUEL-
-    12.TODO organizar los productos de la lista via nombre -ALBERTO TODAS LAS LISTAS ORGANIZAR-
     15.TODO Optimizar la carga de imágenes cuando se de a CompraExterna IMPOSIBLE
     17.TODO hacer que no se puedan repetir los alimentos en la lista de la compra -ALBERTO-
      */

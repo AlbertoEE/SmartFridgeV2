@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.common.util.concurrent.AtomicDoubleArray;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterNuevaLista;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
@@ -25,6 +27,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.GestorFicheroLista;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
 
 import java.util.ArrayList;
 
@@ -170,6 +173,8 @@ public class NuevaListaActivity extends AppCompatActivity {
                 finish();
             }
         });
+        //Ejecutamos el AsyncTask para comprobar el SP mientras se está haciendo la lista
+        new agregarEscasez().execute(adapter);
     }
 
     //Método para crear el objeto lista
@@ -266,6 +271,42 @@ public class NuevaListaActivity extends AppCompatActivity {
 
     public static void setTodasLasListas(ArrayList<ListaCompra> todasLasListas) {
         todasLasListas = todasLasListas;
+    }
+
+    //Creamos un AsyncTask que esté comprobando si hay modificaciones el el SP para añadir esos elementos a la lista
+    public class agregarEscasez extends AsyncTask<Object, Void, Void> {
+        private GestorSharedP gsp;//Para trabajar con el SP
+        private CustomArrayAdapterNuevaLista adapter;//Para trabajar con el adaptador de la clase
+        private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            gsp = new GestorSharedP();
+            alimentosLeidosSP = new ArrayList<>();
+        }
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            //Va a estar siempre comprobando si hay modificaciones en el SharedPreferences
+            while(true){
+                if(gsp.isHayElemento()){
+                    alimentosLeidosSP = gsp.recogerValores();
+                    adapter = (CustomArrayAdapterNuevaLista) objects[0];
+                    for (int i=0; i<alimentosLeidosSP.size(); i++){
+                        adapter.addProducto(alimentosLeidosSP.get(i));
+                    }
+                    gsp.borrarSP();
+                }
+                try {
+                    //Hacemos un sleep para que no esté continuament haciendo accesos al SP
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
     }
 }
 

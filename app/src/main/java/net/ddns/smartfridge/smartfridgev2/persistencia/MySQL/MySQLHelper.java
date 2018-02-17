@@ -11,6 +11,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
@@ -42,7 +43,8 @@ public class MySQLHelper {
     private Blob blob;//Para almacenar la imagne de la bbdd
     private Bitmap imagen;//Para almacenar la imagen de la bbdd;
     private Ingrediente alimentoExterno;//Para recoger los datos de la bbdd
-    private ArrayList<BigDecimal> precios;//Para meter todos los precios de una lista de la compra
+    private ArrayList<Precio> precios;//Para meter todos los precios de una lista de la compra
+    private Precio precio;//Construimos el objeto a partir de los datos de la bbdd
 
     /**
      * Abre la conexión con la BBDD
@@ -110,20 +112,23 @@ public class MySQLHelper {
     }
 
     //Método para recoger el precio de una lista de la compra, según el supermercado
-    public ArrayList<BigDecimal> recogerPrecio(ArrayList<ComponenteListaCompra> nombres, String superm){
+    public ArrayList<Precio> recogerPrecio(ArrayList<ComponenteListaCompra> nombres, String superm){
         precios = new ArrayList<>();
         Statement st = null;
         ResultSet rs = null;
         for (int i=0; i<nombres.size(); i++) {
-            int id = nombres.get(i).getId();
+            String nombre = nombres.get(i).getNombreElemento();
             //Sacamos todos los datos de la bbdd
-            sentencia = "SELECT " + superm + " FROM INGREDIENTES WHERE id_ingrediente = " + id;
+            sentencia = "SELECT " + superm + " FROM INGREDIENTES WHERE UPPER(nombre) = \'" + nombre + "\';";
+            Log.d("precio", "sentencia: " + sentencia);
             try {
                 st = (Statement) conexion.createStatement();
                 rs = st.executeQuery(sentencia);
                 while (rs.next()) {
-                    //Vamos almacenando el valor en el ArrayList
-                    precios.add(rs.getBigDecimal(0));
+                    //Vamos creando los objetos que almacenaremos luego en un arraylist
+                    precio = new Precio(nombres.get(i).getNombreElemento(), rs.getBigDecimal(1).doubleValue(), superm);
+                    precios.add(precio);
+                    //Log.d("precio", "precio: " + sentencia);
                 }
             } catch (SQLException e) {
                 Log.d("SQL", "Error de SQL: " + e.getErrorCode());

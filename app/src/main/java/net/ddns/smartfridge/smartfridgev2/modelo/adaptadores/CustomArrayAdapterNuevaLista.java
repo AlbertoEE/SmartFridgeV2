@@ -64,7 +64,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         //Log.d("MECAGOENDIOS", "dimensión checkboxes antes de añadir: " + checkBoxes.size());
         //Añadimos el correspondiente checkbox al arrayList siempre y cuando sea único
         comprobarRepetidos(checkBoxes, scb);
-        //Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
+        Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
         tvAlimentoSugerido.setText(alimento);
         //AQUI ESTA EL LISTENER DE LOS CHECKBOXES, SI SE CAMBIA A TRUE LO AÑADE A UN ARRAY LIST AUXILIAR Y SI SE CAMBIA A FALSE SE ELIMINA DE ESE ARRAYLIST AUXILIAR
         //TODO ESTO SE CONFIRMA CUANDO LLAMAMOS AL METODO DE CONFIRMAR CAMBIOS
@@ -109,6 +109,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      * Método para eliminar los alimentos que ha seleccionado el usuario
      */
     public void confirmarCambios() {
+
         //Recorremos el auxiliar y lo comparamos con cada objeto del array falseProducts
         for(int a=0; a < auxiliar.size(); a++){
             for (int f=0; f < falseProducts.size(); f++){
@@ -118,6 +119,10 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
                 }
             }
         }
+        //Asignamos al arrayList llamado productos, el valor del arrayList auxiliar
+        this.productos = auxiliar;
+        Log.d("check", "longitud de productos: " + productos.size());
+        checkBoxes.clear();
         this.notifyDataSetChanged();
     }
 
@@ -130,7 +135,8 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      */
     public void mostrarCheckboxes() {
         auxiliar = productos;
-        Log.d("MECAGOENDIOS", "mostrarCheckboxes: " + checkBoxes.size());
+        Log.d("check", "longitud de productos: " + auxiliar.size());
+        //Log.d("MECAGOENDIOS", "mostrarCheckboxes: " + checkBoxes.size());
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.VISIBLE);
             item.setChecked(true);

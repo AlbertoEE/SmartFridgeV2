@@ -27,8 +27,6 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NuevaListaActivity extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys

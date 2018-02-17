@@ -30,6 +30,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     private Dialogos dialogos;
     private Activity activity;
     private String modificacion;
+    int llamada=0;
 
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
@@ -49,19 +50,21 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        Log.d("MECAGOENDIOS", "llamadas: " + llamada++);
         final String alimento = productos.get(position).getNombreElemento();
-        Log.d("MECAGOENDIOS", "getView: " + productos.size());
+        //Log.d("MECAGOENDIOS", "getView: " + productos.size());
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_producto_nueva_lista, parent, false);
         }
-
         TextView tvAlimentoSugerido = convertView.findViewById(R.id.tvNombreroductoNuevaLista);
         SmoothCheckBox scb = convertView.findViewById(R.id.smoothCheckBoxNuevaLista);
-        checkBoxes.add(scb);
         scb.setVisibility(View.INVISIBLE);
-
-
+        Log.d("MECAGOENDIOS", "dimensión checkboxes antes de añadir: " + checkBoxes.size());
+        comprobarRepetidos(checkBoxes, scb);
+        Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
         tvAlimentoSugerido.setText(alimento);
+
+
         //AQUI ESTA EL LISTENER DE LOS CHECKBOXES, SI SE CAMBIA A TRUE LO AÑADE A UN ARRAY LIST AUXILIAR Y SI SE CAMBIA A FALSE SE ELIMINA DE ESE ARRAYLIST AUXILIAR
         //TODO ESTO SE CONFIRMA CUANDO LLAMAMOS AL METODO DE CONFIRMAR CAMBIOS
         //AQUI PASA UNA COSA RARA QUE CUANDO PASA POR AQUI PASA 14 VECES
@@ -151,5 +154,18 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     public int getSize(){
         return productos.size();
+    }
+
+    //Método para comprobar si hay algún checkbox repetido en la lista y no ponerlo
+    public void comprobarRepetidos(ArrayList<SmoothCheckBox> checkbox, SmoothCheckBox scb){
+        int contador=0;
+        for (SmoothCheckBox c : checkbox){
+            if(c==scb){
+                contador++;
+            }
+        }
+        if(contador==0){
+            checkbox.add(scb);
+        }
     }
 }

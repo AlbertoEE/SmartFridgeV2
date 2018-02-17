@@ -19,6 +19,8 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -85,5 +87,19 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
     //Recogemos la lista de la posición seleccionada
     public ArrayList<ListaCompra> getListaCompra(){
         return this.listas;
+    }
+
+    /**
+     * Método para ordenar el recycler view alfabeticamente
+     * @param az este int será un 1 o un -1 según el orden que queramos
+     */
+    public void sortRecyclerView(final int az){
+        Collections.sort(listas, new Comparator<ListaCompra>() {
+            @Override
+            public int compare(ListaCompra v1, ListaCompra v2) {
+                return v1.getFecha().compareToIgnoreCase(v2.getFecha()) * az;
+            }
+        });
+        notifyDataSetChanged();
     }
 }

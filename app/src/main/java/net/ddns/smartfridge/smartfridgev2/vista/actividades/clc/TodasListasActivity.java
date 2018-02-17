@@ -14,6 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import net.ddns.smartfridge.smartfridgev2.BuildConfig;
@@ -46,7 +49,7 @@ public class TodasListasActivity extends AppCompatActivity {
     private ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
     private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
     //private ArrayList<Lista>todosLosProductos = new ArrayList<>();//Para crear la lista con todos los productos
-
+    private int sort = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,5 +140,24 @@ public class TodasListasActivity extends AppCompatActivity {
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_sort, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuSortAll:
+                sort *= -1;
+                adapter.sortRecyclerView(sort);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

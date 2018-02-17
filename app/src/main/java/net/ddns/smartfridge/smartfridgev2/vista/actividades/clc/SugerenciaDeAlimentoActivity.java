@@ -28,6 +28,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     private CustomArrayAdapter customArrayAdapter;
     private GestorSharedP gsp;//Instacia para gestionar el Shared Preferences
     private TextView tvMarqueeSugerenciaDeAlimento;
+    private int sort = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,10 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menuSelect:
                 customArrayAdapter.cambiarCheckBoxes();
+                return true;
+            case R.id.menuSortAllSugerencia:
+                sort *= -1;
+                customArrayAdapter.sortRecyclerView(sort);
         }
         return super.onOptionsItemSelected(item);
     }

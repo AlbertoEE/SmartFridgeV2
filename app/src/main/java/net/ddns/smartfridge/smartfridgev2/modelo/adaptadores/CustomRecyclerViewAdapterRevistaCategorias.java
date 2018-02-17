@@ -18,10 +18,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.DetalleListaExternaActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Alberto on 15/02/2018.
@@ -80,6 +83,19 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
                 }
             }
         });
+    }
+    /**
+     * Método para ordenar el recycler view alfabeticamente
+     * @param az este int será un 1 o un -1 según el orden que queramos
+     */
+    public void sortRecyclerView(final int az){
+        Collections.sort(ingredientes, new Comparator<Ingrediente>() {
+            @Override
+            public int compare(Ingrediente v1, Ingrediente v2) {
+                return v1.getNombreIngrediente().compareToIgnoreCase(v2.getNombreIngrediente()) * az;
+            }
+        });
+        notifyDataSetChanged();
     }
 
     @Override

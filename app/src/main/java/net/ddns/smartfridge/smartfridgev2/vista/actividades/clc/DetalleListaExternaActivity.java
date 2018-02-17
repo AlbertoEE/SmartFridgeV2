@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> componentes;//Para cargar los componentes seleccionados
     private ArrayList<ComponenteListaCompra> componentesAdapter;//Para cargar los componentes seleccionados en el adapter
     private CustomArrayAdapterNuevaLista adapter;;//Adapter para la vista
+    private int sort = 1;
     private Intent intent;//Para recoger los datos del activity que de origen
 
     @Override
@@ -74,5 +78,26 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
         }
         ListView listView = (ListView)findViewById(R.id.detalle_lista);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_sort, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuSortAll:
+                sort *= -1;
+                adapter.sortRecyclerView(sort);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }

@@ -16,6 +16,8 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cn.refactor.library.SmoothCheckBox;
 
@@ -199,5 +201,19 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         if(contador==0){
             aux.add(componente);
         }
+    }
+
+    /**
+     * Método para ordenar el recycler view alfabeticamente
+     * @param az este int será un 1 o un -1 según el orden que queramos
+     */
+    public void sortRecyclerView(final int az){
+        Collections.sort(productos, new Comparator<ComponenteListaCompra>() {
+            @Override
+            public int compare(ComponenteListaCompra v1, ComponenteListaCompra v2) {
+                return v1.getNombreElemento().compareToIgnoreCase(v2.getNombreElemento()) * az;
+            }
+        });
+        notifyDataSetChanged();
     }
 }

@@ -11,9 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cn.refactor.library.SmoothCheckBox;
 
@@ -79,6 +82,20 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
 
     public ArrayList<ComponenteListaCompra> getNuevaLista(){
         return alimentosSeleccionados;
+    }
+
+    /**
+     * Método para ordenar el recycler view alfabeticamente
+     * @param az este int será un 1 o un -1 según el orden que queramos
+     */
+    public void sortRecyclerView(final int az){
+        Collections.sort(alimentos, new Comparator<ComponenteListaCompra>() {
+            @Override
+            public int compare(ComponenteListaCompra v1, ComponenteListaCompra v2) {
+                return v1.getNombreElemento().compareToIgnoreCase(v2.getNombreElemento()) * az;
+            }
+        });
+        notifyDataSetChanged();
     }
 
 }

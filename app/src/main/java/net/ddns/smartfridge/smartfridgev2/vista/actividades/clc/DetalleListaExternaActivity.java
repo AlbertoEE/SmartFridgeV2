@@ -26,6 +26,7 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
     private CustomArrayAdapterNuevaLista adapter;;//Adapter para la vista
     private int sort = 1;
     private Intent intent;//Para recoger los datos del activity que de origen
+    private boolean editando = false;//Booleano para mostrar y ocultar los checkboxes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_lista_externa);
         //Cogemos la referencia a los floating action buttons
         com.getbase.floatingactionbutton.FloatingActionButton botonEditar = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.editar);
-        com.getbase.floatingactionbutton.FloatingActionButton botonAceptar = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.aceptar);
+        //com.getbase.floatingactionbutton.FloatingActionButton botonAceptar = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.aceptar);
         componentesAdapter = new ArrayList<ComponenteListaCompra>();
         componentes = (ArrayList<ComponenteListaCompra>) getIntent().getSerializableExtra("componentes");
         for(int i=0; i<componentes.size();i++) {
@@ -45,7 +46,7 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
         botonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  if(adapter.getSize() > 0){
+                if(adapter.getSize() > 0){
                     editando = !editando;
                     if(editando && adapter.getSize() > 0){
                         adapter.mostrarCheckboxes();
@@ -53,19 +54,7 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
                         adapter.ocultarrCheckboxes();
                         adapter.confirmarCambios();
                     }
-                }*/
-            }
-        });
-        botonAceptar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent();
-                intent.putExtra("elementosLista", componentesAdapter);
-                intent.putExtra("clasePadre", "Detalle");
-                setResult(RESULT_OK, intent);
-                Toast.makeText(DetalleListaExternaActivity.this, "Guardando selección...", Toast.LENGTH_SHORT).show();
-                Log.d("vuelta", "volvemos al activity que le llamó");
-                finish();
+                }
             }
         });
     }
@@ -98,6 +87,15 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    //Codificamos el envío de los datos al activity CompraExternaActivity
+    @Override
+    public void onBackPressed() {
+        intent = new Intent();
+        intent.putExtra("elementosLista", componentesAdapter);
+        intent.putExtra("clasePadre", "Detalle");
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 }

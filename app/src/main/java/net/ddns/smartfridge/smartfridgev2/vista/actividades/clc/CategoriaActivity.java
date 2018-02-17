@@ -41,8 +41,8 @@ public class CategoriaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria);
-        //Para visualizar el botón de retroceso del actionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*Para visualizar el botón de retroceso del actionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         i = getIntent();
         categoria = i.getStringExtra("Categoria");
         customDialogProgressBar = new CustomDialogProgressBar(this);
@@ -51,16 +51,6 @@ public class CategoriaActivity extends AppCompatActivity {
         //Iniciamos la consulta a la bbdd
         new ListadoExterno().execute(categoria);
 
-    }
-
-    /**
-     * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onCreateOptionsMenu(android.view.Menu)'
-     */
-    //Para crear el Action Bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbarlista, menu);
-        return true;
     }
 
     //Creamos el AsyncTask para hacer la consulta a la bbdd
@@ -120,23 +110,13 @@ public class CategoriaActivity extends AppCompatActivity {
         this.adapter.notifyDataSetChanged();
     }
 
+    //Programamos el método para que se envíen los datos
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: //hago un case por si en un futuro agrego mas opciones
-                Log.d("componente", "Se pulsa botón hacia atrás");
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result",adapter.getComponentes());
-                returnIntent.putExtra("clasePadre", "Carro");
-                for(int i=0; i<adapter.getComponentes().size();i++) {
-                    Log.d("componente", "nombre3: " + adapter.getComponentes().get(i).getNombreElemento());
-                }
-                setResult(this.RESULT_OK,returnIntent);
-                Toast.makeText(this, "Añadiendo los elementos seleccionados.", Toast.LENGTH_SHORT).show();
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",adapter.getComponentes());
+        returnIntent.putExtra("clasePadre", "Carro");
+        setResult(this.RESULT_OK,returnIntent);
+        super.onBackPressed();
     }
 }

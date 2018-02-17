@@ -179,21 +179,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         new agregarEscasez().execute(adapter);
     }
 
-    //Método para crear el objeto lista
-    public void crearListaNueva(View v){
-        /*Recogemos los elementos de la lista y los almacenamos en un array
-        listaAlimentosCompra = customAdaptador.getArray();
-        listaNueva.setProductos(listaAlimentosCompra);
-         */
-    }
 
-    //En el onDestroy cerramos la bbdd
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        listaCompraDB.cerrarConexion();
-    }
 
     //Método para hacer los insert en las tablas correspondientes
     public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a, int idLista){
@@ -263,8 +249,6 @@ public class NuevaListaActivity extends AppCompatActivity {
             componenteListaCompras = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
             cargarAdapter();
         } else if (requestCode == REQUEST_CODE_REVISTA && resultCode == RESULT_OK){
-            Log.d("hola", "requestCode: " + requestCode);
-            Log.d("hola", "resultCode: " + resultCode);
             listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
             Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
         }
@@ -312,6 +296,14 @@ public class NuevaListaActivity extends AppCompatActivity {
                 return null;
             }
         }
+    }
+
+    //En el onDestroy cerramos la bbdd
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listaCompraDB.cerrarConexion();
     }
 }
 

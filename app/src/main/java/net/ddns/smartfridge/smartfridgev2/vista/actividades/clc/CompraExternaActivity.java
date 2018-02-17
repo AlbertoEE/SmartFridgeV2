@@ -81,7 +81,7 @@ public class CompraExternaActivity extends AppCompatActivity {
                 for(int i=0; i<alimentosExternos.size();i++) {
                     comprobarRepetidos(alimentosDevueltos, alimentosExternos.get(i));
                     Log.d("componente", "alimentos que van a la lista o al carro: " + alimentosExternos.get(i).getNombreElemento());
-                    alimentosDevueltos.add(alimentosExternos.get(i));
+                    //alimentosDevueltos.add(alimentosExternos.get(i));
                     Log.d("componente", "alimento para incorporar a la lista de la compra: " + alimentosExternos.get(i).getNombreElemento());
                 }
                 clasePadre = data.getStringExtra("clasePadre");
@@ -168,13 +168,12 @@ public class CompraExternaActivity extends AppCompatActivity {
         intent = new Intent();
         if(clasePadre!=null) {
             if (clasePadre.equals("Carro")) {
-                intent.putExtra("AlimentosSeleccionados", alimentosDevueltosCarro);
-            } else if (clasePadre.equals("Detalle")) {
                 intent.putExtra("AlimentosSeleccionados", alimentosDevueltos);
+            } else if (clasePadre.equals("Detalle")) {
+                intent.putExtra("AlimentosSeleccionados", alimentosDevueltosCarro);
             }
         }
         setResult(RESULT_OK, intent);
-        Log.d("hola", "ALIMENTOS DEVUELTOS: " + alimentosDevueltos.size());
         super.onBackPressed();
     }
 }

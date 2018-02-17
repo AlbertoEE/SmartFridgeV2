@@ -47,18 +47,5 @@
             tools:layout_editor_absoluteX="294dp"
             tools:layout_editor_absoluteY="233dp" />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/aceptar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
-            app:fab_colorNormal="@color/transparent"
-            app:fab_icon="@drawable/ic_aceptar_compra"
-            app:fab_size="normal"
-            app:fab_title="Editar"
-            tools:layout_editor_absoluteX="294dp"
-            tools:layout_editor_absoluteY="233dp" />
-
-
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </FrameLayout>

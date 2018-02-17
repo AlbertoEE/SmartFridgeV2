@@ -77,7 +77,7 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
                 idAlimSele = ingredientes.get(position).getIdIngrediente();
                 c = new ComponenteListaCompra(idAlimSele, nombreAlimentoSeleccionado, 2);
                 componentes.add(c);
-                Toast.makeText(activity, "Preparando para añadir: " + c.getNombreElemento(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Añadido: " + c.getNombreElemento(), Toast.LENGTH_SHORT).show();
                 for(int i=0; i<componentes.size();i++) {
                     Log.d("componente", "nombre: " + componentes.get(i).getNombreElemento());
                 }

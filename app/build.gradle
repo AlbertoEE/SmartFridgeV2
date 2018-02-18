@@ -60,6 +60,9 @@ dependencies {
     //Blur
     compile 'jp.wasabeef:blurry:2.1.1'
     //Bubble-Notification
+
+    //Parallax RecyclerView
+    compile 'com.yayandroid:ParallaxRecyclerView:1.1'
 }
 
 

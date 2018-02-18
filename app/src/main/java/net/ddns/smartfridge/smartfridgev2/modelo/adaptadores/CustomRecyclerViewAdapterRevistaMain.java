@@ -1,7 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,15 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.CompraExternaActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.SugerirRecetaActivity;
 
 import java.io.ByteArrayOutputStream;
 

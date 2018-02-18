@@ -249,9 +249,11 @@ public class NuevaListaActivity extends AppCompatActivity {
             componenteListaCompras = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
             cargarAdapter();
         } else if (requestCode == REQUEST_CODE_REVISTA && resultCode == RESULT_OK){
-            listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
-            adapter.addProductosVarios(listadoProductosExternos);
-            Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
+            if (listadoProductosExternos!=null) {
+                listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
+                adapter.addProductosVarios(listadoProductosExternos);
+                Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
+            }
         }
     }
 

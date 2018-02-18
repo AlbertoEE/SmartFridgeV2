@@ -10,6 +10,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewSuper;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PrecioCompraProductosActivity extends AppCompatActivity {
@@ -24,13 +25,14 @@ public class PrecioCompraProductosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_precio_compra_productos);
+        DecimalFormat f = new DecimalFormat("##.00");
 
         precios = (ArrayList<Precio>) getIntent().getExtras().getSerializable("Precios");
         superMercado = (String) getIntent().getExtras().getString("Super");
         total = getIntent().getExtras().getDouble("Total");
 
         tvTotal = findViewById(R.id.tvTotal);
-        tvTotal.setText(String.valueOf(total) + "€");
+        tvTotal.setText(f.format(total) + "€");
 
         recyclerView = findViewById(R.id.rvProductosPrecios);
         adapter = new CustomRecyclerViewSuper(this, precios, superMercado);

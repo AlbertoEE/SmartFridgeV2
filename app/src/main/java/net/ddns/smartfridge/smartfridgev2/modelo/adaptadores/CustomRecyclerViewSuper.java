@@ -62,7 +62,7 @@ public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecycler
     public void onBindViewHolder(CustomRecyclerViewSuper.ViewHolderSuper holder, int position) {
         holder.tvProductoSuper.setText(precios.get(position).getNombreProducto());
         holder.tvSuperMercado.setText(precios.get(position).getSupermercado());
-        holder.tvPrecioSuper.setText(String.valueOf(precios.get(position).getPvp()) + "€");
+        holder.tvPrecioSuper.setText(String.valueOf(Math.round(precios.get(position).getPvp() * 100) / 100) + "€");
     }
 
     @Override

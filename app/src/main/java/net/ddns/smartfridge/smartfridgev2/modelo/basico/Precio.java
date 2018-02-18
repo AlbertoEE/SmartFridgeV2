@@ -1,10 +1,12 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa los productos con los precios por supermercado
  */
 
-public class Precio {
+public class Precio implements Serializable {
     private String nombreProducto;//El nombre del producto
     private double pvp;//El precio del producto
     private String supermercado;//El nombre del supermercado al que corresponde dicho precio

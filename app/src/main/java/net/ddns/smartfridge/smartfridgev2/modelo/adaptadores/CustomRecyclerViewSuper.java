@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -16,6 +17,8 @@ import com.yayandroid.parallaxrecyclerview.ParallaxViewHolder;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
@@ -28,10 +31,24 @@ import java.util.ArrayList;
 public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecyclerViewSuper.ViewHolderSuper> {
     private Activity activity;
     private ArrayList<Precio> precios;
+    private ArrayList<Precio> preciosAuxiliar;
+    private String superMercado;
 
-    public CustomRecyclerViewSuper(Activity activity, ArrayList<Precio> precios){
+    public CustomRecyclerViewSuper(Activity activity, ArrayList<Precio> precios, String superMercado){
         this.activity = activity;
         this.precios = precios;
+        this.superMercado = superMercado;
+
+        preciosAuxiliar = new ArrayList<>();
+
+        for (Precio item : precios) {
+            if (item.getSupermercado().equalsIgnoreCase(superMercado)){
+                preciosAuxiliar.add(item);
+            }
+        }
+
+        this.precios.clear();
+        this.precios = this.preciosAuxiliar;
     }
     @Override
     public CustomRecyclerViewSuper.ViewHolderSuper onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,54 +60,27 @@ public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecycler
 
     @Override
     public void onBindViewHolder(CustomRecyclerViewSuper.ViewHolderSuper holder, int position) {
-        Drawable d = null;
-        switch (position){
-            case 0:
-                d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.super_alcampo);
-                break;
-            case 1:
-                d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.super_carrefour);
-                break;
-            case 2:
-                d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.super_hipercor);
-                break;
-            case 3 :
-                d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.super_mercadona);
-                break;
-
-        }
-        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitmapdata = stream.toByteArray();
-        try {
-            Glide.with(this.activity.getApplicationContext())
-                    .load(bitmapdata)
-                    .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .into(holder.getBackgroundImage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        holder.getBackgroundImage().reuse();
+        holder.tvProductoSuper.setText(precios.get(position).getNombreProducto());
+        holder.tvSuperMercado.setText(precios.get(position).getSupermercado());
+        holder.tvPrecioSuper.setText(String.valueOf(precios.get(position).getPvp()) + "€");
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return precios.size();
     }
 
-    public static class ViewHolderSuper extends ParallaxViewHolder {
 
-        @Override
-        public int getParallaxImageId() {
-            return R.id.ivParallax;
-        }
+    public static class ViewHolderSuper extends RecyclerView.ViewHolder {
+        private TextView tvSuperMercado;
+        private TextView tvProductoSuper;
+        private TextView tvPrecioSuper;
 
         public ViewHolderSuper(View itemView) {
             super(itemView);
+            tvSuperMercado = itemView.findViewById(R.id.tvSuperMercado);
+            tvProductoSuper = itemView.findViewById(R.id.tvProductoSuper);
+            tvPrecioSuper = itemView.findViewById(R.id.tvPrecioSuper);
         }
     }
 }

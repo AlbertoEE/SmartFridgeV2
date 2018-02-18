@@ -27,6 +27,7 @@ public class PrecioCompraActivity extends AppCompatActivity {
     private CustomDialogProgressBar customDialogProgressBar;//Para mostrar un progressBar cuando se ejecuta la consulta a la bbdd
     private MySQLHelper myHelper;//Para acceder a la bbdd
     private ArrayList<Precio> precios;
+    private ArrayList<Double> totales;//Para almacenar los totales de todos los supermercados
 
     private final String [] SUPERMERCADOS = {"carrefour", "alcampo", "hipercor", "mercadona"};
 
@@ -47,6 +48,7 @@ public class PrecioCompraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_precio_compra);
         customDialogProgressBar = new CustomDialogProgressBar(this);
+        totales = new ArrayList<>();
         //Recogemos los valores del intent
         intent = getIntent();
         nombres = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra("productos");
@@ -58,32 +60,39 @@ public class PrecioCompraActivity extends AppCompatActivity {
     }
 
     public ArrayList<Double> calcularTotal(ArrayList<Precio> precios){
-        ArrayList<Double> totales = new ArrayList<>();//Variable para almacenar el total de los productos por supermercado
-        double carrefour=0;//Para calcular el total en Carrefour
-        double alcampo=0;//Para calcular el total en Alcampo
-        double hipercor=0;//Para calcular el total en Hipercor
-        double mercadona=0;//Para calcular el total en Mercadona
+        double carrefour=0f;//Para calcular el total en Carrefour
+        double alcampo=0f;//Para calcular el total en Alcampo
+        double hipercor=0f;//Para calcular el total en Hipercor
+        double mercadona=0f;//Para calcular el total en Mercadona
         //Recorremos el array y vamos calculando los valores
         for (int i=0; i<precios.size();i++){
+            Log.d("CeroMisHuevos", "valor de i: " + precios.get(i).getSupermercado());
             if(precios.get(i).getSupermercado().equals(SUPERMERCADOS[0])){
                 carrefour += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: 0" + carrefour);
+                Log.d("CeroMisHuevos", "calcularTotal: " + carrefour);
             } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[1])){
                 alcampo += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: 1" + alcampo);
+                Log.d("CeroMisHuevos", "calcularTotal: " + alcampo);
             } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[2])){
                 hipercor += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: 2" + hipercor);
+                Log.d("CeroMisHuevos", "calcularTotal: " + hipercor);
             } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[3])){
                 mercadona += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: 3" + mercadona);
+                Log.d("CeroMisHuevos", "calcularTotal: " + mercadona);
             }
+            Log.d("CeroMisHuevos", "valor de carreforu: " + carrefour);
+            Log.d("CeroMisHuevos", "valor de alcampo: " + alcampo);
+            Log.d("CeroMisHuevos", "valor de hipercor: " + hipercor);
+            Log.d("CeroMisHuevos", "valor de mercadona: " + mercadona);
             //Asignamos los valore a un ArrayList de double
+            totales.clear();
             totales.add(carrefour);
             totales.add(alcampo);
             totales.add(hipercor);
             totales.add(mercadona);
-
+            for (int j=0; j<totales.size(); j++){
+                Log.d("TotalArray", "TotalArray: " + totales.get(j).doubleValue());
+            }
             Log.d("CeroMisHuevos", "calcularTotal: adfasf" + totales.get(2));
         }
         return totales;
@@ -96,7 +105,7 @@ public class PrecioCompraActivity extends AppCompatActivity {
         imageButtonCarrefour = findViewById(R.id.ibCarrefour);
         imageButtonMercadona = findViewById(R.id.ibMercadona);
 
-        final ArrayList<Double> totales = calcularTotal(precios);
+        totales = calcularTotal(precios);
 
         imageButtonAlcampo.setOnClickListener(new View.OnClickListener() {
             @Override

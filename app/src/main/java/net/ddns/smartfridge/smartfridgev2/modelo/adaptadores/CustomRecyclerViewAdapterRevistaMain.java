@@ -58,6 +58,8 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.frutos_secos);
         } else if (position == 7) {
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.desayuno);
+        }else if (position == 8) {
+            d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.otros);
         }
         Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -85,7 +87,7 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 9;
     }
 
     public static class ViewHolderRevistaMain extends RecyclerView.ViewHolder {

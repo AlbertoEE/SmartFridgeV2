@@ -1,1 +1,1 @@
-include ':app', ':WheelPicker-1.1.2', ':mysql-connector-java-5.1.44-binv3'
+include ':app', ':WheelPicker-1.1.2', ':mysql-connector-java-5.1.44-binv3', ':mysql-connector-java-5.1.41-bin'

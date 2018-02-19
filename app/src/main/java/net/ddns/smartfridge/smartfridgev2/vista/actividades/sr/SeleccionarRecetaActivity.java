@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SeleccionarRecetaActivity extends AppCompatActivity {
-    private ArrayList<Receta> recetas;//Para almacenar todas las recetas de la bbdd
+/*    private ArrayList<Receta> recetas;//Para almacenar todas las recetas de la bbdd
     private MySQLHelper myHelper;//Para acceder a la bbdd
 
     @Override
@@ -53,5 +53,5 @@ public class SeleccionarRecetaActivity extends AppCompatActivity {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
         }
-    }
+    }*/
 }

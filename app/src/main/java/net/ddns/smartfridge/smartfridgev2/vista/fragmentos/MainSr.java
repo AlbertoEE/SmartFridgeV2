@@ -42,7 +42,6 @@ public class MainSr extends Fragment {
 
             }
         });
-
         return view;
     }
 }

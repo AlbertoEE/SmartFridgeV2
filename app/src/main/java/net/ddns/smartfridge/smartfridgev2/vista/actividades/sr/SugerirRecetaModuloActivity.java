@@ -13,6 +13,10 @@ public class SugerirRecetaModuloActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugerir_receta);
+        com.getbase.floatingactionbutton.FloatingActionButton botonFiltros = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.filtros);
+        com.getbase.floatingactionbutton.FloatingActionButton botonAleatorio = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.aleatorio);
+        com.getbase.floatingactionbutton.FloatingActionButton botonMiNevera = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.miNevera);
+
         Intent intent = getIntent();
     }
 

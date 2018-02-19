@@ -105,6 +105,7 @@ public class TodasListasActivity extends AppCompatActivity {
                 } else {
                     intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
                     intent.putExtra("ListaProductos", adapter.getLista(position));
+                    adapter.notifyDataSetChanged();
                     startActivity(intent);
                 }
             }

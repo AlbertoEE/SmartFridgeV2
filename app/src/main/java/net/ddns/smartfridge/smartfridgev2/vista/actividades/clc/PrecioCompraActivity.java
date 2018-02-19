@@ -19,6 +19,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 import java.math.BigDecimal;
 import java.sql.Array;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PrecioCompraActivity extends AppCompatActivity {
@@ -147,15 +148,17 @@ public class PrecioCompraActivity extends AppCompatActivity {
             }
         });
 
+        DecimalFormat f = new DecimalFormat("##.00");
+
         tvCarrefour = findViewById(R.id.tvCar);
         tvAlcampo = findViewById(R.id.tvAlc);
         tvHipercor = findViewById(R.id.tvHip);
         tvMercadona = findViewById(R.id.tvMer);
 
-        tvCarrefour.setText(String.valueOf(totales.get(0)));
-        tvAlcampo.setText(String.valueOf(totales.get(1)));
-        tvHipercor.setText(String.valueOf(totales.get(2)));
-        tvMercadona.setText(String.valueOf(totales.get(3)));
+        tvCarrefour.setText(f.format(totales.get(0)));
+        tvAlcampo.setText(f.format(totales.get(1)));
+        tvHipercor.setText(f.format(totales.get(2)));
+        tvMercadona.setText(f.format(totales.get(3)));
     }
 
     //Creamos la consulta a la bbdd

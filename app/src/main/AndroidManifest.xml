@@ -67,7 +67,11 @@
         <activity android:name=".vista.actividades.clc.DetalleListaExternaActivity" />
         <activity android:name=".vista.actividades.clc.PrecioCompraActivity" />
         <activity android:name=".vista.actividades.sr.SeleccionarRecetaActivity" />
-        <activity android:name=".vista.actividades.clc.PrecioCompraProductosActivity"></activity>
+        <activity android:name=".vista.actividades.clc.PrecioCompraProductosActivity" />
+
+        <service
+            android:name=".modelo.servicios.RecetasIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

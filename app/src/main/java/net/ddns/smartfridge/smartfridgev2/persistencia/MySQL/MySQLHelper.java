@@ -12,6 +12,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
@@ -39,12 +40,14 @@ public class MySQLHelper {
     private static final String TABLA_INGREDIENTES = "INGREDIENTES";//Nombre de la tabla con los datos de todos los alimentos
     private ArrayList<Ingrediente> alimentosCategoria;//Para almacenar los alimentos recogidos de la bbdd según su categoría
     private String sentencia;//Para recoger las sentcias sql de acceso a la bbdd
-    //private Alimento alimento;//Para construir un objeto a partir de los datos de la bbdd
+    private Receta receta;//Para construir un objeto a partir de los datos de la bbdd
     private Blob blob;//Para almacenar la imagne de la bbdd
     private Bitmap imagen;//Para almacenar la imagen de la bbdd;
     private Ingrediente alimentoExterno;//Para recoger los datos de la bbdd
     private ArrayList<Precio> precios;//Para meter todos los precios de una lista de la compra
     private Precio precio;//Construimos el objeto a partir de los datos de la bbdd
+    private ArrayList<Receta> recetas;//Para almacenar objetos de tipo receta
+
 
     /**
      * Abre la conexión con la BBDD
@@ -120,7 +123,7 @@ public class MySQLHelper {
             String nombre = nombres.get(i).getNombreElemento();
             //Sacamos todos los datos de la bbdd
             sentencia = "SELECT " + superm + " FROM INGREDIENTES WHERE UPPER(nombre) = \'" + nombre + "\';";
-            Log.d("precio", "sentencia: " + sentencia);
+            //Log.d("precio", "sentencia: " + sentencia);
             try {
                 st = (Statement) conexion.createStatement();
                 rs = st.executeQuery(sentencia);
@@ -136,6 +139,30 @@ public class MySQLHelper {
         }
         Log.d("precio", "longitud tras hacer la consulta: " + precios.size());
         return precios;
+    }
+
+    //Método para recoger todas las recetas de la bbdd
+    public ArrayList<Receta> recogerRecetas(){
+        recetas = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT * FROM RECETAS;";
+        //Log.d("sentencia", "sentencia: " + sentencia);
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                        rs.getInt(5), rs.getInt(6));
+                recetas.add(receta);
+                //Log.d("receta", "receta: " + receta.getTituloReceta());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return recetas;
     }
 }
 

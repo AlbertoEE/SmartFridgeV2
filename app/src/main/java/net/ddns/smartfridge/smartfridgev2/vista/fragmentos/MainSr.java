@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class MainSr extends Fragment {
     private RecetasIntentService service;
     private ArrayList<Receta> recetas;
     private static final int REQUEST_FILTRO = 506;
-
+    private MainSr mainSr;
     public MainSr() {
         // Required empty public constructor
     }
@@ -41,7 +42,9 @@ public class MainSr extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_sr, container, false);
         service = new RecetasIntentService();
-        service.setMainSr(this);
+        mainSr = this;
+        Log.d("JOLAS", "onCreateView: " + mainSr);
+        service.setMainSr(mainSr);
         getContext().startService(new Intent(getContext(), RecetasIntentService.class));
         recyclerView = (ParallaxRecyclerView) view.findViewById(R.id.rvRecetas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,6 +76,7 @@ public class MainSr extends Fragment {
     public void crearAdapter(ArrayList<Receta> recetas){
         this.recetas = recetas;
         adapter = new CustomRecyclerViewAdapterRecetas(recetas, getActivity());
+        Log.d("JOLAS", "crearAdapter: ");
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

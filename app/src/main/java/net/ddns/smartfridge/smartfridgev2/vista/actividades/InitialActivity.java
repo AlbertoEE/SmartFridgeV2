@@ -26,7 +26,7 @@ public class InitialActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private Intent intentServicio;//Para iniciar el IntentService de caducidad y escasez
-    private Intent intentRecetas;//Para iniciar el IntentService de recetas
+    //private Intent intentRecetas;//Para iniciar el IntentService de recetas
     private static final String NOMBRE_SERVICIO= "net.ddns.smartfridge.smartfridgev2.ComprobarCaducidadIntentService";
     private static SharedPreferences sp;//Para recoger el SP de la app
 
@@ -86,8 +86,8 @@ public class InitialActivity extends AppCompatActivity {
             //Si no está activo, lo iniciamos
             intentServicio = new Intent(this,ComprobarCaducidadIntentService.class); //serv de tipo Intent
             this.startService(intentServicio); //ctx de tipo Context
-            intentRecetas = new Intent(this, RecetasIntentService.class);//serv de tipo Intent
-            this.startService(intentRecetas);//ctx de tipo Context
+            //intentRecetas = new Intent(this, RecetasIntentService.class);//serv de tipo Intent
+            //this.startService(intentRecetas);//ctx de tipo Context
             Log.d("servicio", "Arranca el servicio");
         } else {
             Log.d("servicio", "El servicio ya está ejecutándose!!!");

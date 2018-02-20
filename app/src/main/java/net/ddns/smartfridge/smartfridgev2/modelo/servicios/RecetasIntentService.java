@@ -15,16 +15,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class RecetasIntentService extends IntentService {
+public class RecetasIntentService extends IntentService{
     private ArrayList<Receta> recetas;//Para almacenar todas las recetas de la bbdd
     private MySQLHelper myHelper;//Para acceder a la bbdd
-    private static final long MINUTO=60000;//Milisegundos que hay en 1 minuto
+    private static final long MINUTO = 6000;//Milisegundos que hay en 1 minuto
     private static final int DELAY = 1000;//Delay usado para arrancar el service
     private MainSr mainSr;
 
     public RecetasIntentService() {
         super("RecetasIntentService");
-        recetas= new ArrayList<>();
+        recetas = new ArrayList<>();
         myHelper = new MySQLHelper();
     }
 
@@ -38,7 +38,11 @@ public class RecetasIntentService extends IntentService {
                     myHelper.abrirConexion();
                     //Recogemos las recetas una a una
                     recetas = myHelper.recogerRecetas();
+                    Log.d("PARALLAX", "run: " + recetas);
+
                     mainSr.crearAdapter(recetas);
+                    Log.d("PARALLAX", "run: ");
+
                 } catch (SQLException e) {
                     Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
                 } catch (ClassNotFoundException e) {
@@ -49,20 +53,21 @@ public class RecetasIntentService extends IntentService {
                 } catch (SQLException e) {
                     Log.d("SQL", "Error al cerrar la bbdd");
                 }
-                for(int i = 0;i<recetas.size(); i++){
+                for (int i = 0; i < recetas.size(); i++) {
                     Log.d("intentService", "Receta en intentService: " + recetas.get(i).getTituloReceta());
                 }
             }
         };
         Timer timer = new Timer();
-        timer.schedule(timerTask,DELAY,MINUTO);
+        timer.schedule(timerTask, DELAY, MINUTO);
     }
 
-    public ArrayList<Receta> getRecetas(){
+    public ArrayList<Receta> getRecetas() {
         return this.recetas;
     }
 
-    public void setMainSr(MainSr mainSr){
+    public void setMainSr(MainSr mainSr) {
+        Log.d("PARALLAX", "setMainSr: " + mainSr);
         this.mainSr = mainSr;
     }
 }

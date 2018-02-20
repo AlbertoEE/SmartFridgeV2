@@ -25,9 +25,9 @@ public class MainSr extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_sugerir_receta, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_sr, container, false);
 
-        view.findViewById(R.id.bSeleccionarRectea).setOnClickListener(new View.OnClickListener() {
+        /*view.findViewById(R.id.bSeleccionarRectea).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Abrirmos el intent
@@ -41,7 +41,7 @@ public class MainSr extends Fragment {
             public void onClick(View view) {
 
             }
-        });
+        });*/
         return view;
     }
 }

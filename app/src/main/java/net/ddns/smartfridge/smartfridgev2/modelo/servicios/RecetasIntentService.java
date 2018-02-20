@@ -54,5 +54,9 @@ public class RecetasIntentService extends IntentService {
         Timer timer = new Timer();
         timer.schedule(timerTask,DELAY,MINUTO);
     }
+
+    public ArrayList<Receta> getRecetas(){
+        return this.recetas;
+    }
 }
 

@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.SeleccionarRecetaActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainSr extends Fragment {
-
+    private Intent i;//Intent usado para abrir otros activitys
 
     public MainSr() {
         // Required empty public constructor
@@ -26,6 +26,15 @@ public class MainSr extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_sr, container, false);
+        com.getbase.floatingactionbutton.FloatingActionButton botonFiltro = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.filtros);
+
+        botonFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), FiltroRecetaActivity.class);
+                startActivity(i);
+            }
+        });
 
         /*view.findViewById(R.id.bSeleccionarRectea).setOnClickListener(new View.OnClickListener() {
             @Override

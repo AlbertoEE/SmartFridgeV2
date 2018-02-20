@@ -1,5 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 
+import android.graphics.Bitmap;
+
 /**
  * Clase que representa una receta de la bbdd
  */
@@ -11,14 +13,16 @@ public class Receta {
     private int tipoReceta;//Clasificación de la receta por categoría de alimento
     private int tiempoReceta;//Clasificación de la receta por el tiempo de preparación
     private int dificultadReceta;//Clasificación de la receta en función de la dificultad de elaboración
+    private Bitmap imagenReceta;//Representa la imagen de la receta
 
-    public Receta(int idReceta, String tituloReceta, String descripcion, int tipoReceta, int tiempoReceta, int dificultadReceta) {
+    public Receta(int idReceta, String tituloReceta, String descripcion, int tipoReceta, int tiempoReceta, int dificultadReceta, Bitmap imagenReceta) {
         this.idReceta = idReceta;
         this.tituloReceta = tituloReceta;
         this.descripcion = descripcion;
         this.tipoReceta = tipoReceta;
         this.tiempoReceta = tiempoReceta;
         this.dificultadReceta = dificultadReceta;
+        this.imagenReceta = imagenReceta;
     }
 
     public int getIdReceta() {
@@ -67,5 +71,13 @@ public class Receta {
 
     public void setDificultadReceta(int dificultadReceta) {
         this.dificultadReceta = dificultadReceta;
+    }
+
+    public Bitmap getImagenReceta() {
+        return imagenReceta;
+    }
+
+    public void setImagenReceta(Bitmap imagenReceta) {
+        this.imagenReceta = imagenReceta;
     }
 }

@@ -59,11 +59,14 @@ dependencies {
     implementation project(':mysql-connector-java-5.1.44-binv3')
     //Blur
     compile 'jp.wasabeef:blurry:2.1.1'
-    //Bubble-Notification
-
+    //Radio-button
+    compile 'me.omidh:liquidradiobutton:1.0.01'
     //Parallax RecyclerView
     compile 'com.yayandroid:ParallaxRecyclerView:1.1'
 }
+
+
+
 
 
 

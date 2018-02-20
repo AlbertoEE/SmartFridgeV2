@@ -22,7 +22,7 @@ public class SugerirRecetaModuloActivity extends AppCompatActivity {
 
     public void abrirSeleccionar(View v){
         //Abrirmos el intent
-        Intent i = new Intent(this, SeleccionarRecetaActivity.class);
+        Intent i = new Intent(this, FiltroRecetaActivity.class);
         startActivity(i);
     }
 }

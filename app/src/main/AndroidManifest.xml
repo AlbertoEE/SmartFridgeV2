@@ -66,7 +66,7 @@
         <activity android:name=".vista.actividades.clc.CategoriaActivity" />
         <activity android:name=".vista.actividades.clc.DetalleListaExternaActivity" />
         <activity android:name=".vista.actividades.clc.PrecioCompraActivity" />
-        <activity android:name=".vista.actividades.sr.SeleccionarRecetaActivity" />
+        <activity android:name=".vista.actividades.sr.FiltroRecetaActivity" />
         <activity android:name=".vista.actividades.clc.PrecioCompraProductosActivity" />
 
         <service

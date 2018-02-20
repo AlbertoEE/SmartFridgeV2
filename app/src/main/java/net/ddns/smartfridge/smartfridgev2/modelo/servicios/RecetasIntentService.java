@@ -22,11 +22,10 @@ public class RecetasIntentService extends IntentService {
     private static final int DELAY = 1000;//Delay usado para arrancar el service
     private MainSr mainSr;
 
-    public RecetasIntentService(MainSr mainSr) {
+    public RecetasIntentService() {
         super("RecetasIntentService");
         recetas= new ArrayList<>();
         myHelper = new MySQLHelper();
-        this.mainSr = mainSr;
     }
 
     @Override
@@ -39,6 +38,7 @@ public class RecetasIntentService extends IntentService {
                     myHelper.abrirConexion();
                     //Recogemos las recetas una a una
                     recetas = myHelper.recogerRecetas();
+                    mainSr.crearAdapter(recetas);
                 } catch (SQLException e) {
                     Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
                 } catch (ClassNotFoundException e) {
@@ -60,6 +60,10 @@ public class RecetasIntentService extends IntentService {
 
     public ArrayList<Receta> getRecetas(){
         return this.recetas;
+    }
+
+    public void setMainSr(MainSr mainSr){
+        this.mainSr = mainSr;
     }
 }
 

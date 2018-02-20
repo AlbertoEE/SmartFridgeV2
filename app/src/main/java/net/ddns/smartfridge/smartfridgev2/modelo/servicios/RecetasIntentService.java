@@ -7,6 +7,7 @@ import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
+import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainSr;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ public class RecetasIntentService extends IntentService {
     private MySQLHelper myHelper;//Para acceder a la bbdd
     private static final long MINUTO=60000;//Milisegundos que hay en 1 minuto
     private static final int DELAY = 1000;//Delay usado para arrancar el service
+    private MainSr mainSr;
 
-    public RecetasIntentService() {
+    public RecetasIntentService(MainSr mainSr) {
         super("RecetasIntentService");
         recetas= new ArrayList<>();
         myHelper = new MySQLHelper();
+        this.mainSr = mainSr;
     }
 
     @Override

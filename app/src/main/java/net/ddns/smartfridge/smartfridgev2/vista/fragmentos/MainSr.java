@@ -16,6 +16,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActiv
  */
 public class MainSr extends Fragment {
     private Intent i;//Intent usado para abrir otros activitys
+    private static final int REQUEST_FILTRO = 504;
 
     public MainSr() {
         // Required empty public constructor
@@ -27,12 +28,13 @@ public class MainSr extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_sr, container, false);
         com.getbase.floatingactionbutton.FloatingActionButton botonFiltro = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.filtros);
-
+        com.getbase.floatingactionbutton.FloatingActionButton botonAleatorio = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.aleatorio);
+        com.getbase.floatingactionbutton.FloatingActionButton botonNevera = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.miNevera);
         botonFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FiltroRecetaActivity.class);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_FILTRO);
             }
         });
 

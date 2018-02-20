@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/*
 public class RecetasIntentService extends IntentService {
     private ArrayList<Receta> recetas;//Para almacenar todas las recetas de la bbdd
     private MySQLHelper myHelper;//Para acceder a la bbdd
@@ -38,7 +38,7 @@ public class RecetasIntentService extends IntentService {
                     myHelper.abrirConexion();
                     //Recogemos las recetas una a una
                     recetas = myHelper.recogerRecetas();
-                    mainSr.crearAdapter(recetas);
+                    //mainSr.crearAdapter(recetas);
                 } catch (SQLException e) {
                     Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
                 } catch (ClassNotFoundException e) {
@@ -65,5 +65,5 @@ public class RecetasIntentService extends IntentService {
     public void setMainSr(MainSr mainSr){
         this.mainSr = mainSr;
     }
-}
+}*/
 

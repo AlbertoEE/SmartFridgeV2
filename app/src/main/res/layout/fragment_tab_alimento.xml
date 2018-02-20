@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,10 +10,43 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvQt"
+            android:layout_width="125dp"
+            android:layout_height="39dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Que tenga"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintStart_toEndOf="@+id/radioGroup"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.105" />
+
+        <TextView
+            android:id="@+id/tvQNt"
+            android:layout_width="175dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="364dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Que no tenga"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.228"
+            app:layout_constraintStart_toEndOf="@+id/radioGroup" />
 
         <RadioGroup
-            android:layout_width="249dp"
+            android:id="@+id/radioGroup"
+            android:layout_width="60dp"
             android:layout_height="118dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -20,20 +54,21 @@
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.078" >
+            app:layout_constraintVertical_bias="0.084">
 
             <me.omidh.liquidradiobutton.LiquidRadioButton
                 android:id="@+id/rbTenga"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
+                android:layout_height="57dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="50dp"
                 android:text="Que tenga"
-                app:lrb_checkedColor="@android:color/holo_green_dark"
+                android:textAlignment="center"
+                app:lrb_checkedColor="@color/colorAccent"
                 app:lrb_explodeCount="3"
                 app:lrb_inAnimDuration="500"
                 app:lrb_innerCircleRadius="15dp"
@@ -41,20 +76,19 @@
                 app:lrb_outterPadding="8dp"
                 app:lrb_strokeRadius="23dp"
                 app:lrb_strokeWidth="1dp"
-                app:lrb_unCheckedColor="@android:color/holo_red_light"
+                app:lrb_unCheckedColor="@color/colorPrimary"
                 tools:layout_editor_absoluteX="71dp"
-                tools:layout_editor_absoluteY="38dp"
-                tools:text="Que tenga" />
+                tools:layout_editor_absoluteY="38dp" />
 
             <me.omidh.liquidradiobutton.LiquidRadioButton
                 android:id="@+id/rbNoTenga"
-                android:layout_width="match_parent"
+                android:layout_width="61dp"
                 android:layout_height="53dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="50dp"
                 android:text="Que no tenga"
-                app:lrb_checkedColor="@android:color/holo_green_dark"
+                app:lrb_checkedColor="@color/colorAccent"
                 app:lrb_explodeCount="3"
                 app:lrb_inAnimDuration="500"
                 app:lrb_innerCircleRadius="15dp"
@@ -62,10 +96,10 @@
                 app:lrb_outterPadding="8dp"
                 app:lrb_strokeRadius="23dp"
                 app:lrb_strokeWidth="1dp"
-                app:lrb_unCheckedColor="@android:color/holo_red_light"
+                app:lrb_unCheckedColor="@color/colorPrimary"
                 tools:layout_editor_absoluteX="71dp"
-                tools:layout_editor_absoluteY="38dp"
-                tools:text="Que no tenga" />
+                tools:layout_editor_absoluteY="38dp" />
+
         </RadioGroup>
 
     </android.support.constraint.ConstraintLayout>

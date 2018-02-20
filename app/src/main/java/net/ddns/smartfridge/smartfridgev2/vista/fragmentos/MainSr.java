@@ -17,6 +17,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRecetas;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.RecetasIntentService;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActivity;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class MainSr extends Fragment {
     private CustomRecyclerViewAdapterRecetas adapter;
     private RecetasIntentService service;
     private ArrayList<Receta> recetas;
+    private static final int REQUEST_FILTRO = 506;
 
     public MainSr() {
         // Required empty public constructor
@@ -43,23 +45,28 @@ public class MainSr extends Fragment {
         getContext().startService(new Intent(getContext(), RecetasIntentService.class));
         recyclerView = (ParallaxRecyclerView) view.findViewById(R.id.rvRecetas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        /*view.findViewById(R.id.bSeleccionarRectea).setOnClickListener(new View.OnClickListener() {
+        com.getbase.floatingactionbutton.FloatingActionButton botonFiltro = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.filtros);
+        com.getbase.floatingactionbutton.FloatingActionButton botonAleatorio = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.aleatorio);
+        com.getbase.floatingactionbutton.FloatingActionButton botonNevera = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.miNevera);
+        botonFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //Abrirmos el intent
-                Intent i = new Intent(getActivity(), SeleccionarRecetaActivity.class);
-                startActivity(i);
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), FiltroRecetaActivity.class);
+                startActivityForResult(i, REQUEST_FILTRO);
             }
         });
-
-        view.findViewById(R.id.bSugerirReceta).setOnClickListener(new View.OnClickListener() {
+        botonAleatorio.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
             }
-        });*/
+        });
+        botonNevera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return view;
     }
 

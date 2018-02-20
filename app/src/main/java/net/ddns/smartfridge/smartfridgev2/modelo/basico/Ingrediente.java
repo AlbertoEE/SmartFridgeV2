@@ -25,6 +25,11 @@ public class Ingrediente {
         this.imagenIngrediente = imagenIngrediente;
     }
 
+    public Ingrediente(int idIngrediente, String nombreIngrediente) {
+        this.idIngrediente = idIngrediente;
+        this.nombreIngrediente = nombreIngrediente;
+    }
+
     public int getIdIngrediente() {
         return idIngrediente;
     }

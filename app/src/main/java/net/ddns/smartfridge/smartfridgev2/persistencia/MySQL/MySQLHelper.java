@@ -227,17 +227,19 @@ public class MySQLHelper {
        // for (int i=0; i<numero; i++){
             if (numero==1){
                 Log.d("check", "solo hay un elemento en el array");
-                sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";
+                sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                        "WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";
                 Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
             } else if (numero>1){
                 Log.d("check", "entra por el else por que hay: " + numero);
                 String ing="";
                 for(int j =0; j<numero-1; j++){
-                    ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + " AND id_ingrediente = ";
+                    ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + ", ";
                     Log.d("check", "valor de la sentencia: " + ing);
                 }
-                sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = " + ing + aIngrediente.get(numero-1).getIdIngrediente()
-                + ");";
+                sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                        "WHERE id_ingrediente IN (" + ing + aIngrediente.get(numero-1).getIdIngrediente() + ")" +
+                        " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";
                 Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
             }
       //  }
@@ -249,16 +251,19 @@ public class MySQLHelper {
     //    for (Ingrediente i : aIngrediente){
         if (numero==1){
             Log.d("check", "solo hay un elemento en el array");
-            sentencia = "SELECT id_receta FROM INGREDIENTES_RECETAS WHERE NOT id_ingrediente = " + aIngrediente.get(0).getIdIngrediente();
+            sentencia = "SELECT * FROM RECETAS WHERE id_receta NOT IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                    "WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";
             Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
         } else if (numero>1){
             Log.d("check", "entra por el else por que hay: " + numero);
             String ing="";
             for(int j =0; j<numero-1; j++){
-                ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + " AND NOT id_ingrediente = ";
+                ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + ", ";
                 Log.d("check", "valor de la sentencia: " + ing);
             }
-            sentencia = "SELECT id_receta FROM INGREDIENTES_RECETAS WHERE NOT id_ingrediente = " + ing + aIngrediente.get(numero-1).getIdIngrediente();
+            sentencia = "SELECT * FROM RECETAS WHERE id_receta NOT IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                    "WHERE id_ingrediente IN (" + ing + aIngrediente.get(numero-1).getIdIngrediente() + ")" +
+                    " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";
             Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
         }
       //  }

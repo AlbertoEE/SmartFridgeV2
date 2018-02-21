@@ -102,7 +102,10 @@ public class TabAlimento extends Fragment {
                     //Llamamos al asyncTask pasándole la select correspondiente
                     new CogerRecetasFiltro().execute(sentenciaSeleccion);
                 }
-
+                Intent i = new Intent();
+                i.putExtra("filtro", recetas);
+                getActivity().setResult(getActivity().RESULT_OK, i);
+                getActivity().finish();
                 /*Miramos si está seleccionado el radiobutton
                 boolean checked = ((RadioButton) view).isChecked();
                 ingredientesSeleccionados = fake();
@@ -129,7 +132,7 @@ public class TabAlimento extends Fragment {
         });
         return v;
     }
-    //Método para realizar la consulta a la bbdd a partir de los datos recogidos
+    /*Método para realizar la consulta a la bbdd a partir de los datos recogidos
     public void comprobarRBT(View view) {
         //Miramos si está seleccionado el radiobutton
         boolean checked = ((me.omidh.liquidradiobutton.LiquidRadioButton) view).isChecked();
@@ -153,7 +156,7 @@ public class TabAlimento extends Fragment {
                     new CogerRecetasFiltro().execute(sentencia);
                     break;
         }
-    }
+    }*/
 
     private String[] generarSugerencias(ArrayList<Ingrediente> ing){
         int count = ing.size();

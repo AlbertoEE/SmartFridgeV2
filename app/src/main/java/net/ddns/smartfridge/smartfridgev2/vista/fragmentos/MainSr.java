@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -119,6 +120,16 @@ public class MainSr extends Fragment {
                 mainSr.crearAdapter(recetas);
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==REQUEST_FILTRO){
+            if(resultCode == Activity.RESULT_OK){
+                adapter.filtrarArray((ArrayList<Receta>)data.getSerializableExtra("filtro"));
             }
         }
     }

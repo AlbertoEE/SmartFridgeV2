@@ -86,7 +86,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
             tvTiempo = itemView.findViewById(R.id.tvTiempo);
             tvMinutos = itemView.findViewById(R.id.tvMinutos);
             pivFoto = itemView.findViewById(R.id.ivReceta);
-            pivFoto.setParallaxRatio(0.2f);
+            pivFoto.setParallaxRatio(2.6f);
         }
     }
 }

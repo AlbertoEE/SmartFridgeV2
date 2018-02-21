@@ -52,7 +52,7 @@ public class MainSr extends Fragment {
         //getContext().startService(new Intent(getContext(), RecetasIntentService.class));
         recyclerView = (ParallaxRecyclerView) view.findViewById(R.id.rvRecetas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        new mostrarRecetas().execute();
+        new mostrarRecetas(this).execute();
         com.getbase.floatingactionbutton.FloatingActionButton botonFiltro = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.filtros);
         com.getbase.floatingactionbutton.FloatingActionButton botonAleatorio = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.aleatorio);
         com.getbase.floatingactionbutton.FloatingActionButton botonNevera = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.miNevera);
@@ -87,6 +87,10 @@ public class MainSr extends Fragment {
     }
 
     public class mostrarRecetas extends AsyncTask<Void, Void, ArrayList<Receta>>{
+        private MainSr mainSr;
+        public mostrarRecetas(MainSr mainSr){
+            this.mainSr = mainSr;
+        }
 
         @Override
         protected ArrayList<Receta> doInBackground(Void... voids) {
@@ -112,6 +116,7 @@ public class MainSr extends Fragment {
             super.onPostExecute(recetas);
             try {
                 myHelper.cerrarConexion();
+                mainSr.crearAdapter(recetas);
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }

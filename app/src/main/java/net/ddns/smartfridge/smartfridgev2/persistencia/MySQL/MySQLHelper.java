@@ -191,5 +191,66 @@ public class MySQLHelper {
         }
         return alimentosCategoria;
     }
+
+    //Método para recoger las recetas en función de si tienen o no algún ingrediente
+    public ArrayList<Receta> filtrarReceta(String sentencia){
+        recetas = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                blob = rs.getBlob(7);
+                byte[] data = blob.getBytes(1, (int)blob.length());
+                ByteArrayInputStream bais = new ByteArrayInputStream(data);
+                imagen = BitmapFactory.decodeStream(bais);
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                        rs.getInt(5), rs.getInt(6), imagen);
+                recetas.add(receta);
+                //Log.d("receta", "receta: " + receta.getTituloReceta());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return recetas;
+    }
+    //Método para montar la sentencia SQL para la búsqueda en la bbdd
+    public String montarSentenciaSi(ArrayList<Ingrediente> aIngrediente){
+        int numero = aIngrediente.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
+        for (Ingrediente i : aIngrediente){
+            if (numero==1){
+                sentencia = "SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = " + i.getIdIngrediente();
+                Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
+            } else if (numero>1){
+                String ing="";
+                for(int j =0; j<numero-1; j++){
+                    ing += String.valueOf(i.getIdIngrediente()) + " AND id_ingrediente = ";
+                }
+                sentencia = "SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = " + ing + i.getIdIngrediente();
+                Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
+            }
+        }
+        return sentencia;
+    }
+    //Método para montar la sentencia SQL para la búsqueda en la bbdd
+    public String montarSentenciaNo(ArrayList<Ingrediente> aIngrediente){
+        int numero = aIngrediente.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
+        for (Ingrediente i : aIngrediente){
+            if (numero==1){
+                sentencia = "SELECT id_receta FROM INGREDIENTES_RECETAS WHERE NOT id_ingrediente = " + i.getIdIngrediente();
+                Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
+            } else if (numero>1){
+                String ing="";
+                for(int j =0; j<numero-1; j++){
+                    ing += String.valueOf(i.getIdIngrediente()) + " AND NOT id_ingrediente = ";
+                }
+                sentencia = "SELECT id_receta FROM INGREDIENTES_RECETAS WHERE NOT id_ingrediente = " + ing + i.getIdIngrediente();
+                Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
+            }
+        }
+        return sentencia;
+    }
 }
 

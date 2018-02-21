@@ -101,9 +101,9 @@ public class MainSr extends Fragment {
             } catch (ClassNotFoundException e) {
                 Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
             }
-        /*    for(int i = 0;i<recetas.size(); i++){
+            for(int i = 0;i<recetas.size(); i++){
                 Log.d("intentService", "Receta en intentService: " + recetas.get(i).getTituloReceta());
-            }*/
+            }
             return recetas;
         }
 

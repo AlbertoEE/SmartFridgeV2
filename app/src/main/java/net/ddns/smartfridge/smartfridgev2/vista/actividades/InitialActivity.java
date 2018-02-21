@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
-import net.ddns.smartfridge.smartfridgev2.modelo.servicios.RecetasIntentService;
+//import net.ddns.smartfridge.smartfridgev2.modelo.servicios.RecetasIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainClc;

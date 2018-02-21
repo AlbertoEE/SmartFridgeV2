@@ -168,5 +168,28 @@ public class MySQLHelper {
         }
         return recetas;
     }
+
+    //Método para seleccionar todos los ingredientes
+    public ArrayList<Ingrediente> recogerIngredientes(){
+        alimentosCategoria = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT id_ingrediente, nombre FROM INGREDIENTES;";
+        Log.d("sentencia", "sentencia: " + sentencia);
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2));
+                alimentosCategoria.add(alimentoExterno);
+                Log.d("receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return alimentosCategoria;
+    }
 }
 

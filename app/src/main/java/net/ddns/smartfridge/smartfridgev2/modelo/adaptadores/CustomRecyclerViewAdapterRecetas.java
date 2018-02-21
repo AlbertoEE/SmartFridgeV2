@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.yayandroid.parallaxrecyclerview.ParallaxImageView;
 import com.yayandroid.parallaxrecyclerview.ParallaxRecyclerView;
 import com.yayandroid.parallaxrecyclerview.ParallaxViewHolder;
 
@@ -42,8 +43,8 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
 
     @Override
     public void onBindViewHolder(ViewHolderRecetas holder, int position) {
-        holder.tvNombreReceta.setText(recetas.get(position).getTituloReceta());
-        holder.tvTiempo.setText(recetas.get(position).getTiempoReceta());
+        holder.tvNombreReceta.setText(String.valueOf(recetas.get(position).getTituloReceta()));
+        holder.tvTiempo.setText(String.valueOf(recetas.get(position).getTiempoReceta()));
         Bitmap bitmap = (recetas.get(position).getImagenReceta());
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -73,6 +74,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
         public TextView tvNombreReceta;
         public TextView tvTiempo;
         public TextView tvMinutos;
+        public ParallaxImageView pivFoto;
         @Override
         public int getParallaxImageId() {
             return R.id.ivReceta;
@@ -83,6 +85,8 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
             tvNombreReceta = itemView.findViewById(R.id.tvNombreReceta);
             tvTiempo = itemView.findViewById(R.id.tvTiempo);
             tvMinutos = itemView.findViewById(R.id.tvMinutos);
+            pivFoto = itemView.findViewById(R.id.ivReceta);
+            pivFoto.setParallaxRatio(0.2f);
         }
     }
 }

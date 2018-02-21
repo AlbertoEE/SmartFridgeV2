@@ -70,6 +70,11 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
         return recetas.size();
     }
 
+    public void filtrarArray(ArrayList<Receta> recetasFiltradas){
+        this.recetas = recetasFiltradas;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolderRecetas extends ParallaxViewHolder {
         public TextView tvNombreReceta;
         public TextView tvTiempo;

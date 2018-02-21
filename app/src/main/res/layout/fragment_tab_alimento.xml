@@ -17,32 +17,29 @@
             android:layout_width="125dp"
             android:layout_height="39dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="Que tenga"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
             app:layout_constraintStart_toEndOf="@+id/radioGroup"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.105" />
+            app:layout_constraintTop_toTopOf="@+id/radioGroup"
+            app:layout_constraintVertical_bias="0.047" />
 
         <TextView
             android:id="@+id/tvQNt"
             android:layout_width="175dp"
             android:layout_height="33dp"
-            android:layout_marginBottom="364dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
             android:text="Que no tenga"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.228"
-            app:layout_constraintStart_toEndOf="@+id/radioGroup" />
+            app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+            app:layout_constraintStart_toEndOf="@+id/radioGroup"
+            app:layout_constraintTop_toTopOf="@+id/radioGroup"
+            app:layout_constraintVertical_bias="0.942" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -54,10 +51,10 @@
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintHorizontal_bias="0.214"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.084">
+            app:layout_constraintTop_toBottomOf="@+id/acAlimentosReceta"
+            app:layout_constraintVertical_bias="0.016">
 
             <me.omidh.liquidradiobutton.LiquidRadioButton
                 android:id="@+id/rbTenga"
@@ -106,14 +103,16 @@
             android:id="@+id/acAlimentosReceta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="152dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="AutoCompleteTextView"
-            app:layout_constraintBottom_toTopOf="@+id/ibBuscar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050000012" />
 
         <ImageButton
             android:id="@+id/ibBuscar"

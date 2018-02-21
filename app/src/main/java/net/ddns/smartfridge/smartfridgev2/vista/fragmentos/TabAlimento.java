@@ -121,7 +121,7 @@ public class TabAlimento extends Fragment {
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
-            generarSugerencias(ingredientes);
+            String [] nombres = generarSugerencias(ingredientes);
         }
     }
 
@@ -134,12 +134,7 @@ public class TabAlimento extends Fragment {
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
                 //Recogemos todas las recetas
-                if(strings[0].equals("SI")){
-                    //sentencia = montarSentenciaSi();
-                } else if (strings[0].equals("NO")){
-                    //sentencia = montarSentenciaNo();
-                }
-                recetas = myHelper.filtrarReceta(sentencia);
+                recetas = myHelper.filtrarReceta(strings[0]);
             } catch (SQLException e) {
                 Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
             } catch (ClassNotFoundException e) {
@@ -162,6 +157,11 @@ public class TabAlimento extends Fragment {
         }
     }
 
-
-
+    //Metodo para simular los alimentos que ha seleccionado el usuario
+    public void fake(){
+        Ingrediente i = new Ingrediente(89, "sal");
+        Ingrediente a = new Ingrediente(94, "huevo");
+        //Ingrediente i = new Ingrediente(89, "sal");
+        //Ingrediente a = new Ingrediente(94, "huevo");
+    }
 }

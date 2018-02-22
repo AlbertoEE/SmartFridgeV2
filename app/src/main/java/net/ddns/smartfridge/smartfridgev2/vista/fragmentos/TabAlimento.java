@@ -11,28 +11,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+
 import android.widget.AutoCompleteTextView;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
+
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 
-import com.pchmn.materialchips.ChipView;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.Chip;
-import com.pchmn.materialchips.model.ChipInterface;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,10 +43,6 @@ public class TabAlimento extends Fragment {
 
     private int contador = 0;
     private ChipsInput linearLayout;
-    private ArrayList<Chip> chips;
-    private ArrayAdapter<String> adapter;
-    private String [] nombres;
-    private List<String> nombresLista;
 
     public TabAlimento() {
         // Required empty public constructor
@@ -63,12 +53,11 @@ public class TabAlimento extends Fragment {
         super.onCreate(savedInstanceState);
         myHelper = new MySQLHelper();
         ingredientesSeleccionados = new ArrayList<>();
-        nombresLista = new ArrayList<>();
         new GetAllIngredientes().execute();
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
@@ -97,42 +86,40 @@ public class TabAlimento extends Fragment {
                 }
             }
         });
+
         v.findViewById(R.id.ibBuscar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Le damos el arrayList con los datos indicados por el usuario
-                //ingredientesSeleccionados = fake();
+                ingredientesSeleccionados = fake();
                 //Log.d("check", "sentencia: " + sentenciaSeleccion);
                 //Log.d("check", "boton pulsado Búsqueda");
-                if (ingredientesSeleccionados.size() > 0 && ingredientesSeleccionados != null){
-                    if (contenga){
-                        //Log.d("check", "contenga onClick: " + contenga);
-                        //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
-                        sentenciaSeleccion = myHelper.montarSentenciaSi(ingredientesSeleccionados);
-                        Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
-                        //Llamamos al asyncTask pasándole la select correspondiente
-                        new CogerRecetasFiltro().execute(sentenciaSeleccion);
-                    } else {
-                        Log.d("check", "contenga onClick: " + contenga);
-                        //Si queremos que no tenga alimentos, montamos la select correspondiente
-                        sentenciaSeleccion = myHelper.montarSentenciaNo(ingredientesSeleccionados);
-                        Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
-                        //Llamamos al asyncTask pasándole la select correspondiente
-                        new CogerRecetasFiltro().execute(sentenciaSeleccion);
-                    }
-                    Intent i = new Intent();
-                    i.putExtra("filtro", recetas);
-                    Log.d("llll", "onClick: " + ingredientesSeleccionados.get(0).getNombreIngrediente());
-                    Log.d("llll", "onClick: " + recetas);
-                    getActivity().setResult(getActivity().RESULT_OK, i);
-                    getActivity().finish();
+                if (contenga){
+                    //Log.d("check", "contenga onClick: " + contenga);
+                    //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
+                    sentenciaSeleccion = myHelper.montarSentenciaSi(ingredientesSeleccionados);
+                    Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
+                    //Llamamos al asyncTask pasándole la select correspondiente
+                    new CogerRecetasFiltro().execute(sentenciaSeleccion);
+                } else {
+                    Log.d("check", "contenga onClick: " + contenga);
+                    //Si queremos que no tenga alimentos, montamos la select correspondiente
+                    sentenciaSeleccion = myHelper.montarSentenciaNo(ingredientesSeleccionados);
+                    Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
+                    //Llamamos al asyncTask pasándole la select correspondiente
+                    new CogerRecetasFiltro().execute(sentenciaSeleccion);
                 }
-                /*Miramos si está seleccionado el radiobutton
+                Intent i = new Intent();
+                i.putExtra("filtro", recetas);
+                getActivity().setResult(getActivity().RESULT_OK, i);
+                getActivity().finish();
+
+                //Miramos si está seleccionado el radiobutton
                 boolean checked = ((RadioButton) view).isChecked();
                 ingredientesSeleccionados = fake();
                 String alimento = act.getText().toString();
                 Log.d("autocomplete", alimento);
-                //Hacemos un case con las opciones de cada radiobutton
+                /*Hacemos un case con las opciones de cada radiobutton
                 switch(view.getId()) {
                     case R.id.rbTenga:
                         if (checked)
@@ -153,36 +140,16 @@ public class TabAlimento extends Fragment {
         });
 
         linearLayout = (ChipsInput) v.findViewById(R.id.chips_input);
-        chips = new ArrayList<>();
-
-        linearLayout.addChipsListener(new ChipsInput.ChipsListener() {
-            @Override
-            public void onChipAdded(ChipInterface chipInterface, int i) {
-                ingredientesSeleccionados.add(ingredientes.get((int)chipInterface.getId()));
-            }
-
-            @Override
-            public void onChipRemoved(ChipInterface chipInterface, int i) {
-                ingredientesSeleccionados.remove(ingredientes.get((int)chipInterface.getId()));
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence) {
-
-            }
-        });
 
         v.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nombre = act.getText().toString();
-                int index = nombresLista.indexOf(nombre);
-                Ingrediente ingrediente = ingredientes.get(index);
-                Chip chip = new Chip(index, ingrediente.getNombreIngrediente(), ingrediente.getNombreIngrediente());
-
+                Chip chip = new Chip("hola" + contador, "hola" + contador);
                 linearLayout.addChip(chip);
+                contador++;
             }
         });
+
         return v;
     }
     /*Método para realizar la consulta a la bbdd a partir de los datos recogidos
@@ -198,16 +165,16 @@ public class TabAlimento extends Fragment {
                 if (checked)
                     //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
                     sentencia = myHelper.montarSentenciaSi(ingredientesSeleccionados);
-                    //Llamamos al asyncTask pasándole la select correspondiente
-                    new CogerRecetasFiltro().execute(sentencia);
-                    break;
+                //Llamamos al asyncTask pasándole la select correspondiente
+                new CogerRecetasFiltro().execute(sentencia);
+                break;
             case R.id.rbNoTenga:
                 if (checked)
                     //Si queremos que no tenga alimentos, montamos la select correspondiente
                     sentencia = myHelper.montarSentenciaNo(ingredientesSeleccionados);
-                    //Llamamos al asyncTask pasándole la select correspondiente
-                    new CogerRecetasFiltro().execute(sentencia);
-                    break;
+                //Llamamos al asyncTask pasándole la select correspondiente
+                new CogerRecetasFiltro().execute(sentencia);
+                break;
         }
     }*/
 
@@ -221,9 +188,6 @@ public class TabAlimento extends Fragment {
         for (int i=0; i<count; i++){
             alimentos[contador] = ing.get(i).getNombreIngrediente();
             contador++;
-        }
-        for (String item : alimentos) {
-            nombresLista.add(item);
         }
         return alimentos;
     }
@@ -248,7 +212,6 @@ public class TabAlimento extends Fragment {
             }
             return ingredientes;
         }
-
         @Override
         protected void onPostExecute(ArrayList<Ingrediente> ingredientes) {
             super.onPostExecute(ingredientes);
@@ -257,9 +220,7 @@ public class TabAlimento extends Fragment {
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
-            nombres = generarSugerencias(ingredientes);
-            adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, nombres);
-            act.setAdapter(adapter);
+            String [] nombres = generarSugerencias(ingredientes);
         }
     }
 

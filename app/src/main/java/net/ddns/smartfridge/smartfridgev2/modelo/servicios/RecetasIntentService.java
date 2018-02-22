@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/*
-public class RecetasIntentService extends IntentService {
+
+public class RecetasIntentService {
+    /*
     private ArrayList<Receta> recetas;//Para almacenar todas las recetas de la bbdd
     private MySQLHelper myHelper;//Para acceder a la bbdd
     private static final long MINUTO=60000;//Milisegundos que hay en 1 minuto
@@ -66,4 +67,5 @@ public class RecetasIntentService extends IntentService {
         this.mainSr = mainSr;
     }
 }*/
+}
 

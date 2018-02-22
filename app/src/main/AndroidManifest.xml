@@ -71,7 +71,9 @@
 
         <service
             android:name=".modelo.servicios.RecetasIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".vista.actividades.sr.DetallesRecetaActivity"></activity>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  * Clase que representa una receta de la bbdd
  */
 
-public class Receta {
+public class    Receta {
     private int idReceta;//El identificador de la receta
     private String tituloReceta;//El título de la receta
     private String descripcion;//Descripción de cómo se hace la receta

@@ -5,12 +5,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterFiltroTipos;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Tipo;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
@@ -23,7 +26,8 @@ import java.util.ArrayList;
 public class TabTipo extends Fragment {
     private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
     private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
-
+    private RecyclerView recyclerView;
+    private CustomRecyclerViewAdapterFiltroTipos adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,10 @@ public class TabTipo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_tipo, container, false);
+        recyclerView = v.findViewById(R.id.rvTabTipo);
+        adapter = new CustomRecyclerViewAdapterFiltroTipos(getActivity());
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setAdapter(adapter);
         //Meter esto en la fila del adapter
      /*   Dialogos d = new Dialogos(getContext(),getActivity());
         Tipo t = new Tipo(1, "arroz");

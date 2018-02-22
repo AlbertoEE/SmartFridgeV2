@@ -676,7 +676,6 @@ public class Dialogos {
             public void onClick(DialogInterface dialog, int which) {
                 //Hacemos la consulta
                 new TabTipo.FiltrarPorTipo().execute(tipo.getId());
-                //fragment.finish();
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

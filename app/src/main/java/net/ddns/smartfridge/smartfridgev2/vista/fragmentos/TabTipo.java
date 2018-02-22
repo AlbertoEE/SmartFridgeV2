@@ -35,9 +35,9 @@ public class TabTipo extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_tipo, container, false);
         //Meter esto en la fila del adapter
-     /*   Dialogos d = new Dialogos(getContext(),getActivity());
+        Dialogos d = new Dialogos(getContext(),getActivity());
         Tipo t = new Tipo(1, "arroz");
-        d.dialogoFiltroTipo(t);*/
+        d.dialogoFiltroTipo(t);
         return v;
     }
 

@@ -26,6 +26,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActiv
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,11 +34,11 @@ import java.util.ArrayList;
 public class MainSr extends Fragment {
     private ParallaxRecyclerView recyclerView;
     private CustomRecyclerViewAdapterRecetas adapter;
-    //private RecetasIntentService service;
+    private Receta receta;
     private ArrayList<Receta> recetas;
     private static final int REQUEST_FILTRO = 506;
     private CustomDialogProgressBar customDialogProgressBar;
-    private MySQLHelper myHelper;
+    private MySQLHelper myHelper;//Para trabajar con la bbdd
 
     public MainSr() {
         // Required empty public constructor
@@ -51,6 +52,7 @@ public class MainSr extends Fragment {
         //service = new RecetasIntentService();
         //service.setMainSr(this);
         //getContext().startService(new Intent(getContext(), RecetasIntentService.class));
+        customDialogProgressBar = new CustomDialogProgressBar(getActivity());
         recyclerView = (ParallaxRecyclerView) view.findViewById(R.id.rvRecetas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         new mostrarRecetas(this).execute();
@@ -67,7 +69,8 @@ public class MainSr extends Fragment {
         botonAleatorio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Buscará una receta aleatoria
+                recetaAleatoria(recetas);
             }
         });
         botonNevera.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +94,13 @@ public class MainSr extends Fragment {
         private MainSr mainSr;
         public mostrarRecetas(MainSr mainSr){
             this.mainSr = mainSr;
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //customDialogProgressBar.showDialogCuadrado();
         }
 
         @Override
@@ -117,11 +127,14 @@ public class MainSr extends Fragment {
             super.onPostExecute(recetas);
             try {
                 myHelper.cerrarConexion();
+                customDialogProgressBar.endDialog();
                 mainSr.crearAdapter(recetas);
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
         }
+
+
     }
 
     @Override
@@ -129,8 +142,24 @@ public class MainSr extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_FILTRO){
             if(resultCode == Activity.RESULT_OK){
-                adapter.filtrarArray((ArrayList<Receta>)data.getSerializableExtra("filtro"));
+                recetas = new ArrayList<>();
+                recetas = (ArrayList<Receta>)data.getSerializableExtra("filtro");
+                adapter.filtrarArray(recetas);
             }
         }
+    }
+
+    //Método para coger una receta aleatoria de la bbdd
+    public ArrayList<Receta> recetaAleatoria(ArrayList<Receta> array){
+        //Miramos el número de elementos que tiene el array para sacar el número aleatorio
+        int longitud = array.size();
+        int posicion;//Para determinar la posición del array que ocupa el número aleatorio
+        Random r = new Random();
+        posicion = r.nextInt(longitud);
+        Log.d("random", "numero: " + posicion);
+        //Seleccionamos la receta que ha salido
+        receta = array.get(posicion);
+        Log.d("random", "receta: " + receta.getTituloReceta());
+        return recetas;
     }
 }

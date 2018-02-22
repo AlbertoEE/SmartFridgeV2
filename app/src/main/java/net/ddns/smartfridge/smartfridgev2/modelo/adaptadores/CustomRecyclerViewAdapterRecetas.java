@@ -66,11 +66,11 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
 
     @Override
     public int getItemCount() {
-        Log.d("PARALLAX", "getItemCount: " + recetas.size());
         return recetas.size();
     }
 
     public void filtrarArray(ArrayList<Receta> recetasFiltradas){
+        Log.d("lll", "filtrarArray: " + recetasFiltradas);
         this.recetas = recetasFiltradas;
         notifyDataSetChanged();
     }

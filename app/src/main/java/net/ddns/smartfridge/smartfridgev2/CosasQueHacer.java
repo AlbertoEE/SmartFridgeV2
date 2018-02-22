@@ -13,6 +13,7 @@ public class CosasQueHacer {
     //TODO PARA TERMINAR LA PARTE DE CREAR LISTAS:
     /*
     10.TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade. -RAQUEL-
+    11.TODO Confirmar cuando se borre una lista mediante un dialog
      */
 
     //TODO RECETAS:

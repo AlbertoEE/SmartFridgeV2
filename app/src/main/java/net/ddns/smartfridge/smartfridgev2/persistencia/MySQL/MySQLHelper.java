@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -268,6 +269,35 @@ public class MySQLHelper {
         }
       //  }
         return sentencia;
+    }
+
+    //Método para filtrar las recetas por tipo
+    public ArrayList<Receta> filtrarRecetaPorTipo(int tipo){
+        recetas = new ArrayList<>();
+        Statement st = null;
+        PreparedStatement pst =null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT * FROM RECETAS WHERE id_tipo_receta = ?;";
+
+        Log.d("sentencia", "sentencia: " + sentencia);
+        try {
+            //st = (Statement) conexion.createStatement();
+            //rs = st.executeQuery(sentencia);
+            pst = conexion.prepareStatement(sentencia);
+            pst.setInt(1, tipo);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                        rs.getInt(5), rs.getInt(6), imagen);
+                recetas.add(receta);
+                Log.d("check", "receta: " + receta.getTituloReceta());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return recetas;
     }
 }
 

@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Nuevo;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Tipo;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
@@ -43,6 +46,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmarAlimento
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ public class Dialogos {
     private Alimento acod;//Para crear un objeto que sea un alimento
     //private AlertDialog.Builder builder;//El builder para crear los dialogs
     private static Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
+    private static FragmentActivity fragment;//Para el constructor necesitamos indicar el fragment donde se va a ejecutar el dialog
     private static final String DIA = " día";//Cte para el mensaje del dialog
     private static final String DIAS = " días";//Cte para el mensaje del dialog
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
@@ -72,6 +77,11 @@ public class Dialogos {
         this.contexto=context;
         //builder = new AlertDialog.Builder(contexto);
         this.clase = activity;
+    }
+
+    public Dialogos(Context context, FragmentActivity fragment){
+        this.contexto=context;
+        this.fragment = fragment;
     }
 
     public Dialogos(Context context){
@@ -602,5 +612,79 @@ public class Dialogos {
         componenteReturn[0] =  editText.getText().toString();
 
         Log.d("tengen", "dialogoModificarBorrar: " + componenteReturn[0]);
+    }
+
+    //Dialog que se mostrará cuando no se haya encontrado ninguna receta con los criterios de búsqueda
+    public void dialogoNoReceta(){
+        new FancyGifDialog.Builder(clase)
+                //Ponemos el título
+                .setTitle("¡Vaya, qué pena!")
+                //Ponemos el mensaje
+                .setMessage("No hemos encontrado ninguna receta con esos criterios de búsqueda. Por favor, vuelve a intentarlo")
+                //Asignamos el botón de negativo
+                .setNegativeBtnText("Cancelar")
+                //Asignamos el color de fondo del boton positivo
+                .setPositiveBtnBackground("#1CACCC")
+                .setPositiveBtnText("Aceptar")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                //Asignamos el gif
+                .setGifResource(R.drawable.gif_dk)
+                .isCancellable(true)
+                .build();
+    }
+    //Dialog que se mostrará cuando se vaya a borrar una lista de la compra de las que hay guardadas
+    public void dialogoBorrarLista(){
+        new FancyGifDialog.Builder(clase)
+                //Ponemos el título
+                .setTitle("¡Cuidado!")
+                //Ponemos el mensaje
+                .setMessage("¿Está seguro de que quiere borrar la lista?")
+                //Asignamos el botón de negativo
+                .setNegativeBtnText("Cancelar")
+                //Asignamos el color de fondo del boton positivo
+                .setPositiveBtnBackground("#1CACCC")
+                .setPositiveBtnText("Aceptar")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                //Asignamos el gif
+                .setGifResource(R.drawable.gif_dixiek)
+                .isCancellable(true)
+                //Añadimos los listener
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //Borramos la lista
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        //No hacemos nada
+                    }
+                })
+                .build();
+    }
+    //Dialog que se mostrará cuando se vaya a filtrar por algún tipo de receta
+    public void dialogoFiltroTipo(Tipo tipo){
+        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+        //Mensaje del Alert
+        builder.setMessage("Va a filtrar por " + tipo.getDescripcion() + ", ¿es correcto?");
+        //Título
+        builder.setTitle("Filtrando receta");
+        //Añadimos los botones
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Hacemos la consulta
+                fragment.finish();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Volvemos a la pantalla para que el usuario pueda seleccionar otro tipo
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

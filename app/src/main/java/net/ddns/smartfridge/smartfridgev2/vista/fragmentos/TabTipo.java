@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Tipo;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
@@ -19,8 +21,8 @@ import java.util.ArrayList;
 
 
 public class TabTipo extends Fragment {
-    private MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
-    private ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
+    private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
+    private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,10 +34,14 @@ public class TabTipo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_tipo, container, false);
+        //Meter esto en la fila del adapter
+     /*   Dialogos d = new Dialogos(getContext(),getActivity());
+        Tipo t = new Tipo(1, "arroz");
+        d.dialogoFiltroTipo(t);*/
         return v;
     }
 
-    public class FiltrarPorTipo extends AsyncTask<Integer, Void, ArrayList<Receta>>{
+    public static class FiltrarPorTipo extends AsyncTask<Integer, Void, ArrayList<Receta>>{
 
         @Override
         protected ArrayList<Receta> doInBackground(Integer... ints) {

@@ -24,10 +24,13 @@ public class TabTipo extends Fragment {
     private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
     private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        recetas = new ArrayList<Receta>();
+       //tipos = new ArrayList<>();
+        new SacarTipos().execute();
     }
 
     @Override
@@ -35,9 +38,9 @@ public class TabTipo extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_tipo, container, false);
         //Meter esto en la fila del adapter
-        Dialogos d = new Dialogos(getContext(),getActivity());
+     /*   Dialogos d = new Dialogos(getContext(),getActivity());
         Tipo t = new Tipo(1, "arroz");
-        d.dialogoFiltroTipo(t);
+        d.dialogoFiltroTipo(t);*/
         return v;
     }
 
@@ -72,6 +75,43 @@ public class TabTipo extends Fragment {
             }
             for(int i = 0;i<recetas.size(); i++){
                 Log.d("intentService", "Receta filtrado: " + recetas.get(i).getTituloReceta());
+            }
+        }
+    }
+
+    public static class SacarTipos extends AsyncTask<Void, Void, ArrayList<Tipo>>{
+        private ArrayList<Tipo> tipos;//Para recoger los resultados de la consulta en el AsyncTask
+
+        @Override
+        protected ArrayList<Tipo> doInBackground(Void... voids) {
+            try {
+                tipos = new ArrayList<>();
+                myHelper = new MySQLHelper();
+                //Abrimos la conexión a la bbdd
+                myHelper.abrirConexion();
+                //Recogemos todas las recetas
+                tipos = myHelper.sacarTipoReceta();
+            } catch (SQLException e) {
+                Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
+            } catch (ClassNotFoundException e) {
+                Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
+            }
+            for(int i = 0;i<recetas.size(); i++){
+                Log.d("intentService", "Receta en intentService: " + recetas.get(i).getTituloReceta());
+            }
+            return tipos;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Tipo> tipos) {
+            super.onPostExecute(tipos);
+            try {
+                myHelper.cerrarConexion();
+            } catch (SQLException e) {
+                Log.d("SQL", "Error al cerrar la bbdd");
+            }
+            for(int i = 0;i<tipos.size(); i++){
+                Log.d("intentService", "Receta tipo: " + tipos.get(i).getDescripcion());
             }
         }
     }

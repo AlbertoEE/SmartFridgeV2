@@ -13,6 +13,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Tipo;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
@@ -48,7 +49,8 @@ public class MySQLHelper {
     private ArrayList<Precio> precios;//Para meter todos los precios de una lista de la compra
     private Precio precio;//Construimos el objeto a partir de los datos de la bbdd
     private ArrayList<Receta> recetas;//Para almacenar objetos de tipo receta
-
+    private ArrayList<Tipo> tipos;//Para almacenar objetos con los tipos de recetas que haya
+    private Tipo tipo;//Para crear objetos a partir de los datos de la bbdd
 
     /**
      * Abre la conexión con la BBDD
@@ -300,6 +302,27 @@ public class MySQLHelper {
         return recetas;
     }
 
-
+    //Metodo para sacar todos los tipos de alimentos que hay en la bbdd
+    public ArrayList<Tipo> sacarTipoReceta(){
+        tipos  = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT * FROM TIPO_DE_RECETAS;";
+        Log.d("sentencia", "sentencia: " + sentencia);
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                tipo = new Tipo(rs.getInt(1), rs.getString(2));
+                tipos.add(tipo);
+                //Log.d("receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return tipos;
+    }
 }
 

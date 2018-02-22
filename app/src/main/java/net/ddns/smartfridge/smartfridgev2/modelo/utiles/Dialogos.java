@@ -664,7 +664,7 @@ public class Dialogos {
                 .build();
     }
     //Dialog que se mostrará cuando se vaya a filtrar por algún tipo de receta
-    public void dialogoFiltroTipo(Tipo tipo){
+    public void dialogoFiltroTipo(final Tipo tipo){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
         builder.setMessage("Va a filtrar por " + tipo.getDescripcion() + ", ¿es correcto?");
@@ -675,7 +675,7 @@ public class Dialogos {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Hacemos la consulta
-                fragment.finish();
+                new TabTipo.FiltrarPorTipo().execute(tipo.getId());
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

@@ -41,9 +41,15 @@ public class CustomBaseAdapter extends BaseAdapter {
         ViewHolderBase fila;
 
         if (view == null) {
-            itemView = LayoutInflater.from(context).inflate(R.layout.fila_producto_nueva_lista, viewGroup, false);
+            itemView = LayoutInflater.from(context).inflate(R.layout.fila_spinner, viewGroup, false);
             fila = new ViewHolderBase();
+            fila.imageView = (ImageView) itemView.findViewById(R.id.ivSpinner);
+            itemView.setTag(fila);
+        } else {
+            fila = (ViewHolderBase) itemView.getTag();
         }
+
+        fila.imageView.setImageBitmap();
         return null;
     }
 

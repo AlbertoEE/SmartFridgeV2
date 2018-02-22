@@ -13,8 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
+
+import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.Chip;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
@@ -37,6 +43,9 @@ public class TabAlimento extends Fragment {
     private String sentenciaSeleccion;//Para ejecutar la sentencia de búsqueda en la bbdd
     private ArrayList<Ingrediente> ingredientesSeleccionados;//Para almacenar los ingredientes seleccionados por el usuario
     private boolean contenga;//Para ver qué radiobutton se ha seleccionado
+
+    private int contador = 0;
+    private ChipsInput linearLayout;
 
     public TabAlimento() {
         // Required empty public constructor
@@ -128,6 +137,17 @@ public class TabAlimento extends Fragment {
                         new CogerRecetasFiltro().execute(sentencia);
                         break;
                 }*/
+            }
+        });
+
+        linearLayout = (ChipsInput) v.findViewById(R.id.chips_input);
+
+        v.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Chip chip = new Chip("hola" + contador, "hola" + contador);
+                linearLayout.addChip(chip);
+                contador++;
             }
         });
         return v;

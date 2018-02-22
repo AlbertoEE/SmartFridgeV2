@@ -110,9 +110,10 @@
             android:text="AutoCompleteTextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.274"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.050000012" />
+            app:layout_constraintVertical_bias="0.051" />
 
         <ImageButton
             android:id="@+id/ibBuscar"
@@ -121,11 +122,37 @@
             android:layout_marginBottom="40dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/alimentos"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_buscar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="Add"
+            app:layout_constraintBottom_toBottomOf="@+id/acAlimentosReceta"
+            app:layout_constraintStart_toEndOf="@+id/acAlimentosReceta"
+            app:layout_constraintTop_toTopOf="@+id/acAlimentosReceta"
+            app:layout_constraintVertical_bias="0.8" />
+
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/chips_input"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="8dp"
+            app:hint="Enter a name"
+            app:maxRows="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

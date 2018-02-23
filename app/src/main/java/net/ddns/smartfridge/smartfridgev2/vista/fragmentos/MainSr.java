@@ -22,6 +22,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 //import net.ddns.smartfridge.smartfridgev2.modelo.servicios.RecetasIntentService;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.DetallesRecetaActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActivity;
 
 import java.sql.SQLException;
@@ -39,6 +40,8 @@ public class MainSr extends Fragment {
     private static final int REQUEST_FILTRO = 506;
     private CustomDialogProgressBar customDialogProgressBar;
     private MySQLHelper myHelper;//Para trabajar con la bbdd
+    private Receta recetaDado;//Para sacar la receta aleatoria
+    private Intent intent;//Para abrir los detalles
 
     public MainSr() {
         // Required empty public constructor
@@ -46,7 +49,7 @@ public class MainSr extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_sr, container, false);
         //service = new RecetasIntentService();
@@ -70,7 +73,16 @@ public class MainSr extends Fragment {
             @Override
             public void onClick(View v) {
                 //Buscará una receta aleatoria
-                recetaAleatoria(recetas);
+                recetaDado = recetaAleatoria(recetas);
+                intent = new Intent(getActivity(), DetallesRecetaActivity.class);
+                intent.putExtra("id", recetaDado.getIdReceta());
+                intent.putExtra("nombre", recetaDado.getTituloReceta());
+                intent.putExtra("descripcion", recetaDado.getDescripcion());
+                intent.putExtra("tipo", recetaDado.getTipoReceta());
+                intent.putExtra("duracion", recetaDado.getTiempo());
+                intent.putExtra("dificultad", recetaDado.getDificultad());
+                intent.putExtra("imagen", recetaDado.getImagenReceta());
+                startActivity(intent);
             }
         });
         botonNevera.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +163,7 @@ public class MainSr extends Fragment {
     }
 
     //Método para coger una receta aleatoria de la bbdd
-    public ArrayList<Receta> recetaAleatoria(ArrayList<Receta> array){
+    public Receta recetaAleatoria(ArrayList<Receta> array){
         //Miramos el número de elementos que tiene el array para sacar el número aleatorio
         int longitud = array.size();
         int posicion;//Para determinar la posición del array que ocupa el número aleatorio
@@ -159,8 +171,8 @@ public class MainSr extends Fragment {
         posicion = r.nextInt(longitud);
         Log.d("random", "numero: " + posicion);
         //Seleccionamos la receta que ha salido
-        receta = array.get(posicion);
-        Log.d("random", "receta: " + receta.getTituloReceta());
-        return recetas;
+        recetaDado = array.get(posicion);
+        Log.d("random", "receta: " + recetaDado.getTituloReceta());
+        return recetaDado;
     }
 }

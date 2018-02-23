@@ -14,6 +14,7 @@ public class    Receta {
     private int tiempoReceta;//Clasificación de la receta por el tiempo de preparación
     private int dificultadReceta;//Clasificación de la receta en función de la dificultad de elaboración
     private Bitmap imagenReceta;//Representa la imagen de la receta
+    private String tiempo;//Para tener el tiempo en lugar del id del tiempo
 
     public Receta(int idReceta, String tituloReceta, String descripcion, int tipoReceta, int tiempoReceta, int dificultadReceta, Bitmap imagenReceta) {
         this.idReceta = idReceta;
@@ -21,6 +22,16 @@ public class    Receta {
         this.descripcion = descripcion;
         this.tipoReceta = tipoReceta;
         this.tiempoReceta = tiempoReceta;
+        this.dificultadReceta = dificultadReceta;
+        this.imagenReceta = imagenReceta;
+    }
+
+    public Receta(int idReceta, String tituloReceta, String descripcion, int tipoReceta, String tiempo, int dificultadReceta, Bitmap imagenReceta) {
+        this.idReceta = idReceta;
+        this.tituloReceta = tituloReceta;
+        this.descripcion = descripcion;
+        this.tipoReceta = tipoReceta;
+        this.tiempo = tiempo;
         this.dificultadReceta = dificultadReceta;
         this.imagenReceta = imagenReceta;
     }
@@ -79,5 +90,13 @@ public class    Receta {
 
     public void setImagenReceta(Bitmap imagenReceta) {
         this.imagenReceta = imagenReceta;
+    }
+
+    public String getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(String tiempo) {
+        this.tiempo = tiempo;
     }
 }

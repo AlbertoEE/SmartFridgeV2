@@ -49,7 +49,7 @@ public class CustomBaseAdapter extends BaseAdapter {
             fila = (ViewHolderBase) itemView.getTag();
         }
 
-        fila.imageView.setImageBitmap();
+        //fila.imageView.setImageBitmap();
         return null;
     }
 

@@ -150,7 +150,8 @@ public class MySQLHelper {
         Statement st = null;
         ResultSet rs = null;
         //Sacamos todos los datos de la bbdd
-        sentencia = "SELECT * FROM RECETAS;";
+        sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, R.id_dificultad_receta, R.imagen_receta " +
+                " FROM RECETAS R, CLASIFICACION_TIEMPO T " + "WHERE R.id_tiempo_receta = T.id_tiempo_receta;";
         //Log.d("sentencia", "sentencia: " + sentencia);
         try {
             st = (Statement) conexion.createStatement();
@@ -162,7 +163,7 @@ public class MySQLHelper {
                 imagen = BitmapFactory.decodeStream(bais);
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                        rs.getInt(5), rs.getInt(6), imagen);
+                        rs.getString(5), rs.getInt(6), imagen);
                 recetas.add(receta);
                 //Log.d("receta", "receta: " + receta.getTituloReceta());
             }
@@ -324,5 +325,6 @@ public class MySQLHelper {
         }
         return tipos;
     }
+
 }
 

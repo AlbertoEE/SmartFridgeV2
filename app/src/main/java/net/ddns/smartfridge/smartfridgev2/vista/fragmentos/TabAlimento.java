@@ -115,7 +115,7 @@ public class TabAlimento extends Fragment {
                 getActivity().finish();
 
                 //Miramos si está seleccionado el radiobutton
-                boolean checked = ((RadioButton) view).isChecked();
+                //boolean checked = ((RadioButton) view).isChecked();
                 ingredientesSeleccionados = fake();
                 String alimento = act.getText().toString();
                 Log.d("autocomplete", alimento);
@@ -152,32 +152,7 @@ public class TabAlimento extends Fragment {
 
         return v;
     }
-    /*Método para realizar la consulta a la bbdd a partir de los datos recogidos
-    public void comprobarRBT(View view) {
-        //Miramos si está seleccionado el radiobutton
-        boolean checked = ((me.omidh.liquidradiobutton.LiquidRadioButton) view).isChecked();
-        ingredientesSeleccionados = fake();
-        String alimento = act.getText().toString();
-        Log.d("autocomplete", alimento);
-        //Hacemos un case con las opciones de cada radiobutton
-        switch(view.getId()) {
-            case R.id.rbTenga:
-                if (checked)
-                    //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
-                    sentencia = myHelper.montarSentenciaSi(ingredientesSeleccionados);
-                //Llamamos al asyncTask pasándole la select correspondiente
-                new CogerRecetasFiltro().execute(sentencia);
-                break;
-            case R.id.rbNoTenga:
-                if (checked)
-                    //Si queremos que no tenga alimentos, montamos la select correspondiente
-                    sentencia = myHelper.montarSentenciaNo(ingredientesSeleccionados);
-                //Llamamos al asyncTask pasándole la select correspondiente
-                new CogerRecetasFiltro().execute(sentencia);
-                break;
-        }
-    }*/
-
+    
     private String[] generarSugerencias(ArrayList<Ingrediente> ing){
         int count = ing.size();
         int contador = 0;

@@ -129,6 +129,7 @@ public class MainSr extends Fragment {
                 myHelper.cerrarConexion();
                 customDialogProgressBar.endDialog();
                 mainSr.crearAdapter(recetas);
+                Log.d("AAAAAAAA", "tiempo en AsyncTask: " + recetas.get(0).getTiempo());
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }

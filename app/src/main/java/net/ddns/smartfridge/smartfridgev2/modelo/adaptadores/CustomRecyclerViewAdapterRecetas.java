@@ -44,7 +44,8 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     @Override
     public void onBindViewHolder(ViewHolderRecetas holder, int position) {
         holder.tvNombreReceta.setText(String.valueOf(recetas.get(position).getTituloReceta()));
-        holder.tvTiempo.setText(String.valueOf(recetas.get(position).getTiempoReceta()));
+        Log.d("AAAAAAAA", "tiempo: " + recetas.get(position).getTiempo());
+        holder.tvTiempo.setText(String.valueOf(recetas.get(position).getTiempo()));
         Bitmap bitmap = (recetas.get(position).getImagenReceta());
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

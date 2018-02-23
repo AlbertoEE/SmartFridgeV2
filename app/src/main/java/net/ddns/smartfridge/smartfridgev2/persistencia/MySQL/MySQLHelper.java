@@ -277,7 +277,7 @@ public class MySQLHelper {
     //Método para filtrar las recetas por tipo
     public ArrayList<Receta> filtrarRecetaPorTipo(int tipo){
         recetas = new ArrayList<>();
-        Statement st = null;
+        //Statement st = null;
         PreparedStatement pst =null;
         ResultSet rs = null;
         //Sacamos todos los datos de la bbdd
@@ -350,5 +350,35 @@ public class MySQLHelper {
         return alimentosCategoria;
     }
 
+    //Método para buscar una receta a partir de un texto
+    public ArrayList<Receta> recogerRecetaTitulo(String  texto){
+        recetas = new ArrayList<>();
+        PreparedStatement pst =null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        if (texto==null) {
+            sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                    "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta;";
+        } else {
+            sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                    "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta " +
+                    "AND R.nombre_receta LIKE % ? %;";
+        }
+        Log.d("sentencia2", "sentencia: " + sentencia);
+        try {
+            pst = conexion.prepareStatement(sentencia);
+            pst.setString(1, texto);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                alimentosCategoria.add(alimentoExterno);
+                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return recetas;
+    }
 }
 

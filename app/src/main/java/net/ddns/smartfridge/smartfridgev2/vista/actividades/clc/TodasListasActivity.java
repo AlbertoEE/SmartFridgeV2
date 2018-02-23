@@ -24,6 +24,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterListas;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorFicheroLista;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
@@ -50,6 +51,8 @@ public class TodasListasActivity extends AppCompatActivity {
     private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
     //private ArrayList<Lista>todosLosProductos = new ArrayList<>();//Para crear la lista con todos los productos
     private int sort = 1;
+    private TodasListasActivity todasListasActivity;
+    private Dialogos dialogos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class TodasListasActivity extends AppCompatActivity {
             Log.d("listaTotalFinal", "id de la lista: " + lista.getId());
         }
         cargarRecyclerView(todasLasListas);
+        dialogos = new Dialogos(this,this);
+        todasListasActivity = this;
     }
 
     private void cargarRecyclerView(ArrayList<ListaCompra>array){
@@ -103,10 +108,7 @@ public class TodasListasActivity extends AppCompatActivity {
                     gfl.actualizarListas(listas);
                     //Log.d("swipe", "tamaño: " + listas.size());
                 } else {
-                    intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
-                    intent.putExtra("ListaProductos", adapter.getLista(position));
-                    adapter.notifyDataSetChanged();
-                    startActivity(intent);
+                    dialogos.dialogoBorrarLista(todasListasActivity, position);
                 }
             }
 
@@ -160,5 +162,12 @@ public class TodasListasActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void deleteOne(int position){
+        intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
+        intent.putExtra("ListaProductos", adapter.getLista(position));
+        adapter.notifyDataSetChanged();
+        startActivity(intent);
     }
 }

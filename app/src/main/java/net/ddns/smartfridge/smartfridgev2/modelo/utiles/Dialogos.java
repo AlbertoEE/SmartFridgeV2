@@ -46,6 +46,7 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmarAlimento
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.TodasListasActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
 import java.lang.reflect.Array;
@@ -633,7 +634,7 @@ public class Dialogos {
                 .build();
     }
     //Dialog que se mostrará cuando se vaya a borrar una lista de la compra de las que hay guardadas
-    public void dialogoBorrarLista(){
+    public void dialogoBorrarLista(final TodasListasActivity clase, final int position){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡Cuidado!")
@@ -653,6 +654,7 @@ public class Dialogos {
                     @Override
                     public void OnClick() {
                         //Borramos la lista
+                        clase.deleteOne(position);
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {

@@ -74,7 +74,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
                 intent.putExtra("descripcion", recetas.get(position).getDescripcion());
                 intent.putExtra("tipo", recetas.get(position).getTipoReceta());
                 intent.putExtra("duracion", recetas.get(position).getTiempo());
-                intent.putExtra("dificultad", recetas.get(position).getDificultadReceta());
+                intent.putExtra("dificultad", recetas.get(position).getDificultad());
                 intent.putExtra("imagen", recetas.get(position).getImagenReceta());
                 activity.startActivity(intent);
             }

@@ -11,6 +11,7 @@ public class Ingrediente {
     private String nombreIngrediente;//El nombre del ingrediente
     private Bitmap imagenIngrediente;//La imagen del ingrediente
     private String clasificacion_compra;//Identificador de la clasificación cuando forma parte de la lista de la compra
+    private int cantidad;//Para guardar la cantidad de un ingrediente dado en una receta
 
     public Ingrediente(int idIngrediente, String nombreIngrediente, Bitmap imagenIngrediente, String clasificacion_compra) {
         this.idIngrediente = idIngrediente;
@@ -28,6 +29,12 @@ public class Ingrediente {
     public Ingrediente(int idIngrediente, String nombreIngrediente) {
         this.idIngrediente = idIngrediente;
         this.nombreIngrediente = nombreIngrediente;
+    }
+
+    public Ingrediente(int idIngrediente, String nombreIngrediente, int cantidad) {
+        this.idIngrediente = idIngrediente;
+        this.nombreIngrediente = nombreIngrediente;
+        this.cantidad = cantidad;
     }
 
     public int getIdIngrediente() {

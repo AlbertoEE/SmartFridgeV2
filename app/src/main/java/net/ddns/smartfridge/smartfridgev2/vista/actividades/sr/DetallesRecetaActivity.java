@@ -29,15 +29,20 @@ public class DetallesRecetaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_receta);
         intent = getIntent();
+        TextView tvTitulo = (TextView)findViewById(R.id.tvTituloReceta);
+        tvTitulo.setText(intent.getStringExtra("nombre"));
+        TextView tvDificultad = (TextView)findViewById(R.id.tvNumeroProductos);
+        tvDificultad.setText(intent.getStringExtra("dificultad"));
         ImageView iv = (ImageView)findViewById(R.id.ivDetalleReceta);
         iv.setImageBitmap((Bitmap)intent.getParcelableExtra("imagen"));
-        TextView tvTiempo = (TextView) findViewById(R.id.tvNumeroProductos);
-        tvTiempo.setText(intent.getStringExtra("duracion"));
+        TextView tvTiempo = (TextView) findViewById(R.id.tvDescTiempo);
+        tvTiempo.setText(" - " + intent.getStringExtra("duracion"));
         TextView tvDescripcion = (TextView)findViewById(R.id.tvDescripcion);
         tvDescripcion.setText(intent.getStringExtra("descripcion"));
         ingredientesReceta = new ArrayList<>();
         tvIng = (TextView)findViewById(R.id.tvIngredientes);
         new RecogerIngredientes().execute(intent.getIntExtra("id",0));
+
     }
 
     public class RecogerIngredientes extends AsyncTask<Integer, Void, ArrayList<Ingrediente>>{

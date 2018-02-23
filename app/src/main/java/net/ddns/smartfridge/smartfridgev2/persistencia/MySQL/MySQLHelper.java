@@ -150,9 +150,9 @@ public class MySQLHelper {
         Statement st = null;
         ResultSet rs = null;
         //Sacamos todos los datos de la bbdd
-        sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, R.id_dificultad_receta, R.imagen_receta " +
-                " FROM RECETAS R, CLASIFICACION_TIEMPO T " + "WHERE R.id_tiempo_receta = T.id_tiempo_receta;";
-        //Log.d("sentencia", "sentencia: " + sentencia);
+        sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta;";
+        Log.d("sentencia2", "sentencia: " + sentencia);
         try {
             st = (Statement) conexion.createStatement();
             rs = st.executeQuery(sentencia);
@@ -163,7 +163,7 @@ public class MySQLHelper {
                 imagen = BitmapFactory.decodeStream(bais);
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                        rs.getString(5), rs.getInt(6), imagen);
+                        rs.getString(5), rs.getString(6), imagen);
                 recetas.add(receta);
                 //Log.d("receta", "receta: " + receta.getTituloReceta());
             }

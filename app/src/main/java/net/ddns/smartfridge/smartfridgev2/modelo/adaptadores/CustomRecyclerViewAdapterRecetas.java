@@ -48,8 +48,6 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     @Override
     public void onBindViewHolder(ViewHolderRecetas holder, final int position) {
         holder.tvNombreReceta.setText(String.valueOf(recetas.get(position).getTituloReceta()));
-        Log.d("AAAAAAAA", "tiempo: " + recetas.get(position).getTiempo());
-        holder.tvTiempo.setText(String.valueOf(recetas.get(position).getTiempo()));
         Bitmap bitmap = (recetas.get(position).getImagenReceta());
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -97,8 +95,6 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     public static class ViewHolderRecetas extends ParallaxViewHolder {
         public View fila;
         public TextView tvNombreReceta;
-        public TextView tvTiempo;
-        public TextView tvMinutos;
         public ParallaxImageView pivFoto;
         @Override
         public int getParallaxImageId() {
@@ -109,8 +105,6 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
             super(itemView);
             fila = itemView;
             tvNombreReceta = itemView.findViewById(R.id.tvNombreReceta);
-            tvTiempo = itemView.findViewById(R.id.tvTiempo);
-            tvMinutos = itemView.findViewById(R.id.tvMinutos);
             pivFoto = itemView.findViewById(R.id.ivReceta);
             pivFoto.setParallaxRatio(2.6f);
         }

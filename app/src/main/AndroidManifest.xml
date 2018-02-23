@@ -66,12 +66,9 @@
         <activity android:name=".vista.actividades.clc.CategoriaActivity" />
         <activity android:name=".vista.actividades.clc.DetalleListaExternaActivity" />
         <activity android:name=".vista.actividades.clc.PrecioCompraActivity" />
-        <activity android:name=".vista.actividades.sr.FiltroRecetaActivity" />
+        <activity android:name=".vista.actividades.sr.FiltroRecetaActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".vista.actividades.clc.PrecioCompraProductosActivity" />
-
-        <service
-            android:name=".modelo.servicios.RecetasIntentService"
-            android:exported="false" />
 
         <activity android:name=".vista.actividades.sr.DetallesRecetaActivity"></activity>
     </application>

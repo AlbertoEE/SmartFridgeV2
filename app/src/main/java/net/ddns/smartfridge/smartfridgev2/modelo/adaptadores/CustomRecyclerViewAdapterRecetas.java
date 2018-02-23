@@ -63,6 +63,12 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
             e.printStackTrace();
         }
         holder.getBackgroundImage().reuse();
+        holder.fila.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("lllll", "onClick: ");
+            }
+        });
     }
 
     @Override
@@ -77,6 +83,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     }
 
     public static class ViewHolderRecetas extends ParallaxViewHolder {
+        public View fila;
         public TextView tvNombreReceta;
         public TextView tvTiempo;
         public TextView tvMinutos;
@@ -88,6 +95,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
 
         public ViewHolderRecetas(View itemView) {
             super(itemView);
+            fila = itemView;
             tvNombreReceta = itemView.findViewById(R.id.tvNombreReceta);
             tvTiempo = itemView.findViewById(R.id.tvTiempo);
             tvMinutos = itemView.findViewById(R.id.tvMinutos);

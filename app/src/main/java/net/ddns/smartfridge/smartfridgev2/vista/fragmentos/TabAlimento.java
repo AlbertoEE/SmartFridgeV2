@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,6 +46,8 @@ public class TabAlimento extends Fragment {
     private String sentenciaSeleccion;//Para ejecutar la sentencia de búsqueda en la bbdd
     private ArrayList<Ingrediente> ingredientesSeleccionados;//Para almacenar los ingredientes seleccionados por el usuario
     private boolean contenga;//Para ver qué radiobutton se ha seleccionado
+    private Intent intent;//Intent para pasar los datos al adapter y refrescarlos
+    private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
 
     private int contador = 0;
     private ChipsInput linearLayout;
@@ -99,7 +102,7 @@ public class TabAlimento extends Fragment {
             @Override
             public void onClick(View view) {
                 //Le damos el arrayList con los datos indicados por el usuario
-                ingredientesSeleccionados = fake();
+                //ingredientesSeleccionados = fake();
                 //Log.d("check", "sentencia: " + sentenciaSeleccion);
                 //Log.d("check", "boton pulsado Búsqueda");
                 if (contenga){
@@ -117,33 +120,16 @@ public class TabAlimento extends Fragment {
                     //Llamamos al asyncTask pasándole la select correspondiente
                     new CogerRecetasFiltro().execute(sentenciaSeleccion);
                 }
-                Intent i = new Intent();
+            /*    Intent i = new Intent();
                 i.putExtra("filtro", recetas);
                 getActivity().setResult(getActivity().RESULT_OK, i);
-                getActivity().finish();
+                getActivity().finish();*/
 
                 //Miramos si está seleccionado el radiobutton
                 //boolean checked = ((RadioButton) view).isChecked();
-                ingredientesSeleccionados = fake();
+                //ingredientesSeleccionados = fake();
                 String alimento = act.getText().toString();
                 Log.d("autocomplete", alimento);
-                /*Hacemos un case con las opciones de cada radiobutton
-                switch(view.getId()) {
-                    case R.id.rbTenga:
-                        if (checked)
-                            //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
-                            sentencia = myHelper.montarSentenciaSi(ingredientesSeleccionados);
-                        //Llamamos al asyncTask pasándole la select correspondiente
-                        new CogerRecetasFiltro().execute(sentencia);
-                        break;
-                    case R.id.rbNoTenga:
-                        if (checked)
-                            //Si queremos que no tenga alimentos, montamos la select correspondiente
-                            sentencia = myHelper.montarSentenciaNo(ingredientesSeleccionados);
-                        //Llamamos al asyncTask pasándole la select correspondiente
-                        new CogerRecetasFiltro().execute(sentencia);
-                        break;
-                }*/
             }
         });
 
@@ -175,9 +161,12 @@ public class TabAlimento extends Fragment {
 
     public void addIngrediente(){
         String ingrediente = act.getText().toString();
+        Log.d("ingrediente", "texto: " + ingrediente);
         if(ingredientesComprobacion.contains(ingrediente)){
+            Log.d("ingrediente", "entra por el if");
             ingredientesSeleccionados.add(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente)));
         } else {
+            Log.d("ingrediente", "entra por el else, va vacío");
             Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();
         }
     }
@@ -244,6 +233,10 @@ public class TabAlimento extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
+            intent = new Intent();
+            intent.putExtra("filtro", recetas);
+            getActivity().setResult(getActivity().RESULT_OK, intent);
+            getActivity().finish();
             try {
                 myHelper.cerrarConexion();
             } catch (SQLException e) {

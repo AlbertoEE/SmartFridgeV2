@@ -196,8 +196,35 @@ public class MySQLHelper {
         return alimentosCategoria;
     }
 
-    //Método para recoger las recetas en función de si tienen o no algún ingrediente
+    //Método para recoger las recetas sin la foto en función de si tienen o no algún ingrediente
     public ArrayList<Receta> filtrarReceta(String consulta){
+        Log.d("check", "filtrarReceta");
+        Log.d("check", "consulta: " + consulta);
+        recetas = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(consulta);
+            while (rs.next()) {
+                Log.d("check", "hay registros");
+                blob = rs.getBlob(7);
+                byte[] data = blob.getBytes(1, (int)blob.length());
+                ByteArrayInputStream bais = new ByteArrayInputStream(data);
+                imagen = BitmapFactory.decodeStream(bais);
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                        rs.getInt(5), rs.getInt(6), imagen);
+                recetas.add(receta);
+                Log.d("check", "receta: " + receta.getTituloReceta());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return recetas;
+    }
+    //Método para recoger las recetas sin la foto en función de si tienen o no algún ingrediente
+    public ArrayList<Receta> filtrarFotoReceta(String consulta){
         Log.d("check", "filtrarReceta");
         Log.d("check", "consulta: " + consulta);
         recetas = new ArrayList<>();

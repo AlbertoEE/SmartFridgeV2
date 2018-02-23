@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.yayandroid.parallaxrecyclerview.ParallaxViewHolder;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.DetallesRecetaActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<CustomRecyclerViewAdapterRecetas.ViewHolderRecetas>{
     private ArrayList<Receta> recetas;
     private Activity activity;
+    private Intent intent;//Para iniciar la nueva actividad
+
     public CustomRecyclerViewAdapterRecetas(ArrayList<Receta> recetas, Activity activity){
         this.recetas = recetas;
         this.activity = activity;
@@ -42,7 +46,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderRecetas holder, int position) {
+    public void onBindViewHolder(ViewHolderRecetas holder, final int position) {
         holder.tvNombreReceta.setText(String.valueOf(recetas.get(position).getTituloReceta()));
         Log.d("AAAAAAAA", "tiempo: " + recetas.get(position).getTiempo());
         holder.tvTiempo.setText(String.valueOf(recetas.get(position).getTiempo()));
@@ -66,7 +70,15 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
         holder.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("lllll", "onClick: ");
+                intent = new Intent(activity.getApplicationContext(), DetallesRecetaActivity.class);
+                intent.putExtra("id", recetas.get(position).getIdReceta());
+                intent.putExtra("nombre", recetas.get(position).getTituloReceta());
+                intent.putExtra("descripcion", recetas.get(position).getDescripcion());
+                intent.putExtra("tipo", recetas.get(position).getTipoReceta());
+                intent.putExtra("duracion", recetas.get(position).getTiempo());
+                intent.putExtra("dificultad", recetas.get(position).getDificultadReceta());
+                intent.putExtra("imagen", recetas.get(position).getImagenReceta());
+                activity.startActivity(intent);
             }
         });
     }

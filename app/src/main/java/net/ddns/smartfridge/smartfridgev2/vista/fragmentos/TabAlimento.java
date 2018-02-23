@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.Chip;
@@ -27,6 +28,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +45,8 @@ public class TabAlimento extends Fragment {
 
     private int contador = 0;
     private ChipsInput linearLayout;
+
+    private ArrayList<String> ingredientesComprobacion;
 
     public TabAlimento() {
         // Required empty public constructor
@@ -61,6 +65,7 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
+        ingredientesComprobacion = new ArrayList<>();
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -144,9 +149,7 @@ public class TabAlimento extends Fragment {
         v.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Chip chip = new Chip("hola" + contador, "hola" + contador);
-                linearLayout.addChip(chip);
-                contador++;
+                addIngrediente();
             }
         });
 
@@ -163,8 +166,18 @@ public class TabAlimento extends Fragment {
         for (int i=0; i<count; i++){
             alimentos[contador] = ing.get(i).getNombreIngrediente();
             contador++;
+            ingredientesComprobacion.add(ing.get(i).getNombreIngrediente());
         }
         return alimentos;
+    }
+
+    public void addIngrediente(){
+        String ingrediente = act.getText().toString();
+        if(ingredientesComprobacion.contains(ingrediente)){
+            ingredientesSeleccionados.add(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente)));
+        } else {
+            Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class GetAllIngredientes extends AsyncTask<Void, Void, ArrayList<Ingrediente>> {

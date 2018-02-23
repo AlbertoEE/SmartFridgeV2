@@ -143,18 +143,6 @@
             app:layout_constraintTop_toTopOf="@+id/acAlimentosReceta"
             app:layout_constraintVertical_bias="0.8" />
 
-        <com.pchmn.materialchips.ChipsInput
-            android:id="@+id/chips_input"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginBottom="8dp"
-            app:chip_deletable="true"
-            app:maxRows="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

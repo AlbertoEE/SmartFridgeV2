@@ -12,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.Chip;
 
@@ -57,6 +60,7 @@ public class TabAlimento extends Fragment {
         super.onCreate(savedInstanceState);
         myHelper = new MySQLHelper();
         ingredientesSeleccionados = new ArrayList<>();
+        ingredientesComprobacion = new ArrayList<>();
         new GetAllIngredientes().execute();
     }
 
@@ -65,7 +69,6 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
-        ingredientesComprobacion = new ArrayList<>();
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -144,8 +147,6 @@ public class TabAlimento extends Fragment {
             }
         });
 
-        linearLayout = (ChipsInput) v.findViewById(R.id.chips_input);
-
         v.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +168,7 @@ public class TabAlimento extends Fragment {
             alimentos[contador] = ing.get(i).getNombreIngrediente();
             contador++;
             ingredientesComprobacion.add(ing.get(i).getNombreIngrediente());
+            Log.d("llllll", "generarSugerencias: " + ingredientesComprobacion.get(i));
         }
         return alimentos;
     }
@@ -209,6 +211,11 @@ public class TabAlimento extends Fragment {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
             String [] nombres = generarSugerencias(ingredientes);
+            act.setAdapter(new ArrayAdapter<String>(
+                    getContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    nombres
+            ));
         }
     }
 

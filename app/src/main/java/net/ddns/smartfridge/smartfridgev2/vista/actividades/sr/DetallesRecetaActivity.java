@@ -22,5 +22,7 @@ public class DetallesRecetaActivity extends AppCompatActivity {
         iv.setImageBitmap((Bitmap)intent.getParcelableExtra("imagen"));
         TextView tvTiempo = (TextView) findViewById(R.id.tvNumeroProductos);
         tvTiempo.setText(intent.getStringExtra("duracion"));
+        TextView tvDescripcion = (TextView)findViewById(R.id.tvDescripcion);
+        tvDescripcion.setText(intent.getStringExtra("descripcion"));
     }
 }

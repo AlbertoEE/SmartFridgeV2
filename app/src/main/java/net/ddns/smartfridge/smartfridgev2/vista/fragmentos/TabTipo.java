@@ -1,5 +1,6 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,18 +31,19 @@ import java.util.ArrayList;
 public class TabTipo extends Fragment {
     private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
     private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
-    private static ArrayList<Receta> recetasTipo;//Para almacenar las recetas recogidas de la bbdd
-    private static ArrayList<Bitmap> imagenesTipo;//Para almacenar las imágenes de las recetas de la bbdd
+    //private static ArrayList<Receta> recetasTipo;//Para almacenar las recetas recogidas de la bbdd
+    //private static ArrayList<Bitmap> imagenesTipo;//Para almacenar las imágenes de las recetas de la bbdd
     private RecyclerView recyclerView;
     private CustomRecyclerViewAdapterFiltroTipos adapter;
+    private Intent intent;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recetas = new ArrayList<Receta>();
-        recetasTipo = new ArrayList<Receta>();
-        imagenesTipo = new ArrayList<>();
+        //recetasTipo = new ArrayList<Receta>();
+        //imagenesTipo = new ArrayList<>();
         new SacarTipos().execute();
     }
 
@@ -56,7 +58,7 @@ public class TabTipo extends Fragment {
         return v;
     }
 
-    public static class FiltrarPorTipo extends AsyncTask<Integer, Void, ArrayList<Receta>>{
+    public class FiltrarPorTipo extends AsyncTask<Integer, Void, ArrayList<Receta>>{
 
         @Override
         protected ArrayList<Receta> doInBackground(Integer... ints) {
@@ -81,13 +83,16 @@ public class TabTipo extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
-            recetasTipo = recetas;
+            //recetasTipo = recetas;
             ArrayList<Bitmap> imagenes = new ArrayList<>();
             for (Receta item : recetas) {
                 imagenes.add(item.getImagenReceta());
                 item.setImagenReceta(null);
             }
-            imagenesTipo = imagenes;
+            intent = new Intent();
+            intent.putExtra("filtro", recetas);
+            intent.putExtra("filtroImagenes" , imagenes);
+            getActivity().setResult(getActivity().RESULT_OK, intent);
             try {
                 myHelper.cerrarConexion();
             } catch (SQLException e) {
@@ -96,7 +101,7 @@ public class TabTipo extends Fragment {
             for(int i = 0;i<recetas.size(); i++){
                 Log.d("intentService", "Receta filtrado: " + recetas.get(i).getTituloReceta());
             }
-
+            //getActivity().finish();
         }
     }
 
@@ -136,12 +141,15 @@ public class TabTipo extends Fragment {
             }
         }
     }
-
+    public void iniciarAsync(int position){
+        new FiltrarPorTipo().execute(position + 1);
+    }
+/*
     public static ArrayList<Receta> getRecetasTipo() {
         return recetasTipo;
     }
 
     public static ArrayList<Bitmap> getImagenesTipo() {
         return imagenesTipo;
-    }
+    }*/
 }

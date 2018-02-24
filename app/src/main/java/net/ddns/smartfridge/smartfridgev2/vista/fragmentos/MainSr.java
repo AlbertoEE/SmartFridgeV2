@@ -155,7 +155,8 @@ public class MainSr extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_FILTRO){
-            Log.d("mainSR", "mainSR: "+ REQUEST_FILTRO);
+            Log.d("mainSR", "mainSR request: "+ requestCode);
+            Log.d("mainSR", "mainSR result: "+ resultCode);
             if(resultCode == Activity.RESULT_OK){
                 Log.d("mainSR", "mainSR: Result Ok");
                 recetas = new ArrayList<>();

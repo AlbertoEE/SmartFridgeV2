@@ -667,7 +667,7 @@ public class Dialogos {
                 })
                 .build();
     }
-    //Dialog que se mostrará cuando se vaya a filtrar por algún tipo de receta
+    /*Dialog que se mostrará cuando se vaya a filtrar por algún tipo de receta
     public void dialogoFiltroTipo(final int tipo){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
@@ -682,8 +682,14 @@ public class Dialogos {
                 Log.d("dialogo", "pulsado aceptar");
                 Log.d("dialogo", "tipo: " + tipo);
                 new TabTipo.FiltrarPorTipo().execute(tipo);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent();
-                intent.putExtra("filtro", fragment.getRecetasTipo());
+                intent.putExtra("filtro", TabTipo.getRecetasTipo());
+                Log.d("dialogo", "tamaño: " + TabTipo.getRecetasTipo().size());
                 intent.putExtra("filtroImagenes" , fragment.getImagenesTipo());
                 clase.setResult(clase.RESULT_OK, intent);
                 clase.finish();
@@ -697,5 +703,5 @@ public class Dialogos {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
+    }*/
 }

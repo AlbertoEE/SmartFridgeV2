@@ -84,8 +84,10 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
         holder.iamgebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Dialogos d = new Dialogos(contexto, tabTipo, activity);
-                d.dialogoFiltroTipo(position + 1);
+                d.dialogoFiltroTipo(position + 1);*/
+                tabTipo.iniciarAsync(position);
             }
         });
     }

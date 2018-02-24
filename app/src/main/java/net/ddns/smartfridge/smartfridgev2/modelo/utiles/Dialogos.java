@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -64,7 +65,7 @@ public class Dialogos {
     private Alimento acod;//Para crear un objeto que sea un alimento
     //private AlertDialog.Builder builder;//El builder para crear los dialogs
     private static Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
-    private static FragmentActivity fragment;//Para el constructor necesitamos indicar el fragment donde se va a ejecutar el dialog
+    private static TabTipo fragment;//Para el constructor necesitamos indicar el fragment donde se va a ejecutar el dialog
     private static final String DIA = " día";//Cte para el mensaje del dialog
     private static final String DIAS = " días";//Cte para el mensaje del dialog
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
@@ -80,9 +81,10 @@ public class Dialogos {
         this.clase = activity;
     }
 
-    public Dialogos(Context context, FragmentActivity fragment){
+    public Dialogos(Context context, TabTipo fragment, Activity activity){
         this.contexto=context;
         this.fragment = fragment;
+        this.clase = activity;
     }
 
     public Dialogos(Context context){
@@ -666,10 +668,10 @@ public class Dialogos {
                 .build();
     }
     //Dialog que se mostrará cuando se vaya a filtrar por algún tipo de receta
-    public void dialogoFiltroTipo(final Tipo tipo){
+    public void dialogoFiltroTipo(final int tipo){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
-        builder.setMessage("Va a filtrar por " + tipo.getDescripcion() + ", ¿es correcto?");
+        builder.setMessage("Aplicando filtro seleccionado...");
         //Título
         builder.setTitle("Filtrando receta");
         //Añadimos los botones
@@ -677,7 +679,14 @@ public class Dialogos {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Hacemos la consulta
-                new TabTipo.FiltrarPorTipo().execute(tipo.getId());
+                Log.d("dialogo", "pulsado aceptar");
+                Log.d("dialogo", "tipo: " + tipo);
+                new TabTipo.FiltrarPorTipo().execute(tipo);
+                Intent intent = new Intent();
+                intent.putExtra("filtro", fragment.getRecetasTipo());
+                intent.putExtra("filtroImagenes" , fragment.getImagenesTipo());
+                clase.setResult(clase.RESULT_OK, intent);
+                clase.finish();
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

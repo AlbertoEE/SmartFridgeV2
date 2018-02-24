@@ -2,7 +2,6 @@ package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,14 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.pchmn.materialchips.ChipsInput;
-import com.pchmn.materialchips.model.Chip;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
@@ -32,7 +27,6 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -233,10 +227,16 @@ public class TabAlimento extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
+            ArrayList<Bitmap> imagenes = new ArrayList<>();
+            for (Receta item : recetas) {
+                imagenes.add(item.getImagenReceta());
+                item.setImagenReceta(null);
+            }
             intent = new Intent();
             intent.putExtra("filtro", recetas);
+            intent.putExtra("filtroImagenes" , imagenes);
             getActivity().setResult(getActivity().RESULT_OK, intent);
-            getActivity().finish();
+
             try {
                 myHelper.cerrarConexion();
             } catch (SQLException e) {
@@ -245,20 +245,7 @@ public class TabAlimento extends Fragment {
             for(int i = 0;i<recetas.size(); i++){
                 Log.d("intentService", "Receta filtrado: " + recetas.get(i).getTituloReceta());
             }
+            getActivity().finish();
         }
-    }
-
-    //Metodo para simular los alimentos que ha seleccionado el usuario
-    public ArrayList<Ingrediente> fake(){
-        Ingrediente i = new Ingrediente(89, "sal");
-        Ingrediente a = new Ingrediente(94, "huevo");
-        Ingrediente l = new Ingrediente(18, "cebolla");
-        Ingrediente r = new Ingrediente(62, "agua");
-        ArrayList<Ingrediente> array = new ArrayList<>();
-        array.add(i);
-        //array.add(a);
-        array.add(l);
-        //array.add(r);
-        return array;
     }
 }

@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -157,6 +158,10 @@ public class MainSr extends Fragment {
             if(resultCode == Activity.RESULT_OK){
                 recetas = new ArrayList<>();
                 recetas = (ArrayList<Receta>)data.getSerializableExtra("filtro");
+                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra("filtroImagenes");
+                for (int i = 0; i < bitmaps.size(); i++){
+                    recetas.get(i).setImagenReceta(bitmaps.get(i));
+                }
                 adapter.filtrarArray(recetas);
             }
         }

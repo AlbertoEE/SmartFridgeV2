@@ -2,11 +2,13 @@ package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa una receta de la bbdd
  */
 
-public class    Receta {
+public class Receta implements Serializable{
     private int idReceta;//El identificador de la receta
     private String tituloReceta;//El título de la receta
     private String descripcion;//Descripción de cómo se hace la receta

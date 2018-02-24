@@ -1,5 +1,12 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 
+import android.view.View;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
+import net.ddns.smartfridge.smartfridgev2.R;
+
 /**
  * Created by Alberto on 17/02/2018.
  */
@@ -24,4 +31,13 @@ public class Constantes {
     public static final int DIALOG = 17;
     public static final int INITIAL = 18;
     public static final int DEFECTO = -1;
+
+    public void prueba(){
+        /*new ShowcaseView.Builder(getActivity())
+                .setTarget( new ViewTarget( ((View) v.findViewById(R.id.ibBuscar)) ) )
+                .setContentTitle("Buscar")
+                .setContentText("Boton para filtrar las recetas")
+                .hideOnTouchOutside()
+                .build();*/
+    }
 }

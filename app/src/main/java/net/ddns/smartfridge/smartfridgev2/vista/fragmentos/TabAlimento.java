@@ -42,7 +42,7 @@ public class TabAlimento extends Fragment {
     private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
 
     private int contador = 0;
-    private ChipsInput linearLayout;
+    //private ChipsInput linearLayout;
 
     private ArrayList<String> ingredientesComprobacion;
 

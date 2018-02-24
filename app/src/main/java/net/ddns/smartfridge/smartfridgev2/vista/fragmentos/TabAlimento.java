@@ -18,8 +18,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.pchmn.materialchips.ChipsInput;
-
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
@@ -114,14 +112,7 @@ public class TabAlimento extends Fragment {
                     //Llamamos al asyncTask pasándole la select correspondiente
                     new CogerRecetasFiltro().execute(sentenciaSeleccion);
                 }
-            /*    Intent i = new Intent();
-                i.putExtra("filtro", recetas);
-                getActivity().setResult(getActivity().RESULT_OK, i);
-                getActivity().finish();*/
 
-                //Miramos si está seleccionado el radiobutton
-                //boolean checked = ((RadioButton) view).isChecked();
-                //ingredientesSeleccionados = fake();
                 String alimento = act.getText().toString();
                 Log.d("autocomplete", alimento);
             }

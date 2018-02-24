@@ -64,11 +64,8 @@ dependencies {
     compile 'me.omidh:liquidradiobutton:1.0.01'
     //Parallax RecyclerView
     compile 'com.yayandroid:ParallaxRecyclerView:1.1'
-    //chip view
-    //compile 'com.github.jakebonk:ChipView:1.0.1'
-    //chipview2
-    //implementation 'com.robertlevonyan.view:MaterialChipView:1.1.3'
-    compile 'com.github.pchmn:MaterialChipsInput:1.0.8'
+    //ChipView
+    implementation 'com.robertlevonyan.view:MaterialChipView:1.1.3'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.amlcurran.showcaseview:library:5.4.3'
 }

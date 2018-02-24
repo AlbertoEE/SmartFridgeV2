@@ -101,7 +101,7 @@ public class TabTipo extends Fragment {
             for(int i = 0;i<recetas.size(); i++){
                 Log.d("intentService", "Receta filtrado: " + recetas.get(i).getTituloReceta());
             }
-            //getActivity().finish();
+            getActivity().finish();
         }
     }
 

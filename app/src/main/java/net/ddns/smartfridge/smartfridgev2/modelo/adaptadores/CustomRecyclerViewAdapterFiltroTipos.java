@@ -35,7 +35,7 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
     }
     @Override
     public CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fila_revista_main, parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fila_tipo, parent,
                 false);
         CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos viewHolder = new CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos(view);
         return viewHolder;
@@ -67,7 +67,7 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
         }
         Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] bitmapdata = stream.toByteArray();
 
         try {
@@ -101,7 +101,7 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
         public ImageButton iamgebutton;
         public ViewHolderRevistaFiltroTipos(View itemView) {
             super(itemView);
-            iamgebutton = itemView.findViewById(R.id.imageButton);
+            iamgebutton = itemView.findViewById(R.id.ibTipo);
         }
     }
 }

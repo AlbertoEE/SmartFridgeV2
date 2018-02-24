@@ -1,6 +1,8 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -44,6 +47,7 @@ public class TabAlimento extends Fragment {
     private Boolean contenga = null;//Para ver qué radiobutton se ha seleccionado
     private Intent intent;//Intent para pasar los datos al adapter y refrescarlos
     private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
+    private ArrayList<String> ingredientesSeleccionadosString;
 
     private int contador = 0;
 
@@ -60,6 +64,7 @@ public class TabAlimento extends Fragment {
         myHelper = new MySQLHelper();
         ingredientesSeleccionados = new ArrayList<>();
         ingredientesComprobacion = new ArrayList<>();
+        ingredientesSeleccionadosString = new ArrayList<>();
         new GetAllIngredientes().execute();
     }
 
@@ -127,6 +132,7 @@ public class TabAlimento extends Fragment {
             public void onClick(View view) {
                 addIngrediente();
                 act.setText("");
+                dismissKeyboard(getActivity());
             }
         });
 
@@ -144,42 +150,48 @@ public class TabAlimento extends Fragment {
             alimentos[contador] = ing.get(i).getNombreIngrediente();
             contador++;
             ingredientesComprobacion.add(ing.get(i).getNombreIngrediente());
-            Log.d("llllll", "generarSugerencias: " + ingredientesComprobacion.get(i));
         }
         return alimentos;
     }
 
     public void addIngrediente(){
         final String ingrediente = act.getText().toString();
+        if(!(llChips.getChildCount() > 3)){
+            if(ingredientesComprobacion.contains(ingrediente.toUpperCase()) && !ingredientesSeleccionadosString.contains(ingrediente)){
+                ingredientesSeleccionados.add(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente.toUpperCase())));
+                ingredientesSeleccionadosString.add(ingrediente);
+                final Chip chip = new Chip(getContext());
+                chip.setChipText(ingrediente);
+                chip.setClosable(true);
+                llChips.addView(chip);
 
-        for (Ingrediente item: ingredientesSeleccionados) {
-
-        }
-        if(ingredientesComprobacion.contains(ingrediente.toUpperCase()) && !ingredientesSeleccionados.contains(ingrediente) && !(llChips.getChildCount() > 3)){
-            ingredientesSeleccionados.add(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente)));
-
-            final Chip chip = new Chip(getContext());
-            chip.setChipText(ingrediente);
-            chip.setClosable(true);
-            llChips.addView(chip);
-
-            chip.setOnCloseClickListener(new OnCloseClickListener() {
-                private Chip chipRef = chip;
-                @Override
-                public void onCloseClick(View v) {
-                    for (Ingrediente item : ingredientes) {
-                        if(item.getNombreIngrediente().equalsIgnoreCase(chipRef.getChipText())){
-                            ingredientesSeleccionados.remove(item);
-                            llChips.removeView(chipRef);
-                            break;
+                chip.setOnCloseClickListener(new OnCloseClickListener() {
+                    private Chip chipRef = chip;
+                    @Override
+                    public void onCloseClick(View v) {
+                        for (Ingrediente item : ingredientes) {
+                            if (item.getNombreIngrediente().equalsIgnoreCase(chipRef.getChipText())) {
+                                ingredientesSeleccionados.remove(item);
+                                llChips.removeView(chipRef);
+                                break;
+                            }
                         }
                     }
-                }
-            });
+                });
+            } else {
+                Log.d("ingrediente", "entra por el else, va vacío");
+                Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Log.d("ingrediente", "entra por el else, va vacío");
-            Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No inntroduzcas más de 3 ingredientes", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void dismissKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (null != activity.getCurrentFocus())
+            imm.hideSoftInputFromWindow(activity.getCurrentFocus()
+                    .getApplicationWindowToken(), 0);
     }
 
     public class GetAllIngredientes extends AsyncTask<Void, Void, ArrayList<Ingrediente>> {

@@ -54,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.256"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/acAlimentosReceta"
-            app:layout_constraintVertical_bias="0.222">
+            app:layout_constraintVertical_bias="0.102">
 
             <me.omidh.liquidradiobutton.LiquidRadioButton
                 android:id="@+id/rbTenga"
@@ -142,6 +142,26 @@
             app:layout_constraintStart_toEndOf="@+id/acAlimentosReceta"
             app:layout_constraintTop_toTopOf="@+id/acAlimentosReceta"
             app:layout_constraintVertical_bias="0.8" />
+
+        <ScrollView
+            android:layout_width="270dp"
+            android:layout_height="103dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.683">
+
+            <LinearLayout
+                android:id="@+id/llChips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
 
     </android.support.constraint.ConstraintLayout>
 

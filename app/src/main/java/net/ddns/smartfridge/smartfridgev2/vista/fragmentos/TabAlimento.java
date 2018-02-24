@@ -15,8 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.robertlevonyan.views.chip.Chip;
+import com.robertlevonyan.views.chip.OnCloseClickListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
@@ -37,14 +41,14 @@ public class TabAlimento extends Fragment {
     private String sentencia;//Para ejecutar la sentencia de búsqueda en la bbdd
     private String sentenciaSeleccion;//Para ejecutar la sentencia de búsqueda en la bbdd
     private ArrayList<Ingrediente> ingredientesSeleccionados;//Para almacenar los ingredientes seleccionados por el usuario
-    private boolean contenga;//Para ver qué radiobutton se ha seleccionado
+    private Boolean contenga = null;//Para ver qué radiobutton se ha seleccionado
     private Intent intent;//Intent para pasar los datos al adapter y refrescarlos
     private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
 
     private int contador = 0;
-    //private ChipsInput linearLayout;
 
     private ArrayList<String> ingredientesComprobacion;
+    private LinearLayout llChips;
 
     public TabAlimento() {
         // Required empty public constructor
@@ -64,6 +68,7 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
+        llChips = (LinearLayout) v.findViewById(R.id.llChips);
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -104,17 +109,16 @@ public class TabAlimento extends Fragment {
                     Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
                     //Llamamos al asyncTask pasándole la select correspondiente
                     new CogerRecetasFiltro().execute(sentenciaSeleccion);
-                } else {
+                } else if (!contenga){
                     Log.d("check", "contenga onClick: " + contenga);
                     //Si queremos que no tenga alimentos, montamos la select correspondiente
                     sentenciaSeleccion = myHelper.montarSentenciaNo(ingredientesSeleccionados);
                     Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
                     //Llamamos al asyncTask pasándole la select correspondiente
                     new CogerRecetasFiltro().execute(sentenciaSeleccion);
+                } else if (contenga == null){
+                    Toast.makeText(getContext(), "Selecciona una opción", Toast.LENGTH_SHORT).show();
                 }
-
-                String alimento = act.getText().toString();
-                Log.d("autocomplete", alimento);
             }
         });
 
@@ -122,6 +126,7 @@ public class TabAlimento extends Fragment {
             @Override
             public void onClick(View view) {
                 addIngrediente();
+                act.setText("");
             }
         });
 
@@ -145,11 +150,32 @@ public class TabAlimento extends Fragment {
     }
 
     public void addIngrediente(){
-        String ingrediente = act.getText().toString();
-        Log.d("ingrediente", "texto: " + ingrediente);
-        if(ingredientesComprobacion.contains(ingrediente)){
-            Log.d("ingrediente", "entra por el if");
+        final String ingrediente = act.getText().toString();
+
+        for (Ingrediente item: ingredientesSeleccionados) {
+
+        }
+        if(ingredientesComprobacion.contains(ingrediente.toUpperCase()) && !ingredientesSeleccionados.contains(ingrediente) && !(llChips.getChildCount() > 3)){
             ingredientesSeleccionados.add(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente)));
+
+            final Chip chip = new Chip(getContext());
+            chip.setChipText(ingrediente);
+            chip.setClosable(true);
+            llChips.addView(chip);
+
+            chip.setOnCloseClickListener(new OnCloseClickListener() {
+                private Chip chipRef = chip;
+                @Override
+                public void onCloseClick(View v) {
+                    for (Ingrediente item : ingredientes) {
+                        if(item.getNombreIngrediente().equalsIgnoreCase(chipRef.getChipText())){
+                            ingredientesSeleccionados.remove(item);
+                            llChips.removeView(chipRef);
+                            break;
+                        }
+                    }
+                }
+            });
         } else {
             Log.d("ingrediente", "entra por el else, va vacío");
             Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();

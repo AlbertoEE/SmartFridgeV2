@@ -257,6 +257,7 @@ public class TabAlimento extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
+            Toast.makeText(getContext(), "No se ha encontrado ninguna receta con los ingredientes indicados", Toast.LENGTH_SHORT).show();
             if (recetas !=null) {
                 ArrayList<Bitmap> imagenes = new ArrayList<>();
                 for (Receta item : recetas) {
@@ -268,8 +269,9 @@ public class TabAlimento extends Fragment {
                 intent.putExtra("filtroImagenes", imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
-                Dialogos d = new Dialogos(getContext());
-                d.dialogoNoReceta();
+            /*    Dialogos d = new Dialogos(getContext());
+                d.dialogoNoReceta();*/
+                Toast.makeText(getContext(), "No se ha encontrado ninguna receta con los ingredientes indicados", Toast.LENGTH_SHORT).show();
             }
             try {
                 myHelper.cerrarConexion();

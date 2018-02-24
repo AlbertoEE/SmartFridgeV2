@@ -617,7 +617,7 @@ public class Dialogos {
         Log.d("tengen", "dialogoModificarBorrar: " + componenteReturn[0]);
     }
 
-    //Dialog que se mostrará cuando no se haya encontrado ninguna receta con los criterios de búsqueda
+    /*Dialog que se mostrará cuando no se haya encontrado ninguna receta con los criterios de búsqueda
     public void dialogoNoReceta(){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
@@ -634,7 +634,7 @@ public class Dialogos {
                 .setGifResource(R.drawable.gif_dk)
                 .isCancellable(true)
                 .build();
-    }
+    }*/
     //Dialog que se mostrará cuando se vaya a borrar una lista de la compra de las que hay guardadas
     public void dialogoBorrarLista(final TodasListasActivity clase, final int position){
         new FancyGifDialog.Builder(clase)

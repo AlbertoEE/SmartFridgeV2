@@ -49,6 +49,8 @@ public class TabAlimento extends Fragment {
     private Intent intent;//Intent para pasar los datos al adapter y refrescarlos
     private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
     private ArrayList<String> ingredientesSeleccionadosString;
+    private ArrayList<String> tiempo;//Array para guardar los ids de la tabla del tiempo de las recetas
+    private ArrayList<String> dif;//Array para guardar los ids de la tabla de la dificultad de las recetas
 
     private int contador = 0;
 
@@ -196,7 +198,8 @@ public class TabAlimento extends Fragment {
     }
 
     public class GetAllIngredientes extends AsyncTask<Void, Void, ArrayList<Ingrediente>> {
-
+        ArrayList<String> duracion = new ArrayList<>();
+        ArrayList<String> dificultad = new ArrayList<>();
         @Override
         protected ArrayList<Ingrediente> doInBackground(Void... voids) {
             myHelper = new MySQLHelper();
@@ -205,6 +208,14 @@ public class TabAlimento extends Fragment {
                 myHelper.abrirConexion();
                 //Recogemos todos los ingredientes
                 ingredientes = myHelper.recogerIngredientes();
+                //Recogemos todas las duraciones
+                duracion = myHelper.recogerDuracion();
+                //Recogemos todas las dificultadas
+                dificultad = myHelper.recogerDificultad();
+                //Lo asignamos a los atributos de la clase
+                tiempo = duracion;
+                dif = dificultad;
+                Log.d("tiempo", "longitud: " + tiempo.size());
             } catch (SQLException e) {
                 Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
             } catch (ClassNotFoundException e) {
@@ -283,5 +294,13 @@ public class TabAlimento extends Fragment {
             }
             getActivity().finish();
         }
+    }
+
+    public ArrayList<String> getTiempo() {
+        return tiempo;
+    }
+
+    public ArrayList<String> getDif() {
+        return dif;
     }
 }

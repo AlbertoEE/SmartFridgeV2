@@ -426,5 +426,48 @@ public class MySQLHelper {
         }
         return recetas;
     }
+
+    //Método para recoger todos los elementos de duración
+    public ArrayList<String> recogerDuracion(){
+        ArrayList<String> duracion = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT duracion FROM CLASIFICACION_TIEMPO;";
+        Log.d("sentencia2", "sentencia: " + sentencia);
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                duracion.add(rs.getString(1));
+                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return duracion;
+    }
+    //Método para recoger todos los elementos de duración
+    public ArrayList<String> recogerDificultad(){
+        ArrayList<String> dificultad = new ArrayList<>();
+        Statement st = null;
+        ResultSet rs = null;
+        //Sacamos todos los datos de la bbdd
+        sentencia = "SELECT nombre_dificultad FROM DIFICULTAD;";
+        Log.d("sentencia2", "sentencia: " + sentencia);
+        try {
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            while (rs.next()) {
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                dificultad.add(rs.getString(1));
+                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+            }
+        } catch (SQLException e) {
+            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
+        }
+        return dificultad;
+    }
 }
 

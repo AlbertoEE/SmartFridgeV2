@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Alberto on 22/02/2018.
@@ -15,9 +18,11 @@ import net.ddns.smartfridge.smartfridgev2.R;
 
 public class CustomBaseAdapter extends BaseAdapter {
     private Context context;
+    private ArrayList<String> datos;//Para cargar los datos
 
-    public CustomBaseAdapter(Context context){
+    public CustomBaseAdapter(Context context, ArrayList<String> datos){
         this.context = context;
+        this.datos = datos;
     }
 
     @Override
@@ -43,17 +48,18 @@ public class CustomBaseAdapter extends BaseAdapter {
         if (view == null) {
             itemView = LayoutInflater.from(context).inflate(R.layout.fila_spinner, viewGroup, false);
             fila = new ViewHolderBase();
-            fila.imageView = (ImageView) itemView.findViewById(R.id.ivSpinner);
+            fila.textView = (TextView) itemView.findViewById(R.id.tvSpinner);
             itemView.setTag(fila);
         } else {
             fila = (ViewHolderBase) itemView.getTag();
+            fila.textView.setText(datos.get(i));
         }
 
         //fila.imageView.setImageBitmap();
-        return null;
+        return itemView;
     }
 
     private static class ViewHolderBase{
-        ImageView imageView;
+        TextView textView;
     }
 }

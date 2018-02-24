@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomBaseAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
@@ -29,6 +32,11 @@ public class TabOtros extends Fragment {
     private CustomDialogProgressBar customDialogProgressBar;
     private MySQLHelper myHelper;//Para trabajar con la bbdd
     private ArrayList<Receta> recetas;
+    private ArrayList<String> tiempo;//Array para guardar los ids de la tabla del tiempo de las recetas
+    private ArrayList<String> dificultad;//Array para guardar los ids de la tabla de dificultad de las recetas
+    private Spinner spinnerT;//Para coger la referencia del spinner del tiempo
+    private Spinner spinnerD;//Para coger la referencia del spinner de la duración
+    private Context contexto;//Para el contexto del activity
 
     public TabOtros() {
         // Required empty public constructor
@@ -38,6 +46,11 @@ public class TabOtros extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customDialogProgressBar = new CustomDialogProgressBar(getActivity());
+        //Cogemos la referencia al activity donde se sacan los datos
+        TabAlimento ta = (TabAlimento)getFragmentManager().findFragmentByTag("tab1");
+        //Recogemos los valores que necesitamos para los comboBox
+        tiempo=ta.getTiempo();
+        dificultad = ta.getDif();
     }
 
     @Override
@@ -47,6 +60,13 @@ public class TabOtros extends Fragment {
         buscar = (EditText)v.findViewById(R.id.actvRecetas);
         texto = buscar.getText().toString();
         Log.d("filtro", "texto a buscar: " + texto);
+        spinnerT = (Spinner) v.findViewById(R.id.spnTiempo);
+        spinnerD = (Spinner) v.findViewById(R.id.spnDificultad);
+        //Le asignamos los valores a los spinner
+        CustomBaseAdapter cba = new CustomBaseAdapter(getContext(), tiempo);
+        spinnerT.setAdapter(cba);
+        cba = new CustomBaseAdapter(getContext(), dificultad);
+        spinnerD.setAdapter(cba);
         return v;
     }
 

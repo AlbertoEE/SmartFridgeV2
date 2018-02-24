@@ -28,6 +28,7 @@ import com.robertlevonyan.views.chip.OnCloseClickListener;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
@@ -256,16 +257,20 @@ public class TabAlimento extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
-            ArrayList<Bitmap> imagenes = new ArrayList<>();
-            for (Receta item : recetas) {
-                imagenes.add(item.getImagenReceta());
-                item.setImagenReceta(null);
+            if (recetas !=null) {
+                ArrayList<Bitmap> imagenes = new ArrayList<>();
+                for (Receta item : recetas) {
+                    imagenes.add(item.getImagenReceta());
+                    item.setImagenReceta(null);
+                }
+                intent = new Intent();
+                intent.putExtra("filtro", recetas);
+                intent.putExtra("filtroImagenes", imagenes);
+                getActivity().setResult(getActivity().RESULT_OK, intent);
+            } else {
+                Dialogos d = new Dialogos(getContext());
+                d.dialogoNoReceta();
             }
-            intent = new Intent();
-            intent.putExtra("filtro", recetas);
-            intent.putExtra("filtroImagenes" , imagenes);
-            getActivity().setResult(getActivity().RESULT_OK, intent);
-
             try {
                 myHelper.cerrarConexion();
             } catch (SQLException e) {

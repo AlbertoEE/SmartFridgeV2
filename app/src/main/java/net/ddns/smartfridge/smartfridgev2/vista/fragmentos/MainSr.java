@@ -155,9 +155,13 @@ public class MainSr extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_FILTRO){
+            Log.d("mainSR", "mainSR: "+ REQUEST_FILTRO);
             if(resultCode == Activity.RESULT_OK){
+                Log.d("mainSR", "mainSR: Result Ok");
                 recetas = new ArrayList<>();
                 recetas = (ArrayList<Receta>)data.getSerializableExtra("filtro");
+                Log.d("mainSR", "mainSR: "+ recetas.size());
+
                 ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra("filtroImagenes");
                 for (int i = 0; i < bitmaps.size(); i++){
                     recetas.get(i).setImagenReceta(bitmaps.get(i));

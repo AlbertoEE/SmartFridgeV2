@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import com.robertlevonyan.views.chip.Chip;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
-
-import org.w3c.dom.Attr;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,9 +42,9 @@ public class TabAlimento extends Fragment {
     private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
 
     private int contador = 0;
+    //private ChipsInput linearLayout;
 
     private ArrayList<String> ingredientesComprobacion;
-    private LinearLayout llChips;
 
     public TabAlimento() {
         // Required empty public constructor
@@ -70,7 +64,6 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
-        llChips = (LinearLayout) v.findViewById(R.id.llChips);
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -154,13 +147,9 @@ public class TabAlimento extends Fragment {
     public void addIngrediente(){
         String ingrediente = act.getText().toString();
         Log.d("ingrediente", "texto: " + ingrediente);
-        if(ingredientesComprobacion.contains(ingrediente.toUpperCase()) && !ingredientesSeleccionados.contains(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente)))){
+        if(ingredientesComprobacion.contains(ingrediente)){
             Log.d("ingrediente", "entra por el if");
             ingredientesSeleccionados.add(ingredientes.get(ingredientesComprobacion.indexOf(ingrediente)));
-            Chip chip = new Chip(getContext());
-            chip.setChipText(ingrediente);
-            chip.setClosable(true);
-            llChips.addView(chip);
         } else {
             Log.d("ingrediente", "entra por el else, va vacío");
             Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();

@@ -214,7 +214,7 @@ public class MySQLHelper {
                 imagen = BitmapFactory.decodeStream(bais);
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                        rs.getInt(5), rs.getInt(6), imagen);
+                        rs.getString(5), rs.getString(6), imagen);
                 recetas.add(receta);
                 Log.d("check", "receta: " + receta.getTituloReceta());
             }
@@ -258,7 +258,11 @@ public class MySQLHelper {
        // for (int i=0; i<numero; i++){
             if (numero==1){
                 Log.d("check", "solo hay un elemento en el array");
-                sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                //sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                //        "WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";
+                sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                        "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
+                        " AND id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
                         "WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";
                 Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
             } else if (numero>1){
@@ -268,7 +272,12 @@ public class MySQLHelper {
                     ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + ", ";
                     Log.d("check", "valor de la sentencia: " + ing);
                 }
-                sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+             /*   sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
+                        "WHERE id_ingrediente IN (" + ing + aIngrediente.get(numero-1).getIdIngrediente() + ")" +
+                        " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";*/
+                sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                        "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
+                        " AND id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
                         "WHERE id_ingrediente IN (" + ing + aIngrediente.get(numero-1).getIdIngrediente() + ")" +
                         " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";
                 Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
@@ -308,8 +317,10 @@ public class MySQLHelper {
         PreparedStatement pst =null;
         ResultSet rs = null;
         //Sacamos todos los datos de la bbdd
-        sentencia = "SELECT * FROM RECETAS WHERE id_tipo_receta = ?;";
-
+        //sentencia = "SELECT * FROM RECETAS WHERE id_tipo_receta = ?;";
+        sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
+                " AND id_tipo_receta = ?;";
         Log.d("sentencia", "sentencia: " + sentencia);
         try {
             //st = (Statement) conexion.createStatement();

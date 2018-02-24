@@ -1,6 +1,10 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,14 +30,18 @@ import java.util.ArrayList;
 public class TabTipo extends Fragment {
     private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
     private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
+    private static ArrayList<Receta> recetasTipo;//Para almacenar las recetas recogidas de la bbdd
+    private static ArrayList<Bitmap> imagenesTipo;//Para almacenar las imágenes de las recetas de la bbdd
     private RecyclerView recyclerView;
     private CustomRecyclerViewAdapterFiltroTipos adapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       recetas = new ArrayList<Receta>();
-       //tipos = new ArrayList<>();
+        recetas = new ArrayList<Receta>();
+        recetasTipo = new ArrayList<Receta>();
+        imagenesTipo = new ArrayList<>();
         new SacarTipos().execute();
     }
 
@@ -42,13 +50,9 @@ public class TabTipo extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_tipo, container, false);
         recyclerView = v.findViewById(R.id.rvTabTipo);
-        adapter = new CustomRecyclerViewAdapterFiltroTipos(getActivity());
+        adapter = new CustomRecyclerViewAdapterFiltroTipos(getActivity(), this, getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
-        //Meter esto en la fila del adapter
-     /*   Dialogos d = new Dialogos(getContext(),getActivity());
-        Tipo t = new Tipo(1, "arroz");
-        d.dialogoFiltroTipo(t);*/
         return v;
     }
 
@@ -61,6 +65,7 @@ public class TabTipo extends Fragment {
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
                 //Recogemos todas las recetas
+                Log.d("dialogo", "asynctask");
                 recetas = myHelper.filtrarRecetaPorTipo(ints[0]);
             } catch (SQLException e) {
                 Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
@@ -76,6 +81,13 @@ public class TabTipo extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
+            recetasTipo = recetas;
+            ArrayList<Bitmap> imagenes = new ArrayList<>();
+            for (Receta item : recetas) {
+                imagenes.add(item.getImagenReceta());
+                item.setImagenReceta(null);
+            }
+            imagenesTipo = imagenes;
             try {
                 myHelper.cerrarConexion();
             } catch (SQLException e) {
@@ -84,6 +96,7 @@ public class TabTipo extends Fragment {
             for(int i = 0;i<recetas.size(); i++){
                 Log.d("intentService", "Receta filtrado: " + recetas.get(i).getTituloReceta());
             }
+
         }
     }
 
@@ -122,5 +135,13 @@ public class TabTipo extends Fragment {
                 Log.d("intentService", "Receta tipo: " + tipos.get(i).getDescripcion());
             }
         }
+    }
+
+    public static ArrayList<Receta> getRecetasTipo() {
+        return recetasTipo;
+    }
+
+    public static ArrayList<Bitmap> getImagenesTipo() {
+        return imagenesTipo;
     }
 }

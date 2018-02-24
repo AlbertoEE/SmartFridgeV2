@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
 import java.io.ByteArrayOutputStream;
 
@@ -23,8 +26,12 @@ import java.io.ByteArrayOutputStream;
 
 public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos> {
     private Activity activity;
-    public CustomRecyclerViewAdapterFiltroTipos(Activity activity){
+    private TabTipo tabTipo;
+    private Context contexto;
+    public CustomRecyclerViewAdapterFiltroTipos(Activity activity, TabTipo tabTipo, Context cont){
         this.activity = activity;
+        this.tabTipo = tabTipo;
+        this.contexto = cont;
     }
     @Override
     public CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,7 +42,7 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
     }
 
     @Override
-    public void onBindViewHolder(CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos holder, int position) {
+    public void onBindViewHolder(CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos holder, final int position) {
         Drawable d = null;
         if (position == 0){
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.ic_arroz);
@@ -77,7 +84,8 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
         holder.iamgebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Dialogos d = new Dialogos(contexto, tabTipo, activity);
+                d.dialogoFiltroTipo(position + 1);
             }
         });
     }

@@ -34,7 +34,7 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         imagenesDetalles = null;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mi_nevera);
+        setContentView(R.layout.activity_mi_nevera_filtro);
         imagenesDetalles = new ArrayList<>();
         alimentoDB = new AlimentoDB(this);
         cursor = alimentoDB.getAlimentos();

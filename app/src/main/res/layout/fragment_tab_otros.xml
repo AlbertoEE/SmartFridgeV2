@@ -13,54 +13,57 @@
 
         <Spinner
             android:id="@+id/spnTiempo"
-            android:layout_width="78dp"
+            android:layout_width="185dp"
             android:layout_height="33dp"
+            android:layout_marginBottom="332dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.712"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/actvRecetas"
-            app:layout_constraintVertical_bias="0.164" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRecetas"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Spinner
             android:id="@+id/spnDificultad"
-            android:layout_width="80dp"
+            android:layout_width="111dp"
             android:layout_height="34dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.717"
+            app:layout_constraintHorizontal_bias="0.791"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnTiempo"
-            app:layout_constraintVertical_bias="0.182" />
+            app:layout_constraintVertical_bias="0.175" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="56dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="8dp"
             android:text="Tiempo"
             app:layout_constraintBottom_toBottomOf="@+id/spnTiempo"
             app:layout_constraintEnd_toStartOf="@+id/spnTiempo"
-            app:layout_constraintTop_toTopOf="@+id/spnTiempo" />
+            app:layout_constraintTop_toTopOf="@+id/spnTiempo"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="56dp"
+            android:layout_marginEnd="100dp"
             android:layout_marginTop="8dp"
             android:text="Dificultad"
             app:layout_constraintBottom_toBottomOf="@+id/spnDificultad"
             app:layout_constraintEnd_toStartOf="@+id/spnDificultad"
-            app:layout_constraintTop_toTopOf="@+id/spnDificultad" />
+            app:layout_constraintTop_toTopOf="@+id/spnDificultad"
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/actvRecetas"
+            android:id="@+id/tvRecetas"
             android:layout_width="164dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -75,7 +78,7 @@
             app:layout_constraintVertical_bias="0.089" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/ibFiltrarTabOtros"
             android:layout_width="94dp"
             android:layout_height="89dp"
             android:layout_marginBottom="8dp"

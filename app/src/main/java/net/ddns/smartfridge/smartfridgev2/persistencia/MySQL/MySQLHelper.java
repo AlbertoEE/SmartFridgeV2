@@ -406,7 +406,7 @@ public class MySQLHelper {
         PreparedStatement pst =null;
         ResultSet rs = null;
         //Sacamos todos los datos de la bbdd
-        if (texto==null) {
+        if (texto==null || !texto.isEmpty()) {
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                     "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta;";
         } else {

@@ -103,12 +103,15 @@ public class TodasListasActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
 
                 if (direction == ItemTouchHelper.LEFT){
-                    adapter.removeItem(position);
-                    listas = adapter.getListaCompra();
-                    gfl.actualizarListas(listas);
-                    //Log.d("swipe", "tamaño: " + listas.size());
-                } else {
                     dialogos.dialogoBorrarLista(todasListasActivity, position);
+                    //Log.d("swipe", "tamaño: " + listas.size());
+                    Log.d("ñññ", "onSwiped: 1");
+                } else if(direction == ItemTouchHelper.RIGHT){
+                    intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
+                    intent.putExtra("ListaProductos", adapter.getLista(position));
+                    adapter.notifyDataSetChanged();
+                    startActivity(intent);
+                    Log.d("ñññ", "onSwiped: 2");
                 }
             }
 
@@ -165,9 +168,12 @@ public class TodasListasActivity extends AppCompatActivity {
     }
 
     public void deleteOne(int position){
-        intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
-        intent.putExtra("ListaProductos", adapter.getLista(position));
+        adapter.removeItem(position);
+        listas = adapter.getListaCompra();
+        gfl.actualizarListas(listas);
+    }
+
+    public void cancel(){
         adapter.notifyDataSetChanged();
-        startActivity(intent);
     }
 }

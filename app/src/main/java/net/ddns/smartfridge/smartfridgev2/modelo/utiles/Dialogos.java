@@ -662,6 +662,7 @@ public class Dialogos {
                 .OnNegativeClicked(new FancyGifDialogListener() {
                     @Override
                     public void OnClick() {
+                        clase.cancel();
                         //No hacemos nada
                     }
                 })

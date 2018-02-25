@@ -2,6 +2,8 @@ package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,16 +61,39 @@ public class TabOtros extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_otros, container, false);
-        buscar = (EditText)v.findViewById(R.id.actvRecetas);
-        texto = buscar.getText().toString();
-        Log.d("filtro", "texto a buscar: " + texto);
+        buscar = (EditText)v.findViewById(R.id.tvRecetas);
+
         spinnerT = (Spinner) v.findViewById(R.id.spnTiempo);
         spinnerD = (Spinner) v.findViewById(R.id.spnDificultad);
         //Le asignamos los valores a los spinner
-        CustomBaseAdapter cba = new CustomBaseAdapter(getContext(), tiempo);
-        spinnerT.setAdapter(cba);
-        cba = new CustomBaseAdapter(getContext(), dificultad);
-        spinnerD.setAdapter(cba);
+
+        List<String> spinnerArrayTiempo =  new ArrayList<String>();
+        List<String> spinnerArrayDificultad =  new ArrayList<String>();
+        for (String item : tiempo) {
+            spinnerArrayTiempo.add(item);
+        }
+        for (String item : dificultad) {
+            spinnerArrayDificultad.add(item);
+        }
+
+        ArrayAdapter<String> adapterT = new ArrayAdapter<String>(
+                getContext(), android.R.layout.simple_spinner_item, spinnerArrayTiempo);
+        ArrayAdapter<String> adapterD = new ArrayAdapter<String>(
+                getContext(), android.R.layout.simple_spinner_item, spinnerArrayDificultad);
+
+        adapterT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerT.setAdapter(adapterT);
+
+        adapterD.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerD.setAdapter(adapterD);
+
+        v.findViewById(R.id.ibFiltrarTabOtros).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new mostrarRecetasFiltro().execute();
+            }
+        });
+
         return v;
     }
 
@@ -86,15 +113,17 @@ public class TabOtros extends Fragment {
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
                 //Recogemos las recetas una a una
-                recetas = myHelper.recogerRecetaTitulo(voids[0]);
+                recetas = myHelper.recogerRecetaTitulo(buscar.getText().toString());
+                Log.d("intentServiced", "doInBackground: " + recetas.size());
+                for(int i = 0;i<recetas.size(); i++){
+                    Log.d("intentServiced", "Receta en intentService: " + recetas.get(i).getTituloReceta());
+                }
             } catch (SQLException e) {
                 Log.d("SQL", "Error al conectarse a la bbdd: " + e.getErrorCode());
             } catch (ClassNotFoundException e) {
                 Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
             }
-            for(int i = 0;i<recetas.size(); i++){
-                Log.d("intentService", "Receta en intentService: " + recetas.get(i).getTituloReceta());
-            }
+
             return recetas;
         }
 
@@ -104,6 +133,17 @@ public class TabOtros extends Fragment {
             try {
                 myHelper.cerrarConexion();
                 customDialogProgressBar.endDialog();
+
+                ArrayList<Bitmap> imagenes = new ArrayList<>();
+                for (Receta item : recetas) {
+                    imagenes.add(item.getImagenReceta());
+                    item.setImagenReceta(null);
+                }
+                Intent intent = new Intent();
+                intent.putExtra("filtro", recetas);
+                intent.putExtra("filtroImagenes" , imagenes);
+                getActivity().setResult(getActivity().RESULT_OK, intent);
+                getActivity().finish();
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }

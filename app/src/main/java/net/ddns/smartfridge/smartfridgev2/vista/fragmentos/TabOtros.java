@@ -15,10 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomBaseAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
@@ -55,13 +54,14 @@ public class TabOtros extends Fragment {
         //Recogemos los valores que necesitamos para los comboBox
         tiempo=ta.getTiempo();
         dificultad = ta.getDif();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tab_otros, container, false);
-        buscar = (EditText)v.findViewById(R.id.tvRecetas);
+        buscar = (EditText)v.findViewById(R.id.tvRecetasD);
 
         spinnerT = (Spinner) v.findViewById(R.id.spnTiempo);
         spinnerD = (Spinner) v.findViewById(R.id.spnDificultad);
@@ -90,10 +90,11 @@ public class TabOtros extends Fragment {
         v.findViewById(R.id.ibFiltrarTabOtros).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new mostrarRecetasFiltro().execute();
+                Log.d("sentencia3", "Pulsado el boton");
+                Log.d("sentencia3", "texto: " + buscar.getText().toString().toUpperCase());
+                new mostrarRecetasFiltro().execute(buscar.getText().toString().toUpperCase());
             }
         });
-
         return v;
     }
 
@@ -102,18 +103,19 @@ public class TabOtros extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            customDialogProgressBar.showDialogCuadrado();
+            //ustomDialogProgressBar.showDialogCuadrado();
         }
 
         @Override
         protected ArrayList<Receta> doInBackground(String... voids) {
+            Log.d("sentencia3", "sentencia: " + voids[0]);
             recetas = new ArrayList<>();
             myHelper = new MySQLHelper();
             try {
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
                 //Recogemos las recetas una a una
-                recetas = myHelper.recogerRecetaTitulo(buscar.getText().toString());
+                recetas = myHelper.recogerRecetaTitulo(voids[0]);
                 Log.d("intentServiced", "doInBackground: " + recetas.size());
                 for(int i = 0;i<recetas.size(); i++){
                     Log.d("intentServiced", "Receta en intentService: " + recetas.get(i).getTituloReceta());
@@ -123,17 +125,14 @@ public class TabOtros extends Fragment {
             } catch (ClassNotFoundException e) {
                 Log.d("SQL", "Error al establecer la conexión: " + e.getMessage());
             }
-
             return recetas;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
-            try {
-                myHelper.cerrarConexion();
-                customDialogProgressBar.endDialog();
-
+            if (recetas.size()>0) {
+                Log.d("otros", "receta: " + recetas.get(0).getTituloReceta());
                 ArrayList<Bitmap> imagenes = new ArrayList<>();
                 for (Receta item : recetas) {
                     imagenes.add(item.getImagenReceta());
@@ -143,13 +142,16 @@ public class TabOtros extends Fragment {
                 intent.putExtra("filtro", recetas);
                 intent.putExtra("filtroImagenes" , imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
+            } else {
+                Toast.makeText(getContext(), "No hay resultados", Toast.LENGTH_SHORT).show();
+            }
+            try {
+                myHelper.cerrarConexion();
+
                 getActivity().finish();
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
         }
-
-
     }
-
 }

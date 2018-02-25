@@ -403,27 +403,36 @@ public class MySQLHelper {
     //Método para buscar una menu_receta a partir de un texto
     public ArrayList<Receta> recogerRecetaTitulo(String  texto){
         recetas = new ArrayList<>();
-        PreparedStatement pst =null;
+        //PreparedStatement pst =null;
+        Statement st=null;
         ResultSet rs = null;
         //Sacamos todos los datos de la bbdd
-        if (texto==null || !texto.isEmpty()) {
+        if (texto==null || texto.isEmpty()) {
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                     "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta;";
         } else {
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                     "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta " +
-                    "AND R.nombre_receta LIKE % ? %;";
+                    "AND R.nombre_receta LIKE '%" + texto + "%';";
         }
-        Log.d("sentencia2", "sentencia: " + sentencia);
+        Log.d("sentencia3", "sentencia: " + sentencia);
         try {
-            pst = conexion.prepareStatement(sentencia);
-            pst.setString(1, texto);
-            rs = pst.executeQuery();
+            st = (Statement) conexion.createStatement();
+            rs = st.executeQuery(sentencia);
+            Log.d("sentencia3", "TEXTO: " + texto);
+            //rs = pst.executeQuery();
+            Log.d("sentencia3", "rs: " + rs.getFetchSize());
             while (rs.next()) {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
-                alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2), rs.getInt(3));
-                alimentosCategoria.add(alimentoExterno);
-                Log.d("menu_receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+                blob = rs.getBlob(7);
+                byte[] data = blob.getBytes(1, (int)blob.length());
+                ByteArrayInputStream bais = new ByteArrayInputStream(data);
+                imagen = BitmapFactory.decodeStream(bais);
+                //Vamos creando los objetos que almacenaremos luego en un arraylist
+                receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                        rs.getString(5), rs.getString(6), imagen);
+                recetas.add(receta);
+                Log.d("sentencia3", "receta: " + receta.getTituloReceta());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());

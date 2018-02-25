@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.712"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecetas"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecetasD"
             app:layout_constraintVertical_bias="1.0" />
 
         <Spinner
@@ -63,14 +63,14 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/tvRecetas"
+            android:id="@+id/tvRecetasD"
             android:layout_width="164dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:hint="Introduzca búsqueda"
+            android:hint="Introduzca su búsqueda"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +86,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@null"
+            android:onClick="consultar"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_buscar"
             app:layout_constraintBottom_toBottomOf="parent"

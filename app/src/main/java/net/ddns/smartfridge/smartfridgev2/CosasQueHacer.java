@@ -19,5 +19,6 @@ public class CosasQueHacer {
     //TODO RECETAS:
     /*
     4. TODO Error android.view.InflateException: Binary XML file line #0: Error inflating class ImageButton línea 38 CustomRecyclerViewAdapterFiltroTipos
+    5. TODO Hacer que se seleccione o spinner o texto, no los dos a la vez
      */
 }

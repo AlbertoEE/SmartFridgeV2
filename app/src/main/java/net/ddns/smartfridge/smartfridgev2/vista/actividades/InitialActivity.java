@@ -137,35 +137,6 @@ public class InitialActivity extends AppCompatActivity {
         return sp;
     }
 
-  /*  public void mostrarTutorial(boolean tutorial){
-        if(!tutorial){
-            new ShowcaseView.Builder(this)
-                    .setTarget( new ViewTarget( ((View) findViewById(R.id.ca)) ) )
-                    .setContentTitle("Control de Alimentos")
-                    .setContentText("Botón para gestionar el control de los alimentos de MiNevera")
-                    .hideOnTouchOutside()
-                    .build();
-            new ShowcaseView.Builder(this)
-                    .setTarget( new ViewTarget( ((View) findViewById(R.id.pm)) ) )
-                    .setContentTitle("Programar Menu")
-                    .setContentText("Botón para gestionar la programación de los menús (En desarrollo)")
-                    .hideOnTouchOutside()
-                    .build();
-            new ShowcaseView.Builder(this)
-                    .setTarget( new ViewTarget( ((View) findViewById(R.id.sr)) ) )
-                    .setContentTitle("Sugerir recetas")
-                    .setContentText("Botón para gestionar todas las recetas con sus filtros")
-                    .hideOnTouchOutside()
-                    .build();
-            new ShowcaseView.Builder(this)
-                    .setTarget( new ViewTarget( ((View) findViewById(R.id.clc)) ) )
-                    .setContentTitle("Programar Menu")
-                    .setContentText("Botón para gestionar las listas de la compra")
-                    .hideOnTouchOutside()
-                    .build();
-        }
-    }*/
-
     private void mostrarTutorial(){
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
 
@@ -175,11 +146,11 @@ public class InitialActivity extends AppCompatActivity {
 
         if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
 
-            //Declaramos todas las variables que vamos a usar
+            /*Declaramos todas las variables que vamos a usar
             final ViewTarget b1 = new ViewTarget(R.id.ca, this);
             final ViewTarget b2 = new ViewTarget(R.id.pm, this);
             final ViewTarget b3 = new ViewTarget(R.id.sr , this);
-            final ViewTarget b4 = new ViewTarget(R.id.clc , this);
+            final ViewTarget b4 = new ViewTarget(R.id.clc , this);*/
 
             //Creamos un nuevo LayoutParms para cambiar el botón de posición
             final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -224,6 +195,9 @@ public class InitialActivity extends AppCompatActivity {
                             s.setContentText("Botón para gestionar la programación de los menús (En desarrollo)");
                             break;
                         case 4:
+
+                            break;
+                        case 5:
                             //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("run?", false);

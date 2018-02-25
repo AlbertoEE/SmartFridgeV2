@@ -13,13 +13,11 @@ public class CosasQueHacer {
     //TODO PARA TERMINAR LA PARTE DE CREAR LISTAS:
     /*
     10.TODO Tener en cuenta que al pulsar una notificacion del tipo escasez mientras se está haciendo una lista, el producto no se añade. -RAQUEL-
-    11.TODO Confirmar cuando se borre una lista mediante un dialog
+    11.TODO Mostrar algo de fondo cuando no haya ninguna lista
      */
 
     //TODO RECETAS:
     /*
-    1. TODO Conectar la consulta de todos los ingredientes con el AutoCompleteTextView en TabAlimento
-    2. TODO Controlar Select con ingredientes que no haya en ninguna menu_receta
-    3. TODO Cambiar eltiempo que sale al mostrar las recetas por el tiempo real
+    4. TODO Error android.view.InflateException: Binary XML file line #0: Error inflating class ImageButton línea 38 CustomRecyclerViewAdapterFiltroTipos
      */
 }

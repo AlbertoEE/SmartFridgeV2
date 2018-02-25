@@ -162,7 +162,9 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
                 //Vemos si tenemos que hacer la consulta en función del título o de los spinner
+                Log.d("nepeee", "doInBackground: " + voids[0]);
                 recetas = myHelper.filtrarRecetaMiNevera(voids[0]);
+                Log.d("nepeee", "doInBackground: " +recetas.size());
 
                 Log.d("intentServiced", "doInBackground: " + recetas.size());
                 for(int i = 0;i<recetas.size(); i++){

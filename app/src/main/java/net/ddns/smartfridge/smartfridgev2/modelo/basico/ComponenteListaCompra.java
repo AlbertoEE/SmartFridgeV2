@@ -10,18 +10,17 @@ public class ComponenteListaCompra implements Serializable{
     private String nombreElemento;//El nombre del elemento
     private int tipo;//Nos va a decir de dónde proviene ese alimento
     /**
-     * The constant TIPOS.
+     * Constante que es un array de int donde se representa la procedencia del alimento que forma parte de la lista de la compra
      */
     public static final int[]TIPOS = {1,2,3};//Si es de tipo 1, proviene de la bbdd de MiNevera, si es de tipo 2 proviene de SF y si es de tipo 3 es manual
 
     /**
-     * Instantiates a new Componente lista compra.
+     * Constructor
      *
-     * @param id             the id
-     * @param nombreElemento the nombre elemento
-     * @param tipo           the tipo
+     * @param id             id del alimento
+     * @param nombreElemento nombre del alimento
+     * @param tipo           tipo del alimento para indicar de dónde procede
      */
-//Constructor
     public ComponenteListaCompra(int id, String nombreElemento, int tipo) {
         this.id = id;
         this.nombreElemento = nombreElemento;

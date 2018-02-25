@@ -9,32 +9,17 @@ public class Alimento_Nuevo {
     private String fecha_alta;//Fecha en la que se insertó el alimento en la bbdd
 
     /**
-     * Instantiates a new Alimento nuevo.
+     * Constructor
      *
-     * @param nombre_ali_nuevo the nombre ali nuevo
-     * @param fecha_alta       the fecha alta
-     * @param id               the id
+     * @param nombre_ali_nuevo nombre del alimento
+     * @param fecha_alta       fecha de alta en la bbdd del alimento
+     * @param id               id del alimento
      */
-//Constructor 1
     public Alimento_Nuevo(String nombre_ali_nuevo, String fecha_alta, int id) {
-
         this.nombre_ali_nuevo = nombre_ali_nuevo;
         this.fecha_alta = fecha_alta;
         this.id = id;
     }
-
-    /**
-     * Instantiates a new Alimento nuevo.
-     *
-     * @param nombre_ali_nuevo the nombre ali nuevo
-     * @param fecha_alta       the fecha alta
-     */
-//Constructor 2
-    public Alimento_Nuevo(String nombre_ali_nuevo, String fecha_alta) {
-        this.nombre_ali_nuevo = nombre_ali_nuevo;
-        this.fecha_alta = fecha_alta;
-    }
-
     /**
      * Gets id.
      *

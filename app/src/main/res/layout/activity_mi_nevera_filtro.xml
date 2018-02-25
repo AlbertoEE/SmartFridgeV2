@@ -22,7 +22,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMiNevera"
         android:layout_width="match_parent"
-        android:layout_height="385dp"
+        android:layout_height="316dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/ibFiltrarMiNevera"
         app:layout_constraintEnd_toEndOf="parent"

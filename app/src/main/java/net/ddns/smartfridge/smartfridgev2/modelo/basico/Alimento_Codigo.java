@@ -16,10 +16,10 @@ public class Alimento_Codigo implements Serializable{
     /**
      * Instantiates a new Alimento codigo.
      *
-     * @param id_codigo     the id codigo
-     * @param nomAlimento   the nom alimento
-     * @param codigo_barras the codigo barras
-     * @param imagen        the imagen
+     * @param id_codigo     id del alimento
+     * @param nomAlimento   nombre del alimento
+     * @param codigo_barras codigo de barras del alimento
+     * @param imagen        imagen del alimento
      */
     public Alimento_Codigo(int id_codigo, String nomAlimento, String codigo_barras, Bitmap imagen) {
         this.id_codigo = id_codigo;

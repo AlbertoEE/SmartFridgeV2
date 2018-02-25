@@ -18,17 +18,17 @@ public class Alimento implements Serializable {
     private Bitmap imagen;//Imagen del alimento
 
     /**
-     * Instantiates a new Alimento.
+     * Constructor
      *
-     * @param id              the id
-     * @param nombreAlimento  the nombre alimento
-     * @param cantidad        the cantidad
-     * @param dias_caducidad  the dias caducidad
-     * @param fecha_registro  the fecha registro
-     * @param fecha_caducidad the fecha caducidad
-     * @param imagen          the imagen
+     * @param id              Id del alimento
+     * @param nombreAlimento  el nombre alimento
+     * @param cantidad        las unidades del alimento
+     * @param dias_caducidad  los dias que faltan para caducidad
+     * @param fecha_registro  la fecha en la que se registra el alimento
+     * @param fecha_caducidad la fecha de caducidad
+     * @param imagen          la imagen del alimento
      */
-//Constructor 1
+
     public Alimento(int id, String nombreAlimento, int cantidad, int dias_caducidad,
                     String fecha_registro, String fecha_caducidad, Bitmap imagen) {
         this.id = id;
@@ -41,16 +41,14 @@ public class Alimento implements Serializable {
     }
 
     /**
-     * Instantiates a new Alimento.
-     *
-     * @param nombreAlimento  the nombre alimento
-     * @param cantidad        the cantidad
-     * @param dias_caducidad  the dias caducidad
-     * @param fecha_registro  the fecha registro
-     * @param fecha_caducidad the fecha caducidad
-     * @param imagen          the imagen
+     * Constructor 2
+     * @param nombreAlimento  el nombre alimento
+     * @param cantidad        las unidades del alimento
+     * @param dias_caducidad  los dias que faltan para caducidad
+     * @param fecha_registro  la fecha en la que se registra el alimento
+     * @param fecha_caducidad la fecha de caducidad
+     * @param imagen          la imagen del alimento
      */
-//Constructor 2
     public Alimento(String nombreAlimento, int cantidad, int dias_caducidad, String fecha_registro,
             String fecha_caducidad, Bitmap imagen) {
         this.nombreAlimento = nombreAlimento;
@@ -62,25 +60,23 @@ public class Alimento implements Serializable {
     }
 
     /**
-     * Instantiates a new Alimento.
+     * Constructor que recibe como parámetros el nombre y la imagen
      *
-     * @param nombreA the nombre a
-     * @param bm      the bm
+     * @param nombreA el nombre del alimento
+     * @param bm      imagen del alimento
      */
-//Constructor que recibe como parámetros el nombre y la imagen
     public Alimento (String nombreA, Bitmap bm){
         this.nombreAlimento = nombreA;
         this.imagen = bm;
     }
 
     /**
-     * Instantiates a new Alimento.
+     * Constructor que recibe como parámetros el id, el nombre y la imagen
      *
-     * @param _id     the id
-     * @param nombreA the nombre a
-     * @param bm      the bm
+     * @param _id     id del alimento
+     * @param nombreA nombre del alimento
+     * @param bm      imagen de la clase
      */
-//Constructor que recibe como parámetros el id, el nombre y la imagen
     public Alimento (int _id, String nombreA, Bitmap bm){
         this.id = _id;
         this.nombreAlimento = nombreA;

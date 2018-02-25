@@ -632,7 +632,7 @@ public class MySQLHelper {
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                         "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND " +
                         "R.id_dificultad_receta = D.id_dificultad_receta AND R.id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = (" +
-                        "SELECT id_ingrediente FROM INGREDIENTES WHERE nombre = " + alimentos.get(0) + "));";
+                        "SELECT id_ingrediente FROM INGREDIENTES WHERE nombre = \'" + alimentos.get(0) + "\'));";
             Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
         } else if (numero>1){
             Log.d("check", "entra por el else por que hay: " + numero);
@@ -644,7 +644,7 @@ public class MySQLHelper {
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                     "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta " +
                     "AND R.id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente IN (SELECT id_ingrediente FROM INGREDIENTES " +
-                    "WHERE nombre = " + ing + alimentos.get(numero-1)+") GROUP BY id_receta HAVING COUNT(*)= " + numero + ");";
+                    "WHERE nombre = \'" + ing + alimentos.get(numero-1)+"\') GROUP BY id_receta HAVING COUNT(*)= " + numero + ");";
             Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
         }
         try {

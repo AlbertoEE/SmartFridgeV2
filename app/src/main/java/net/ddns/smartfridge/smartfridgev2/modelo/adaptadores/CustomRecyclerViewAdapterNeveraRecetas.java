@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,6 +30,7 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
     private ArrayList<Alimento> alimentos;
     private Activity activity;
     private ArrayList<Alimento> alimentosCopia;
+    private ArrayList<String> alimentosSeleccionados;
 
     public CustomRecyclerViewAdapterNeveraRecetas(ArrayList<Alimento> alimentos, Activity activity){
         this.alimentos = alimentos;
@@ -45,7 +47,7 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
     }
 
     @Override
-    public void onBindViewHolder(CustomRecyclerViewAdapterNeveraRecetas.ViewHolderNeveraRecetas holder, int position) {
+    public void onBindViewHolder(CustomRecyclerViewAdapterNeveraRecetas.ViewHolderNeveraRecetas holder, final int position) {
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setVisibility(View.INVISIBLE);
         holder.tvDiasCaducidad.setVisibility(View.INVISIBLE);
@@ -65,6 +67,21 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
                 e.printStackTrace();
             }
         }
+        holder.fila.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(alimentosSeleccionados.size()<=3){
+                    if(!alimentosSeleccionados.contains(alimentos.get(position).getNombreAlimento())){
+                        alimentosSeleccionados.add(alimentos.get(position).getNombreAlimento());
+                        Toast.makeText(activity, "Alimento seleccionado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "El alimento ya ha sido seleccionado", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(activity, "Ya se han seleccionado 3 alimentos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     /**

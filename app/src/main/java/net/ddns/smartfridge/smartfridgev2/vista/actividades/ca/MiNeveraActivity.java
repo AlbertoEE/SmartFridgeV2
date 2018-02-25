@@ -33,6 +33,9 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * The type Mi nevera activity.
+ */
 public class MiNeveraActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
     private Cursor cursor;
@@ -67,10 +70,20 @@ public class MiNeveraActivity extends AppCompatActivity {
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Sets imagen detalles.
+     *
+     * @param bitmaps the bitmaps
+     */
     public static void setImagenDetalles(ArrayList<Bitmap> bitmaps) {
         imagenesDetalles = bitmaps;
     }
 
+    /**
+     * Iniciardetalles.
+     *
+     * @param alimento the alimento
+     */
     public void iniciardetalles(Alimento alimento) {
         //this.imagenDetalles = alimento.getImagen();
         alimento = new Alimento(
@@ -87,6 +100,12 @@ public class MiNeveraActivity extends AppCompatActivity {
         startActivityForResult(intent, DETALLES_ACTIVITY);
     }
 
+    /**
+     * Iniciardetalles.
+     *
+     * @param alimentos the alimentos
+     * @param position  the position
+     */
     public void iniciardetalles(ArrayList<Alimento> alimentos, int position) {
         ArrayList<Alimento> alimentosSinFoto = new ArrayList<>();
         for (Alimento item : alimentos) {
@@ -110,6 +129,11 @@ public class MiNeveraActivity extends AppCompatActivity {
         startActivityForResult(intent, DETALLES_ACTIVITY);
     }
 
+    /**
+     * Gets imagen detalles.
+     *
+     * @return the imagen detalles
+     */
     public static ArrayList<Bitmap> getImagenDetalles() {
         return imagenesDetalles;
     }

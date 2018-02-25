@@ -15,11 +15,16 @@ import java.util.ArrayList;
 /**
  * Created by Alberto on 22/02/2018.
  */
-
 public class CustomBaseAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> datos;//Para cargar los datos
 
+    /**
+     * Instantiates a new Custom base adapter.
+     *
+     * @param context the context
+     * @param datos   the datos
+     */
     public CustomBaseAdapter(Context context, ArrayList<String> datos){
         this.context = context;
         this.datos = datos;
@@ -60,6 +65,9 @@ public class CustomBaseAdapter extends BaseAdapter {
     }
 
     private static class ViewHolderBase{
+        /**
+         * The Text view.
+         */
         TextView textView;
     }
 }

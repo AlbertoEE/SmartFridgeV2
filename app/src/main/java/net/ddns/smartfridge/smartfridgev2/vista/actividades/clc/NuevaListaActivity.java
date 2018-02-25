@@ -31,6 +31,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimen
 
 import java.util.ArrayList;
 
+/**
+ * The type Nueva lista activity.
+ */
 public class NuevaListaActivity extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
     private String alimentoNuevo;//Para recoger el dato introducido por el usuario en el dialog
@@ -180,8 +183,13 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
 
-
-    //Método para hacer los insert en las tablas correspondientes
+    /**
+     * Insertar componentes lista.
+     *
+     * @param a       the a
+     * @param idLista the id lista
+     */
+//Método para hacer los insert en las tablas correspondientes
     public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a, int idLista){
         int tipo;//Para guardar el tipo de cada objeto del arrayList
         //Recorremos el ArrayList
@@ -204,7 +212,12 @@ public class NuevaListaActivity extends AppCompatActivity {
         }
     }
 
-    //Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
+    /**
+     * Crear array array list.
+     *
+     * @return the array list
+     */
+//Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
     public ArrayList<ComponenteListaCompra> crearArray(){
         ComponenteListaCompra c = new ComponenteListaCompra(1, "patata", 1);
         ComponenteListaCompra c1 = new ComponenteListaCompra(2, "tomate", 1);
@@ -257,15 +270,28 @@ public class NuevaListaActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets todas las listas.
+     *
+     * @return the todas las listas
+     */
     public static ArrayList<ListaCompra> getTodasLasListas() {
         return todasLasListas;
     }
 
+    /**
+     * Sets todas las listas.
+     *
+     * @param todasLasListas the todas las listas
+     */
     public static void setTodasLasListas(ArrayList<ListaCompra> todasLasListas) {
         todasLasListas = todasLasListas;
     }
 
-    //Creamos un AsyncTask que esté comprobando si hay modificaciones el el SP para añadir esos elementos a la lista
+    /**
+     * The type Agregar escasez.
+     */
+//Creamos un AsyncTask que esté comprobando si hay modificaciones el el SP para añadir esos elementos a la lista
     public class agregarEscasez extends AsyncTask<Object, Void, Void> {
         private GestorSharedP gsp;//Para trabajar con el SP
         private CustomArrayAdapterNuevaLista adapter;//Para trabajar con el adaptador de la clase

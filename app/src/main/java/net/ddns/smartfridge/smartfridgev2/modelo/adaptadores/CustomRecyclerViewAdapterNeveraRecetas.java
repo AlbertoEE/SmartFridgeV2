@@ -25,13 +25,18 @@ import java.util.Comparator;
 /**
  * Created by Alberto on 25/02/2018.
  */
-
 public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter<CustomRecyclerViewAdapterNeveraRecetas.ViewHolderNeveraRecetas>{
     private ArrayList<Alimento> alimentos;
     private Activity activity;
     private ArrayList<Alimento> alimentosCopia;
     private ArrayList<String> alimentosSeleccionados;
 
+    /**
+     * Instantiates a new Custom recycler view adapter nevera recetas.
+     *
+     * @param alimentos the alimentos
+     * @param activity  the activity
+     */
     public CustomRecyclerViewAdapterNeveraRecetas(ArrayList<Alimento> alimentos, Activity activity){
         this.alimentos = alimentos;
         this.alimentosCopia = new ArrayList<>();
@@ -87,7 +92,7 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
     /**
      * Método para filtrar en el recycler view
      *
-     * @param text
+     * @param text the text
      */
     public void filter(String text) {
         //limpiamos todos los alimentos, por eso antes hicimos una copia
@@ -109,6 +114,7 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
 
     /**
      * Método para ordenar el recycler view alfabeticamente
+     *
      * @param az este int será un 1 o un -1 según el orden que queramos
      */
     public void sortRecyclerView(final int az){
@@ -125,13 +131,40 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
         return alimentos.size();
     }
 
+    /**
+     * The type View holder nevera recetas.
+     */
     public class ViewHolderNeveraRecetas extends RecyclerView.ViewHolder {
+        /**
+         * The Fila.
+         */
         public View fila;//La fila completa, para el listener
+        /**
+         * The Tv nombre.
+         */
         public TextView tvNombre;
+        /**
+         * The Tv unidades.
+         */
         public TextView tvUnidades;
+        /**
+         * The Tv dias caducidad.
+         */
         public TextView tvDiasCaducidad;
+        /**
+         * The Tv fecha caducidad.
+         */
         public TextView tvFechaCaducidad;
+        /**
+         * The Iv foto alimento.
+         */
         public ImageView ivFotoAlimento;
+
+        /**
+         * Instantiates a new View holder nevera recetas.
+         *
+         * @param itemView the item view
+         */
         public ViewHolderNeveraRecetas(View itemView) {
             super(itemView);
             fila = itemView;

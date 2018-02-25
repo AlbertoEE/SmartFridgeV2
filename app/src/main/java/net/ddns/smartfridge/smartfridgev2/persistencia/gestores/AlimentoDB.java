@@ -15,7 +15,6 @@ import java.io.ByteArrayOutputStream;
 /**
  * Clase con los métodos para la capa de persistencia del objeto Alimento
  */
-
 public class AlimentoDB {
     private MiNeveraDB miNevera;//Para la instancia de MiNeveraDB
     private SQLiteDatabase sql;//Para crear la instancia de SQLiteDatabase para escritura
@@ -23,14 +22,22 @@ public class AlimentoDB {
     private static final String QUERYBBDDCOMPLETA = "SELECT * FROM " + MiNeveraDB.TABLA_ALIMENTOS;//Sentencia para sacar todos los datos de la bbdd
 
 
-    //Constructor
+    /**
+     * Instantiates a new Alimento db.
+     *
+     * @param contexto the contexto
+     */
+//Constructor
     public AlimentoDB(Context contexto){
         miNevera = new MiNeveraDB(contexto);
         sqe= miNevera.getReadableDatabase();
         sql = miNevera.getWritableDatabase();
     }
 
-    //Método para cerrar la conexión con la bbdd
+    /**
+     * Cerrar conexion.
+     */
+//Método para cerrar la conexión con la bbdd
     public void cerrarConexion(){
         //Cerramos el acceso a la bbdd
         miNevera.close();
@@ -38,7 +45,12 @@ public class AlimentoDB {
         sql.close();
     }
 
-    //Metodo para insertar un nuevo objeto de tipo Alimento en la bbdd
+    /**
+     * Guardar alimento.
+     *
+     * @param alimento the alimento
+     */
+//Metodo para insertar un nuevo objeto de tipo Alimento en la bbdd
     public void guardarAlimento(Alimento alimento){
         byte[] blob;
         ContentValues cv = new ContentValues();
@@ -59,19 +71,36 @@ public class AlimentoDB {
         cv.put(MiNeveraDB.CAMPOS_ALIMENTOS[6], blob);
         sql.insert(MiNeveraDB.TABLA_ALIMENTOS, null, cv);
     }
-    //Recoge todos los alimentos de la bbdd
+
+    /**
+     * Get alimentos cursor.
+     *
+     * @return the cursor
+     */
+//Recoge todos los alimentos de la bbdd
     public Cursor getAlimentos(){
         //El resultado se almacena en un cursor
         Cursor cursor = sqe.rawQuery(QUERYBBDDCOMPLETA, new String[]{});
         return cursor;
     }
 
-    //Metodo para borrar un alimento de la bbdd a partir de su id
+    /**
+     * Borrar alimento.
+     *
+     * @param id the id
+     */
+//Metodo para borrar un alimento de la bbdd a partir de su id
     public void borrarAlimento(int id){
         sql.execSQL("DELETE FROM " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id + ";");
     }
 
-    //Método para actualizar las uds de un registro a partir de su id
+    /**
+     * Actualizar unidades.
+     *
+     * @param id  the id
+     * @param uds the uds
+     */
+//Método para actualizar las uds de un registro a partir de su id
     public void actualizarUnidades(int id, int uds){
         //Creamos la sentencia con la consulta
         String updateUds = "UPDATE " + MiNeveraDB.TABLA_ALIMENTOS + " SET " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + "=" + uds + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id;
@@ -79,7 +108,13 @@ public class AlimentoDB {
         //Log.d("sql", "update: " + updateUds);
     }
 
-    //Método para seleccionar el id del alimento a partir de sus datos
+    /**
+     * Get id alimento int.
+     *
+     * @param alimento the alimento
+     * @return the int
+     */
+//Método para seleccionar el id del alimento a partir de sus datos
     public int getIdAlimento(Alimento alimento){
         int id=0;//Para almacenar el resultado de la bbdd
         String QUERYIDALIMENTO = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + " FROM " + MiNeveraDB.TABLA_ALIMENTOS + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[1] + " = \'" + alimento.getNombreAlimento() +

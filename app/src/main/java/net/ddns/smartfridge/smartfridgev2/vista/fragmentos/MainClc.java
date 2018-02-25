@@ -26,6 +26,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class MainClc extends Fragment {
 
 
+    /**
+     * Instantiates a new Main clc.
+     */
     public MainClc() {
         // Required empty public constructor
     }
@@ -57,6 +60,11 @@ public class MainClc extends Fragment {
         return view;
     }
 
+    /**
+     * Mostrar tutorial ca.
+     *
+     * @param v the v
+     */
     public void mostrarTutorialCa(View v) {
         final SharedPreferences tutorialShowcases = getActivity().getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
 

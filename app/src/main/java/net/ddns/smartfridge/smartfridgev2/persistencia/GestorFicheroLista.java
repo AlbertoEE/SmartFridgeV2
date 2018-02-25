@@ -21,18 +21,28 @@ import java.util.ArrayList;
  * Clase para gestionar los ficheros donde vamos a escribir y leer los objetos que representan
  * nuevas listas de la compra
  */
-
 public class GestorFicheroLista {
     private ArrayList<ListaCompra>listas;//ArrayList para guardar todas las listas leidas del fichero
     private Context contexto;//Para almacenar el contexto del activity donde se va a instanciar la clase
     private ListaCompra lista;//Para leer cada objeto del fichero y trabajar con él
 
-    //Constructor
+    /**
+     * Instantiates a new Gestor fichero lista.
+     *
+     * @param context the context
+     */
+//Constructor
     public GestorFicheroLista(Context context){
         this.contexto = context;
     }
 
-    //Método para añadir los objetos de tipo ListaCompra al fichero
+    /**
+     * Escribir lista array list.
+     *
+     * @param l the l
+     * @return the array list
+     */
+//Método para añadir los objetos de tipo ListaCompra al fichero
     public ArrayList<ListaCompra> escribirLista(ListaCompra l)  {
         listas = leerTodasListas();
         if(listas==null){
@@ -63,7 +73,12 @@ public class GestorFicheroLista {
         return listas;
     }
 
-    //Método para leer el arraylist con las listas almacenado en el fichero
+    /**
+     * Leer todas listas array list.
+     *
+     * @return the array list
+     */
+//Método para leer el arraylist con las listas almacenado en el fichero
     public ArrayList<ListaCompra> leerTodasListas(){
         listas = new ArrayList<ListaCompra>();
         //BufferedReader br=null;
@@ -100,7 +115,12 @@ public class GestorFicheroLista {
         return listas;
     }
 
-    //Método para actualizar el fichero con las listas desde TodasListasActivity
+    /**
+     * Actualizar listas.
+     *
+     * @param alc the alc
+     */
+//Método para actualizar el fichero con las listas desde TodasListasActivity
     public void actualizarListas(ArrayList<ListaCompra> alc){
         FileOutputStream fos=null;
         ObjectOutputStream oos = null;

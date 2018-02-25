@@ -16,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Clase con los métodos para la gestión de persistencia en el módulo de listas de la compra.
  */
-
 public class ListaCompraDB {
     private MiNeveraDB miNevera;//Para la instancia de MiNeveraDB
     private SQLiteDatabase sql;//Para crear la instancia de SQLiteDatabase para escritura
@@ -34,14 +33,22 @@ public class ListaCompraDB {
     private String fecha;//Para almacenar la fecha obtenida a partir del id de la lista
     //private ArrayList<Lista>todosLosProductos2 = new ArrayList<>();
 
-    //Constructor
+    /**
+     * Instantiates a new Lista compra db.
+     *
+     * @param contexto the contexto
+     */
+//Constructor
     public ListaCompraDB(Context contexto){
         miNevera = new MiNeveraDB(contexto);
         sqe= miNevera.getReadableDatabase();
         sql = miNevera.getWritableDatabase();
     }
 
-    //Método para cerrar la conexión con la bbdd
+    /**
+     * Cerrar conexion.
+     */
+//Método para cerrar la conexión con la bbdd
     public void cerrarConexion(){
         //Cerramos el acceso a la bbdd
         miNevera.close();
@@ -49,21 +56,37 @@ public class ListaCompraDB {
         sql.close();
     }
 
-    //Método para crear una nueva lista de la compra
+    /**
+     * Insertar nueva lista.
+     *
+     * @param l the l
+     */
+//Método para crear una nueva lista de la compra
     public void insertarNuevaLista(ListaCompra l){
         ContentValues cv = new ContentValues();
         cv.put(MiNeveraDB.CAMPOS_LISTA[1], l.getFecha());
         sql.insert(MiNeveraDB.TABLA_ALIMENTOS_CREADOS, null, cv);
     }
 
-    //Método para insertar un alimento introducido manualmente por el usuario en la bbdd de alimento_manual
+    /**
+     * Insertar alimento manual.
+     *
+     * @param nombreAlimento the nombre alimento
+     */
+//Método para insertar un alimento introducido manualmente por el usuario en la bbdd de alimento_manual
     public void insertarAlimentoManual(String nombreAlimento){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_MANUAL + " (" + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[1] + ") VALUES (\'" +
                 nombreAlimento + "\');";
         sql.execSQL(sentencia);
     }
 
-    //Metodo para recoger el id de un objeto de la tabla alimento_manual
+    /**
+     * Get id alimento int.
+     *
+     * @param nombre_alimento the nombre alimento
+     * @return the int
+     */
+//Metodo para recoger el id de un objeto de la tabla alimento_manual
     public int getIdAlimento(String nombre_alimento){
         int id=0;//Para almacenar el resultado de la bbdd
         sentencia = "SELECT " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[0] + " FROM " + MiNeveraDB.TABLA_ALIMENTO_MANUAL + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTO_MANUAL[1] + " = \'" +
@@ -82,13 +105,24 @@ public class ListaCompraDB {
         return id;
     }
 
-    //Método para crear una nueva lista de la compra
+    /**
+     * Insertar lista compra.
+     *
+     * @param l the l
+     */
+//Método para crear una nueva lista de la compra
     public void insertarListaCompra(ListaCompra l){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_LISTA + " (" + MiNeveraDB.CAMPOS_LISTA[1] + ") VALUES (\'" + l.getFecha() + "\');";
         sql.execSQL(sentencia);
     }
 
-    //Método para coger el id de la nueva lista creada
+    /**
+     * Get id lista int.
+     *
+     * @param fechaLista the fecha lista
+     * @return the int
+     */
+//Método para coger el id de la nueva lista creada
     public int getIdLista(String fechaLista){
         int id=0;//Para almacenar el resultado de la bbdd
         sentencia = "SELECT " + MiNeveraDB.CAMPOS_LISTA[0] + " FROM " + MiNeveraDB.TABLA_LISTA + " WHERE " + MiNeveraDB.CAMPOS_LISTA[1] + " = \'" +
@@ -109,26 +143,49 @@ public class ListaCompraDB {
         return id;
     }
 
-    //Método para insertar un componente de la lista en la tabla interna
+    /**
+     * Insert componente interno.
+     *
+     * @param c       the c
+     * @param idLista the id lista
+     */
+//Método para insertar un componente de la lista en la tabla interna
     public synchronized void insertComponenteInterno(ComponenteListaCompra c, int idLista){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_INTERNO_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
         Log.d("sentencia", "sentencia: " + sentencia);
         sql.execSQL(sentencia);
     }
 
-    //Método para insertar un componente de la lista en la tabla externa
+    /**
+     * Insert componente externo.
+     *
+     * @param c       the c
+     * @param idLista the id lista
+     */
+//Método para insertar un componente de la lista en la tabla externa
     public void insertComponenteExterno(ComponenteListaCompra c, int idLista){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_EXTERNO_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
         sql.execSQL(sentencia);
     }
 
-    //Método para insertar un componente de la lista en la tabla de alimentos manuales
+    /**
+     * Insert componente manual.
+     *
+     * @param c       the c
+     * @param idLista the id lista
+     */
+//Método para insertar un componente de la lista en la tabla de alimentos manuales
     public void insertComponenteManual(ComponenteListaCompra c, int idLista){
         sentencia = "INSERT INTO " + MiNeveraDB.TABLA_ALIMENTO_MANUAL_LISTA + " VALUES (" + idLista + ", " + c.getId() + ");";
         sql.execSQL(sentencia);
     }
 
-    //Método para recuperar todos los ids de todas las listas que hay
+    /**
+     * Recuperar id listas array list.
+     *
+     * @return the array list
+     */
+//Método para recuperar todos los ids de todas las listas que hay
     public synchronized ArrayList<Integer> recuperarIdListas(){
         sentencia = "SELECT * FROM " + MiNeveraDB.TABLA_LISTA + ";";
         //El resultado se almacena en un cursor
@@ -421,7 +478,13 @@ public class ListaCompraDB {
         return productos;
     }*/
 
-    //Método para obtener la fecha de una lista almacenada en la bbdd
+    /**
+     * Obtener fecha lista string.
+     *
+     * @param id the id
+     * @return the string
+     */
+//Método para obtener la fecha de una lista almacenada en la bbdd
     public String obtenerFechaLista(int id){
         sentencia = "SELECT " + MiNeveraDB.CAMPOS_LISTA[1] + " FROM " + MiNeveraDB.TABLA_LISTA + " WHERE " + MiNeveraDB.CAMPOS_LISTA[0] + " = " + id;
         //El resultado se almacena en un cursor

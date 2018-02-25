@@ -15,13 +15,19 @@ import java.util.ArrayList;
 /**
  * Created by Alberto on 23/01/2018.
  */
-
 public class CustomPageAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Alimento> alimentos;
     private ArrayList<Bitmap> imagen;
     private int id;
     private static boolean cambio = false;
 
+    /**
+     * Instantiates a new Custom page adapter.
+     *
+     * @param fm             the fm
+     * @param alimentos      the alimentos
+     * @param imagenAlimento the imagen alimento
+     */
     public CustomPageAdapter(FragmentManager fm, ArrayList<Alimento> alimentos, ArrayList<Bitmap> imagenAlimento) {
         super(fm);
         this.alimentos = alimentos;
@@ -47,10 +53,20 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
+    /**
+     * Set cambio.
+     *
+     * @param cambio1 the cambio 1
+     */
     public static void setCambio(boolean cambio1){
         cambio = cambio1;
     }
 
+    /**
+     * Remove page.
+     *
+     * @param id the id
+     */
     public void removePage(int id){
         alimentos.remove(id);
         notifyDataSetChanged();

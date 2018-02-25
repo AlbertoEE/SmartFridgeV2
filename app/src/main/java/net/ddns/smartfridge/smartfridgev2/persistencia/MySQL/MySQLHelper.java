@@ -28,7 +28,6 @@ import java.util.ArrayList;
  * Clase creada para manejar las conexiones a la BBDD externa escrita en MySQL, para el correcto
  * funcionamiento, esta clase hace uso de el driver JDBC.
  */
-
 public class MySQLHelper {
     private final static String DRIVER = "com.mysql.jdbc.Driver";//Driver para la conexión con la bbdd
     private final static String NOMBRE_BBDD = "BBDD_SMART_FRIDGE";//Nombre de la bbdd
@@ -56,7 +55,7 @@ public class MySQLHelper {
      * Abre la conexión con la BBDD
      *
      * @throws ClassNotFoundException cuando no se encuentra el driver especificado
-     * @throws SQLException cuando no se ha podido establecer la conexión
+     * @throws SQLException           cuando no se ha podido establecer la conexión
      */
     public void abrirConexion() throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
@@ -73,7 +72,14 @@ public class MySQLHelper {
         conexion.close();
     }
 
-    //Consulta para comprobar si el código de barras escaneado está en la bbdd
+    /**
+     * Consulta cod barras alimento codigo.
+     *
+     * @param cod_barras the cod barras
+     * @return the alimento codigo
+     * @throws SQLException the sql exception
+     */
+//Consulta para comprobar si el código de barras escaneado está en la bbdd
     public Alimento_Codigo consultaCodBarras(String cod_barras) throws SQLException {
         Alimento_Codigo ac=null;//Para almacenar los datos de la bbdd
         String nombre;//Para almacenar le nombre de la bbdd
@@ -100,7 +106,15 @@ public class MySQLHelper {
 
         return ac;
     }
-    //Método para seleccionar todos los ingredientes de una categoría determinada
+
+    /**
+     * Recoger alimento por categoria array list.
+     *
+     * @param categoria the categoria
+     * @return the array list
+     * @throws SQLException the sql exception
+     */
+//Método para seleccionar todos los ingredientes de una categoría determinada
     public ArrayList<Ingrediente> recogerAlimentoPorCategoria(String categoria) throws SQLException {
         alimentosCategoria = new ArrayList<Ingrediente>();
         sentencia = "SELECT id_ingrediente, nombre, imagen FROM INGREDIENTES WHERE codificacion_compra = \'" + categoria + "\';";
@@ -117,7 +131,14 @@ public class MySQLHelper {
         return alimentosCategoria;
     }
 
-    //Método para recoger el precio de una lista de la compra, según el supermercado
+    /**
+     * Recoger precio array list.
+     *
+     * @param nombres the nombres
+     * @param superm  the superm
+     * @return the array list
+     */
+//Método para recoger el precio de una lista de la compra, según el supermercado
     public ArrayList<Precio> recogerPrecio(ArrayList<ComponenteListaCompra> nombres, String superm){
         precios = new ArrayList<>();
         Statement st = null;
@@ -144,7 +165,12 @@ public class MySQLHelper {
         return precios;
     }
 
-    //Método para recoger todas las recetas de la bbdd
+    /**
+     * Recoger recetas array list.
+     *
+     * @return the array list
+     */
+//Método para recoger todas las recetas de la bbdd
     public ArrayList<Receta> recogerRecetas(){
         recetas = new ArrayList<>();
         Statement st = null;
@@ -173,7 +199,12 @@ public class MySQLHelper {
         return recetas;
     }
 
-    //Método para seleccionar todos los ingredientes
+    /**
+     * Recoger ingredientes array list.
+     *
+     * @return the array list
+     */
+//Método para seleccionar todos los ingredientes
     public ArrayList<Ingrediente> recogerIngredientes(){
         alimentosCategoria = new ArrayList<>();
         Statement st = null;
@@ -196,7 +227,13 @@ public class MySQLHelper {
         return alimentosCategoria;
     }
 
-    //Método para recoger las recetas sin la foto en función de si tienen o no algún ingrediente
+    /**
+     * Filtrar receta array list.
+     *
+     * @param consulta the consulta
+     * @return the array list
+     */
+//Método para recoger las recetas sin la foto en función de si tienen o no algún ingrediente
     public ArrayList<Receta> filtrarReceta(String consulta){
         Log.d("check", "filtrarReceta");
         Log.d("check", "consulta: " + consulta);
@@ -223,7 +260,14 @@ public class MySQLHelper {
         }
         return recetas;
     }
-    //Método para recoger las recetas sin la foto en función de si tienen o no algún ingrediente
+
+    /**
+     * Filtrar foto receta array list.
+     *
+     * @param consulta the consulta
+     * @return the array list
+     */
+//Método para recoger las recetas sin la foto en función de si tienen o no algún ingrediente
     public ArrayList<Receta> filtrarFotoReceta(String consulta){
         Log.d("check", "filtrarReceta");
         Log.d("check", "consulta: " + consulta);
@@ -250,7 +294,14 @@ public class MySQLHelper {
         }
         return recetas;
     }
-    //Método para montar la sentencia SQL para la búsqueda en la bbdd
+
+    /**
+     * Montar sentencia si string.
+     *
+     * @param aIngrediente the a ingrediente
+     * @return the string
+     */
+//Método para montar la sentencia SQL para la búsqueda en la bbdd
     public String montarSentenciaSi(ArrayList<Ingrediente> aIngrediente){
         //Log.d("check", "metodo en mysql");
         int numero = aIngrediente.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
@@ -285,7 +336,14 @@ public class MySQLHelper {
       //  }
         return sentencia;
     }
-    //Método para montar la sentencia SQL para la búsqueda en la bbdd
+
+    /**
+     * Montar sentencia no string.
+     *
+     * @param aIngrediente the a ingrediente
+     * @return the string
+     */
+//Método para montar la sentencia SQL para la búsqueda en la bbdd
     public String montarSentenciaNo(ArrayList<Ingrediente> aIngrediente){
         int numero = aIngrediente.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
     //    for (Ingrediente i : aIngrediente){
@@ -318,7 +376,13 @@ public class MySQLHelper {
         return sentencia;
     }
 
-    //Método para filtrar las recetas por tipo
+    /**
+     * Filtrar receta por tipo array list.
+     *
+     * @param tipo the tipo
+     * @return the array list
+     */
+//Método para filtrar las recetas por tipo
     public ArrayList<Receta> filtrarRecetaPorTipo(int tipo){
         recetas = new ArrayList<>();
         //Statement st = null;
@@ -353,7 +417,12 @@ public class MySQLHelper {
         return recetas;
     }
 
-    //Metodo para sacar todos los tipos de alimentos que hay en la bbdd
+    /**
+     * Sacar tipo receta array list.
+     *
+     * @return the array list
+     */
+//Metodo para sacar todos los tipos de alimentos que hay en la bbdd
     public ArrayList<Tipo> sacarTipoReceta(){
         tipos  = new ArrayList<>();
         Statement st = null;
@@ -376,7 +445,13 @@ public class MySQLHelper {
         return tipos;
     }
 
-    //Método para seleccionar todos los ingredientes de una menu_receta dada
+    /**
+     * Recoger ingredientes receta array list.
+     *
+     * @param id the id
+     * @return the array list
+     */
+//Método para seleccionar todos los ingredientes de una menu_receta dada
     public ArrayList<Ingrediente> recogerIngredientesReceta(int id){
         alimentosCategoria = new ArrayList<>();
         Statement st = null;
@@ -400,7 +475,13 @@ public class MySQLHelper {
         return alimentosCategoria;
     }
 
-    //Método para buscar una menu_receta a partir de un texto
+    /**
+     * Recoger receta titulo array list.
+     *
+     * @param texto the texto
+     * @return the array list
+     */
+//Método para buscar una menu_receta a partir de un texto
     public ArrayList<Receta> recogerRecetaTitulo(String  texto){
         recetas = new ArrayList<>();
         //PreparedStatement pst =null;
@@ -440,7 +521,12 @@ public class MySQLHelper {
         return recetas;
     }
 
-    //Método para recoger todos los elementos de duración
+    /**
+     * Recoger duracion array list.
+     *
+     * @return the array list
+     */
+//Método para recoger todos los elementos de duración
     public ArrayList<String> recogerDuracion(){
         ArrayList<String> duracion = new ArrayList<>();
         Statement st = null;
@@ -461,7 +547,13 @@ public class MySQLHelper {
         }
         return duracion;
     }
-    //Método para recoger todos los elementos de duración
+
+    /**
+     * Recoger dificultad array list.
+     *
+     * @return the array list
+     */
+//Método para recoger todos los elementos de duración
     public ArrayList<String> recogerDificultad(){
         ArrayList<String> dificultad = new ArrayList<>();
         Statement st = null;
@@ -483,7 +575,14 @@ public class MySQLHelper {
         return dificultad;
     }
 
-    //Método para recoger las recetas en función del tiempo y la dificultad
+    /**
+     * Receta por tiempo dificultad array list.
+     *
+     * @param tiempo     the tiempo
+     * @param dificultad the dificultad
+     * @return the array list
+     */
+//Método para recoger las recetas en función del tiempo y la dificultad
     public ArrayList<Receta> recetaPorTiempoDificultad(String tiempo, String dificultad){
         recetas = new ArrayList<>();
         //PreparedStatement pst =null;
@@ -514,7 +613,14 @@ public class MySQLHelper {
         }
         return recetas;
     }
-    //Método para filtrar recetas a partir de los ingredientes que hay en MiNevera
+
+    /**
+     * Filtrar receta mi nevera array list.
+     *
+     * @param alimentos the alimentos
+     * @return the array list
+     */
+//Método para filtrar recetas a partir de los ingredientes que hay en MiNevera
     public ArrayList<Receta> filtrarRecetaMiNevera(ArrayList<String> alimentos){
         String nombreAlimento ="";
         recetas = new ArrayList<>();

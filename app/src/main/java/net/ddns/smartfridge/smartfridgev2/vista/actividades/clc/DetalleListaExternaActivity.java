@@ -20,6 +20,9 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 
 import java.util.ArrayList;
 
+/**
+ * The type Detalle lista externa activity.
+ */
 public class DetalleListaExternaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> componentes;//Para cargar los componentes seleccionados
     private ArrayList<ComponenteListaCompra> componentesAdapter;//Para cargar los componentes seleccionados en el adapter

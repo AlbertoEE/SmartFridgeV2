@@ -17,6 +17,9 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
 
+/**
+ * The type Compra externa activity.
+ */
 public class CompraExternaActivity extends AppCompatActivity {
    //private static final int REQUEST_CODE_ANTERIOR = 5465;//Código de respuesta para el activity que lo llamó
     private static final int REQUEST_CODE_SIGUIENTE = 468;//Código de respuesta para el activity que al que va a llamar, el detalle de cada elemento
@@ -50,7 +53,12 @@ public class CompraExternaActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    //Programamos el método que va a haber en cada botón. Programamos el de las verduras
+    /**
+     * Abrir categoria.
+     *
+     * @param categoria the categoria
+     */
+//Programamos el método que va a haber en cada botón. Programamos el de las verduras
     public void abrirCategoria(int categoria){
         seleccion = categorias[categoria];
         intent = new Intent(this, CategoriaActivity.class);
@@ -148,7 +156,13 @@ public class CompraExternaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
+    /**
+     * Comprobar repetidos.
+     *
+     * @param comp            the comp
+     * @param componenteNuevo the componente nuevo
+     */
+//Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
     public void comprobarRepetidos(ArrayList<ComponenteListaCompra> comp, ComponenteListaCompra componenteNuevo){
         int contador=0;
         for (ComponenteListaCompra c : comp){

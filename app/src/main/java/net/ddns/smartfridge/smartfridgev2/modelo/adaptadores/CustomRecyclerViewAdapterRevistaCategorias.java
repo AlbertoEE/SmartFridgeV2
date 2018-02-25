@@ -29,7 +29,6 @@ import java.util.Comparator;
 /**
  * Created by Alberto on 15/02/2018.
  */
-
 public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Adapter<CustomRecyclerViewAdapterRevistaCategorias.ViewHolderRevistaCategorias> {
     private ArrayList<Ingrediente> ingredientes;
     private Activity activity;
@@ -38,6 +37,13 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
     private ArrayList<ComponenteListaCompra> componentes;//Para almacenar los elementos seleccionados y pasarlos al activity
     private ComponenteListaCompra c;//Para crear el objeto que añadiremos al array de los elementos seleccionados
 
+    /**
+     * Instantiates a new Custom recycler view adapter revista categorias.
+     *
+     * @param ingredientes the ingredientes
+     * @param activity     the activity
+     * @param array        the array
+     */
     public CustomRecyclerViewAdapterRevistaCategorias(ArrayList<Ingrediente> ingredientes, Activity activity, ArrayList<ComponenteListaCompra> array){
         this.ingredientes = ingredientes;
         this.activity = activity;
@@ -84,8 +90,10 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
             }
         });
     }
+
     /**
      * Método para ordenar el recycler view alfabeticamente
+     *
      * @param az este int será un 1 o un -1 según el orden que queramos
      */
     public void sortRecyclerView(final int az){
@@ -103,6 +111,9 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
         return ingredientes.size();
     }
 
+    /**
+     * The type View holder revista categorias.
+     */
     public static class ViewHolderRevistaCategorias extends RecyclerView.ViewHolder {
         private View fila;
         private ImageView imageView;
@@ -110,6 +121,11 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
         private TextView tvUnidadesFila;
         private TextView tvDiasCaducidad;
 
+        /**
+         * Instantiates a new View holder revista categorias.
+         *
+         * @param itemView the item view
+         */
         public ViewHolderRevistaCategorias(View itemView) {
             super(itemView);
             this.fila = itemView;
@@ -122,6 +138,11 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
         }
     }
 
+    /**
+     * Gets componentes.
+     *
+     * @return the componentes
+     */
     public ArrayList<ComponenteListaCompra> getComponentes() {
         return componentes;
     }

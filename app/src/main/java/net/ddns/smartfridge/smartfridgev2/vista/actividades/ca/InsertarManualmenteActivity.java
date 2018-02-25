@@ -34,6 +34,9 @@ import java.io.ByteArrayOutputStream;
 
 import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO2;
 
+/**
+ * The type Insertar manualmente activity.
+ */
 public class InsertarManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
@@ -73,6 +76,11 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         explicacion.setSelected(true);
     }
 
+    /**
+     * Hacer foto button.
+     *
+     * @param view the view
+     */
     public void hacerFotoButton(View view){
         hacerFoto();
     }
@@ -105,6 +113,11 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Siguiente boton.
+     *
+     * @param view the view
+     */
     public void siguienteBoton(View view){
         String nombre = String.valueOf(etNombreAlimento.getText());
         Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
@@ -169,10 +182,20 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets foto.
+     *
+     * @return the foto
+     */
     public static Bitmap getFoto() {
         return foto;
     }
 
+    /**
+     * Sets foto.
+     *
+     * @param foto the foto
+     */
     public static void setFoto(Bitmap foto) {
         foto = foto;
     }

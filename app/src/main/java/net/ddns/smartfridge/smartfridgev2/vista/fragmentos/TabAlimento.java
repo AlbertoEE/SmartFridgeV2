@@ -59,6 +59,9 @@ public class TabAlimento extends Fragment {
     private ArrayList<String> ingredientesComprobacion;
     private LinearLayout llChips;
 
+    /**
+     * Instantiates a new Tab alimento.
+     */
     public TabAlimento() {
         // Required empty public constructor
     }
@@ -165,6 +168,9 @@ public class TabAlimento extends Fragment {
         return alimentos;
     }
 
+    /**
+     * Add ingrediente.
+     */
     public void addIngrediente(){
         final String ingrediente = act.getText().toString();
         if(!(llChips.getChildCount() > 3)){
@@ -198,6 +204,11 @@ public class TabAlimento extends Fragment {
         }
     }
 
+    /**
+     * Dismiss keyboard.
+     *
+     * @param activity the activity
+     */
     public void dismissKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (null != activity.getCurrentFocus())
@@ -205,8 +216,17 @@ public class TabAlimento extends Fragment {
                     .getApplicationWindowToken(), 0);
     }
 
+    /**
+     * The type Get all ingredientes.
+     */
     public class GetAllIngredientes extends AsyncTask<Void, Void, ArrayList<Ingrediente>> {
+        /**
+         * The Duracion.
+         */
         ArrayList<String> duracion = new ArrayList<>();
+        /**
+         * The Dificultad.
+         */
         ArrayList<String> dificultad = new ArrayList<>();
         @Override
         protected ArrayList<Ingrediente> doInBackground(Void... voids) {
@@ -251,6 +271,9 @@ public class TabAlimento extends Fragment {
         }
     }
 
+    /**
+     * The type Coger recetas filtro.
+     */
     public class CogerRecetasFiltro extends AsyncTask<String, Void, ArrayList<Receta>> {
 
         @Override
@@ -304,10 +327,20 @@ public class TabAlimento extends Fragment {
         }
     }
 
+    /**
+     * Gets tiempo.
+     *
+     * @return the tiempo
+     */
     public ArrayList<String> getTiempo() {
         return tiempo;
     }
 
+    /**
+     * Gets dif.
+     *
+     * @return the dif
+     */
     public ArrayList<String> getDif() {
         return dif;
     }

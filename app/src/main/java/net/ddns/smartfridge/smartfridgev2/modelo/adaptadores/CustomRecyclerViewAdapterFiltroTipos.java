@@ -23,11 +23,18 @@ import java.io.ByteArrayOutputStream;
 /**
  * Created by Alberto on 22/02/2018.
  */
-
 public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos> {
     private Activity activity;
     private TabTipo tabTipo;
     private Context contexto;
+
+    /**
+     * Instantiates a new Custom recycler view adapter filtro tipos.
+     *
+     * @param activity the activity
+     * @param tabTipo  the tab tipo
+     * @param cont     the cont
+     */
     public CustomRecyclerViewAdapterFiltroTipos(Activity activity, TabTipo tabTipo, Context cont){
         this.activity = activity;
         this.tabTipo = tabTipo;
@@ -97,8 +104,20 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
         return 10;
     }
 
+    /**
+     * The type View holder revista filtro tipos.
+     */
     public class ViewHolderRevistaFiltroTipos extends RecyclerView.ViewHolder{
+        /**
+         * The Iamgebutton.
+         */
         public ImageButton iamgebutton;
+
+        /**
+         * Instantiates a new View holder revista filtro tipos.
+         *
+         * @param itemView the item view
+         */
         public ViewHolderRevistaFiltroTipos(View itemView) {
             super(itemView);
             iamgebutton = itemView.findViewById(R.id.ibTipo);

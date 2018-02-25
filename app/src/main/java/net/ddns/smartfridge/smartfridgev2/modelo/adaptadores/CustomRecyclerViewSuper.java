@@ -27,13 +27,19 @@ import java.util.ArrayList;
 /**
  * Created by Alberto on 17/02/2018.
  */
-
 public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecyclerViewSuper.ViewHolderSuper> {
     private Activity activity;
     private ArrayList<Precio> precios;
     private ArrayList<Precio> preciosAuxiliar;
     private String superMercado;
 
+    /**
+     * Instantiates a new Custom recycler view super.
+     *
+     * @param activity     the activity
+     * @param precios      the precios
+     * @param superMercado the super mercado
+     */
     public CustomRecyclerViewSuper(Activity activity, ArrayList<Precio> precios, String superMercado){
         this.activity = activity;
         this.precios = precios;
@@ -71,11 +77,19 @@ public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecycler
     }
 
 
+    /**
+     * The type View holder super.
+     */
     public static class ViewHolderSuper extends RecyclerView.ViewHolder {
         private TextView tvSuperMercado;
         private TextView tvProductoSuper;
         private TextView tvPrecioSuper;
 
+        /**
+         * Instantiates a new View holder super.
+         *
+         * @param itemView the item view
+         */
         public ViewHolderSuper(View itemView) {
             super(itemView);
             tvSuperMercado = itemView.findViewById(R.id.tvSuperMercado);

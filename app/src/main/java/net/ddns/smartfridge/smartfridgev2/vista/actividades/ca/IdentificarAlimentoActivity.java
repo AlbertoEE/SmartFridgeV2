@@ -53,7 +53,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
+/**
+ * The type Identificar alimento activity.
+ */
 public class IdentificarAlimentoActivity extends AppCompatActivity {
+    /**
+     * The constant PERMISOS.
+     */
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
     //de que el usuario no haya concedido los permisos necesarios
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
@@ -96,6 +102,9 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         mostrarTutorial();
     }
 
+    /**
+     * Escanear.
+     */
     public void escanear() {
         Intent intent = new Intent(this, EscanerActivity.class);
         //Para que no se guarde el histórico de códigos escaneados
@@ -138,7 +147,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
+    /**
+     * Scaner.
+     *
+     * @param v the v
+     */
+//Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void scaner(View v) {
         Permiso permiso = new Permiso();
         if (permiso.permisoCamara(this, this)) {
@@ -178,7 +192,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
+    /**
+     * Vision cloud.
+     *
+     * @param v the v
+     */
+//Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void visionCloud(View v) {
         //Creamos la instancia del objeto Vision para usar Cloud Vision API.
 
@@ -193,7 +212,10 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Para llamar a la cámara para hacer la foto del Cloud
+    /**
+     * Llamar hacer foto.
+     */
+//Para llamar a la cámara para hacer la foto del Cloud
     public void llamarHacerFoto() {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Miramos si hay alguna aplicación que pueda hacer la foto
@@ -202,7 +224,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Abre el intent de la inserción manual de alimentos
+    /**
+     * Insertar manualmente button.
+     *
+     * @param view the view
+     */
+//Abre el intent de la inserción manual de alimentos
     public void insertarManualmenteButton(View view) {
         Log.d("cod", "codigo 3_A: " + codigo_barras);
         Intent intent = new Intent(this, InsertarManualmenteActivity.class);
@@ -213,7 +240,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Metodo para coger el fichero con la imagen hecha con la cámara
+    /**
+     * Coger archivo camara file.
+     *
+     * @return the file
+     */
+//Metodo para coger el fichero con la imagen hecha con la cámara
     public File cogerArchivoCamara() {
         File archivo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String directorioAlmcto;//Para darle el nombre a la imagen
@@ -224,7 +256,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         return fichero;
     }
 
-    //Metodo para cargar la imagen y ejecutar el AsyncTask
+    /**
+     * Cargar imagen.
+     *
+     * @param uri the uri
+     */
+//Metodo para cargar la imagen y ejecutar el AsyncTask
     public void cargarImagen(Uri uri) {
         //Comprobamos que no esté vacía
         if (uri != null) {
@@ -250,14 +287,22 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Comrpobamos si hay conexión
+    /**
+     * Conexion boolean.
+     *
+     * @return the boolean
+     */
+//Comrpobamos si hay conexión
     public boolean conexion() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    //Creamos el AsyncTask para hacer la consulta a la web
+    /**
+     * The type Cloud vision task.
+     */
+//Creamos el AsyncTask para hacer la consulta a la web
     public class CloudVisionTask extends AsyncTask<Object, Void, String> {
 
         @Override

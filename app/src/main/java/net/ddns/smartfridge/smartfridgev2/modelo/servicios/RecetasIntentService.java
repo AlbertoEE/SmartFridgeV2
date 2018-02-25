@@ -15,6 +15,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+/**
+ * The type Recetas intent service.
+ */
 public class RecetasIntentService {
     /*
     private ArrayList<Receta> recetas;//Para almacenar todas las recetas de la bbdd

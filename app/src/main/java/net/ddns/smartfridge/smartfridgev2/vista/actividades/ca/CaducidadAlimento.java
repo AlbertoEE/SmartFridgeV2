@@ -36,7 +36,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Caducidad alimento.
+ */
 public class CaducidadAlimento extends AppCompatActivity {
+    /**
+     * The constant MAXUDS.
+     */
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private int unidadesWheel;//Unidades del Wheel Picker
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
@@ -55,6 +61,9 @@ public class CaducidadAlimento extends AppCompatActivity {
     private static boolean manual=false;//Será true cuando venga de inserción manual
     private String cod_barras;//Para el código de barras del alimento
 
+    /**
+     * The constant isInFront.
+     */
     public static Boolean isInFront = null;
 
     @Override
@@ -107,6 +116,11 @@ public class CaducidadAlimento extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set tiempo caducidad.
+     *
+     * @param tiempo_Caducidad the tiempo caducidad
+     */
     public void setTiempo_Caducidad(int tiempo_Caducidad){
         this.tiempo_Caducidad = tiempo_Caducidad;
     }
@@ -124,7 +138,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
     }
 
-    //Método para dar las características al WheelPicker
+    /**
+     * Wheel.
+     *
+     * @param wheelPicker the wheel picker
+     */
+//Método para dar las características al WheelPicker
     public void wheel(WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
@@ -154,7 +173,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         });
     }
 
-    //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
+    /**
+     * Confirmar caducidad.
+     *
+     * @param v the v
+     */
+//Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
         Dialogos dialogos = new Dialogos(this,this);
 
@@ -229,6 +253,11 @@ public class CaducidadAlimento extends AppCompatActivity {
         Toast.makeText(this, String.valueOf(controlDragAndDrop), Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Boton mas.
+     *
+     * @param view the view
+     */
     public void botonMas(View view){
         try {
             customDatePicker.obtenerFecha();
@@ -237,20 +266,39 @@ public class CaducidadAlimento extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set fechas.
+     *
+     * @param fecha_incial the fecha incial
+     * @param fecha_final  the fecha final
+     */
     public void setFechas(String fecha_incial, String fecha_final){
         this.fecha_inicial = fecha_incial;
         this.fecha_final = fecha_final;
     }
 
+    /**
+     * Gets control drag and drop.
+     *
+     * @return the control drag and drop
+     */
     public int getControlDragAndDrop() {
         return controlDragAndDrop;
     }
 
+    /**
+     * Sets control drag and drop.
+     *
+     * @param controlDragAndDrop the control drag and drop
+     */
     public void setControlDragAndDrop(int controlDragAndDrop) {
         this.controlDragAndDrop = controlDragAndDrop;
     }
 
-    //Método para poner las imágenes a los botones del drag and drop
+    /**
+     * Poner imagenes.
+     */
+//Método para poner las imágenes a los botones del drag and drop
     public void ponerImagenes(){
         Drawable elemento;//Para almacenar los elementos drawable
         Bitmap bitmap;//Para convertir el drawable a bitmap

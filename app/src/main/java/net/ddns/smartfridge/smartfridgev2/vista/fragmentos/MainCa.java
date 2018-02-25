@@ -24,6 +24,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class MainCa extends Fragment {
     private View v;//Para el view del fragment
 
+    /**
+     * Instantiates a new Main ca.
+     */
     public MainCa() {
         // Required empty public constructor
     }
@@ -51,6 +54,11 @@ public class MainCa extends Fragment {
         return view;
     }
 
+    /**
+     * Mostrar tutorial ca.
+     *
+     * @param v the v
+     */
     public void mostrarTutorialCa(View v) {
         final SharedPreferences tutorialShowcases = getActivity().getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
 
@@ -100,6 +108,11 @@ public class MainCa extends Fragment {
         }
     }
 
+    /**
+     * Gets v.
+     *
+     * @return the v
+     */
     public View getV() {
         return v;
     }

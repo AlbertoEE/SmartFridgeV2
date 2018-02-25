@@ -32,6 +32,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Detalles activity.
+ */
 public class DetallesActivity extends FragmentActivity {
     private ViewPager viewPager;
     private ArrayList<Alimento> alimentos;
@@ -66,6 +69,9 @@ public class DetallesActivity extends FragmentActivity {
         //mostrarTutorial();
     }
 
+    /**
+     * Cargar array.
+     */
     public void cargarArray() {
         //Limpiamos el array
         alimentos = new ArrayList<>();

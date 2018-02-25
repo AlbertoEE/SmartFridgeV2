@@ -15,6 +15,9 @@ import net.ddns.smartfridge.smartfridgev2.R;
 public class MainPm extends Fragment {
 
 
+    /**
+     * Instantiates a new Main pm.
+     */
     public MainPm() {
         // Required empty public constructor
     }

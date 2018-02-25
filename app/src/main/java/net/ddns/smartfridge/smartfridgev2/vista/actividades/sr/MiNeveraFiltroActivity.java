@@ -20,6 +20,9 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.util.ArrayList;
 
+/**
+ * The type Mi nevera filtro activity.
+ */
 public class MiNeveraFiltroActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
     private Cursor cursor;
@@ -54,6 +57,11 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
         //recyclerViewAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Gets imagen detalles.
+     *
+     * @return the imagen detalles
+     */
     public static ArrayList<Bitmap> getImagenDetalles() {
         return imagenesDetalles;
     }

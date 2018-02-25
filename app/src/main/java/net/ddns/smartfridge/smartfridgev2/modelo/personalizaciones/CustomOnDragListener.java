@@ -17,10 +17,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento
 
 /**
  * Created by Alberto on 10/01/2018.
- *
+ * <p>
  * Esta clase maneja la zona de drop del Activity CaducidadAlimento
  */
-
 public class CustomOnDragListener implements View.OnDragListener {
     private boolean dentro; //Booelean que declara si la imagen arrastrada está dentro o no
     private RelativeLayout zona; //Layout que contiene la zona de drop
@@ -33,6 +32,14 @@ public class CustomOnDragListener implements View.OnDragListener {
     private int w; //Anchura de los dias
     private int h; //Altura de los dias
 
+    /**
+     * Instantiates a new Custom on drag listener.
+     *
+     * @param imageView         the image view
+     * @param linearLayout      the linear layout
+     * @param context           the context
+     * @param caducidadAlimento the caducidad alimento
+     */
     public CustomOnDragListener(ImageView imageView, LinearLayout linearLayout, Context context, CaducidadAlimento caducidadAlimento){
         this.backGround = imageView;
         this.myLinearLayout = linearLayout;

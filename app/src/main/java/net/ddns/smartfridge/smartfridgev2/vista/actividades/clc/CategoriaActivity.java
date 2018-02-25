@@ -24,6 +24,9 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * The type Categoria activity.
+ */
 public class CategoriaActivity extends AppCompatActivity {
     private Intent i;//Para pasar datos entre Activitys
     private String categoria;//Para hacer la búsqueda en la bbdd
@@ -53,7 +56,10 @@ public class CategoriaActivity extends AppCompatActivity {
 
     }
 
-    //Creamos el AsyncTask para hacer la consulta a la bbdd
+    /**
+     * The type Listado externo.
+     */
+//Creamos el AsyncTask para hacer la consulta a la bbdd
     public class ListadoExterno extends AsyncTask<String,Void, ArrayList<Ingrediente>> {
 
         @Override
@@ -92,10 +98,20 @@ public class CategoriaActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets ingredientes categoria.
+     *
+     * @return the ingredientes categoria
+     */
     public ArrayList<Ingrediente> getIngredientesCategoria() {
         return ingredientesCategoria;
     }
 
+    /**
+     * Sets ingredientes categoria.
+     *
+     * @param ingredientesCategoria the ingredientes categoria
+     */
     public void setIngredientesCategoria(ArrayList<Ingrediente> ingredientesCategoria) {
         this.ingredientesCategoria = ingredientesCategoria;
     }

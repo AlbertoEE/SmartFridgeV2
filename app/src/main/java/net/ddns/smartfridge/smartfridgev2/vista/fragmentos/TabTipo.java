@@ -28,6 +28,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
+/**
+ * The type Tab tipo.
+ */
 public class TabTipo extends Fragment {
     private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
     private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
@@ -58,6 +61,9 @@ public class TabTipo extends Fragment {
         return v;
     }
 
+    /**
+     * The type Filtrar por tipo.
+     */
     public class FiltrarPorTipo extends AsyncTask<Integer, Void, ArrayList<Receta>>{
 
         @Override
@@ -105,6 +111,9 @@ public class TabTipo extends Fragment {
         }
     }
 
+    /**
+     * The type Sacar tipos.
+     */
     public static class SacarTipos extends AsyncTask<Void, Void, ArrayList<Tipo>>{
         private ArrayList<Tipo> tipos;//Para recoger los resultados de la consulta en el AsyncTask
 
@@ -141,6 +150,12 @@ public class TabTipo extends Fragment {
             }
         }
     }
+
+    /**
+     * Iniciar async.
+     *
+     * @param position the position
+     */
     public void iniciarAsync(int position){
         new FiltrarPorTipo().execute(position + 1);
     }

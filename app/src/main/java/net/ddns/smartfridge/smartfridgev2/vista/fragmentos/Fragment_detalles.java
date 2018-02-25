@@ -42,6 +42,9 @@ import java.util.List;
 
 import jp.wasabeef.blurry.Blurry;
 
+/**
+ * The type Fragment detalles.
+ */
 public class Fragment_detalles extends Fragment {
     private int unidadesWheel;
     private static int MAXUDS = 50;
@@ -88,6 +91,14 @@ public class Fragment_detalles extends Fragment {
         return view;
     }
 
+    /**
+     * New instance fragment detalles.
+     *
+     * @param alimento the alimento
+     * @param imagen   the imagen
+     * @param position the position
+     * @return the fragment detalles
+     */
     public static Fragment_detalles newInstance(Alimento alimento, Bitmap imagen, int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("alimento", alimento);
@@ -111,6 +122,11 @@ public class Fragment_detalles extends Fragment {
 
     }
 
+    /**
+     * Wheel.
+     *
+     * @param wheelPicker the wheel picker
+     */
     public void wheel(final WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
@@ -184,6 +200,12 @@ public class Fragment_detalles extends Fragment {
         //Controlamos la imagen que hay que pon
     }
 
+    /**
+     * Comprimir imagen.
+     *
+     * @param bitmap    the bitmap
+     * @param imageView the image view
+     */
     public void comprimirImagen(Bitmap bitmap, ImageView imageView){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);

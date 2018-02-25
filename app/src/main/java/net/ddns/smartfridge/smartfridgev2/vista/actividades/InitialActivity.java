@@ -29,6 +29,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainClc;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainPm;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainSr;
 
+/**
+ * The type Initial activity.
+ */
 public class InitialActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
@@ -129,6 +132,11 @@ public class InitialActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Gets sp.
+     *
+     * @return the sp
+     */
     public static SharedPreferences getSp() {
         return sp;
     }

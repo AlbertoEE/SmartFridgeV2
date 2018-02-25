@@ -45,6 +45,9 @@ public class TabOtros extends Fragment {
     private Context contexto;//Para el contexto del activity
     private int procedencia=2;//Para ver por dónde se va a realizar la búsqueda
 
+    /**
+     * Instantiates a new Tab otros.
+     */
     public TabOtros() {
         // Required empty public constructor
     }
@@ -150,6 +153,9 @@ public class TabOtros extends Fragment {
         return v;
     }
 
+    /**
+     * The type Mostrar recetas filtro.
+     */
     public class mostrarRecetasFiltro extends AsyncTask<String, Void, ArrayList<Receta>> {
 
         @Override

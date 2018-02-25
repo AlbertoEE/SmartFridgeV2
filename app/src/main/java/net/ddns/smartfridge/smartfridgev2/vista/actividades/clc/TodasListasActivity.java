@@ -33,6 +33,9 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * The type Todas listas activity.
+ */
 public class TodasListasActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapterListas adapter;
     private RecyclerView recyclerView;
@@ -172,12 +175,20 @@ public class TodasListasActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Delete one.
+     *
+     * @param position the position
+     */
     public void deleteOne(int position){
         adapter.removeItem(position);
         listas = adapter.getListaCompra();
         gfl.actualizarListas(listas);
     }
 
+    /**
+     * Cancel.
+     */
     public void cancel(){
         adapter.notifyDataSetChanged();
     }

@@ -3,8 +3,10 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,6 +17,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.support.v7.widget.SearchView;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
@@ -45,6 +54,7 @@ public class MiNeveraActivity extends AppCompatActivity {
         cursor = alimentoDB.getAlimentos();
 
         iniciarRecyclerView();
+        mostrarTutorial();
     }
 
     private void iniciarRecyclerView() {
@@ -166,5 +176,53 @@ public class MiNeveraActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         alimentoDB.cerrarConexion();
+    }
+    private void mostrarTutorial(){
+        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        boolean run;
+        run = tutorialShowcases.getBoolean("runMiNevera", true);
+
+        if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
+
+            //Creamos un nuevo LayoutParms para cambiar el botón de posición
+            final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            lps.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            // Ponemos márgenes al botón
+            int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+            lps.setMargins(margin, margin, margin, margin);
+
+            //Creamos el ShowCase
+            final ShowcaseView s = new ShowcaseView.Builder(this)
+                    .setTarget( new ViewTarget( ((View) findViewById(R.id.rvMiNevera)) ) )
+                    .setContentTitle("Pulsa en el que desees ver con detalle")
+                    .hideOnTouchOutside()
+                    .build();
+            s.setButtonText("Siguiente");
+            s.setButtonPosition(lps);
+            //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
+            s.overrideButtonClick(new View.OnClickListener() {
+                int contadorS = 0;
+                Target targetOrdenar = new Target() {
+                    @Override
+                    public Point getPoint() {
+                        return new ViewTarget(searchView.findViewById(R.id.menuSort)).getPoint();
+                    }
+                };
+                @Override
+                public void onClick(View v) {
+                    contadorS++;
+                    switch (contadorS) {
+                        case 1:
+                           /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
+                            tutorialShowcasesEdit.putBoolean("runMiNevera", false);
+                            tutorialShowcasesEdit.apply();*/
+                            s.hide();
+                            break;
+                    }
+                }
+            });
+        }
     }
 }

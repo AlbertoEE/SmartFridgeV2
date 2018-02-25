@@ -191,14 +191,15 @@ public class InitialActivity extends AppCompatActivity {
                             s.setContentText("Botón para gestionar la programación de los menús (En desarrollo)");
                             break;
                         case 4:
-
+                            s.hide();
+                            //View vista = mainCa.getV();
+                            //mainCa.mostrarTutorialCa(vista);
                             break;
                         case 5:
-                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("run?", false);
-                            tutorialShowcasesEdit.apply();
-                            s.hide();
+                            tutorialShowcasesEdit.apply();*/
                             break;
                     }
                 }

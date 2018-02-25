@@ -48,10 +48,10 @@ public class InitialActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.ca:
-                    MainCa ca = new MainCa();
+                    mainCa = new MainCa();
                     setTitle("Control de Alimentos");
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content, ca, "CA");
+                    fragmentTransaction.replace(R.id.content, mainCa, "CA");
                     fragmentTransaction.commit();
                     return true;
                 case R.id.pm:
@@ -62,17 +62,17 @@ public class InitialActivity extends AppCompatActivity {
                     fragmentTransaction2.commit();
                     return true;
                 case R.id.clc:
-                    MainClc clc = new MainClc();
+                    mainClc = new MainClc();
                     setTitle("Crear lista de la Compra");
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction3.replace(R.id.content, clc, "CLC");
+                    fragmentTransaction3.replace(R.id.content, mainClc, "CLC");
                     fragmentTransaction3.commit();
                     return true;
                 case R.id.sr:
-                    MainSr sr = new MainSr();
+                    mainSr = new MainSr();
                     setTitle("Sugerencias de recetas");
                     FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction4.replace(R.id.content, sr, "SR");
+                    fragmentTransaction4.replace(R.id.content, mainSr, "SR");
                     fragmentTransaction4.commit();
                     return true;
             }
@@ -87,10 +87,10 @@ public class InitialActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        MainCa ca = new MainCa();
+        mainCa = new MainCa();
         setTitle("Control de Alimentos");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content, ca, "CA");
+        fragmentTransaction.replace(R.id.content, mainCa, "CA");
         fragmentTransaction.commit();
         //Comprobamos si está activo el IntentService
         if (!servicioEjecutando()){
@@ -105,11 +105,7 @@ public class InitialActivity extends AppCompatActivity {
         }
         sp = getPreferences(Context.MODE_PRIVATE);
         //Ponemos el tutorial para el inicio
-
-        this.mainCa = (MainCa) getSupportFragmentManager().findFragmentByTag("tagCA");
-        this.mainSr = (MainSr) getSupportFragmentManager().findFragmentByTag("tagSR");
-        this.mainClc = (MainClc) getSupportFragmentManager().findFragmentByTag("tagCLC");
-
+        Log.d("lñlñ", "onCreate: " + mainCa);
         mostrarTutorial();
     }
 

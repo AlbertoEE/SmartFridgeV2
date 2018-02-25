@@ -40,6 +40,7 @@ public class TabOtros extends Fragment {
     private Spinner spinnerT;//Para coger la referencia del spinner del tiempo
     private Spinner spinnerD;//Para coger la referencia del spinner de la duración
     private Context contexto;//Para el contexto del activity
+    private int procedencia;//Para ver por dónde se va a realizar la búsqueda
 
     public TabOtros() {
         // Required empty public constructor
@@ -90,9 +91,20 @@ public class TabOtros extends Fragment {
         v.findViewById(R.id.ibFiltrarTabOtros).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("sentencia3", "Pulsado el boton");
-                Log.d("sentencia3", "texto: " + buscar.getText().toString().toUpperCase());
-                new mostrarRecetasFiltro().execute(buscar.getText().toString().toUpperCase());
+                procedencia = 2;
+                //Vemos si el usuario quiere filtrar por el título de la receta o por el tiempo y duración
+                switch (procedencia){
+                    case 1:
+                        //En caso de que filtre por el título, pasamos estos parámetros al asyncTask
+                        new mostrarRecetasFiltro().execute("titulo", buscar.getText().toString().toUpperCase());
+                        break;
+                    case 2:
+                        Log.d("sentencia4", "case 2");
+                        //En caso de que filtre por la duración y el tiempo, pasamos estos parámetros al asyncTask
+                        new mostrarRecetasFiltro().execute("spinner", spinnerT.getSelectedItem().toString(), spinnerD.getSelectedItem().toString());
+                        break;
+                }
+
             }
         });
         return v;
@@ -108,14 +120,19 @@ public class TabOtros extends Fragment {
 
         @Override
         protected ArrayList<Receta> doInBackground(String... voids) {
-            Log.d("sentencia3", "sentencia: " + voids[0]);
+            Log.d("sentencia3", "sentencia: " + voids[1]);
             recetas = new ArrayList<>();
             myHelper = new MySQLHelper();
             try {
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
-                //Recogemos las recetas una a una
-                recetas = myHelper.recogerRecetaTitulo(voids[0]);
+                //Vemos si tenemos que hacer la consulta en función del título o de los spinner
+                if (voids[0].equals("titulo")) {
+                    recetas = myHelper.recogerRecetaTitulo(voids[1]);
+                } else if (voids[0].equals("spinner")){
+                    Log.d("sentencia4", "else if");
+                    recetas = myHelper.recetaPorTiempoDificultad(voids[1], voids[2]);
+                }
                 Log.d("intentServiced", "doInBackground: " + recetas.size());
                 for(int i = 0;i<recetas.size(); i++){
                     Log.d("intentServiced", "Receta en intentService: " + recetas.get(i).getTituloReceta());
@@ -143,6 +160,7 @@ public class TabOtros extends Fragment {
                 intent.putExtra("filtroImagenes" , imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
+                //Si no hay coincidencias, se mostrará un toast al usuario
                 Toast.makeText(getContext(), "No hay resultados", Toast.LENGTH_SHORT).show();
             }
             try {

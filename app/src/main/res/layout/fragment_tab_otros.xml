@@ -64,7 +64,7 @@
 
         <EditText
             android:id="@+id/tvRecetasD"
-            android:layout_width="164dp"
+            android:layout_width="209dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"

@@ -8,10 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -40,7 +43,7 @@ public class TabOtros extends Fragment {
     private Spinner spinnerT;//Para coger la referencia del spinner del tiempo
     private Spinner spinnerD;//Para coger la referencia del spinner de la duración
     private Context contexto;//Para el contexto del activity
-    private int procedencia;//Para ver por dónde se va a realizar la búsqueda
+    private int procedencia=2;//Para ver por dónde se va a realizar la búsqueda
 
     public TabOtros() {
         // Required empty public constructor
@@ -91,7 +94,6 @@ public class TabOtros extends Fragment {
         v.findViewById(R.id.ibFiltrarTabOtros).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                procedencia = 2;
                 //Vemos si el usuario quiere filtrar por el título de la receta o por el tiempo y duración
                 switch (procedencia){
                     case 1:
@@ -104,6 +106,44 @@ public class TabOtros extends Fragment {
                         new mostrarRecetasFiltro().execute("spinner", spinnerT.getSelectedItem().toString(), spinnerD.getSelectedItem().toString());
                         break;
                 }
+
+            }
+        });
+
+        buscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(buscar.getText().toString().isEmpty()){
+                    procedencia = 2;
+                    spinnerD.setEnabled(true);
+                    spinnerT.setEnabled(true);
+                } else {
+                    procedencia = 1;
+                    spinnerD.setEnabled(false);
+                    spinnerT.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        spinnerD.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                buscar.setText("");
+                procedencia = 2;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });

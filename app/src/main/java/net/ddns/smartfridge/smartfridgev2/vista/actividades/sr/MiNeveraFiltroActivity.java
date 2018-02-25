@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapter;
+import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterNeveraRecetas;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
     private Cursor cursor;
     private RecyclerView rvMiNevera;
-    private CustomRecyclerViewAdapter recyclerViewAdapter;
+    private CustomRecyclerViewAdapterNeveraRecetas adapter;
     private RecyclerView.LayoutManager layoutManager;
     private SearchView searchView;
     private static ArrayList<Bitmap> imagenesDetalles;
@@ -49,7 +50,7 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
         //recyclerViewAdapter = new CustomRecyclerViewAdapter(cursor, this);
         cursor.close();
         rvMiNevera.setLayoutManager(layoutManager);
-        rvMiNevera.setAdapter(recyclerViewAdapter);
+        rvMiNevera.setAdapter(adapter);
         //recyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -71,13 +72,13 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                recyclerViewAdapter.filter(s);
+                adapter.filter(s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                recyclerViewAdapter.filter(s);
+                adapter.filter(s);
                 return false;
             }
         });
@@ -94,7 +95,7 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
                 } else if (sort == -1) {
                     sort = 1;
                 }
-                recyclerViewAdapter.sortRecyclerView(sort);
+                adapter.sortRecyclerView(sort);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

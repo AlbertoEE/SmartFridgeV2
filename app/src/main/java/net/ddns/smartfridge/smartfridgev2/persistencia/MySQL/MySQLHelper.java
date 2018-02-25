@@ -515,13 +515,32 @@ public class MySQLHelper {
         return recetas;
     }
     //Método para filtrar recetas a partir de los ingredientes que hay en MiNevera
-    public ArrayList<Receta> filtrarRecetaMiNevera(ArrayList<Alimento> alimentos){
+    public ArrayList<Receta> filtrarRecetaMiNevera(ArrayList<String> alimentos){
+        String nombreAlimento ="";
         recetas = new ArrayList<>();
         Statement st = null;
         ResultSet rs = null;
-       // sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
-         //       "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta " +
-               // "AND T.duracion = \'" + tiempo + "\' AND D.nombre_dificultad = \'" + dificultad + "\';";
+        int numero = alimentos.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
+        if (numero==1){
+            Log.d("check", "solo hay un elemento en el array");
+            sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                        "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND " +
+                        "R.id_dificultad_receta = D.id_dificultad_receta AND R.id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = (" +
+                        "SELECT id_ingrediente FROM INGREDIENTES WHERE nombre = " + alimentos.get(0) + "));";
+            Log.d("sentencia", "sentencia con 1 ingrediente: " + sentencia);
+        } else if (numero>1){
+            Log.d("check", "entra por el else por que hay: " + numero);
+            String ing="";
+            for(int j =0; j<numero-1; j++){
+                nombreAlimento += alimentos.get(j) + " or nombre = ";
+                Log.d("check", "valor de la sentencia: " + ing);
+            }
+            sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
+                    "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta " +
+                    "AND R.id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente IN (SELECT id_ingrediente FROM INGREDIENTES " +
+                    "WHERE nombre = " + ing + alimentos.get(numero-1)+") GROUP BY id_receta HAVING COUNT(*)= " + numero + ");";
+            Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
+        }
         try {
             st = (Statement) conexion.createStatement();
             rs = st.executeQuery(sentencia);

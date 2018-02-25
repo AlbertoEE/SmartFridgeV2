@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.BuildConfig;
 import net.ddns.smartfridge.smartfridgev2.R;
@@ -47,7 +48,7 @@ public class TodasListasActivity extends AppCompatActivity {
     private ListaCompra lista;//Para generar cada objeto de tipo ListaCompra
     private String fechaLista;//Para saber la fecha de una lista
     private Fecha fecha;//Para cambiar el formato de la fecha que recibimos de la bbdd
-    private ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
+    private ArrayList<ListaCompra> todasLasListas = new ArrayList<>();//Array con todas las listas de la compra que hay en la bbdd
     private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
     //private ArrayList<Lista>todosLosProductos = new ArrayList<>();//Para crear la lista con todos los productos
     private int sort = 1;
@@ -73,6 +74,10 @@ public class TodasListasActivity extends AppCompatActivity {
         for (int i=0; i<todasLasListas.size(); i++){
             lista = todasLasListas.get(i);
             Log.d("listaTotalFinal", "id de la lista: " + lista.getId());
+        }
+        if(todasLasListas.size()>0){
+            TextView text = (TextView) findViewById(R.id.tvNoLista);
+            text.setVisibility(View.INVISIBLE);
         }
         cargarRecyclerView(todasLasListas);
         dialogos = new Dialogos(this,this);

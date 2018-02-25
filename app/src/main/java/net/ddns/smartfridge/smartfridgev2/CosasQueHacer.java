@@ -1,7 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2;
 
 /**
- * Created by Alberto on 07/02/2018.
+ * TODO
  */
 
 public class CosasQueHacer {
@@ -21,7 +21,7 @@ public class CosasQueHacer {
     4. TODO Error android.view.InflateException: Binary XML file line #0: Error inflating class ImageButton línea 38 CustomRecyclerViewAdapterFiltroTipos
     5. TODO Hacer que se seleccione o spinner o texto, no los dos a la vez
     6. TODO Programar filtro por miNevera
-    7. TODO Poner fondo a MainSr para que se vea mientras cargan las recetas
+    7. TODO Arreglar progressBar MainSr para que se vea mientras cargan las recetas
      */
 
     //TODO APP:

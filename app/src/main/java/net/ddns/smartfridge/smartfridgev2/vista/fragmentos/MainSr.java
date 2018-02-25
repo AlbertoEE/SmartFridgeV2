@@ -46,6 +46,9 @@ public class MainSr extends Fragment {
     private Receta recetaDado;//Para sacar la menu_receta aleatoria
     private Intent intent;//Para abrir los detalles
 
+    /**
+     * Instantiates a new Main sr.
+     */
     public MainSr() {
         // Required empty public constructor
     }
@@ -99,6 +102,11 @@ public class MainSr extends Fragment {
         return view;
     }
 
+    /**
+     * Crear adapter.
+     *
+     * @param recetas the recetas
+     */
     public void crearAdapter(ArrayList<Receta> recetas){
         this.recetas = recetas;
         adapter = new CustomRecyclerViewAdapterRecetas(recetas, getActivity());
@@ -106,8 +114,17 @@ public class MainSr extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * The type Mostrar recetas.
+     */
     public class mostrarRecetas extends AsyncTask<Void, Void, ArrayList<Receta>>{
         private MainSr mainSr;
+
+        /**
+         * Instantiates a new Mostrar recetas.
+         *
+         * @param mainSr the main sr
+         */
         public mostrarRecetas(MainSr mainSr){
             this.mainSr = mainSr;
         }
@@ -188,7 +205,13 @@ public class MainSr extends Fragment {
         }
     }
 
-    //Método para coger una menu_receta aleatoria de la bbdd
+    /**
+     * Receta aleatoria receta.
+     *
+     * @param array the array
+     * @return the receta
+     */
+//Método para coger una menu_receta aleatoria de la bbdd
     public Receta recetaAleatoria(ArrayList<Receta> array){
         //Miramos el número de elementos que tiene el array para sacar el número aleatorio
         int longitud = array.size();

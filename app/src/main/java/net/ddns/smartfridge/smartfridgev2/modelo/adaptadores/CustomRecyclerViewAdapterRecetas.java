@@ -26,12 +26,17 @@ import java.util.ArrayList;
 /**
  * Created by Alberto on 19/02/2018.
  */
-
 public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<CustomRecyclerViewAdapterRecetas.ViewHolderRecetas>{
     private ArrayList<Receta> recetas;
     private Activity activity;
     private Intent intent;//Para iniciar la nueva actividad
 
+    /**
+     * Instantiates a new Custom recycler view adapter recetas.
+     *
+     * @param recetas  the recetas
+     * @param activity the activity
+     */
     public CustomRecyclerViewAdapterRecetas(ArrayList<Receta> recetas, Activity activity){
         this.recetas = recetas;
         this.activity = activity;
@@ -86,21 +91,43 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
         return recetas.size();
     }
 
+    /**
+     * Filtrar array.
+     *
+     * @param recetasFiltradas the recetas filtradas
+     */
     public void filtrarArray(ArrayList<Receta> recetasFiltradas){
         Log.d("lll", "filtrarArray: " + recetasFiltradas);
         this.recetas = recetasFiltradas;
         notifyDataSetChanged();
     }
 
+    /**
+     * The type View holder recetas.
+     */
     public static class ViewHolderRecetas extends ParallaxViewHolder {
+        /**
+         * The Fila.
+         */
         public View fila;
+        /**
+         * The Tv nombre receta.
+         */
         public TextView tvNombreReceta;
+        /**
+         * The Piv foto.
+         */
         public ParallaxImageView pivFoto;
         @Override
         public int getParallaxImageId() {
             return R.id.ivReceta;
         }
 
+        /**
+         * Instantiates a new View holder recetas.
+         *
+         * @param itemView the item view
+         */
         public ViewHolderRecetas(View itemView) {
             super(itemView);
             fila = itemView;

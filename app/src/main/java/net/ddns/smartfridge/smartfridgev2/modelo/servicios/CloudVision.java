@@ -14,8 +14,10 @@ import java.util.Locale;
 /**
  * Clase que representa la lógica para acceder al API de Google Cloud Vision
  */
-
 public class CloudVision {
+    /**
+     * The constant DIMENSION_BITMAP.
+     */
     public static final int DIMENSION_BITMAP = 1000;//Para redimensionar el bitmap de la imagen
     private static final int CALIDAD = 90;//Calidad de la imagen para pasarla de bitmap a jpeg
     private static final String [] clave = {"pen", "bottle", "lemon", "tomato", "egg"};//Array con palabras clave
@@ -23,7 +25,14 @@ public class CloudVision {
     private int cloudOk;//Lo vamos a usar para saber si ha habido algún resultado o no en la consulta al Cloud Vision. En función de este parámetro, se cargará
     //una funcionalidad u otra en el activity que se inicia. Si es 0, será que no ha habido resultados
 
-    //Metodo para escalar la imagen y darle el tamaño de 1000x1000
+    /**
+     * Escalar imagen bitmap.
+     *
+     * @param bitmap    the bitmap
+     * @param dimension the dimension
+     * @return the bitmap
+     */
+//Metodo para escalar la imagen y darle el tamaño de 1000x1000
     public Bitmap escalarImagen(Bitmap bitmap, int dimension) {
         int anchoOriginal = bitmap.getWidth();
         int altoOriginal = bitmap.getHeight();
@@ -46,7 +55,13 @@ public class CloudVision {
         return Bitmap.createScaledBitmap(bitmap, anchoRed, altoRed, false);
     }
 
-    //Metodo para crear un objeto Imagen a partir del Bitmap obtenido de la camara
+    /**
+     * Convertir bitmap image.
+     *
+     * @param b the b
+     * @return the image
+     */
+//Metodo para crear un objeto Imagen a partir del Bitmap obtenido de la camara
     public static Image convertirBitmap(Bitmap b) {
         //Instanciamos el objeto Image
         Image base64 = new Image();
@@ -60,7 +75,13 @@ public class CloudVision {
         return base64.encodeContent(imBytes);
     }
 
-    //Método para tratar la respuesta obtenida por el API
+    /**
+     * Tratar respuesta string.
+     *
+     * @param respuesta the respuesta
+     * @return the string
+     */
+//Método para tratar la respuesta obtenida por el API
     public String tratarRespuesta(BatchAnnotateImagesResponse respuesta) {
         /*Nos devuelve un EntityAnnotation. Almacenamos todos los datos en un List. Por cada "coincidencia" que encuentre va a tener un objeto de tipo Label
         Vamos a almacenar todas estas etiquetas en un List*/
@@ -91,10 +112,20 @@ public class CloudVision {
         return mostrar;
     }
 
+    /**
+     * Gets cloud ok.
+     *
+     * @return the cloud ok
+     */
     public int getCloudOk() {
         return cloudOk;
     }
 
+    /**
+     * Sets cloud ok.
+     *
+     * @param cloudOk the cloud ok
+     */
     public void setCloudOk(int cloudOk) {
         this.cloudOk = cloudOk;
     }

@@ -25,7 +25,6 @@ import cn.refactor.library.SmoothCheckBox;
 /**
  * Created by Alberto on 10/02/2018.
  */
-
 public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> productos;
     private ArrayList<ComponenteListaCompra> auxiliar;
@@ -36,6 +35,13 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     private String modificacion;
     private int contador;//Para ver si hay elementos que están repetidos
 
+    /**
+     * Instantiates a new Custom array adapter nueva lista.
+     *
+     * @param context            the context
+     * @param productosSugeridos the productos sugeridos
+     * @param activity           the activity
+     */
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
         //Log.d("MECAGOENDIOS", "CustomArrayAdapterNuevaLista: " + productosSugeridos.size());
@@ -102,6 +108,11 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     }
 
 
+    /**
+     * Add producto.
+     *
+     * @param producto the producto
+     */
     public void addProducto(ComponenteListaCompra producto) {
         if(this.productos.contains(producto)){
             Toast.makeText(activity, "Ya está en la lista", Toast.LENGTH_SHORT).show();
@@ -132,6 +143,11 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         this.notifyDataSetChanged();
     }
 
+    /**
+     * Gets lista final.
+     *
+     * @return the lista final
+     */
     public ArrayList<ComponenteListaCompra> getListaFinal() {
         return this.productos;
     }
@@ -161,8 +177,8 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     /**
      * Metodo para modificar el nombre de un alimento ya existente en el array
      *
-     * @param position
-     * @param modificacion
+     * @param position     the position
+     * @param modificacion the modificacion
      */
     public void modificar(int position, String modificacion){
         if (modificacion != null) {
@@ -174,11 +190,22 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         }
     }
 
+    /**
+     * Get size int.
+     *
+     * @return the int
+     */
     public int getSize(){
         return productos.size();
     }
 
-    //Método para comprobar si hay algún checkbox repetido en la lista y no ponerlo
+    /**
+     * Comprobar repetidos.
+     *
+     * @param checkbox the checkbox
+     * @param scb      the scb
+     */
+//Método para comprobar si hay algún checkbox repetido en la lista y no ponerlo
     public void comprobarRepetidos(ArrayList<SmoothCheckBox> checkbox, SmoothCheckBox scb){
         contador = 0;//Lo inicializamos
         for (SmoothCheckBox c : checkbox){
@@ -192,7 +219,14 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             checkbox.add(scb);
         }
     }
-    //Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
+
+    /**
+     * Comprobar repetidos alimentos.
+     *
+     * @param aux        the aux
+     * @param componente the componente
+     */
+//Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
     public void comprobarRepetidosAlimentos(ArrayList<ComponenteListaCompra> aux, ComponenteListaCompra componente){
         contador=0;//Iniciamos el contador
         for (ComponenteListaCompra c : aux){
@@ -209,6 +243,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
 
     /**
      * Método para ordenar el recycler view alfabeticamente
+     *
      * @param az este int será un 1 o un -1 según el orden que queramos
      */
     public void sortRecyclerView(final int az){
@@ -221,6 +256,11 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         notifyDataSetChanged();
     }
 
+    /**
+     * Add productos varios.
+     *
+     * @param productos the productos
+     */
     public void addProductosVarios(ArrayList<ComponenteListaCompra> productos){
         for (ComponenteListaCompra item: productos) {
             if (!this.productos.contains(item)) {

@@ -3,6 +3,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -17,9 +18,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 
 import com.google.api.client.json.JsonFactory;
@@ -48,7 +53,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
+/**
+ * The type Identificar alimento activity.
+ */
 public class IdentificarAlimentoActivity extends AppCompatActivity {
+    /**
+     * The constant PERMISOS.
+     */
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
     //de que el usuario no haya concedido los permisos necesarios
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
@@ -88,8 +99,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             //No hacemos nada
         }
+        mostrarTutorial();
     }
 
+    /**
+     * Escanear.
+     */
     public void escanear() {
         Intent intent = new Intent(this, EscanerActivity.class);
         //Para que no se guarde el histórico de códigos escaneados
@@ -132,7 +147,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
+    /**
+     * Scaner.
+     *
+     * @param v the v
+     */
+//Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void scaner(View v) {
         Permiso permiso = new Permiso();
         if (permiso.permisoCamara(this, this)) {
@@ -172,7 +192,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
+    /**
+     * Vision cloud.
+     *
+     * @param v the v
+     */
+//Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void visionCloud(View v) {
         //Creamos la instancia del objeto Vision para usar Cloud Vision API.
 
@@ -187,7 +212,10 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Para llamar a la cámara para hacer la foto del Cloud
+    /**
+     * Llamar hacer foto.
+     */
+//Para llamar a la cámara para hacer la foto del Cloud
     public void llamarHacerFoto() {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Miramos si hay alguna aplicación que pueda hacer la foto
@@ -196,7 +224,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Abre el intent de la inserción manual de alimentos
+    /**
+     * Insertar manualmente button.
+     *
+     * @param view the view
+     */
+//Abre el intent de la inserción manual de alimentos
     public void insertarManualmenteButton(View view) {
         Log.d("cod", "codigo 3_A: " + codigo_barras);
         Intent intent = new Intent(this, InsertarManualmenteActivity.class);
@@ -207,7 +240,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Metodo para coger el fichero con la imagen hecha con la cámara
+    /**
+     * Coger archivo camara file.
+     *
+     * @return the file
+     */
+//Metodo para coger el fichero con la imagen hecha con la cámara
     public File cogerArchivoCamara() {
         File archivo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String directorioAlmcto;//Para darle el nombre a la imagen
@@ -218,7 +256,12 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         return fichero;
     }
 
-    //Metodo para cargar la imagen y ejecutar el AsyncTask
+    /**
+     * Cargar imagen.
+     *
+     * @param uri the uri
+     */
+//Metodo para cargar la imagen y ejecutar el AsyncTask
     public void cargarImagen(Uri uri) {
         //Comprobamos que no esté vacía
         if (uri != null) {
@@ -244,14 +287,22 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Comrpobamos si hay conexión
+    /**
+     * Conexion boolean.
+     *
+     * @return the boolean
+     */
+//Comrpobamos si hay conexión
     public boolean conexion() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    //Creamos el AsyncTask para hacer la consulta a la web
+    /**
+     * The type Cloud vision task.
+     */
+//Creamos el AsyncTask para hacer la consulta a la web
     public class CloudVisionTask extends AsyncTask<Object, Void, String> {
 
         @Override
@@ -372,6 +423,59 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             //Le pasamos la imagen
             i.putExtra("imagenCloud", imagenCamara);
             startActivity(i);
+        }
+    }
+    private void mostrarTutorial() {
+        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        boolean run;
+        run = tutorialShowcases.getBoolean("runIA", true);
+        if (run) {//Comprobamos si ya se ha mostrado el tutorial en algún momento
+            //Creamos el ShowCase
+            final ShowcaseView s = new ShowcaseView.Builder(this)
+                    .setTarget(new ViewTarget(((View) findViewById(R.id.ibEscaner))))
+                    .setContentTitle("Escanear")
+                    .setContentText("Pulsa para escanear el código de barras de un alimento")
+                    .hideOnTouchOutside()
+                    .build();
+            s.setButtonText("Siguiente");
+            //Creamos un nuevo LayoutParms para cambiar el botón de posición
+            final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            lps.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            // Ponemos márgenes al botón
+            int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+            lps.setMargins(margin, margin, margin, margin);
+            s.setButtonPosition(lps);
+            //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
+            s.overrideButtonClick(new View.OnClickListener() {
+                int contadorS = 0;
+
+                @Override
+                public void onClick(View v) {
+                    contadorS++;
+                    switch (contadorS) {
+                        case 1:
+                            // Ponemos márgenes al botón
+                            s.setTarget(new ViewTarget(((View) findViewById(R.id.ibCloudVision))));
+                            s.setContentTitle("Identificar vía imagen");
+                            s.setContentText("Pulsa para identificar un alimento a través de su imagen");
+                            break;
+                        case 2:
+                            s.setTarget(new ViewTarget(((View) findViewById(R.id.ibManual))));
+                            s.setContentTitle("Identificar manualmente");
+                            s.setContentText("Pulsa para identificar un alimento de manera manual");
+                            break;
+
+                        case 3:
+                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
+                            tutorialShowcasesEdit.putBoolean("runIA", false);
+                            tutorialShowcasesEdit.apply();*/
+                            s.hide();
+                            break;
+                    }
+                }
+            });
         }
     }
 }

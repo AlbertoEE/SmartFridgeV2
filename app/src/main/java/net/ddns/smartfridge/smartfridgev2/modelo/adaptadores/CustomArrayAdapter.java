@@ -23,13 +23,18 @@ import cn.refactor.library.SmoothCheckBox;
 /**
  * Created by Alberto on 07/02/2018.
  */
-
 public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> alimentos;
     private ArrayList<ComponenteListaCompra> alimentosSeleccionados;
     private ArrayList<SmoothCheckBox> smoothCheckBoxes;
     private boolean cambio = false;
 
+    /**
+     * Instantiates a new Custom array adapter.
+     *
+     * @param context   the context
+     * @param alimentos the alimentos
+     */
     public CustomArrayAdapter(Context context, ArrayList<ComponenteListaCompra> alimentos){
         super(context, R.layout.fila_alimentos_sugeridos, alimentos);
         this.alimentos = alimentos;
@@ -66,6 +71,9 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
         return convertView;
     }
 
+    /**
+     * Cambiar check boxes.
+     */
     public void cambiarCheckBoxes(){
         cambio = !cambio;
         if(cambio){
@@ -80,12 +88,18 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
         }
     }
 
+    /**
+     * Get nueva lista array list.
+     *
+     * @return the array list
+     */
     public ArrayList<ComponenteListaCompra> getNuevaLista(){
         return alimentosSeleccionados;
     }
 
     /**
      * Método para ordenar el recycler view alfabeticamente
+     *
      * @param az este int será un 1 o un -1 según el orden que queramos
      */
     public void sortRecyclerView(final int az){

@@ -11,13 +11,32 @@ import android.widget.Toast;
 /**
  * Created by raquel on 29/12/2017.
  */
-
 public class Permiso {
+    /**
+     * The constant PERM_FOTO.
+     */
     public static final int PERM_FOTO=1;//Lo usaremos para indicar la posición del array para el permiso de la cámara
+    /**
+     * The constant PERM_LECTURA.
+     */
     public static final int PERM_LECTURA=2;//Lo usaremos para indicar la posición del array para el permiso de lectura en almcto interno
+    /**
+     * The constant PERM_ESCRITURA.
+     */
     public static final int PERM_ESCRITURA=3;//Lo usaremos para indicar la posición del array para el permiso de escritura en almcto interno
+    /**
+     * The constant PERM_FOTO2.
+     */
     public static final int PERM_FOTO2 = 4;
-    //Metodo para comprobar si tiene concedido el permiso para acceder a la cámara
+
+    /**
+     * Permiso camara boolean.
+     *
+     * @param contexto  the contexto
+     * @param actividad the actividad
+     * @return the boolean
+     */
+//Metodo para comprobar si tiene concedido el permiso para acceder a la cámara
     public boolean permisoCamara(Context contexto, Activity actividad){
         boolean permisoC = false;//Declaramos la variable donde vamos a almacenar el permiso, la inicializamos como false
         //Declaramos una variable de tipo int donde se almacenará si se han dado o no permisos
@@ -30,7 +49,15 @@ public class Permiso {
         }
         return permisoC;
     }
-    //Metodo para comprobar si tiene concedido el permiso para lectura del almacenamiento interno
+
+    /**
+     * Permiso lectura boolean.
+     *
+     * @param contexto  the contexto
+     * @param actividad the actividad
+     * @return the boolean
+     */
+//Metodo para comprobar si tiene concedido el permiso para lectura del almacenamiento interno
     public boolean permisoLectura(Context contexto, Activity actividad){
         boolean permisoL = false;//Declaramos la variable donde vamos a almacenar el permiso, la inicializamos como false
         //Declaramos una variable de tipo int donde se almacenará si se han dado o no permisos
@@ -49,7 +76,14 @@ public class Permiso {
         return permisoL;
     }
 
-    //Metodo para comprobar si tiene concedido el permiso para escritura del almacenamiento interno
+    /**
+     * Permiso escritura boolean.
+     *
+     * @param contexto  the contexto
+     * @param actividad the actividad
+     * @return the boolean
+     */
+//Metodo para comprobar si tiene concedido el permiso para escritura del almacenamiento interno
     public boolean permisoEscritura(Context contexto, Activity actividad){
         boolean permisoE = false;//Declaramos la variable donde vamos a almacenar el permiso, la inicializamos como false
         //Declaramos una variable de tipo int donde se almacenará si se han dado o no permisos
@@ -68,6 +102,13 @@ public class Permiso {
         return permisoE;
     }
 
+    /**
+     * Permiso camara 2 boolean.
+     *
+     * @param activity the activity
+     * @param context  the context
+     * @return the boolean
+     */
     public boolean permisoCamara2(Activity activity, Context context){
         boolean permisoCamara = false;
 

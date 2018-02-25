@@ -32,7 +32,6 @@ import java.util.Comparator;
  * Este adaptador funciona con un cursor pero su principal fuente de datos es un arrayList cargado
  * con la información del cursor.
  */
-
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
     private Cursor cursor;
     private MiNeveraActivity activity;
@@ -40,6 +39,12 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     private ArrayList<Alimento> alimentosCopia; //Este otro tan solo se usa para el método de filtrar
     private Fecha fecha;
 
+    /**
+     * Instantiates a new Custom recycler view adapter.
+     *
+     * @param cursor   the cursor
+     * @param activity the activity
+     */
     public CustomRecyclerViewAdapter(Cursor cursor, MiNeveraActivity activity) {
         this.cursor = cursor;
         this.activity = activity;
@@ -140,7 +145,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     /**
      * Método para filtrar en el recycler view
      *
-     * @param text
+     * @param text the text
      */
     public void filter(String text) {
         //limpiamos todos los alimentos, por eso antes hicimos una copia
@@ -162,6 +167,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     /**
      * Método para ordenar el recycler view alfabeticamente
+     *
      * @param az este int será un 1 o un -1 según el orden que queramos
      */
     public void sortRecyclerView(final int az){
@@ -175,7 +181,8 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     /**
      * Setter del cursor
-     * @param cursor
+     *
+     * @param cursor the cursor
      */
     public void setCursor(Cursor cursor){
         this.cursor = cursor;
@@ -205,14 +212,40 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         return alimentos.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Fila.
+         */
         public View fila;//La fila completa, para el listener
+        /**
+         * The Tv nombre.
+         */
         public TextView tvNombre;
+        /**
+         * The Tv unidades.
+         */
         public TextView tvUnidades;
+        /**
+         * The Tv dias caducidad.
+         */
         public TextView tvDiasCaducidad;
+        /**
+         * The Tv fecha caducidad.
+         */
         public TextView tvFechaCaducidad;
+        /**
+         * The Iv foto alimento.
+         */
         public ImageView ivFotoAlimento;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             fila = itemView;

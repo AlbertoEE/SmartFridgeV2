@@ -26,21 +26,35 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Created by Alberto on 09/02/2018.
  */
-
 public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<CustomRecyclerViewAdapterListas.ViewHolder2> {
     private ArrayList<ListaCompra> listas;
     private Fecha fechaF = new Fecha();//Para formatear la fecha de la bbdd
     private ListaCompra lista;//Para recoger la lista de la posición seleccionada
 
+    /**
+     * Instantiates a new Custom recycler view adapter listas.
+     *
+     * @param listaCompras the lista compras
+     */
     public CustomRecyclerViewAdapterListas(ArrayList<ListaCompra> listaCompras){
         this.listas = listaCompras;
     }
 
+    /**
+     * Add item.
+     *
+     * @param listaCompra the lista compra
+     */
     public void addItem(ListaCompra listaCompra) {
         listas.add(listaCompra);
         notifyItemInserted(listas.size());
     }
 
+    /**
+     * Remove item.
+     *
+     * @param position the position
+     */
     public void removeItem(int position) {
         listas.remove(position);
         notifyItemRemoved(position);
@@ -67,11 +81,28 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
         return listas.size();
     }
 
+    /**
+     * The type View holder 2.
+     */
     public static class ViewHolder2 extends RecyclerView.ViewHolder {
+        /**
+         * The Fila.
+         */
         public View fila;//La fila completa, para el listener
+        /**
+         * The Tv fecha lista.
+         */
         public TextView tvFechaLista;
+        /**
+         * The Tv numero productos.
+         */
         public TextView tvNumeroProductos;
 
+        /**
+         * Instantiates a new View holder 2.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder2(View itemView) {
             super(itemView);
             fila = itemView;
@@ -80,17 +111,29 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
         }
     }
 
+    /**
+     * Get lista array list.
+     *
+     * @param posicion the posicion
+     * @return the array list
+     */
     public ArrayList<ComponenteListaCompra> getLista(int posicion){
         return this.listas.get(posicion).getProductos();
     }
 
-    //Recogemos la lista de la posición seleccionada
+    /**
+     * Get lista compra array list.
+     *
+     * @return the array list
+     */
+//Recogemos la lista de la posición seleccionada
     public ArrayList<ListaCompra> getListaCompra(){
         return this.listas;
     }
 
     /**
      * Método para ordenar el recycler view alfabeticamente
+     *
      * @param az este int será un 1 o un -1 según el orden que queramos
      */
     public void sortRecyclerView(final int az){

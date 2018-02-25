@@ -13,10 +13,16 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Contiene los métodos para obtener la firma digital SHA1
  */
-
 public class Firma {
 
-    //Método para coger la firma
+    /**
+     * Get firma string.
+     *
+     * @param pm            the pm
+     * @param nombrePackage the nombre package
+     * @return the string
+     */
+//Método para coger la firma
     public static String getFirma(PackageManager pm, String nombrePackage){
 
         //Recogemos la información del package. Recoge toda la info del Manifest

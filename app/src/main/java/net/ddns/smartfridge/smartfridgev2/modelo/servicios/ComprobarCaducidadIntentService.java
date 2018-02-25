@@ -51,6 +51,9 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private boolean alimentoRepetidoSP=false;//Booleano que nos indica si un alimento está ya incluido en el SP
     private AlimentoDB alimentoDB=null;//Para establecer la conexión con la bbdd
 
+    /**
+     * Instantiates a new Comprobar caducidad intent service.
+     */
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
         dialogos = new Dialogos(this);
@@ -203,11 +206,21 @@ public class ComprobarCaducidadIntentService extends IntentService {
         timer.schedule(timerTask,DELAY,MINUTO);
     }
 
+    /**
+     * Gets bm.
+     *
+     * @return the bm
+     */
     public static Bitmap getBm() {
         return bm;
     }
 
-    //Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
+    /**
+     * Comprobar cantidad.
+     *
+     * @param cursor the cursor
+     */
+//Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
     public void comprobarCantidad(Cursor cursor){
         alimentoRepetidoSP=false;
         //Almacenamos en la variable el número de unidades de cada elemento
@@ -242,7 +255,13 @@ public class ComprobarCaducidadIntentService extends IntentService {
         }
     }
 
-    //Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
+    /**
+     * Comprobar escasez shared p.
+     *
+     * @param lista    the lista
+     * @param alimento the alimento
+     */
+//Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
     public void comprobarEscasezSharedP(ArrayList<ComponenteListaCompra> lista, Alimento alimento){
         for ( int i=0; i<lista.size(); i++){
             if(lista.get(i).getNombreElemento().equals(alimento.getNombreAlimento())){

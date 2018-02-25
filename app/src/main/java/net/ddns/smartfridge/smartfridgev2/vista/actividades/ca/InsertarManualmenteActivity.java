@@ -2,6 +2,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,14 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
@@ -29,6 +34,9 @@ import java.io.ByteArrayOutputStream;
 
 import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO2;
 
+/**
+ * The type Insertar manualmente activity.
+ */
 public class InsertarManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
@@ -59,6 +67,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             //No hacemos nada
         }
+        mostrarTutorial();
     }
 
     private void cargarMarquee(){
@@ -67,6 +76,11 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         explicacion.setSelected(true);
     }
 
+    /**
+     * Hacer foto button.
+     *
+     * @param view the view
+     */
     public void hacerFotoButton(View view){
         hacerFoto();
     }
@@ -99,6 +113,11 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Siguiente boton.
+     *
+     * @param view the view
+     */
     public void siguienteBoton(View view){
         String nombre = String.valueOf(etNombreAlimento.getText());
         Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
@@ -163,10 +182,20 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets foto.
+     *
+     * @return the foto
+     */
     public static Bitmap getFoto() {
         return foto;
     }
 
+    /**
+     * Sets foto.
+     *
+     * @param foto the foto
+     */
     public static void setFoto(Bitmap foto) {
         foto = foto;
     }
@@ -177,5 +206,64 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         alimento_nuevoDB.cerrarConexion();
+    }
+
+    private void mostrarTutorial(){
+        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        boolean run;
+        run = tutorialShowcases.getBoolean("runInsertarManualmente", true);
+
+        if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
+
+            //Creamos un nuevo LayoutParms para cambiar el botón de posición
+            final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            lps.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            // Ponemos márgenes al botón
+            int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+            lps.setMargins(margin, margin, margin, margin);
+
+            //Creamos el ShowCase
+            final ShowcaseView s = new ShowcaseView.Builder(this)
+                    .setTarget( new ViewTarget( ((View) findViewById(R.id.etNombreAlimento)) ) )
+                    .setContentTitle("Nombre del alimento")
+                    .setContentText("Escribe el nombre del alimento que quieras incluir. Se te mostrará la lista con las sugerencias" +
+                            " de productos que hayas incluido manualmente con anterioridad")
+                    .hideOnTouchOutside()
+                    .build();
+            s.setButtonText("Siguiente");
+            s.setButtonPosition(lps);
+            //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
+            s.overrideButtonClick(new View.OnClickListener() {
+                int contadorS = 0;
+
+                @Override
+                public void onClick(View v) {
+                    contadorS++;
+                    switch (contadorS) {
+                        case 1:
+
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.ibCamara)) ) );
+                            s.setContentTitle("Realizar fotografía");
+                            s.setContentText("Pulsa para realizar una fotografía del alimento.");
+                            break;
+
+                        case 2:
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.ibSiguiente)) )  );
+                            s.setContentTitle("Aceptar");
+                            s.setContentText("Pulsa para confirmar los datos y pasar a la pantalla de insertar caducidad y cantidad.");
+                            break;
+
+                        case 3:
+                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
+                            tutorialShowcasesEdit.putBoolean("runInsertarManualmente", false);
+                            tutorialShowcasesEdit.apply();*/
+                            s.hide();
+                            break;
+                    }
+                }
+            });
+        }
     }
 }

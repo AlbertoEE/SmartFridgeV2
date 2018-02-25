@@ -23,6 +23,9 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * The type Precio compra activity.
+ */
 public class PrecioCompraActivity extends AppCompatActivity {
     private Intent intent;//Para recoger los valores del Activity que le llama
     private ArrayList<ComponenteListaCompra> nombres;//Para almacenar lo recogido del intent
@@ -61,6 +64,12 @@ public class PrecioCompraActivity extends AppCompatActivity {
         new consultarTodosPrecios(this).execute(nombres);
     }
 
+    /**
+     * Calcular total array list.
+     *
+     * @param precios the precios
+     * @return the array list
+     */
     public ArrayList<Double> calcularTotal(ArrayList<Precio> precios){
         double carrefour=0f;//Para calcular el total en Carrefour
         double alcampo=0f;//Para calcular el total en Alcampo
@@ -100,6 +109,11 @@ public class PrecioCompraActivity extends AppCompatActivity {
         return totales;
     }
 
+    /**
+     * Set array.
+     *
+     * @param preciosS the precios s
+     */
     public void setArray(ArrayList<Precio> preciosS){
         this.precios = preciosS;
         imageButtonAlcampo = findViewById(R.id.ibAlcampo);
@@ -165,7 +179,10 @@ public class PrecioCompraActivity extends AppCompatActivity {
         }
     }
 
-    //Creamos la consulta a la bbdd
+    /**
+     * The type Consultar todos precios.
+     */
+//Creamos la consulta a la bbdd
     public class consultarTodosPrecios extends AsyncTask<ArrayList<ComponenteListaCompra>, Void, ArrayList<Precio>>{
         private final String [] SUPERMERCADOS = {"carrefour", "alcampo", "hipercor", "mercadona"};
         private ArrayList<Precio>  precioPorSuper = new ArrayList<>();//Para almacenar los resultados de la bbdd
@@ -174,6 +191,11 @@ public class PrecioCompraActivity extends AppCompatActivity {
         private Precio precio;//Para generar objetos a partir de los datos de la bbdd
         private PrecioCompraActivity clase;
 
+        /**
+         * Instantiates a new Consultar todos precios.
+         *
+         * @param clase the clase
+         */
         public consultarTodosPrecios(PrecioCompraActivity clase){
             this.clase = clase;
         }
@@ -237,7 +259,13 @@ public class PrecioCompraActivity extends AppCompatActivity {
             }
         }*/
 
-        //Método para calcular el total de precio en función de cada supermercado
+        /**
+         * Calcular total array list.
+         *
+         * @param precios the precios
+         * @return the array list
+         */
+//Método para calcular el total de precio en función de cada supermercado
         public ArrayList<Double> calcularTotal(ArrayList<Precio> precios){
             ArrayList<Double> totales = new ArrayList<>();//Variable para almacenar el total de los productos por supermercado
             double carrefour=0;//Para calcular el total en Carrefour

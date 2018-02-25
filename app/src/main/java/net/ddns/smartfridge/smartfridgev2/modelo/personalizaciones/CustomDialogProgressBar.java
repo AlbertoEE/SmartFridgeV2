@@ -10,13 +10,17 @@ import net.ddns.smartfridge.smartfridgev2.R;
 
 /**
  * Created by Alberto on 14/01/2018.
- *
+ * <p>
  * Clase creada con el fin de invocar un dialago que contenga el progressDialog indeterminado
  */
-
 public class CustomDialogProgressBar {
     private Dialog dialog;
 
+    /**
+     * Instantiates a new Custom dialog progress bar.
+     *
+     * @param activity the activity
+     */
     public CustomDialogProgressBar(Activity activity){
         dialog = new Dialog(activity);
     }

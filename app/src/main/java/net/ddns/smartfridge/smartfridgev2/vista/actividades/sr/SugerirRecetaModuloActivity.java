@@ -7,6 +7,9 @@ import android.view.View;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 
+/**
+ * The type Sugerir receta modulo activity.
+ */
 public class SugerirRecetaModuloActivity extends AppCompatActivity {
 
     @Override
@@ -20,6 +23,11 @@ public class SugerirRecetaModuloActivity extends AppCompatActivity {
         Intent intent = getIntent();
     }
 
+    /**
+     * Abrir seleccionar.
+     *
+     * @param v the v
+     */
     public void abrirSeleccionar(View v){
         //Abrirmos el intent
         Intent i = new Intent(this, FiltroRecetaActivity.class);

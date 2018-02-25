@@ -21,6 +21,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.util.ArrayList;
 
+/**
+ * The type Sugerencia de alimento activity.
+ */
 public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<ComponenteListaCompra> alimentosSugeridos;

@@ -16,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Clase que gestiona el almacenamiento del fichero Shared Preferences
  */
-
 public class GestorSharedP {
     private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
@@ -25,7 +24,12 @@ public class GestorSharedP {
     private SharedPreferences sp= InitialActivity.getSp();//Cogemos el SP que hemos usado antes
     private ComponenteListaCompra componente;//Para crear los componentes a partir del SP
 
-    //Método para comprobar si hay algún elemento en el SP
+    /**
+     * Productos almacenados int.
+     *
+     * @return the int
+     */
+//Método para comprobar si hay algún elemento en el SP
     public  int productosAlmacenados(){
         elementos = 0;
         //Comprobamos si hay algún elemento leyendo el SP
@@ -44,7 +48,11 @@ public class GestorSharedP {
         }
         return elementos;
     }
-    /*Método para recoger los valores del SP
+
+    /**
+     * Borrar sp.
+     */
+/*Método para recoger los valores del SP
     public ArrayList<String> recogerValores(int elem){
         String valor;//Para almacenar el valor recogido del SP
         alimentosLeidosSP = new ArrayList<String>();
@@ -64,15 +72,30 @@ public class GestorSharedP {
         Log.d("sp", "limpiamos el sp");
     }
 
+    /**
+     * Is hay elemento boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHayElemento() {
         return hayElemento;
     }
 
+    /**
+     * Sets hay elemento.
+     *
+     * @param hayElemento the hay elemento
+     */
     public void setHayElemento(boolean hayElemento) {
         this.hayElemento = hayElemento;
     }
 
-    //Método para recoger los valores del SP
+    /**
+     * Recoger valores array list.
+     *
+     * @return the array list
+     */
+//Método para recoger los valores del SP
     public ArrayList<ComponenteListaCompra> recogerValores(){
         //Recogemos todos los datos del SP
         totalElementos = sp.getAll();

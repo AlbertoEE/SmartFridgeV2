@@ -20,6 +20,9 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
 
+/**
+ * The type Confirmar alimento activity.
+ */
 public class ConfirmarAlimentoActivity extends AppCompatActivity {
     private Intent escaner;//Para recoger el Intent
     private String cod_barrras = null;//Variable para almacenar el código de barras que recibimos el Escaner
@@ -63,7 +66,10 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         dialogos = new Dialogos(this, this);
     }
 
-    //Creamos el AsyncTask para hacer la consulta a la bbdd
+    /**
+     * The type Verificador.
+     */
+//Creamos el AsyncTask para hacer la consulta a la bbdd
     public class Verificador extends AsyncTask<String,Void, Alimento_Codigo> {
         @Override
         protected void onPreExecute() {
@@ -120,26 +126,51 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         }
     }
 
-    //Programamos el botón de NO
+    /**
+     * Volver identificar alimento.
+     *
+     * @param v the v
+     */
+//Programamos el botón de NO
     public void volverIdentificarAlimento (View v){
         //Toast.makeText(this, "nombre: " + al.getNomAlimento(), Toast.LENGTH_SHORT).show();
         dialogos.dialogAlimentoNoEncontrado();
     }
 
-    //Programamos el botón de SI
+    /**
+     * Alimento identificado.
+     *
+     * @param v the v
+     */
+//Programamos el botón de SI
     public void alimentoIdentificado (View v){
         dialogos.dialogAlimentoEncontrado();
     }
 
 
+    /**
+     * Gets alimento.
+     *
+     * @return the alimento
+     */
     public static Alimento_Codigo getAlimento() {
         return al;
     }
 
+    /**
+     * Gets imagen cloud.
+     *
+     * @return the imagen cloud
+     */
     public static Bitmap getImagenCloud() {
         return imagenCloud;
     }
 
+    /**
+     * Gets nombre cloud.
+     *
+     * @return the nombre cloud
+     */
     public static String getNombreCloud() {
         return nombreCloud;
     }

@@ -29,6 +29,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainClc;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainPm;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainSr;
 
+/**
+ * The type Initial activity.
+ */
 public class InitialActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
@@ -129,6 +132,11 @@ public class InitialActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Gets sp.
+     *
+     * @return the sp
+     */
     public static SharedPreferences getSp() {
         return sp;
     }
@@ -191,14 +199,15 @@ public class InitialActivity extends AppCompatActivity {
                             s.setContentText("Botón para gestionar la programación de los menús (En desarrollo)");
                             break;
                         case 4:
-
+                            s.hide();
+                            //View vista = mainCa.getV();
+                            //mainCa.mostrarTutorialCa(vista);
                             break;
                         case 5:
-                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("run?", false);
-                            tutorialShowcasesEdit.apply();
-                            s.hide();
+                            tutorialShowcasesEdit.apply();*/
                             break;
                     }
                 }

@@ -58,7 +58,6 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 /**
  * Clase para mostrar los diferentes tipos de dialogs en la app
  */
-
 public class Dialogos {
     private Context contexto;//El contexto del dialog
     private static Intent intent;//Para llamar a otras Activitys
@@ -75,22 +74,44 @@ public class Dialogos {
     private Alimento_Nuevo aliNuevo;//Para crear un objeto alimento nuevo y guardarlo en la bbdd
     private ComponenteListaCompra componente;//Para crear un componente nuevo de la lista para añadirlo a esta
 
+    /**
+     * Instantiates a new Dialogos.
+     *
+     * @param context  the context
+     * @param activity the activity
+     */
     public Dialogos(Context context, Activity activity){
         this.contexto=context;
         //builder = new AlertDialog.Builder(contexto);
         this.clase = activity;
     }
 
+    /**
+     * Instantiates a new Dialogos.
+     *
+     * @param context  the context
+     * @param fragment the fragment
+     * @param activity the activity
+     */
     public Dialogos(Context context, TabTipo fragment, Activity activity){
         this.contexto=context;
         this.fragment = fragment;
         this.clase = activity;
     }
 
+    /**
+     * Instantiates a new Dialogos.
+     *
+     * @param context the context
+     */
     public Dialogos(Context context){
         this.contexto=context;
     }
-    //Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
+
+    /**
+     * Dialog alimento no encontrado.
+     */
+//Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
     public void dialogAlimentoNoEncontrado(){
         /*
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
@@ -150,7 +171,11 @@ public class Dialogos {
                 })
                 .build();
     }
-    //Se mostrará el dialog cuando el alimento encontrado en la bbdd sí sea el que tiene el cliente
+
+    /**
+     * Dialog alimento encontrado.
+     */
+//Se mostrará el dialog cuando el alimento encontrado en la bbdd sí sea el que tiene el cliente
     public void dialogAlimentoEncontrado(){
 
         new FancyGifDialog.Builder(clase)
@@ -188,7 +213,16 @@ public class Dialogos {
                 .build();
     }
 
-    //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
+    /**
+     * Dialog caducidad.
+     *
+     * @param udsSeleccionadas the uds seleccionadas
+     * @param caducidad        the caducidad
+     * @param alimento         the alimento
+     * @param manualCod        the manual cod
+     * @param cod_barras       the cod barras
+     */
+//Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
     public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manualCod, final String cod_barras){
         String day;//Para poner el mensaje del dialog
         Log.d("manual", "manual: " + manualCod);
@@ -242,7 +276,11 @@ public class Dialogos {
                 })
                 .build();
     }
-    //Dialog para cuando no se ha seleccionado una caducidad
+
+    /**
+     * Dialog no caducidad.
+     */
+//Dialog para cuando no se ha seleccionado una caducidad
     public void dialogNoCaducidad(){
         new FancyGifDialog.Builder(clase)
                 .setTitle("¡NO SE HA SELECCIONADO LA CADUCIDAD!")
@@ -268,7 +306,13 @@ public class Dialogos {
                 .build();
     }
 
-    //Dialog para notificar a SF un alimento nuevo
+    /**
+     * Dialog notificar sf.
+     *
+     * @param alimento   the alimento
+     * @param cod_barras the cod barras
+     */
+//Dialog para notificar a SF un alimento nuevo
     public void dialogNotificarSF(final Alimento alimento, final String cod_barras){
         Log.d("cod", "codigo 11: " + cod_barras);
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
@@ -312,7 +356,10 @@ public class Dialogos {
         dialog.show();
     }
 
-    //Dialog para cuando no se encuentra el producto escaneado en la bbdd de códigos de barras
+    /**
+     * Dialog no cod barras.
+     */
+//Dialog para cuando no se encuentra el producto escaneado en la bbdd de códigos de barras
     public void dialogNoCodBarras(){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
@@ -344,7 +391,20 @@ public class Dialogos {
                 .build();
     }
 
-    //Dialog para cuando se van a eliminar todas las uds de un alimento
+    /**
+     * Dialog cero unidades.
+     *
+     * @param vista       the vista
+     * @param id          the id
+     * @param contexto    the contexto
+     * @param foto        the foto
+     * @param nombre      the nombre
+     * @param adapter     the adapter
+     * @param posicion    the posicion
+     * @param wheelPicker the wheel picker
+     * @param uds         the uds
+     */
+//Dialog para cuando se van a eliminar todas las uds de un alimento
     public void dialogCeroUnidades(final View vista, final int id, final Context contexto, final Bitmap foto, final String nombre, final CustomPageAdapter adapter, final int posicion, final WheelPicker wheelPicker, final int uds){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
@@ -377,7 +437,21 @@ public class Dialogos {
                 })
                 .build();
     }
-    //SnackBar para deshacer la eliminación del elimento
+
+    /**
+     * Mostrar snack.
+     *
+     * @param vista       the vista
+     * @param id          the id
+     * @param contexto    the contexto
+     * @param foto        the foto
+     * @param nombre      the nombre
+     * @param adapter     the adapter
+     * @param posicion    the posicion
+     * @param wheelPicker the wheel picker
+     * @param uds         the uds
+     */
+//SnackBar para deshacer la eliminación del elimento
     public static void mostrarSnack(View vista, final int id, final Context contexto, final Bitmap foto, final String nombre, final CustomPageAdapter adapter, final int posicion, final WheelPicker wheelPicker, final int uds){
         //Creamos el SnackBar con el texto que indiquemos
         Snackbar sb = Snackbar.make(vista, "Eliminando alimento", Snackbar.LENGTH_SHORT);
@@ -417,7 +491,14 @@ public class Dialogos {
         });
     }
 
-    //Dialog para cuando se van a eliminar todas las uds de un alimento
+    /**
+     * Dialog anadir lista.
+     *
+     * @param contexto the contexto
+     * @param foto     the foto
+     * @param nombre   the nombre
+     */
+//Dialog para cuando se van a eliminar todas las uds de un alimento
     public static void dialogAnadirLista(final Context contexto, Bitmap foto, String nombre){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
@@ -451,7 +532,14 @@ public class Dialogos {
                 .build();
     }
 
-    //Método para enviar la notificación
+    /**
+     * Enviar notificacion caducado.
+     *
+     * @param alimento the alimento
+     * @param contexto the contexto
+     * @param posicion the posicion
+     */
+//Método para enviar la notificación
     public void enviarNotificacionCaducado(Alimento alimento, Context contexto, int posicion){
         intent = new Intent(contexto, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
@@ -489,7 +577,14 @@ public class Dialogos {
 
     }
 
-    //Método para enviar la notificación cuando falten menos de dos días para la caducidad
+    /**
+     * Enviar notificacion proxima caducidad.
+     *
+     * @param alimento the alimento
+     * @param contexto the contexto
+     * @param posicion the posicion
+     */
+//Método para enviar la notificación cuando falten menos de dos días para la caducidad
     public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto, int posicion){
         //Completar cuando esté creado el BuscarReceta por alimento
 
@@ -514,7 +609,14 @@ public class Dialogos {
         nm.notify(alimento.getId(), notificacion);
     }
 
-    //Método para enviar la notificación cuando haya menos de dos unidades de alimento
+    /**
+     * Enviar notificacion proxima escasez.
+     *
+     * @param alimento the alimento
+     * @param contexto the contexto
+     * @param posicion the posicion
+     */
+//Método para enviar la notificación cuando haya menos de dos unidades de alimento
     public void enviarNotificacionProximaEscasez(Alimento alimento, Context contexto, int posicion){
         //Creamos el objeto componente con todos los datos
         componente = new ComponenteListaCompra(alimento.getId(), alimento.getNombreAlimento(),ComponenteListaCompra.TIPOS[0]);
@@ -548,7 +650,10 @@ public class Dialogos {
         Log.d("Alimento", "id: " + componente.getId());
     }
 
-    //Dialog para cuando se añadan productos a la lista de la compra
+    /**
+     * Dialog lista compra.
+     */
+//Dialog para cuando se añadan productos a la lista de la compra
     public void dialogListaCompra(){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
@@ -570,6 +675,13 @@ public class Dialogos {
         dialog.show();
     }
 
+    /**
+     * Dialogo modificar borrar.
+     *
+     * @param texto    the texto
+     * @param adapter  the adapter
+     * @param position the position
+     */
     public void dialogoModificarBorrar(String texto, final CustomArrayAdapterNuevaLista adapter, final int position){
         final String[] componenteReturn = new String[1];
 
@@ -617,7 +729,13 @@ public class Dialogos {
         Log.d("tengen", "dialogoModificarBorrar: " + componenteReturn[0]);
     }
 
-    /*Dialog que se mostrará cuando no se haya encontrado ninguna menu_receta con los criterios de búsqueda
+    /**
+     * Dialogo borrar lista.
+     *
+     * @param clase    the clase
+     * @param position the position
+     */
+/*Dialog que se mostrará cuando no se haya encontrado ninguna menu_receta con los criterios de búsqueda
     public void dialogoNoReceta(){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título

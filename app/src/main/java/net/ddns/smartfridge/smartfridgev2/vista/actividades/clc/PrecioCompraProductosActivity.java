@@ -13,6 +13,9 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * The type Precio compra productos activity.
+ */
 public class PrecioCompraProductosActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CustomRecyclerViewSuper adapter;

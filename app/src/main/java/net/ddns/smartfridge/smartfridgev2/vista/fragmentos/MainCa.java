@@ -22,7 +22,11 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class MainCa extends Fragment {
+    private View v;//Para el view del fragment
 
+    /**
+     * Instantiates a new Main ca.
+     */
     public MainCa() {
         // Required empty public constructor
     }
@@ -46,11 +50,16 @@ public class MainCa extends Fragment {
                 startActivity(i);
             }
         });
-        //mostrarTutorial(view);
+        this.v = view;
         return view;
     }
 
-    private void mostrarTutorialCa(View v) {
+    /**
+     * Mostrar tutorial ca.
+     *
+     * @param v the v
+     */
+    public void mostrarTutorialCa(View v) {
         final SharedPreferences tutorialShowcases = getActivity().getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
 
         boolean run;
@@ -93,17 +102,18 @@ public class MainCa extends Fragment {
                             s.setContentTitle("Ver MiNevera");
                             s.setContentText("Pulsa para ver los alimentos guardados en MiNevera");
                             break;
-
-                        case 2:
-                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
-                            SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("run?", false);
-                            tutorialShowcasesEdit.apply();
-                            s.hide();
-                            break;
                     }
                 }
             });
         }
+    }
+
+    /**
+     * Gets v.
+     *
+     * @return the v
+     */
+    public View getV() {
+        return v;
     }
 }

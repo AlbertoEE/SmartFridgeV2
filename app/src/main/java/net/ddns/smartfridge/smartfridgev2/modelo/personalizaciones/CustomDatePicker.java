@@ -19,8 +19,10 @@ import java.util.Calendar;
  * Created by Alberto on 14/01/2018.
  * Clase para el calendario
  */
-
 public class CustomDatePicker {
+    /**
+     * The Calendar.
+     */
     public final Calendar calendar = Calendar.getInstance();
 
     //Obtenemos el mes, dia y año actual
@@ -33,6 +35,12 @@ public class CustomDatePicker {
     private CaducidadAlimento ca;
     private RelativeLayout relativeLayout;
 
+    /**
+     * Instantiates a new Custom date picker.
+     *
+     * @param context  the context
+     * @param activity the activity
+     */
     public CustomDatePicker(Context context, Activity activity){
         this.c = context;
         this.activity = activity;
@@ -42,7 +50,7 @@ public class CustomDatePicker {
     /**
      * Método para instanciar al calendario
      *
-     * @throws ParseException
+     * @throws ParseException the parse exception
      */
     public void obtenerFecha() throws ParseException {
         //Creamos el diálogo

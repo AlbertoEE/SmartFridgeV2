@@ -16,6 +16,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * The type Dialog activity.
+ */
 public class DialogActivity extends Activity {
     private Intent i;//Para recoger el intent que nos llega de la notificación del service
     //private Map<Integer, String> datosSP;//Para guardar los datos recibidos del intent
@@ -57,7 +60,13 @@ public class DialogActivity extends Activity {
         d.dialogListaCompra();
     }
 
-    //Método para guardar lo recibido en el intent en el SharedPreferences
+    /**
+     * Guardar sp.
+     *
+     * @param posicion       the posicion
+     * @param nombreAlimento the nombre alimento
+     */
+//Método para guardar lo recibido en el intent en el SharedPreferences
     public void guardarSP(int posicion, String nombreAlimento){
         //Escribimos los datos. Generamos el editor
         SharedPreferences.Editor editor = mySp.edit();
@@ -66,7 +75,13 @@ public class DialogActivity extends Activity {
         editor.commit();
     }
 
-    //Método para obtener la posición dónde se almacenará el siguiente elemento del sP
+    /**
+     * Recoger posicion int.
+     *
+     * @param sp the sp
+     * @return the int
+     */
+//Método para obtener la posición dónde se almacenará el siguiente elemento del sP
     public int recogerPosicion(SharedPreferences sp){
         int elementos = 0;//Iniciamos la variable con el total de elementos que hay en el SP a 0
         //Recogemos todos los elementos que hay en el sp
@@ -89,10 +104,20 @@ public class DialogActivity extends Activity {
         return elementos;
     }
 
+    /**
+     * Gets my sp.
+     *
+     * @return the my sp
+     */
     public static SharedPreferences getMySp() {
         return mySp;
     }
 
+    /**
+     * Sets my sp.
+     *
+     * @param mySp the my sp
+     */
     public void setMySp(SharedPreferences mySp) {
         this.mySp = mySp;
     }

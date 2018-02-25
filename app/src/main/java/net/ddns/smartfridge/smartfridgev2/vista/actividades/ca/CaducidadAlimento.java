@@ -1,6 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,11 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
@@ -31,7 +36,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Caducidad alimento.
+ */
 public class CaducidadAlimento extends AppCompatActivity {
+    /**
+     * The constant MAXUDS.
+     */
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private int unidadesWheel;//Unidades del Wheel Picker
     private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
@@ -50,6 +61,9 @@ public class CaducidadAlimento extends AppCompatActivity {
     private static boolean manual=false;//Será true cuando venga de inserción manual
     private String cod_barras;//Para el código de barras del alimento
 
+    /**
+     * The constant isInFront.
+     */
     public static Boolean isInFront = null;
 
     @Override
@@ -73,6 +87,7 @@ public class CaducidadAlimento extends AppCompatActivity {
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUdsDetalles);
         wheel(wheelPicker);
         adb = new AlimentoDB(this);
+        mostrarTutorial();
     }
 
     private void comprobarPadre(){
@@ -101,6 +116,11 @@ public class CaducidadAlimento extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set tiempo caducidad.
+     *
+     * @param tiempo_Caducidad the tiempo caducidad
+     */
     public void setTiempo_Caducidad(int tiempo_Caducidad){
         this.tiempo_Caducidad = tiempo_Caducidad;
     }
@@ -118,7 +138,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
     }
 
-    //Método para dar las características al WheelPicker
+    /**
+     * Wheel.
+     *
+     * @param wheelPicker the wheel picker
+     */
+//Método para dar las características al WheelPicker
     public void wheel(WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
@@ -148,7 +173,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         });
     }
 
-    //Metodo que mostrará un dialog con la caducidad y las uds seleccionads
+    /**
+     * Confirmar caducidad.
+     *
+     * @param v the v
+     */
+//Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
         Dialogos dialogos = new Dialogos(this,this);
 
@@ -223,6 +253,11 @@ public class CaducidadAlimento extends AppCompatActivity {
         Toast.makeText(this, String.valueOf(controlDragAndDrop), Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Boton mas.
+     *
+     * @param view the view
+     */
     public void botonMas(View view){
         try {
             customDatePicker.obtenerFecha();
@@ -231,20 +266,39 @@ public class CaducidadAlimento extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set fechas.
+     *
+     * @param fecha_incial the fecha incial
+     * @param fecha_final  the fecha final
+     */
     public void setFechas(String fecha_incial, String fecha_final){
         this.fecha_inicial = fecha_incial;
         this.fecha_final = fecha_final;
     }
 
+    /**
+     * Gets control drag and drop.
+     *
+     * @return the control drag and drop
+     */
     public int getControlDragAndDrop() {
         return controlDragAndDrop;
     }
 
+    /**
+     * Sets control drag and drop.
+     *
+     * @param controlDragAndDrop the control drag and drop
+     */
     public void setControlDragAndDrop(int controlDragAndDrop) {
         this.controlDragAndDrop = controlDragAndDrop;
     }
 
-    //Método para poner las imágenes a los botones del drag and drop
+    /**
+     * Poner imagenes.
+     */
+//Método para poner las imágenes a los botones del drag and drop
     public void ponerImagenes(){
         Drawable elemento;//Para almacenar los elementos drawable
         Bitmap bitmap;//Para convertir el drawable a bitmap
@@ -298,8 +352,6 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     //En el onDestroy cerramos la bbdd
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -317,5 +369,70 @@ public class CaducidadAlimento extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         isInFront = false;
+    }
+
+    private void mostrarTutorial(){
+        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        boolean run;
+        run = tutorialShowcases.getBoolean("runCAlimento", true);
+
+        if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
+
+            //Creamos un nuevo LayoutParms para cambiar el botón de posición
+            final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            lps.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            // Ponemos márgenes al botón
+            int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+            lps.setMargins(margin, margin, margin, margin);
+
+            //Creamos el ShowCase
+            final ShowcaseView s = new ShowcaseView.Builder(this)
+                    .setTarget( new ViewTarget( ((View) findViewById(R.id.ivCad4)) ) )
+                    .setContentTitle("Días para caducidad")
+                    .setContentText("Arrastra los días que faltan para la caducidad del alimento")
+                    .hideOnTouchOutside()
+                    .build();
+            s.setButtonText("Siguiente");
+            //s.setButtonPosition(lps);
+            //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
+            s.overrideButtonClick(new View.OnClickListener() {
+                int contadorS = 0;
+
+                @Override
+                public void onClick(View v) {
+                    contadorS++;
+                    switch (contadorS) {
+                        case 1:
+                            s.setButtonPosition(lps);
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.ivCadMas)) ) );
+                            s.setContentTitle("Más días");
+                            s.setContentText("Si faltan más de 7 días para la caducidad, puedes seleccionar la fecha pulsando en este icono. Se mostrará el calendario para" +
+                                    " indicar la fecha de caducidad.");
+                            break;
+
+                        case 2:
+
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.wheelUdsDetalles)) )  );
+                            s.setContentTitle("Unidades añadidas a MiNevera");
+                            s.setContentText("Mueve la rueda para seleccionar las unidades añadidas a MiNevera");
+                            break;
+
+                        case 3:
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.btOkCad)) )  );
+                            s.setContentTitle("Botón Aceptar");
+                            s.setContentText("Pulsa cuando quieras confirmar los datos. Se te mostrará un mensaje indicándote los datos introducidos para ver si estás conforme con ellos.");
+                            break;
+                        case 4:
+                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
+                            tutorialShowcasesEdit.putBoolean("runCAlimento", false);
+                            tutorialShowcasesEdit.apply();*/
+                            s.hide();
+                            break;
+                    }
+                }
+            });
+        }
     }
 }

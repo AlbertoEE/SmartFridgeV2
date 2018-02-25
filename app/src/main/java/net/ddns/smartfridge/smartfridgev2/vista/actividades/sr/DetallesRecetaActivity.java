@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * The type Detalles receta activity.
+ */
 public class DetallesRecetaActivity extends AppCompatActivity {
     private Intent intent;//Para recoger el intent del otro Activity
     private MySQLHelper myHelper;//Para hacer la búsqueda en la bbdd
@@ -58,6 +61,9 @@ public class DetallesRecetaActivity extends AppCompatActivity {
         speakerbox = new Speakerbox(getApplication());
     }
 
+    /**
+     * The type Recoger ingredientes.
+     */
     public class RecogerIngredientes extends AsyncTask<Integer, Void, ArrayList<Ingrediente>>{
 
         @Override

@@ -9,6 +9,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabOtros;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
+/**
+ * The type Filtro receta activity.
+ */
 public class FiltroRecetaActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;//Para poner las pestañas
 

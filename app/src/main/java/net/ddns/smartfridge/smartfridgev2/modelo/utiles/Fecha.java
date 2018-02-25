@@ -15,13 +15,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * Clase con los métodos para trabajar con las fechas
  */
-
 public class Fecha {
     private Calendar hoy;//Para crear el objeto Calendar con la fecha de hoy
     private int diasParaCaducidad=0;//Para almacenar los dias de caducidad que tiene el alimento
     private static final int MILISEGUNDOS = 86400000;//Representa los milisegundos que tiene un día
 
-    //Método para conseguir la fecha actual
+    /**
+     * Fecha actual string.
+     *
+     * @return the string
+     */
+//Método para conseguir la fecha actual
     public String fechaActual(){
         //Recogemos la fecha actual
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -33,7 +37,12 @@ public class Fecha {
         return fecha_actual;
     }
 
-    //Método para conseguir la fecha actual
+    /**
+     * Fecha actual completa string.
+     *
+     * @return the string
+     */
+//Método para conseguir la fecha actual
     public String fechaActualCompleta(){
         //Recogemos la fecha actual
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
@@ -45,7 +54,13 @@ public class Fecha {
         return fecha_actual;
     }
 
-    //Método para pasar de formato completo a formato corto de una fecha
+    /**
+     * Fecha corta string.
+     *
+     * @param fechaLarga the fecha larga
+     * @return the string
+     */
+//Método para pasar de formato completo a formato corto de una fecha
     public String fechaCorta(String fechaLarga){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -60,7 +75,13 @@ public class Fecha {
         return fechaCorta;
     }
 
-    //Método para saber una fecha a partir de unos días dados
+    /**
+     * Dias a fecha string.
+     *
+     * @param tiempo_Caducidad the tiempo caducidad
+     * @return the string
+     */
+//Método para saber una fecha a partir de unos días dados
     public String diasAFecha(int tiempo_Caducidad){
         //Instanciamos un objeto Calendar
         hoy = Calendar.getInstance();
@@ -70,7 +91,15 @@ public class Fecha {
         return f_caducidad_alimento;
     }
 
-    //Método para obtener los días a partir de una fecha dada
+    /**
+     * Fecha dias int.
+     *
+     * @param fechaCalendarioMas the fecha calendario mas
+     * @param context            the context
+     * @return the int
+     * @throws ParseException the parse exception
+     */
+//Método para obtener los días a partir de una fecha dada
     public int fechaDias(String fechaCalendarioMas, Context context) throws java.text.ParseException {
         Log.d("fecha", "entramos en el metodo");
         //Cogemos la fecha actual

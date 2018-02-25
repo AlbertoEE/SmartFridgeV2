@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 
+/**
+ * The type Producto no encontrado activity.
+ */
 public class ProductoNoEncontradoActivity extends AppCompatActivity {
 
     @Override

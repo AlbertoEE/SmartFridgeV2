@@ -26,20 +26,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Clase con los métodos para guardar una imagen realizada con la cámara en el almacenamieno interno del teléfono o de la tablet
-
+ * Clase con los métodos para guardar una imagen realizada con la cámara en el almacenamieno interno del teléfono o de la tablet
  */
-
 public class GestorAlmacenamientoInterno {
 
     private Context contexto;//Para obtener el contexto de la activity
     private String path;//Para el path de la foto
 
+    /**
+     * Instantiates a new Gestor almacenamiento interno.
+     *
+     * @param cont the cont
+     */
     public GestorAlmacenamientoInterno(Context cont){
         this.contexto=cont;
     }
 
-    //Método para comprobar si el almacenamiento externo está disponible
+    /**
+     * Disponible boolean.
+     *
+     * @return the boolean
+     */
+//Método para comprobar si el almacenamiento externo está disponible
     public boolean disponible() {
         //Guardamos en un String el estado del almacenamiento externo
         String estado = Environment.getExternalStorageState();
@@ -50,7 +58,12 @@ public class GestorAlmacenamientoInterno {
         return false;
     }
 
-    //Obtenemos el directorio donde se va a almacenar
+    /**
+     * Coger directorio string.
+     *
+     * @return the string
+     */
+//Obtenemos el directorio donde se va a almacenar
     public String cogerDirectorio(){
         //Indiamos la cte DIRECTORY_PICTURES para que se guarde en la carpeta de imágenes del dispositivo
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -59,7 +72,13 @@ public class GestorAlmacenamientoInterno {
         return file.getAbsolutePath();
     }
 
-    //Método para guardar la imagen
+    /**
+     * Guardar imagen string.
+     *
+     * @param b the b
+     * @return the string
+     */
+//Método para guardar la imagen
     public String guardarImagen(Bitmap b){
 
         String directorioAlmcto;//Para darle el nombre a la imagen

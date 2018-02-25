@@ -21,11 +21,16 @@ import java.io.ByteArrayOutputStream;
 /**
  * Created by Alberto on 15/02/2018.
  */
-
 public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<CustomRecyclerViewAdapterRevistaMain.ViewHolderRevistaMain> {
     private Activity activity;
     private CompraExternaActivity compraExternaActivity;
 
+    /**
+     * Instantiates a new Custom recycler view adapter revista main.
+     *
+     * @param activity              the activity
+     * @param compraExternaActivity the compra externa activity
+     */
     public CustomRecyclerViewAdapterRevistaMain(Activity activity, CompraExternaActivity compraExternaActivity){
         this.activity = activity;
         this.compraExternaActivity = compraExternaActivity;
@@ -90,10 +95,21 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
         return 9;
     }
 
+    /**
+     * The type View holder revista main.
+     */
     public static class ViewHolderRevistaMain extends RecyclerView.ViewHolder {
+        /**
+         * The Fila.
+         */
         public View fila;//La fila completa, para el listener
         private ImageButton imageButton;
 
+        /**
+         * Instantiates a new View holder revista main.
+         *
+         * @param itemView the item view
+         */
         public ViewHolderRevistaMain(View itemView) {
             super(itemView);
             fila = itemView;

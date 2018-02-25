@@ -17,6 +17,9 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Mostrar productos lista activity.
+ */
 public class MostrarProductosListaActivity extends AppCompatActivity {
     private Intent intent;
     private ListView listView;

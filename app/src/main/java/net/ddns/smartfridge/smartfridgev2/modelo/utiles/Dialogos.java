@@ -617,13 +617,13 @@ public class Dialogos {
         Log.d("tengen", "dialogoModificarBorrar: " + componenteReturn[0]);
     }
 
-    /*Dialog que se mostrará cuando no se haya encontrado ninguna receta con los criterios de búsqueda
+    /*Dialog que se mostrará cuando no se haya encontrado ninguna menu_receta con los criterios de búsqueda
     public void dialogoNoReceta(){
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("¡Vaya, qué pena!")
                 //Ponemos el mensaje
-                .setMessage("No hemos encontrado ninguna receta con esos criterios de búsqueda. Por favor, vuelve a intentarlo")
+                .setMessage("No hemos encontrado ninguna menu_receta con esos criterios de búsqueda. Por favor, vuelve a intentarlo")
                 //Asignamos el botón de negativo
                 .setNegativeBtnText("Cancelar")
                 //Asignamos el color de fondo del boton positivo
@@ -668,13 +668,13 @@ public class Dialogos {
                 })
                 .build();
     }
-    /*Dialog que se mostrará cuando se vaya a filtrar por algún tipo de receta
+    /*Dialog que se mostrará cuando se vaya a filtrar por algún tipo de menu_receta
     public void dialogoFiltroTipo(final int tipo){
         AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
         //Mensaje del Alert
         builder.setMessage("Aplicando filtro seleccionado...");
         //Título
-        builder.setTitle("Filtrando receta");
+        builder.setTitle("Filtrando menu_receta");
         //Añadimos los botones
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override

@@ -48,7 +48,7 @@ public class MySQLHelper {
     private Ingrediente alimentoExterno;//Para recoger los datos de la bbdd
     private ArrayList<Precio> precios;//Para meter todos los precios de una lista de la compra
     private Precio precio;//Construimos el objeto a partir de los datos de la bbdd
-    private ArrayList<Receta> recetas;//Para almacenar objetos de tipo receta
+    private ArrayList<Receta> recetas;//Para almacenar objetos de tipo menu_receta
     private ArrayList<Tipo> tipos;//Para almacenar objetos con los tipos de recetas que haya
     private Tipo tipo;//Para crear objetos a partir de los datos de la bbdd
 
@@ -165,7 +165,7 @@ public class MySQLHelper {
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
                         rs.getString(5), rs.getString(6), imagen);
                 recetas.add(receta);
-                //Log.d("receta", "receta: " + receta.getTituloReceta());
+                //Log.d("menu_receta", "menu_receta: " + menu_receta.getTituloReceta());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -188,7 +188,7 @@ public class MySQLHelper {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2));
                 alimentosCategoria.add(alimentoExterno);
-                Log.d("receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
+                Log.d("menu_receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -216,7 +216,7 @@ public class MySQLHelper {
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
                         rs.getString(5), rs.getString(6), imagen);
                 recetas.add(receta);
-                Log.d("check", "receta: " + receta.getTituloReceta());
+                Log.d("check", "menu_receta: " + receta.getTituloReceta());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -243,7 +243,7 @@ public class MySQLHelper {
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
                         rs.getInt(5), rs.getInt(6), imagen);
                 recetas.add(receta);
-                Log.d("check", "receta: " + receta.getTituloReceta());
+                Log.d("check", "menu_receta: " + receta.getTituloReceta());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -345,7 +345,7 @@ public class MySQLHelper {
                 receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
                         rs.getString(5), rs.getString(6), imagen);
                 recetas.add(receta);
-                Log.d("check", "receta: " + receta.getTituloReceta());
+                Log.d("check", "menu_receta: " + receta.getTituloReceta());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -368,7 +368,7 @@ public class MySQLHelper {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 tipo = new Tipo(rs.getInt(1), rs.getString(2));
                 tipos.add(tipo);
-                //Log.d("receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
+                //Log.d("menu_receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -376,7 +376,7 @@ public class MySQLHelper {
         return tipos;
     }
 
-    //Método para seleccionar todos los ingredientes de una receta dada
+    //Método para seleccionar todos los ingredientes de una menu_receta dada
     public ArrayList<Ingrediente> recogerIngredientesReceta(int id){
         alimentosCategoria = new ArrayList<>();
         Statement st = null;
@@ -392,7 +392,7 @@ public class MySQLHelper {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2), rs.getInt(3));
                 alimentosCategoria.add(alimentoExterno);
-                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+                Log.d("menu_receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -400,7 +400,7 @@ public class MySQLHelper {
         return alimentosCategoria;
     }
 
-    //Método para buscar una receta a partir de un texto
+    //Método para buscar una menu_receta a partir de un texto
     public ArrayList<Receta> recogerRecetaTitulo(String  texto){
         recetas = new ArrayList<>();
         PreparedStatement pst =null;
@@ -423,7 +423,7 @@ public class MySQLHelper {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 alimentoExterno = new Ingrediente(rs.getInt(1), rs.getString(2), rs.getInt(3));
                 alimentosCategoria.add(alimentoExterno);
-                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+                Log.d("menu_receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -445,7 +445,7 @@ public class MySQLHelper {
             while (rs.next()) {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 duracion.add(rs.getString(1));
-                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+                Log.d("menu_receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());
@@ -466,7 +466,7 @@ public class MySQLHelper {
             while (rs.next()) {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 dificultad.add(rs.getString(1));
-                Log.d("receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
+                Log.d("menu_receta", "ingrediente: " + alimentoExterno.getIdIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());

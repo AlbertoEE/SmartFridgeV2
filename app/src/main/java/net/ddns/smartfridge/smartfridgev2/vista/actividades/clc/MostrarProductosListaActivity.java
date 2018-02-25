@@ -100,6 +100,7 @@ public class MostrarProductosListaActivity extends AppCompatActivity {
                 intent.putExtra("productos", componentesListaCompra);
                 startActivity(intent);
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

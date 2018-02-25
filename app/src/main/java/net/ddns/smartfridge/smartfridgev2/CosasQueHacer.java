@@ -19,7 +19,7 @@ public class CosasQueHacer {
     //TODO RECETAS:
     /*
     1. TODO Conectar la consulta de todos los ingredientes con el AutoCompleteTextView en TabAlimento
-    2. TODO Controlar Select con ingredientes que no haya en ninguna receta
+    2. TODO Controlar Select con ingredientes que no haya en ninguna menu_receta
     3. TODO Cambiar eltiempo que sale al mostrar las recetas por el tiempo real
      */
 }

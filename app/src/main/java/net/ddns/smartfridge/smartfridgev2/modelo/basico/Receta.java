@@ -5,17 +5,17 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 /**
- * Clase que representa una receta de la bbdd
+ * Clase que representa una menu_receta de la bbdd
  */
 
 public class Receta implements Serializable{
-    private int idReceta;//El identificador de la receta
-    private String tituloReceta;//El título de la receta
-    private String descripcion;//Descripción de cómo se hace la receta
-    private int tipoReceta;//Clasificación de la receta por categoría de alimento
-    private int tiempoReceta;//Clasificación de la receta por el tiempo de preparación
-    private int dificultadReceta;//Clasificación de la receta en función de la dificultad de elaboración
-    private Bitmap imagenReceta;//Representa la imagen de la receta
+    private int idReceta;//El identificador de la menu_receta
+    private String tituloReceta;//El título de la menu_receta
+    private String descripcion;//Descripción de cómo se hace la menu_receta
+    private int tipoReceta;//Clasificación de la menu_receta por categoría de alimento
+    private int tiempoReceta;//Clasificación de la menu_receta por el tiempo de preparación
+    private int dificultadReceta;//Clasificación de la menu_receta en función de la dificultad de elaboración
+    private Bitmap imagenReceta;//Representa la imagen de la menu_receta
     private String tiempo;//Para tener el tiempo en lugar del id del tiempo
     private String dificultad;//Para escribir el texto con la dificultad
 

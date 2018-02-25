@@ -8,17 +8,17 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tiempo">
+    <array name="tiempo">
         <item>Menos de 15 min</item>
         <item>Entre 15 y 30 min</item>
         <item>Entre 30 y 60 min</item>
         <item>Entre 1 y 2 horas</item>
         <item>Más de 2 horas</item>
-    </string>
-    <string name="dificultad">
+    </array>
+    <array name="dificultad">
         <item>Fácil</item>
         <item>Media</item>
         <item>Difícil</item>
         <item>Muy difícil</item>
-    </string>
+    </array>
 </resources>

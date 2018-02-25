@@ -1,7 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 
 /**
- * Clase que representa un tipo de receta
+ * Clase que representa un tipo de menu_receta
  */
 
 public class Tipo {

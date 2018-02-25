@@ -68,6 +68,8 @@ dependencies {
     implementation 'com.robertlevonyan.view:MaterialChipView:1.1.3'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.amlcurran.showcaseview:library:5.4.3'
+    //TextSpeech
+    compile 'com.mapzen.android:speakerbox:1.4.1'
 }
 
 

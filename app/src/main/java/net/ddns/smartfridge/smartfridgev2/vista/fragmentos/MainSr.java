@@ -41,7 +41,7 @@ public class MainSr extends Fragment {
     private static final int REQUEST_FILTRO = 506;
     private CustomDialogProgressBar customDialogProgressBar;
     private MySQLHelper myHelper;//Para trabajar con la bbdd
-    private Receta recetaDado;//Para sacar la receta aleatoria
+    private Receta recetaDado;//Para sacar la menu_receta aleatoria
     private Intent intent;//Para abrir los detalles
 
     public MainSr() {
@@ -73,7 +73,7 @@ public class MainSr extends Fragment {
         botonAleatorio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Buscará una receta aleatoria
+                //Buscará una menu_receta aleatoria
                 recetaDado = recetaAleatoria(recetas);
                 intent = new Intent(getActivity(), DetallesRecetaActivity.class);
                 intent.putExtra("id", recetaDado.getIdReceta());
@@ -172,7 +172,7 @@ public class MainSr extends Fragment {
         }
     }
 
-    //Método para coger una receta aleatoria de la bbdd
+    //Método para coger una menu_receta aleatoria de la bbdd
     public Receta recetaAleatoria(ArrayList<Receta> array){
         //Miramos el número de elementos que tiene el array para sacar el número aleatorio
         int longitud = array.size();
@@ -180,9 +180,9 @@ public class MainSr extends Fragment {
         Random r = new Random();
         posicion = r.nextInt(longitud);
         Log.d("random", "numero: " + posicion);
-        //Seleccionamos la receta que ha salido
+        //Seleccionamos la menu_receta que ha salido
         recetaDado = array.get(posicion);
-        Log.d("random", "receta: " + recetaDado.getTituloReceta());
+        Log.d("random", "menu_receta: " + recetaDado.getTituloReceta());
         return recetaDado;
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
@@ -154,11 +155,14 @@ public class PrecioCompraActivity extends AppCompatActivity {
         tvAlcampo = findViewById(R.id.tvAlc);
         tvHipercor = findViewById(R.id.tvHip);
         tvMercadona = findViewById(R.id.tvMer);
-
-        tvCarrefour.setText(f.format(totales.get(0)));
-        tvAlcampo.setText(f.format(totales.get(1)));
-        tvHipercor.setText(f.format(totales.get(2)));
-        tvMercadona.setText(f.format(totales.get(3)));
+        try{
+            tvCarrefour.setText(f.format(totales.get(0)));
+            tvAlcampo.setText(f.format(totales.get(1)));
+            tvHipercor.setText(f.format(totales.get(2)));
+            tvMercadona.setText(f.format(totales.get(3)));
+        } catch (NullPointerException e){
+            Toast.makeText(this, "No se han encontrado resultados", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Creamos la consulta a la bbdd

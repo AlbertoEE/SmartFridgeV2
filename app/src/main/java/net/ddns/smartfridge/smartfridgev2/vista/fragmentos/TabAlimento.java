@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.robertlevonyan.views.chip.Chip;
 import com.robertlevonyan.views.chip.OnCloseClickListener;
 
@@ -76,6 +78,12 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
+        new ShowcaseView.Builder(getActivity())
+                .setTarget( new ViewTarget( ((View) v.findViewById(R.id.ibBuscar)) ) )
+                .setContentTitle("Buscar")
+                .setContentText("Boton para filtrar las recetas")
+                .hideOnTouchOutside()
+                .build();
         llChips = (LinearLayout) v.findViewById(R.id.llChips);
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);

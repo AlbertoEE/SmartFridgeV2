@@ -1,7 +1,9 @@
 package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +17,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.MiNeveraFiltroActivity;
 
 import java.io.ByteArrayOutputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,12 +33,66 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
     private Activity activity;
     private ArrayList<Alimento> alimentosCopia;
     private ArrayList<String> alimentosSeleccionados;
+    private Cursor cursor;
+    private MiNeveraFiltroActivity clase;
 
-    public CustomRecyclerViewAdapterNeveraRecetas(ArrayList<Alimento> alimentos, Activity activity){
-        this.alimentos = alimentos;
+    public CustomRecyclerViewAdapterNeveraRecetas(Cursor cursor, Activity activity, MiNeveraFiltroActivity clase){
+        this.alimentos = new ArrayList<>();
         this.alimentosCopia = new ArrayList<>();
+        this.alimentosSeleccionados = new ArrayList<>();
         this.activity = activity;
+        this.cursor = cursor;
+        this.clase = clase;
+
+        cargarArray();
     }
+
+    public void cargarArray() {
+        //Limpiamos el array
+        alimentos.clear();
+
+        //Comprobamos si hay datos en el cursor
+        if (cursor.moveToFirst()) {
+            //Variables necesarias para convertir el blob de la foto a bitmap
+            byte[] byteArrayFoto;
+            Bitmap bm;
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            for (int i = 0; i < cursor.getCount(); i++) { //Recorremos el cursor (no sé por qué puse un for)
+                byteArrayFoto = cursor.getBlob(6);
+                if (byteArrayFoto != null) { //Comprobamos si el blob que nos da es null
+                    //no lo es por lo tanto comprimimos la foto y añadimos un nuevo alimento a nuestro array
+                    bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
+                    bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    alimentos.add(new Alimento(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            bm));
+                }else{
+                    //el blob es null por lo tanto añadimos un alimento a nuestro array pero con la imagen null
+                    alimentos.add(new Alimento(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            null));
+                }
+                //siguiente registro del cursor
+                cursor.moveToNext();
+            }
+        }
+        //Cuando ya tenemos nuestro array entero, hacemos una copia de el porque nos va a hacer falta
+        //para el método de filtrar
+        alimentosCopia.addAll(alimentos);
+        cursor.close();
+    }
+
 
     @Override
     public CustomRecyclerViewAdapterNeveraRecetas.ViewHolderNeveraRecetas onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,7 +107,6 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
         holder.tvNombre.setText(alimentos.get(position).getNombreAlimento());
         holder.tvUnidades.setVisibility(View.INVISIBLE);
         holder.tvDiasCaducidad.setVisibility(View.INVISIBLE);
-        holder.tvFechaCaducidad.setVisibility(View.INVISIBLE);
         //Si el alimento que estamos usando tiene imagen usamos glide para cargar la imagen
         if (alimentos.get(position).getImagen() != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -70,10 +125,11 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
         holder.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(alimentosSeleccionados.size()<=3){
+                if(alimentosSeleccionados.size()<6){
                     if(!alimentosSeleccionados.contains(alimentos.get(position).getNombreAlimento())){
                         alimentosSeleccionados.add(alimentos.get(position).getNombreAlimento());
                         Toast.makeText(activity, "Alimento seleccionado", Toast.LENGTH_SHORT).show();
+                        clase.addChip(alimentos.get(position).getNombreAlimento());
                     } else {
                         Toast.makeText(activity, "El alimento ya ha sido seleccionado", Toast.LENGTH_SHORT).show();
                     }
@@ -118,6 +174,14 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
             }
         });
         notifyDataSetChanged();
+    }
+
+    public void eliminarSeleccionado(String string){
+        alimentosSeleccionados.remove(string);
+    }
+
+    public ArrayList<String> getAlimentosSeleccionados(){
+        return this.alimentosSeleccionados;
     }
 
     @Override

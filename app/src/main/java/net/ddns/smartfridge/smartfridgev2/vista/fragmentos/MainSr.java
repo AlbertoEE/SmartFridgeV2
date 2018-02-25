@@ -25,6 +25,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogP
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.DetallesRecetaActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.MiNeveraFiltroActivity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class MainSr extends Fragment {
     private Receta receta;
     private ArrayList<Receta> recetas;
     private static final int REQUEST_FILTRO = 506;
+    private static final int REQUEST_FILTRO2 = 78;
     private CustomDialogProgressBar customDialogProgressBar;
     private MySQLHelper myHelper;//Para trabajar con la bbdd
     private Receta recetaDado;//Para sacar la menu_receta aleatoria
@@ -89,7 +91,8 @@ public class MainSr extends Fragment {
         botonNevera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getActivity(), MiNeveraFiltroActivity.class);
+                startActivityForResult(i, REQUEST_FILTRO2);
             }
         });
         customDialogProgressBar =  new CustomDialogProgressBar(getActivity());
@@ -157,6 +160,19 @@ public class MainSr extends Fragment {
         if (requestCode==REQUEST_FILTRO){
             Log.d("mainSR", "mainSR request: "+ requestCode);
             Log.d("mainSR", "mainSR result: "+ resultCode);
+            if(resultCode == Activity.RESULT_OK){
+                Log.d("mainSR", "mainSR: Result Ok");
+                recetas = new ArrayList<>();
+                recetas = (ArrayList<Receta>)data.getSerializableExtra("filtro");
+                Log.d("mainSR", "mainSR: "+ recetas.size());
+
+                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra("filtroImagenes");
+                for (int i = 0; i < bitmaps.size(); i++){
+                    recetas.get(i).setImagenReceta(bitmaps.get(i));
+                }
+                adapter.filtrarArray(recetas);
+            }
+        } else if (requestCode==REQUEST_FILTRO2){
             if(resultCode == Activity.RESULT_OK){
                 Log.d("mainSR", "mainSR: Result Ok");
                 recetas = new ArrayList<>();

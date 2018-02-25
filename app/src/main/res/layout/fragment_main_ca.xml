@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="tagCA"
     tools:context="net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa">
 
     <!-- TODO: Update blank fragment layout -->

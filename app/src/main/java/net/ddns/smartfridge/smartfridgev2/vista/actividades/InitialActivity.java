@@ -36,6 +36,10 @@ public class InitialActivity extends AppCompatActivity {
     //private Intent intentRecetas;//Para iniciar el IntentService de recetas
     private static final String NOMBRE_SERVICIO= "net.ddns.smartfridge.smartfridgev2.ComprobarCaducidadIntentService";
     private static SharedPreferences sp;//Para recoger el SP de la app
+    //Atributos de la clase que hacen referencia a los fragmentos para llamar a los metodos de los tutoriales de cada fragmento
+    private MainCa mainCa;
+    private MainSr mainSr;
+    private MainClc mainClc;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -101,6 +105,11 @@ public class InitialActivity extends AppCompatActivity {
         }
         sp = getPreferences(Context.MODE_PRIVATE);
         //Ponemos el tutorial para el inicio
+
+        this.mainCa = (MainCa) getSupportFragmentManager().findFragmentByTag("tagCA");
+        this.mainSr = (MainSr) getSupportFragmentManager().findFragmentByTag("tagSR");
+        this.mainClc = (MainClc) getSupportFragmentManager().findFragmentByTag("tagCLC");
+
         mostrarTutorial();
     }
 

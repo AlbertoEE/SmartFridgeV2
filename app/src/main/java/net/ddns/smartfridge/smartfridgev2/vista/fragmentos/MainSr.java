@@ -133,7 +133,7 @@ public class MainSr extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            customDialogProgressBar.showDialogOndas();
+            //customDialogProgressBar.showDialogOndas();
         }
 
         @Override
@@ -162,7 +162,7 @@ public class MainSr extends Fragment {
             try {
                 myHelper.cerrarConexion();
                 mainSr.crearAdapter(recetas);
-                customDialogProgressBar.endDialog();
+                //customDialogProgressBar.endDialog();
                 Log.d("AAAAAAAA", "tiempo en AsyncTask: " + recetas.get(0).getTiempo());
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");

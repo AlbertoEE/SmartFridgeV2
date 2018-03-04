@@ -57,7 +57,7 @@ public class MiNeveraActivity extends AppCompatActivity {
         cursor = alimentoDB.getAlimentos();
 
         iniciarRecyclerView();
-        mostrarTutorial();
+        //mostrarTutorial();
     }
 
     private void iniciarRecyclerView() {

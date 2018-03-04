@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 /**
- * Clase que representa una menu_receta de la bbdd
+ * Clase que representa una receta de la bbdd
  */
 public class Receta implements Serializable{
     private int idReceta;//El identificador de la menu_receta
@@ -19,15 +19,15 @@ public class Receta implements Serializable{
     private String dificultad;//Para escribir el texto con la dificultad
 
     /**
-     * Instantiates a new Receta.
+     * Constructor
      *
-     * @param idReceta         the id receta
-     * @param tituloReceta     the titulo receta
-     * @param descripcion      the descripcion
-     * @param tipoReceta       the tipo receta
-     * @param tiempoReceta     the tiempo receta
-     * @param dificultadReceta the dificultad receta
-     * @param imagenReceta     the imagen receta
+     * @param idReceta         id de la receta
+     * @param tituloReceta     titulo de la receta
+     * @param descripcion      descripción de la receta
+     * @param tipoReceta       tipo de receta
+     * @param tiempoReceta     tiempo que se tarda en preparar la receta
+     * @param dificultadReceta dificultad de la receta
+     * @param imagenReceta     imagen de la receta
      */
     public Receta(int idReceta, String tituloReceta, String descripcion, int tipoReceta, int tiempoReceta, int dificultadReceta, Bitmap imagenReceta) {
         this.idReceta = idReceta;
@@ -40,15 +40,15 @@ public class Receta implements Serializable{
     }
 
     /**
-     * Instantiates a new Receta.
+     * Constructor
      *
-     * @param idReceta         the id receta
-     * @param tituloReceta     the titulo receta
-     * @param descripcion      the descripcion
-     * @param tipoReceta       the tipo receta
-     * @param tiempo           the tiempo
-     * @param dificultadReceta the dificultad receta
-     * @param imagenReceta     the imagen receta
+     * @param idReceta         id de la receta
+     * @param tituloReceta     titulo de la receta
+     * @param descripcion      descripción de la receta
+     * @param tipoReceta       tipo de receta
+     * @param tiempo           tiempo que se tarda en preparar la receta
+     * @param dificultadReceta dificultad de la receta
+     * @param imagenReceta     imagen de la receta
      */
     public Receta(int idReceta, String tituloReceta, String descripcion, int tipoReceta, String tiempo, String dificultadReceta, Bitmap imagenReceta) {
         this.idReceta = idReceta;

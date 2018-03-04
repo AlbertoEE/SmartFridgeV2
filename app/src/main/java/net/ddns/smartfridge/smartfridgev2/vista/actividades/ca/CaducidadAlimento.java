@@ -87,7 +87,7 @@ public class CaducidadAlimento extends AppCompatActivity {
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUdsDetalles);
         wheel(wheelPicker);
         adb = new AlimentoDB(this);
-        mostrarTutorial();
+        //mostrarTutorial();
     }
 
     private void comprobarPadre(){

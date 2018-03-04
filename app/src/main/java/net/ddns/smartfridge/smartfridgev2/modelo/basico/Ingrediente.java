@@ -13,12 +13,12 @@ public class Ingrediente {
     private int cantidad;//Para guardar la cantidad de un ingrediente dado en una menu_receta
 
     /**
-     * Instantiates a new Ingrediente.
+     * Constructor
      *
-     * @param idIngrediente        the id ingrediente
-     * @param nombreIngrediente    the nombre ingrediente
-     * @param imagenIngrediente    the imagen ingrediente
-     * @param clasificacion_compra the clasificacion compra
+     * @param idIngrediente        id del ingrediente en la bbdd
+     * @param nombreIngrediente    nombre del ingrediente
+     * @param imagenIngrediente    imagen del ingrediente
+     * @param clasificacion_compra clasificación del ingrediente
      */
     public Ingrediente(int idIngrediente, String nombreIngrediente, Bitmap imagenIngrediente, String clasificacion_compra) {
         this.idIngrediente = idIngrediente;
@@ -28,11 +28,11 @@ public class Ingrediente {
     }
 
     /**
-     * Instantiates a new Ingrediente.
+     * Constructor
      *
-     * @param idIngrediente     the id ingrediente
-     * @param nombreIngrediente the nombre ingrediente
-     * @param imagenIngrediente the imagen ingrediente
+     * @param idIngrediente     id del ingrediente en la bbdd
+     * @param nombreIngrediente nombre del ingrediente
+     * @param imagenIngrediente imagen del ingrediente
      */
     public Ingrediente(int idIngrediente, String nombreIngrediente, Bitmap imagenIngrediente) {
         this.idIngrediente = idIngrediente;
@@ -41,10 +41,10 @@ public class Ingrediente {
     }
 
     /**
-     * Instantiates a new Ingrediente.
+     * Constructor
      *
-     * @param idIngrediente     the id ingrediente
-     * @param nombreIngrediente the nombre ingrediente
+     * @param idIngrediente     id del ingrediente en la bbdd
+     * @param nombreIngrediente nombre del ingrediente
      */
     public Ingrediente(int idIngrediente, String nombreIngrediente) {
         this.idIngrediente = idIngrediente;
@@ -52,11 +52,11 @@ public class Ingrediente {
     }
 
     /**
-     * Instantiates a new Ingrediente.
+     * Constructor
      *
-     * @param idIngrediente     the id ingrediente
-     * @param nombreIngrediente the nombre ingrediente
-     * @param cantidad          the cantidad
+     * @param idIngrediente     id del ingrediente en la bbdd
+     * @param nombreIngrediente nombre del ingrediente
+     * @param cantidad          cantidad del ingrediente
      */
     public Ingrediente(int idIngrediente, String nombreIngrediente, int cantidad) {
         this.idIngrediente = idIngrediente;

@@ -67,7 +67,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             //No hacemos nada
         }
-        mostrarTutorial();
+        //mostrarTutorial();
     }
 
     private void cargarMarquee(){

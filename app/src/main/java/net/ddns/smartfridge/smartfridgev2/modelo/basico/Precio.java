@@ -11,11 +11,11 @@ public class Precio implements Serializable {
     private String supermercado;//El nombre del supermercado al que corresponde dicho precio
 
     /**
-     * Instantiates a new Precio.
+     * Constructor
      *
-     * @param nombreProducto the nombre producto
-     * @param pvp            the pvp
-     * @param supermercado   the supermercado
+     * @param nombreProducto nombre del producto
+     * @param pvp            precio del producto en la bbdd
+     * @param supermercado   nombre del supermercado
      */
     public Precio(String nombreProducto, double pvp, String supermercado) {
         this.nombreProducto = nombreProducto;

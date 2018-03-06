@@ -28,12 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".vista.actividades.clc.CrearListaCompraActivity" />
+        <activity android:name=".vista.actividades.clc.CreadorListaCompraActivity" />
         <activity android:name=".vista.actividades.sr.SugerirRecetaModuloActivity" />
         <activity android:name=".vista.actividades.ca.IdentificadorAlimentoActivity" />
         <activity android:name=".vista.actividades.ca.EscanerActivity" />
         <activity android:name=".vista.actividades.ca.ConfirmadorAlimentoActivity" />
-        <activity android:name=".vista.actividades.ca.ProductoNoEncontradoActivity" />
         <activity android:name=".vista.actividades.ca.CaducidadAlimento" />
         <activity android:name=".vista.actividades.ca.InsertadorManualmenteActivity" />
         <activity android:name=".vista.actividades.ca.MiNeveraActivity" />
@@ -61,7 +60,7 @@
             android:theme="@style/Theme.Transparent" />
         <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentoActivity" />
         <activity android:name=".vista.actividades.clc.TodasListasActivity" />
-        <activity android:name=".vista.actividades.clc.MostrarProductosListaActivity" />
+        <activity android:name=".vista.actividades.clc.MostradorProductosListaActivity" />
         <activity android:name=".vista.actividades.clc.CompraExternaActivity" />
         <activity android:name=".vista.actividades.clc.CategoriaActivity" />
         <activity android:name=".vista.actividades.clc.DetalleListaExternaActivity" />

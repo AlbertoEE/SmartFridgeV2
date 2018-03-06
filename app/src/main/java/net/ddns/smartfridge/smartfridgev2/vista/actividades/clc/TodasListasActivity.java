@@ -115,7 +115,7 @@ public class TodasListasActivity extends AppCompatActivity {
                     //Log.d("swipe", "tamaño: " + listas.size());
                     Log.d("ñññ", "onSwiped: 1");
                 } else if(direction == ItemTouchHelper.RIGHT){
-                    intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
+                    intent = new Intent(getApplicationContext(), MostradorProductosListaActivity.class);
                     intent.putExtra("ListaProductos", adapter.getLista(position));
                     adapter.notifyDataSetChanged();
                     startActivity(intent);

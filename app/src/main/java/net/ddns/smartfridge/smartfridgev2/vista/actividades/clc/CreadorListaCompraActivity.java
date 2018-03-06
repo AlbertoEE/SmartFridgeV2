@@ -10,7 +10,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 /**
  * The type Crear lista compra activity.
  */
-public class CrearListaCompraActivity extends AppCompatActivity {
+public class CreadorListaCompraActivity extends AppCompatActivity {
     private Intent intent;//Lo vamos a usar para recoger el intent de otros activitys, así como para lanzar activitys nuevos
 
     @Override

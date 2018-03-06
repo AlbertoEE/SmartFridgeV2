@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/listacomprafondo"
-    tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.MostrarProductosListaActivity">
+    tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.MostradorProductosListaActivity">
 
     <ListView
         android:id="@+id/lvMostrarProductos"

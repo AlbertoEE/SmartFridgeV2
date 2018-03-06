@@ -12,25 +12,12 @@ public class ListaCompra implements Serializable{
     private String fecha;//Para almacenar la fecha en la que se creó la lista
     private ArrayList<ComponenteListaCompra> productos;//ArrayList para guardar los ítems de la lista de la compra
 
-    /**
-     * Instantiates a new Lista compra.
-     *
-     * @param _id        the id
-     * @param _fecha     the fecha
-     * @param _productos the productos
-     */
-//Constructor
-    public ListaCompra(int _id, String _fecha, ArrayList<ComponenteListaCompra> _productos){
-        this.id = _id;
-        this.fecha = _fecha;
-        this.productos = _productos;
-    }
 
     /**
-     * Instantiates a new Lista compra.
+     * Constructor
      *
-     * @param _fecha     the fecha
-     * @param _productos the productos
+     * @param _fecha     fecha en la que se crea la lista
+     * @param _productos ArrayList para guardar los productos que componen la lista de la compra
      */
 //Otro constructor
     public ListaCompra(String _fecha, ArrayList<ComponenteListaCompra> _productos){

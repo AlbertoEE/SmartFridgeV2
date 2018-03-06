@@ -48,6 +48,9 @@ public class Tipo {
     /**
      * Sets descripcion.
      *
+     *
+     *
+     *
      * @param descripcion the descripcion
      */
     public void setDescripcion(String descripcion) {

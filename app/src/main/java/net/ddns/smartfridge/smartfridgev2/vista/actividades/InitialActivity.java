@@ -109,7 +109,7 @@ public class InitialActivity extends AppCompatActivity {
         sp = getPreferences(Context.MODE_PRIVATE);
         //Ponemos el tutorial para el inicio
         Log.d("lñlñ", "onCreate: " + mainCa);
-        mostrarTutorial();
+        //mostrarTutorial();
     }
 
     @Override

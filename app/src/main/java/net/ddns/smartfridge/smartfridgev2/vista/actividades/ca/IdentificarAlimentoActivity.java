@@ -99,7 +99,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             //No hacemos nada
         }
-        mostrarTutorial();
+        //mostrarTutorial();
     }
 
     /**

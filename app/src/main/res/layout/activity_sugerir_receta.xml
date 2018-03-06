@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.SugerirRecetaModuloActivity">
+    tools:context="net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.SugeridorRecetaModuloActivity">
 
     <Button
         android:id="@+id/bSeleccionarRectea"

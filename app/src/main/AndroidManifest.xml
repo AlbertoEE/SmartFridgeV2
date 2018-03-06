@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".vista.actividades.clc.CreadorListaCompraActivity" />
-        <activity android:name=".vista.actividades.sr.SugerirRecetaModuloActivity" />
+        <activity android:name=".vista.actividades.sr.SugeridorRecetaModuloActivity" />
         <activity android:name=".vista.actividades.ca.IdentificadorAlimentoActivity" />
         <activity android:name=".vista.actividades.ca.EscanerActivity" />
         <activity android:name=".vista.actividades.ca.ConfirmadorAlimentoActivity" />

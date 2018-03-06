@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * The type Categoria activity.
+ * Activity que muestra una lista de alimentos filtrados por su categoria
  */
 public class CategoriaActivity extends AppCompatActivity {
     private Intent i;//Para pasar datos entre Activitys

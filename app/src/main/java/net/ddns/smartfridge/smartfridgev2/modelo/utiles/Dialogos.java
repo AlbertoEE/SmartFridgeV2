@@ -250,6 +250,7 @@ public class Dialogos {
                         adb.guardarAlimento(alimento);
                         idAlimento = adb.getIdAlimento(alimento);
                         Log.d("ref", "dialog id: " + idAlimento);
+                        Log.d("nombrealimento", "nombre alimento: " + alimento.getNombreAlimento());
                         aliNuevo = new Alimento_Nuevo(alimento.getNombreAlimento(), alimento.getFecha_registro(), idAlimento);
                         andb.guardarAlimento(aliNuevo);
                         Toast.makeText(contexto, "Elemento guardado correctamente en Tu Nevera", Toast.LENGTH_SHORT).show();

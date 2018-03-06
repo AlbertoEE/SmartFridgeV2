@@ -55,7 +55,7 @@ import java.util.Collections;
 /**
  * The type Identificar alimento activity.
  */
-public class IdentificarAlimentoActivity extends AppCompatActivity {
+public class IdentificadorAlimentoActivity extends AppCompatActivity {
     /**
      * The constant PERMISOS.
      */
@@ -231,7 +231,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 //Abre el intent de la inserción manual de alimentos
     public void insertarManualmenteButton(View view) {
         Log.d("cod", "codigo 3_A: " + codigo_barras);
-        Intent intent = new Intent(this, InsertarManualmenteActivity.class);
+        Intent intent = new Intent(this, InsertadorManualmenteActivity.class);
        // if(codigo_barras!=null){
             intent.putExtra("CODIGO_BARRAS", codigo_barras);
             Log.d("cod", "codigo 3: " + codigo_barras);
@@ -403,11 +403,11 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             super.onPostExecute(s);
             customDialogProgressBar.endDialog();
             Log.d("json", "mensaje: " + s);
-            Toast.makeText(IdentificarAlimentoActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-            //Vamos a crear el Intent para abrir el activity de ConfirmarAlimentoActivity
-            Intent i = new Intent(getApplicationContext(), ConfirmarAlimentoActivity.class);
+            Toast.makeText(IdentificadorAlimentoActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+            //Vamos a crear el Intent para abrir el activity de ConfirmadorAlimentoActivity
+            Intent i = new Intent(getApplicationContext(), ConfirmadorAlimentoActivity.class);
             //Le pasamos el nombre de la clase padre
-            i.putExtra("ClasePadre", "IdentificarAlimentoActivity");
+            i.putExtra("ClasePadre", "IdentificadorAlimentoActivity");
             if (s!=null){
                 //Le pasamos el nombre del elemento
                 i.putExtra("nombreCloud", s);

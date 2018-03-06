@@ -30,12 +30,12 @@
         </activity>
         <activity android:name=".vista.actividades.clc.CrearListaCompraActivity" />
         <activity android:name=".vista.actividades.sr.SugerirRecetaModuloActivity" />
-        <activity android:name=".vista.actividades.ca.IdentificarAlimentoActivity" />
+        <activity android:name=".vista.actividades.ca.IdentificadorAlimentoActivity" />
         <activity android:name=".vista.actividades.ca.EscanerActivity" />
-        <activity android:name=".vista.actividades.ca.ConfirmarAlimentoActivity" />
+        <activity android:name=".vista.actividades.ca.ConfirmadorAlimentoActivity" />
         <activity android:name=".vista.actividades.ca.ProductoNoEncontradoActivity" />
         <activity android:name=".vista.actividades.ca.CaducidadAlimento" />
-        <activity android:name=".vista.actividades.ca.InsertarManualmenteActivity" />
+        <activity android:name=".vista.actividades.ca.InsertadorManualmenteActivity" />
         <activity android:name=".vista.actividades.ca.MiNeveraActivity" />
 
         <provider

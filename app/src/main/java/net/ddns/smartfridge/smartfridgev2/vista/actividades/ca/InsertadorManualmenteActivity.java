@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +42,7 @@ import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO
 /**
  * The type Insertar manualmente activity.
  */
-public class InsertarManualmenteActivity extends AppCompatActivity {
+public class InsertadorManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
     private static Bitmap foto;
@@ -132,9 +131,9 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         String nombre = String.valueOf(etNombreAlimento.getText());
         Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
         if(!nombre.equals("") ){
-            Intent intent = new Intent(InsertarManualmenteActivity.this, CaducidadAlimento.class);
+            Intent intent = new Intent(InsertadorManualmenteActivity.this, CaducidadAlimento.class);
             intent.putExtra("FotoBitMap", foto);
-            intent.putExtra("ClasePadre", "InsertarManualmenteActivity");
+            intent.putExtra("ClasePadre", "InsertadorManualmenteActivity");
             intent.putExtra("NombreAlimento" , etNombreAlimento.getText());
             intent.putExtra("CODIGO_BARRAS", codigo_barras);
             Log.d("cod", "codigo 5: " + codigo_barras);

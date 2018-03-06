@@ -67,7 +67,7 @@ public class MiNeveraActivity extends AppCompatActivity {
         cursor.close();
         rvMiNevera.setLayoutManager(layoutManager);
         rvMiNevera.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.notifyDataSetChanged();
+        //recyclerViewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -108,6 +108,7 @@ public class MiNeveraActivity extends AppCompatActivity {
      */
     public void iniciardetalles(ArrayList<Alimento> alimentos, int position) {
         ArrayList<Alimento> alimentosSinFoto = new ArrayList<>();
+        imagenesDetalles.clear();
         for (Alimento item : alimentos) {
             this.imagenesDetalles.add(item.getImagen());
             alimentosSinFoto.add(

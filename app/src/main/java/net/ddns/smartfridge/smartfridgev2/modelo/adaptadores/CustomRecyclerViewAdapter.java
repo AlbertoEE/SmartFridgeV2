@@ -66,6 +66,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     public void cargarArray() {
         //Limpiamos el array
         alimentos.clear();
+        alimentosCopia.clear();
 
         //Comprobamos si hay datos en el cursor
         if (cursor.moveToFirst()) {
@@ -105,6 +106,9 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         }
         //Cuando ya tenemos nuestro array entero, hacemos una copia de el porque nos va a hacer falta
         //para el método de filtrar
+        for (Alimento item : alimentos) {
+            Log.d("repetision", "cargarArray: " + item.getImagen());
+        }
         alimentosCopia.addAll(alimentos);
         cursor.close();
     }
@@ -127,7 +131,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         }
         //Si el alimento que estamos usando tiene imagen usamos glide para cargar la imagen
         if (alimentos.get(position).getImagen() != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
             alimentos.get(position).getImagen().compress(Bitmap.CompressFormat.PNG, 100, stream);
             try {
                 Glide.with(this.activity.getApplicationContext())
@@ -138,7 +142,11 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                         .into(holder.ivFotoAlimento);
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            }*/
+            holder.ivFotoAlimento.setImageBitmap(alimentos.get(position).getImagen());
+        } else {
+            Log.d("repetision", "llenarFila: tiene que haber 5");
+            holder.ivFotoAlimento.setImageResource(android.R.drawable.ic_delete);
         }
     }
 
@@ -185,6 +193,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
      * @param cursor the cursor
      */
     public void setCursor(Cursor cursor){
+        this.cursor = null;
         this.cursor = cursor;
     }
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -31,6 +32,9 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO2;
 
@@ -88,7 +92,9 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     private void hacerFoto(){
         permiso = new Permiso();
         Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Log.d("PERMISOCAMARA2", String.valueOf(permiso.permisoCamara2(this, this)));
+        Uri uri  = Uri.parse("content:///sdcard/photo.jpg");
+        intentCamera.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+        intentCamera.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (permiso.permisoCamara2(this, this)
                 && intentCamera.resolveActivity(this.getPackageManager()) != null){
                startActivityForResult(intentCamera, COD_CAMARA);
@@ -169,17 +175,37 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         //Al volver de hacer la foto la colocamos en el lugar del botón de la cámara
-        if (requestCode == COD_CAMARA && resultCode != RESULT_CANCELED && data != null) {
-            //Bundle extras = data.getExtras();
-            foto = (Bitmap) data.getExtras().get("data");
-            if(foto != null){
+        Log.d("LA PUERTA", "onActivityResult: " + requestCode + resultCode + data );
+        if (requestCode == COD_CAMARA) {
+            File file = new File(Environment.getExternalStorageDirectory().getPath(), "photo.jpg");
+            Uri uri = Uri.fromFile(file);
+            Bitmap bitmap;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                bitmap = crupAndScale(bitmap, 300);
+                Log.d("MADRELAFOTO", "onActivityResult: " + bitmap);
+                foto = bitmap;
                 mostrarFoto();
-            } else{
-                Toast.makeText(this, "Error al tomar la foto", Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
+    }
+
+    public static  Bitmap crupAndScale (Bitmap source,int scale){
+        int factor = source.getHeight() <= source.getWidth() ? source.getHeight(): source.getWidth();
+        int longer = source.getHeight() >= source.getWidth() ? source.getHeight(): source.getWidth();
+        int x = source.getHeight() >= source.getWidth() ?0:(longer-factor)/2;
+        int y = source.getHeight() <= source.getWidth() ?0:(longer-factor)/2;
+        source = Bitmap.createBitmap(source, x, y, factor, factor);
+        source = Bitmap.createScaledBitmap(source, scale, scale, false);
+        return source;
     }
 
     /**

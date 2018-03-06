@@ -32,6 +32,7 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.alimentos = alimentos;
         this.imagen = imagenAlimento;
+        Log.d("BUGASO", "CustomPageAdapter: " + alimentos.size() + "     " + imagen.size());
     }
 
     @Override

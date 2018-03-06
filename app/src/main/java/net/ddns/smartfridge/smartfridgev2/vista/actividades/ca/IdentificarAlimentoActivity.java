@@ -40,14 +40,13 @@ import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.CloudVision;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Firma;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
-import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestorAlmacenamientoInterno;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionAlmacenamientoInterno;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
     private static final String KEY = "data";//Cte para el nombre de la clave "data"
     private Bitmap imagenCamara = null;//Para almacenar la imagen
     private static final String API_KEY = "AIzaSyDnjuzwlVTlgcubURXS3xhFwmuKBEvxGGQ";
-    private GestorAlmacenamientoInterno gai;//Para almacenar la foto
+    private GestionAlmacenamientoInterno gai;//Para almacenar la foto
     private Uri fotoUri;//Para almacenar la Uri de la foto para api Cloud Vision
     private CustomDialogProgressBar customDialogProgressBar;//Para el progressbar personalizado
     private static final String HEADER = "X-Android-Package";//Para general el header de la solicitud http
@@ -86,7 +85,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_identificar_alimento);
         AlimentoDB alimentoDB = new AlimentoDB(this);
         dialogos = new Dialogos(this, this);
-        gai = new GestorAlmacenamientoInterno(this);
+        gai = new GestionAlmacenamientoInterno(this);
         customDialogProgressBar = new CustomDialogProgressBar(this);
         cvision = new CloudVision();
         try {
@@ -250,7 +249,7 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
         File archivo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String directorioAlmcto;//Para darle el nombre a la imagen
         File fichero;
-        GestorAlmacenamientoInterno gi = new GestorAlmacenamientoInterno(this);
+        GestionAlmacenamientoInterno gi = new GestionAlmacenamientoInterno(this);
         directorioAlmcto = gi.cogerDirectorio();
         fichero = new File(directorioAlmcto + "/imagenVision.png");
         return fichero;

@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.persistencia;
+package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
 import android.content.Context;
 import android.util.Log;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Clase para gestionar los ficheros donde vamos a escribir y leer los objetos que representan
  * nuevas listas de la compra
  */
-public class GestorFicheroLista {
+public class GestionFicheroLista {
     private ArrayList<ListaCompra>listas;//ArrayList para guardar todas las listas leidas del fichero
     private Context contexto;//Para almacenar el contexto del activity donde se va a instanciar la clase
     private ListaCompra lista;//Para leer cada objeto del fichero y trabajar con él
@@ -32,7 +32,7 @@ public class GestorFicheroLista {
      * @param context the context
      */
 //Constructor
-    public GestorFicheroLista(Context context){
+    public GestionFicheroLista(Context context){
         this.contexto = context;
     }
 

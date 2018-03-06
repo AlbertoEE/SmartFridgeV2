@@ -1,11 +1,9 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,8 +14,7 @@ import android.widget.TextView;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
-import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionSharedP;
 
 import java.util.ArrayList;
 
@@ -29,7 +26,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> alimentosSugeridos;
     private ArrayList<String> nuevaLista;
     private CustomArrayAdapter customArrayAdapter;
-    private GestorSharedP gsp;//Instacia para gestionar el Shared Preferences
+    private GestionSharedP gsp;//Instacia para gestionar el Shared Preferences
     private TextView tvMarqueeSugerenciaDeAlimento;
     private int sort = 1;
 
@@ -37,7 +34,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugerencia_de_alimento);
-        gsp = new GestorSharedP();
+        gsp = new GestionSharedP();
         //Cogemos la referecencia al fab
         FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab1);
         //alimentosSugeridos = getIntent().getStringArrayListExtra("AlimentosSugeridos");

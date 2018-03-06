@@ -8,8 +8,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +57,8 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         foto = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar_manualmente);
@@ -92,7 +96,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     private void hacerFoto(){
         permiso = new Permiso();
         Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri uri  = Uri.parse("content:///sdcard/photo.jpg");
+        Uri uri  = Uri.parse("file:///sdcard/photo.jpg");
         intentCamera.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
         intentCamera.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (permiso.permisoCamara2(this, this)
@@ -179,6 +183,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         //Al volver de hacer la foto la colocamos en el lugar del botón de la cámara
         Log.d("LA PUERTA", "onActivityResult: " + requestCode + resultCode + data );
         if (requestCode == COD_CAMARA) {
+            Log.d("jjjjj", "onActivityResult: " + "hoaalala");
             File file = new File(Environment.getExternalStorageDirectory().getPath(), "photo.jpg");
             Uri uri = Uri.fromFile(file);
             Bitmap bitmap;
@@ -191,9 +196,11 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                Log.d("jjjjj", "onActivityResult: " + "hoaalala2");
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                Log.d("jjjjj", "onActivityResult: " + "hoaalala3");
             }
         }
     }

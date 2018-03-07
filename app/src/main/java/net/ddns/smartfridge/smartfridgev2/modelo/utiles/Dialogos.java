@@ -479,7 +479,7 @@ public class Dialogos {
                             alimentoDB = new AlimentoDB(contexto);
                             alimentoDB.borrarAlimento(id);
                             Toast.makeText(contexto, "Elemento eliminado", Toast.LENGTH_SHORT).show();
-                            dialogAnadirLista(contexto, foto, nombre);
+                            //dialogAnadirLista(contexto, foto, nombre);
                             adapter.removePage(posicion);
                             alimentoDB.cerrarConexion();
                             break;

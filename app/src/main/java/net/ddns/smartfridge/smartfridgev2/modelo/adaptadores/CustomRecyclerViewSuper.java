@@ -22,6 +22,7 @@ import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -32,6 +33,7 @@ public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecycler
     private ArrayList<Precio> precios;
     private ArrayList<Precio> preciosAuxiliar;
     private String superMercado;
+    private DecimalFormat f = new DecimalFormat("##.00");
 
     /**
      * Instantiates a new Custom recycler view super.
@@ -68,7 +70,8 @@ public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecycler
     public void onBindViewHolder(CustomRecyclerViewSuper.ViewHolderSuper holder, int position) {
         holder.tvProductoSuper.setText(precios.get(position).getNombreProducto());
         holder.tvSuperMercado.setText(precios.get(position).getSupermercado());
-        holder.tvPrecioSuper.setText(String.valueOf(Math.round(precios.get(position).getPvp() * 100) / 100) + "€");
+        //holder.tvPrecioSuper.setText(String.valueOf(Math.round(precios.get(position).getPvp() * 100) / 100) + "€");
+        holder.tvPrecioSuper.setText(f.format(precios.get(position).getPvp()) + "€");
     }
 
     @Override

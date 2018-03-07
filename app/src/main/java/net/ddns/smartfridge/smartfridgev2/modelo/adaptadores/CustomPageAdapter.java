@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class CustomPageAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Alimento> alimentos;
-    private ArrayList<Bitmap> imagen;
+    private static ArrayList<Bitmap> imagen;
     private int id;
     private static boolean cambio = false;
 
@@ -70,6 +70,7 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
      */
     public void removePage(int id){
         alimentos.remove(id);
+        imagen.remove(id);
         notifyDataSetChanged();
     }
 

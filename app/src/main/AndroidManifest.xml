@@ -28,15 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".vista.actividades.clc.CrearListaCompraActivity" />
-        <activity android:name=".vista.actividades.sr.SugerirRecetaModuloActivity" />
-        <activity android:name=".vista.actividades.ca.IdentificarAlimentoActivity" />
-        <activity android:name=".vista.actividades.ca.EscanerActivity" />
-        <activity android:name=".vista.actividades.ca.ConfirmarAlimentoActivity" />
-        <activity android:name=".vista.actividades.ca.ProductoNoEncontradoActivity" />
-        <activity android:name=".vista.actividades.ca.CaducidadAlimento" />
-        <activity android:name=".vista.actividades.ca.InsertarManualmenteActivity" />
-        <activity android:name=".vista.actividades.ca.MiNeveraActivity" />
+        <activity android:name=".vista.actividades.clc.CrearListaCompraActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.sr.SugerirRecetaModuloActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.IdentificarAlimentoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.EscanerActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.ConfirmarAlimentoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.ProductoNoEncontradoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.CaducidadAlimento" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.InsertarManualmenteActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.ca.MiNeveraActivity" android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -49,29 +50,29 @@
             />
         </provider>
 
-        <activity android:name=".vista.actividades.ca.DetallesActivity" />
+        <activity android:name=".vista.actividades.ca.DetallesActivity" android:screenOrientation="portrait"/>
 
         <service
             android:name=".modelo.servicios.ComprobarCaducidadIntentService"
             android:exported="false" />
 
-        <activity android:name=".vista.actividades.clc.NuevaListaActivity" />
+        <activity android:name=".vista.actividades.clc.NuevaListaActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".vista.actividades.DialogActivity"
-            android:theme="@style/Theme.Transparent" />
-        <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentoActivity" />
-        <activity android:name=".vista.actividades.clc.TodasListasActivity" />
-        <activity android:name=".vista.actividades.clc.MostrarProductosListaActivity" />
-        <activity android:name=".vista.actividades.clc.CompraExternaActivity" />
-        <activity android:name=".vista.actividades.clc.CategoriaActivity" />
-        <activity android:name=".vista.actividades.clc.DetalleListaExternaActivity" />
-        <activity android:name=".vista.actividades.clc.PrecioCompraActivity" />
+            android:theme="@style/Theme.Transparent" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.SugerenciaDeAlimentoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.TodasListasActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.MostrarProductosListaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.CompraExternaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.CategoriaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.DetalleListaExternaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.PrecioCompraActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".vista.actividades.sr.FiltroRecetaActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".vista.actividades.clc.PrecioCompraProductosActivity" />
-        <activity android:name=".vista.actividades.sr.DetallesRecetaActivity" />
-        <activity android:name=".vista.actividades.sr.MiNeveraFiltroActivity"></activity>
+            android:windowSoftInputMode="adjustPan" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.clc.PrecioCompraProductosActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.sr.DetallesRecetaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".vista.actividades.sr.MiNeveraFiltroActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

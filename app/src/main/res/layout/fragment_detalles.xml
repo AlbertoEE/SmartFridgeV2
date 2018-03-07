@@ -53,15 +53,14 @@
         <com.aigestudio.wheelpicker.WheelPicker
             android:id="@+id/wheelUdsDetalles"
             android:layout_width="36dp"
-            android:layout_height="102dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="100dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvUnidadesDetalles"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.337"
+            app:layout_constraintHorizontal_bias="0.397"
             app:layout_constraintStart_toEndOf="@+id/tvUnidadesDetalles"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.688"
+            app:layout_constraintTop_toTopOf="@+id/tvUnidadesDetalles"
             app:wheel_atmospheric="true"
             app:wheel_curved="true"
             app:wheel_cyclic="false"
@@ -89,7 +88,7 @@
             app:layout_constraintHorizontal_bias="0.252"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNombreAlimentoDetalles"
-            app:layout_constraintVertical_bias="0.093" />
+            app:layout_constraintVertical_bias="0.203" />
 
         <TextView
             android:id="@+id/tvFechaCaducidadDetalles"

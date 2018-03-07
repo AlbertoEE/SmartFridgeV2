@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
@@ -31,6 +32,10 @@ public class PrecioCompraProductosActivity extends AppCompatActivity {
         DecimalFormat f = new DecimalFormat("##.00");
 
         precios = (ArrayList<Precio>) getIntent().getExtras().getSerializable("Precios");
+        for (Precio precio:precios) {
+            Log.d("Noacabamos", "onCreate: " + precio.getPvp());
+        }
+
         superMercado = (String) getIntent().getExtras().getString("Super");
         total = getIntent().getExtras().getDouble("Total");
 

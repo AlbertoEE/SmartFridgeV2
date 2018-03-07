@@ -145,8 +145,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
             }*/
             holder.ivFotoAlimento.setImageBitmap(alimentos.get(position).getImagen());
         } else {
-            Log.d("repetision", "llenarFila: tiene que haber 5");
-            holder.ivFotoAlimento.setImageResource(android.R.drawable.ic_delete);
+            holder.ivFotoAlimento.setImageResource(R.drawable.not_found);
         }
     }
 

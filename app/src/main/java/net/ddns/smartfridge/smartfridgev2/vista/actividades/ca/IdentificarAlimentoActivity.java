@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -50,6 +51,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestorAlmacenamientoInterno;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -82,6 +84,8 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificar_alimento);
         AlimentoDB alimentoDB = new AlimentoDB(this);
@@ -127,26 +131,54 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
             //Si viene del api vision
         } else {
             if (resultCode == RESULT_OK) {
-                Bundle extras = data.getExtras();
-                imagenCamara = (Bitmap) extras.get(KEY);
+//                Bundle extras = data.getExtras();
+             //   imagenCamara = (Bitmap) extras.get(KEY);
+
+                File file = new File(Environment.getExternalStorageDirectory().getPath(), "photo.jpg");
+                Uri uri = Uri.fromFile(file);
+                Bitmap bitmap;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    bitmap = crupAndScale(bitmap, 300);
+                    imagenCamara = bitmap;
+                    fotoUri = Uri.parse(gai.guardarImagen(bitmap));
+                    //Llamamos al metodo cargarImagen y le pasamos la uri
+                    cargarImagen(fotoUri);
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Log.d("jjjjj", "onActivityResult: " + "hoaalala2");
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Log.d("jjjjj", "onActivityResult: " + "hoaalala3");
+                }
+
                 //Comprobamos si se ha hecho una foto
-                if (imagenCamara != null) {
+                /*if (imagenCamara != null) {
                     //Guardamos la imagen
                     gai.guardarImagen(imagenCamara);
                     //Cogemos la uri de la foto que hacemos
                     //Log.d("seguimiento", "uri: " + FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara()));
                     //fotoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", cogerArchivoCamara());
-                    File f = cogerArchivoCamara();
-                    fotoUri = Uri.parse(gai.guardarImagen(imagenCamara));
-                    //Llamamos al metodo cargarImagen y le pasamos la uri
-                    cargarImagen(fotoUri);
+                    //File f = cogerArchivoCamara();
+
                 } else {//Si no se ha hecho, se lo indicamos al usuario
                     Toast.makeText(this, "Error al tomar la fotografía. Por favor, vuelva a intentarlo.", Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
         }
     }
 
+    public static  Bitmap crupAndScale (Bitmap source,int scale){
+        int factor = source.getHeight() <= source.getWidth() ? source.getHeight(): source.getWidth();
+        int longer = source.getHeight() >= source.getWidth() ? source.getHeight(): source.getWidth();
+        int x = source.getHeight() >= source.getWidth() ?0:(longer-factor)/2;
+        int y = source.getHeight() <= source.getWidth() ?0:(longer-factor)/2;
+        source = Bitmap.createBitmap(source, x, y, factor, factor);
+        source = Bitmap.createScaledBitmap(source, scale, scale, false);
+        return source;
+    }
     /**
      * Scaner.
      *
@@ -218,6 +250,9 @@ public class IdentificarAlimentoActivity extends AppCompatActivity {
 //Para llamar a la cámara para hacer la foto del Cloud
     public void llamarHacerFoto() {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri uri  = Uri.parse("file:///sdcard/photo.jpg");
+        iHacerFotografia.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+        iHacerFotografia.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         //Miramos si hay alguna aplicación que pueda hacer la foto
         if (iHacerFotografia.resolveActivity(this.getPackageManager()) != null) {
             startActivityForResult(iHacerFotografia, Permiso.PERM_FOTO);

@@ -263,8 +263,10 @@ public class NuevaListaActivity extends AppCompatActivity {
             cargarAdapter();
         } else if (requestCode == REQUEST_CODE_REVISTA && resultCode == RESULT_OK){
             if (listadoProductosExternos!=null) {
-                listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
-                adapter.addProductosVarios(listadoProductosExternos);
+                if(data.getExtras() != null){
+                    listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
+                    adapter.addProductosVarios(listadoProductosExternos);
+                }
                 Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
             }
         }

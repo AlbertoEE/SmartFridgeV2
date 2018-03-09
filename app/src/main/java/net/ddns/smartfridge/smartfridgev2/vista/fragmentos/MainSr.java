@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.yayandroid.parallaxrecyclerview.ParallaxRecyclerView;
 import com.yayandroid.parallaxrecyclerview.ParallaxViewHolder;
@@ -163,6 +164,8 @@ public class MainSr extends Fragment {
                 Log.d("AAAAAAAA", "tiempo en AsyncTask: " + recetas.get(0).getTiempo());
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
+            } catch (NullPointerException ex) {
+                Toast.makeText(getContext(), "No hay conexión a internet", Toast.LENGTH_SHORT).show();
             }
         }
 

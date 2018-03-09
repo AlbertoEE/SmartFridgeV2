@@ -15,10 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.common.util.concurrent.AtomicDoubleArray;
-
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterNuevaLista;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
@@ -26,8 +23,6 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorFicheroLista;
 import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
 
 import java.util.ArrayList;
 
@@ -109,16 +104,21 @@ public class NuevaListaActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
-                            alimentoNuevo =  input.getText().toString();
+                            if (!input.getText().toString().isEmpty()){
+                                alimentoNuevo =  input.getText().toString();
 
-                            //Lo añadimos a la bbdd
-                            listaCompraDB.insertarAlimentoManual(alimentoNuevo);
-                            //Leemos el id de ese objeto
-                            id_alimento_manual = listaCompraDB.getIdAlimento(alimentoNuevo);
-                            //Creamos el objeto que va a ser añadido a la vista de la lista
-                            componente = new ComponenteListaCompra(id_alimento_manual, alimentoNuevo,3);
-                            //Lo añadimos al adapter
-                            adapter.addProducto(componente);
+                                //Lo añadimos a la bbdd
+                                listaCompraDB.insertarAlimentoManual(alimentoNuevo);
+                                //Leemos el id de ese objeto
+                                id_alimento_manual = listaCompraDB.getIdAlimento(alimentoNuevo);
+                                //Creamos el objeto que va a ser añadido a la vista de la lista
+                                componente = new ComponenteListaCompra(id_alimento_manual, alimentoNuevo,3);
+                                //Lo añadimos al adapter
+                                adapter.addProducto(componente);
+                            } else {
+                                Toast.makeText(context, "Rellene el campo", Toast.LENGTH_SHORT).show();
+                            }
+
                             Log.d("alimento", "alimento: " + alimentoNuevo + ", id: " + id_alimento_manual);
                         }
                     });
@@ -137,6 +137,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Cuando pulsemos el botón, se va a abrir el activity con todos los alimentos
                 intent = new Intent(getApplicationContext(), CompraExternaActivity.class);
+                editando = false;
                 startActivityForResult(intent, REQUEST_CODE_REVISTA);
             }
         });

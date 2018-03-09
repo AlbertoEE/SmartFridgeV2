@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class DetalleListaExternaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> componentes;//Para cargar los componentes seleccionados
     private ArrayList<ComponenteListaCompra> componentesAdapter;//Para cargar los componentes seleccionados en el adapter
-    private CustomArrayAdapterNuevaLista adapter;;//Adapter para la vista
+    private CustomArrayAdapterNuevaLista adapter;//Adapter para la vista
     private int sort = 1;
     private Intent intent;//Para recoger los datos del activity que de origen
     private boolean editando = false;//Booleano para mostrar y ocultar los checkboxes

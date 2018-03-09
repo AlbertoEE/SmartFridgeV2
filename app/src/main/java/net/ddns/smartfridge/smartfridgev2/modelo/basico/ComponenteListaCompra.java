@@ -82,17 +82,13 @@ public class ComponenteListaCompra implements Serializable{
     }
 
     @Override
-    public boolean equals(Object object) {
-        boolean iguales = false;
-
-        if (object != null && object instanceof ComponenteListaCompra)
-        {
-            iguales = this.nombreElemento == ((ComponenteListaCompra) object).nombreElemento;
+    public boolean equals(Object o){
+        if(o instanceof ComponenteListaCompra){
+            ComponenteListaCompra toCompare = (ComponenteListaCompra) o;
+            return this.nombreElemento.equalsIgnoreCase(toCompare.nombreElemento);
         }
-
-        return iguales;
+        return false;
     }
-
     @Override
     public int hashCode()
     {

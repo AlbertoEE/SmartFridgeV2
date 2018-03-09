@@ -16,6 +16,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,6 +34,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     private Dialogos dialogos;
     private Activity activity;
     private String modificacion;
+    private ArrayList<Boolean> booleans;
     private int contador;//Para ver si hay elementos que están repetidos
 
     /**
@@ -44,7 +46,6 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      */
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
-        //Log.d("MECAGOENDIOS", "CustomArrayAdapterNuevaLista: " + productosSugeridos.size());
         if (productosSugeridos != null) {
             this.productos = productosSugeridos;
 
@@ -56,6 +57,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         this.checkBoxes = new ArrayList<>();
         this.falseProducts = new ArrayList<>();
         dialogos = new Dialogos(context, activity);
+        cargarBooleans();
     }
 
     @NonNull
@@ -63,7 +65,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //Log.d("MECAGOENDIOS", "llamadas: " + llamada++);
         final String alimento = productos.get(position).getNombreElemento();
-        //Log.d("MECAGOENDIOS", "getView: " + productos.size());
+        Log.d("MECAGOENDIOS", "getView: " + productos.size());
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_producto_nueva_lista, parent, false);
         }
@@ -83,15 +85,17 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
                 if (b) {//Si está marcado a true el checkbox
                     //Se añade al auxiliar
-                    comprobarRepetidosAlimentos(auxiliar, productos.get(position));
+                    //comprobarRepetidosAlimentos(auxiliar, productos.get(position));
                     //Miramos si un alimento que estaba a false, se ha vuelto a poner a true para quitarlo del array correspondiente
-                    for(int i=0;i<falseProducts.size();i++){
+                    booleans.set(position, true);
+                    /*for(int i=0;i<falseProducts.size();i++){
                         if(falseProducts.get(i).getNombreElemento().equals(productos.get(position)));
                         falseProducts.remove(productos.get(position));
-                    }
+                    }*/
                 } else {
                     //Comprobamos que el elemento que queremos eliminar no está ya incluido en el arrayList. Si no está ni se mete en el array
-                    comprobarRepetidosAlimentos(falseProducts, productos.get(position));
+                    booleans.set(position, false);
+                    //comprobarRepetidosAlimentos(falseProducts, productos.get(position));
                 }
             }
         });
@@ -107,6 +111,13 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         return convertView;
     }
 
+    public void cargarBooleans(){
+        booleans = new ArrayList<>();
+        booleans.clear();
+        for (int i = 0; i < productos.size(); i++){
+            booleans.add(true);
+        }
+    }
 
     /**
      * Add producto.
@@ -115,9 +126,10 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      */
     public void addProducto(ComponenteListaCompra producto) {
         if(this.productos.contains(producto)){
-            Toast.makeText(activity, "Ya está en la lista", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity.getApplicationContext(), "Ya está en la lista", Toast.LENGTH_SHORT).show();
         } else {
             productos.add(producto);
+            booleans.add(new Boolean(true));
             this.notifyDataSetChanged();
         }
     }
@@ -126,9 +138,13 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      * Método para eliminar los alimentos que ha seleccionado el usuario
      */
     public void confirmarCambios() {
-
+        for (Boolean item : booleans) {
+            Log.d("ConfirmarCambios", "confirmarCambios: " + item.booleanValue());
+        }
+        Log.d("ConfirmarCambios", "confirmarCambios: " + booleans.size());
+        Log.d("ConfirmarCambios", "confirmarCambios: " + productos.size());
         //Recorremos el auxiliar y lo comparamos con cada objeto del array falseProducts
-        for(int a=0; a < auxiliar.size(); a++){
+        /*for(int a=0; a < auxiliar.size(); a++){
             for (int f=0; f < falseProducts.size(); f++){
                 //Si coinciden los elementos, se elimina del auxiliar
                 if (auxiliar.get(a).getNombreElemento().equals(falseProducts.get(f).getNombreElemento())){
@@ -137,9 +153,28 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
             }
         }
         //Asignamos al arrayList llamado productos, el valor del arrayList auxiliar
-        this.productos = auxiliar;
+        this.productos = auxiliar;*/
+
+        for (int i = 0; i < booleans.size(); i++) {
+            if(booleans.get(i).booleanValue()){
+                auxiliar.add(productos.get(i));
+            }
+        }
+        for (ComponenteListaCompra item : auxiliar) {
+            Log.d("bucle", "confirmarCambios: " + item.getNombreElemento());
+        }
+
+        productos.clear();
+        for (ComponenteListaCompra item : auxiliar) {
+            productos.add(item);
+        }
+        for (ComponenteListaCompra item : productos) {
+            Log.d("bucle2", "confirmarCambios: " + item.getNombreElemento());
+        }
+        auxiliar.clear();
         Log.d("check", "longitud de productos: " + productos.size());
         checkBoxes.clear();
+        cargarBooleans();
         this.notifyDataSetChanged();
     }
 
@@ -156,8 +191,8 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      * Metodo para mostrar los checkboxes gracias al arrayList de checkboxes
      */
     public void mostrarCheckboxes() {
-        auxiliar = productos;
-        Log.d("check", "longitud de productos: " + auxiliar.size());
+        //auxiliar = productos;
+        //*Log.d("check", "longitud de productos: " + auxiliar.size());
         //Log.d("MECAGOENDIOS", "mostrarCheckboxes: " + checkBoxes.size());
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.VISIBLE);
@@ -196,6 +231,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      * @return the int
      */
     public int getSize(){
+        Log.d("PR", "getSize: " + productos.size());
         return productos.size();
     }
 
@@ -263,10 +299,17 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      */
     public void addProductosVarios(ArrayList<ComponenteListaCompra> productos){
         for (ComponenteListaCompra item: productos) {
+            Log.d("atila", "addProductosVarios: " + item.getNombreElemento() + "\n" + item.getId() + "\n" + item.getTipo());
             if (!this.productos.contains(item)) {
                 this.productos.add(item);
+                Log.d("atila", "pene: " + item.getNombreElemento() + "\n" + item.getId() + "\n" + item.getTipo());
+
             }
         }
+        for (ComponenteListaCompra item : this.productos) {
+            Log.d("atilo", "addProductosVarios: " + item.getNombreElemento() + item.getId() + item.getTipo());
+        }
+        cargarBooleans();
         notifyDataSetChanged();
     }
 }

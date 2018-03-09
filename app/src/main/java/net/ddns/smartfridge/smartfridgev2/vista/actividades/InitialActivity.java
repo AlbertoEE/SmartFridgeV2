@@ -5,6 +5,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
@@ -28,6 +31,13 @@ import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainClc;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainPm;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainSr;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * The type Initial activity.
@@ -109,7 +119,28 @@ public class InitialActivity extends AppCompatActivity {
         sp = getPreferences(Context.MODE_PRIVATE);
         //Ponemos el tutorial para el inicio
         Log.d("lñlñ", "onCreate: " + mainCa);
+        checkInternetConnection();
         //mostrarTutorial();
+    }
+
+    private void checkInternetConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        Toast.makeText(this, "no internet connection", Toast.LENGTH_LONG).show();
+        if (null == ni)
+            Toast.makeText(this, "no internet connection", Toast.LENGTH_LONG).show();
+        else {
+            Toast.makeText(this, "Internet Connect is detected .. check access to sire", Toast.LENGTH_LONG).show();
+            try {
+                String parameters = ""; //
+                URL url = new URL("http://smartFridge.ddns.net" + parameters);
+                executeReq(url);
+            }
+            catch(Exception e){
+                //Error
+                Toast.makeText(this, "Pos no", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -130,6 +161,32 @@ public class InitialActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void executeReq(URL urlObject) throws IOException {
+        HttpURLConnection conn = null;
+
+        conn = (HttpURLConnection) urlObject.openConnection();
+        conn.setReadTimeout(100000); //Milliseconds
+        conn.setConnectTimeout(150000); //Milliseconds
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+
+        // Start connect
+        conn.connect();
+        String response = (conn.getInputStream()).toString();
+        Log.d("Response:", response);
+    }
+
+    private static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        is.close();
+        return sb.toString();
     }
 
     /**

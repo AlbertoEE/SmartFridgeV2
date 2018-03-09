@@ -18,7 +18,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import java.util.ArrayList;
 
 /**
- * The type Compra externa activity.
+ * Activity que muestra una lista con las categorias de clasificación de los alimentos en la bbdd externa para poder añadirlos a la lista
  */
 public class CompraExternaActivity extends AppCompatActivity {
    //private static final int REQUEST_CODE_ANTERIOR = 5465;//Código de respuesta para el activity que lo llamó

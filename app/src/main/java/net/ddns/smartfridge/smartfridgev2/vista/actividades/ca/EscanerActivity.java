@@ -62,7 +62,7 @@ public class EscanerActivity extends AppCompatActivity implements ZXingScannerVi
             }
         }, DELAY_SCANNER);
         //Si reconoce un código de barras, abrimos el intent correspondiente para buscar correspondencia en la bbdd
-        confirmar = new Intent(this, ConfirmarAlimentoActivity.class);
+        confirmar = new Intent(this, ConfirmadorAlimentoActivity.class);
         //Pasamos el código de barras y el formato para comprobar que se encuentra en la bbdd
         confirmar.putExtra(TAG_CODIGO, resultado.getText());
         confirmar.putExtra(TAG_TIPO_CODIGO, resultado.getBarcodeFormat().toString());

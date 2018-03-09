@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * The type Mostrar productos lista activity.
  */
-public class MostrarProductosListaActivity extends AppCompatActivity {
+public class MostradorProductosListaActivity extends AppCompatActivity {
     private Intent intent;
     private ListView listView;
     //private ShareActionProvider mShareActionProvider;

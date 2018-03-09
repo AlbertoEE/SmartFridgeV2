@@ -2,28 +2,23 @@ package net.ddns.smartfridge.smartfridgev2.modelo.servicios;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
-import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.lang.Thread.sleep;
 
@@ -226,7 +221,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
         //Almacenamos en la variable el número de unidades de cada elemento
         unidades = cursor.getInt(2);
         if (unidades < DIAS_CADUCIDAD){
-            GestorSharedP gsp = new GestorSharedP();
+            GestionSharedP gsp = new GestionSharedP();
             int elementos = gsp.productosAlmacenados();
             Log.d("probandoSP", "num: " + elementos);
             if(elementos>0) {

@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Clase con los métodos para guardar una imagen realizada con la cámara en el almacenamieno interno del teléfono o de la tablet
  */
-public class GestorAlmacenamientoInterno {
+public class GestionAlmacenamientoInterno {
 
     private Context contexto;//Para obtener el contexto de la activity
     private String path;//Para el path de la foto
@@ -38,7 +38,7 @@ public class GestorAlmacenamientoInterno {
      *
      * @param cont the cont
      */
-    public GestorAlmacenamientoInterno(Context cont){
+    public GestionAlmacenamientoInterno(Context cont){
         this.contexto=cont;
     }
 

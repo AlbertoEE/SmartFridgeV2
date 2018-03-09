@@ -45,8 +45,8 @@ public class CaducidadAlimento extends AppCompatActivity {
      */
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private int unidadesWheel;//Unidades del Wheel Picker
-    private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
-    private Alimento a;//Para almacenar el objeto que recojamos el ConfirmarAlimentoActivity
+    private Alimento_Codigo ac;//Para almacenar el objeto que recojamos el ConfirmadorAlimentoActivity
+    private Alimento a;//Para almacenar el objeto que recojamos el ConfirmadorAlimentoActivity
     private int tiempo_Caducidad;//Para almacenar los días de caducidad
     private AlimentoDB adb;//Instancia del Gestor de BD de Alimentos
     private CustomDatePicker customDatePicker;
@@ -92,7 +92,7 @@ public class CaducidadAlimento extends AppCompatActivity {
 
     private void comprobarPadre(){
         //Comprobamos si venimos de insertar manualmente o no
-        if(intent.getExtras().get("ClasePadre").equals("InsertarManualmenteActivity")){
+        if(intent.getExtras().get("ClasePadre").equals("InsertadorManualmenteActivity")){
             nombreAlimento = String.valueOf(intent.getExtras().get("NombreAlimento"));
             imagenAlimento = (Bitmap) intent.getExtras().get("FotoBitMap");
             dd.setImageBitmap(imagenAlimento);
@@ -104,12 +104,12 @@ public class CaducidadAlimento extends AppCompatActivity {
             //Si venimos de confirmar alimento debemos ver si venimos desde el scaner o desde el Cloud Vision
             //Intentamos coger el objeto
 
-            ac = ConfirmarAlimentoActivity.getAlimento();
+            ac = ConfirmadorAlimentoActivity.getAlimento();
             if (ac == null){
                 //Si es null, venimos del cloud vision
-                imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+                imagenAlimento = ConfirmadorAlimentoActivity.getImagenCloud();
                 dd.setImageBitmap(imagenAlimento);
-                nombreAlimento = ConfirmarAlimentoActivity.getNombreCloud();
+                nombreAlimento = ConfirmadorAlimentoActivity.getNombreCloud();
             } else {
                 dd.setImageBitmap(ac.getImagen());
             }
@@ -236,9 +236,9 @@ public class CaducidadAlimento extends AppCompatActivity {
                 imagenAlimento = ac.getImagen();
             } catch (NullPointerException e){
                 //Entrará por aquí cuando vengamos de Cloud Vision
-                imagenAlimento = ConfirmarAlimentoActivity.getImagenCloud();
+                imagenAlimento = ConfirmadorAlimentoActivity.getImagenCloud();
                 if (imagenAlimento==null){
-                    //imagenAlimento = InsertarManualmenteActivity.getFoto();
+                    //imagenAlimento = InsertadorManualmenteActivity.getFoto();
                     imagenAlimento = (Bitmap)intent.getExtras().get("FotoBitMap");
                 }
             }

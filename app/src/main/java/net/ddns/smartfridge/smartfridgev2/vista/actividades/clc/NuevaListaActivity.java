@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,8 +19,8 @@ import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterN
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
-import net.ddns.smartfridge.smartfridgev2.persistencia.GestorFicheroLista;
-import net.ddns.smartfridge.smartfridgev2.persistencia.GestorSharedP;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionFicheroLista;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class NuevaListaActivity extends AppCompatActivity {
     private Fecha fecha;//Para usar los métodos para obtener la fecha de hoy
     private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
-    private GestorSharedP gsp;//Instancia de la clase para trabajar con el SharedPreferences
+    private GestionSharedP gsp;//Instancia de la clase para trabajar con el SharedPreferences
     private ListaCompraDB listaCompraDB;//Para utilizar los métodos de persistencia del módulo de lista de la compra
     private ComponenteListaCompra componente;//Para crear los items que van a ir en la lista
     private int id_alimento_manual;//Para guardar el id que hay en la bbdd asociado al alimento que metemos de manera manual
@@ -51,14 +50,14 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> listadoProductos;
     private ArrayList<ComponenteListaCompra> listadoProductosExternos;//ArrayList para almacenar todos los productos que vienen de la parte externa
     private static ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
-    private GestorFicheroLista gfl;//Para almacenar las listas en un fichero interno
+    private GestionFicheroLista gfl;//Para almacenar las listas en un fichero interno
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lista);
-        gsp = new GestorSharedP();
-        gfl = new GestorFicheroLista(this);
+        gsp = new GestionSharedP();
+        gfl = new GestionFicheroLista(this);
         listaCompraDB = new ListaCompraDB(this);
         listadoProductosExternos = new ArrayList<>();
         //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -296,14 +295,14 @@ public class NuevaListaActivity extends AppCompatActivity {
      */
 //Creamos un AsyncTask que esté comprobando si hay modificaciones el el SP para añadir esos elementos a la lista
     public class agregarEscasez extends AsyncTask<Object, Void, Void> {
-        private GestorSharedP gsp;//Para trabajar con el SP
+        private GestionSharedP gsp;//Para trabajar con el SP
         private CustomArrayAdapterNuevaLista adapter;//Para trabajar con el adaptador de la clase
         private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            gsp = new GestorSharedP();
+            gsp = new GestionSharedP();
             alimentosLeidosSP = new ArrayList<>();
         }
 

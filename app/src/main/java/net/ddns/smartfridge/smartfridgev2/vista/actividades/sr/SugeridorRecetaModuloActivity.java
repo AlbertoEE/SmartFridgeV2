@@ -10,7 +10,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 /**
  * The type Sugerir receta modulo activity.
  */
-public class SugerirRecetaModuloActivity extends AppCompatActivity {
+public class SugeridorRecetaModuloActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -27,7 +27,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
-import net.ddns.smartfridge.smartfridgev2.persistencia.GestorFicheroLista;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionFicheroLista;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class TodasListasActivity extends AppCompatActivity {
     private Paint p = new Paint();
     private Intent intent;
     private ListaCompraDB listaCompraDB;//Para trabajar con la bbdd de datos y la tabla de las listas
-    private GestorFicheroLista gfl;//Para leer del fichero las listas
+    private GestionFicheroLista gfl;//Para leer del fichero las listas
     private ArrayList<Integer> idsCopia;//Para almacenar los ids de la tabla listas
     //private ArrayList<Lista> productosInterna;//Para almacenar los componentes de cada compra almacenada en la bbdd
     private CopyOnWriteArrayList<ComponenteListaCompra> productosExterna;//Para almacenar los componentes de cada compra almacenada en la bbdd
@@ -70,7 +70,7 @@ public class TodasListasActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_listas);
-        gfl = new GestorFicheroLista(this);
+        gfl = new GestionFicheroLista(this);
         //todasLasListas = NuevaListaActivity.getTodasLasListas();
         todasLasListas = gfl.leerTodasListas();
         Log.d("listaTotalFinal", "tamaño: " + todasLasListas.size());
@@ -115,7 +115,7 @@ public class TodasListasActivity extends AppCompatActivity {
                     //Log.d("swipe", "tamaño: " + listas.size());
                     Log.d("ñññ", "onSwiped: 1");
                 } else if(direction == ItemTouchHelper.RIGHT){
-                    intent = new Intent(getApplicationContext(), MostrarProductosListaActivity.class);
+                    intent = new Intent(getApplicationContext(), MostradorProductosListaActivity.class);
                     intent.putExtra("ListaProductos", adapter.getLista(position));
                     adapter.notifyDataSetChanged();
                     startActivity(intent);

@@ -1,5 +1,4 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,13 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificarAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificadorAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -38,7 +36,7 @@ public class MainCa extends Fragment {
         view.findViewById(R.id.ibIdentificar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), IdentificarAlimentoActivity.class);
+                Intent i = new Intent(getActivity(), IdentificadorAlimentoActivity.class);
                 startActivity(i);
             }
         });

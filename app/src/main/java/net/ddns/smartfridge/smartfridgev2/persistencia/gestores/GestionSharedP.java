@@ -1,4 +1,4 @@
-package net.ddns.smartfridge.smartfridgev2.persistencia;
+package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Clase que gestiona el almacenamiento del fichero Shared Preferences
  */
-public class GestorSharedP {
+public class GestionSharedP {
     private ArrayList<ComponenteListaCompra> alimentosLeidosSP;//Para leer los aliemntos que hay en el SP almacenados
     private int elementos;//Para contar el número de elementos que hay en el SP
     private boolean hayElemento;//Variable para comprobar si hay elementos almacenados en el SP. Se inicializa a false

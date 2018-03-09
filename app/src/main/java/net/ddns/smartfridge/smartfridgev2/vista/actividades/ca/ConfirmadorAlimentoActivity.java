@@ -23,7 +23,7 @@ import java.sql.SQLException;
 /**
  * The type Confirmar alimento activity.
  */
-public class ConfirmarAlimentoActivity extends AppCompatActivity {
+public class ConfirmadorAlimentoActivity extends AppCompatActivity {
     private Intent escaner;//Para recoger el Intent
     private String cod_barrras = null;//Variable para almacenar el código de barras que recibimos el Escaner
     private String formato_codigo = null;//Para recoger el formato del código leído
@@ -49,7 +49,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
         customDialogProgressBar = new CustomDialogProgressBar(this);
         dialogos = new Dialogos(this, this);
         //Comprobamos el activity desde el que viene
-        if(escaner.getStringExtra("ClasePadre").equals("IdentificarAlimentoActivity")){
+        if(escaner.getStringExtra("ClasePadre").equals("IdentificadorAlimentoActivity")){
             setContentView(R.layout.activity_confirmar_alimento);
             imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
             texto_alimento = (TextView)findViewById(R.id.tvCloud);
@@ -108,7 +108,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 texto_alimento.setText(al.getNomAlimento());
                 texto_alimento.setSelected(true);//Para las animaciones de los textos
             } else {
-                Intent intent = new Intent(getApplicationContext(), IdentificarAlimentoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), IdentificadorAlimentoActivity.class);
                 intent.putExtra("CODIGO_BARRAS", cod_barrras);
                 intent.putExtra("ClasePadre", "ConfirmarAlmientoActivity");
                 startActivity(intent);
@@ -121,7 +121,7 @@ public class ConfirmarAlimentoActivity extends AppCompatActivity {
                 myHelper.cerrarConexion();
                 customDialogProgressBar.endDialog();
             } catch (SQLException e) {
-                Toast.makeText(ConfirmarAlimentoActivity.this, "Error con la bbdd", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConfirmadorAlimentoActivity.this, "Error con la bbdd", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -47,7 +47,7 @@ public class ComprobarCaducidadIntentService extends IntentService {
     private AlimentoDB alimentoDB=null;//Para establecer la conexión con la bbdd
 
     /**
-     * Instantiates a new Comprobar caducidad intent service.
+     * Constructor
      */
     public ComprobarCaducidadIntentService() {
         super("ComprobarCaducidadIntentService");
@@ -201,19 +201,12 @@ public class ComprobarCaducidadIntentService extends IntentService {
         timer.schedule(timerTask,DELAY,MINUTO);
     }
 
-    /**
-     * Gets bm.
-     *
-     * @return the bm
-     */
-    public static Bitmap getBm() {
-        return bm;
-    }
+
 
     /**
-     * Comprobar cantidad.
+     * Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
      *
-     * @param cursor the cursor
+     * @param cursor Cursor con los elementos de la bbdd
      */
 //Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
     public void comprobarCantidad(Cursor cursor){
@@ -251,10 +244,10 @@ public class ComprobarCaducidadIntentService extends IntentService {
     }
 
     /**
-     * Comprobar escasez shared p.
+     * Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
      *
-     * @param lista    the lista
-     * @param alimento the alimento
+     * @param lista    ArrayList con componentes de la lista de la compra
+     * @param alimento objeto Alimento a comparar con los almacenados
      */
 //Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
     public void comprobarEscasezSharedP(ArrayList<ComponenteListaCompra> lista, Alimento alimento){

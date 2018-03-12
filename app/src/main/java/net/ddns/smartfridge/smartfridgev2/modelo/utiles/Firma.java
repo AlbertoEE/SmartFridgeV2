@@ -16,11 +16,11 @@ import java.security.NoSuchAlgorithmException;
 public class Firma {
 
     /**
-     * Get firma string.
+     * Método para coger la firma
      *
-     * @param pm            the pm
-     * @param nombrePackage the nombre package
-     * @return the string
+     * @param pm            el PckageManer necesario para obtenerla
+     * @param nombrePackage el nombre del Package para obtener la firma
+     * @return String con la firma
      */
 //Método para coger la firma
     public static String getFirma(PackageManager pm, String nombrePackage){

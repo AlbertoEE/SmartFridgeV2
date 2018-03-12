@@ -9,17 +9,15 @@ import android.view.Window;
 import net.ddns.smartfridge.smartfridgev2.R;
 
 /**
- * Created by Alberto on 14/01/2018.
- * <p>
- * Clase creada con el fin de invocar un dialago que contenga el progressDialog indeterminado
+ * Clase que prepresenta un DialogProgressBar personalizado
  */
 public class CustomDialogProgressBar {
     private Dialog dialog;
 
     /**
-     * Instantiates a new Custom dialog progress bar.
+     * Constructor
      *
-     * @param activity the activity
+     * @param activity La Activity sobre la que se ejecuta
      */
     public CustomDialogProgressBar(Activity activity){
         dialog = new Dialog(activity);
@@ -48,7 +46,7 @@ public class CustomDialogProgressBar {
     }
 
     /**
-     * Finaliza el diálogo, lo mata
+     * Finaliza el diálogo
      */
     public void endDialog(){
         dialog.dismiss();

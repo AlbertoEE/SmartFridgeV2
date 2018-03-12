@@ -8,7 +8,7 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import net.ddns.smartfridge.smartfridgev2.R;
 
 /**
- * Created by Alberto on 17/02/2018.
+ * Clase que almacena las constantes para la pila de actividades de la aplicación
  */
 public class Constantes {
     /**

@@ -16,12 +16,11 @@ import java.text.ParseException;
 import java.util.Calendar;
 
 /**
- * Created by Alberto on 14/01/2018.
- * Clase para el calendario
+ * Clase para crear un calendario personalizado
  */
 public class CustomDatePicker {
     /**
-     * The Calendar.
+     * Variable que representa una instancia del calendario
      */
     public final Calendar calendar = Calendar.getInstance();
 
@@ -30,16 +29,16 @@ public class CustomDatePicker {
     private final int dia = calendar.get(Calendar.DAY_OF_MONTH);
     private final int anio = calendar.get(Calendar.YEAR);
 
-    private Activity activity;
-    private Context c;
+    private Activity activity;//Representa una Activity
+    private Context c;//Para indicar el contexto
     private CaducidadAlimento ca;
     private RelativeLayout relativeLayout;
 
     /**
-     * Instantiates a new Custom date picker.
+     * Constructor
      *
-     * @param context  the context
-     * @param activity the activity
+     * @param context  el contexto donde se va a ejecutar
+     * @param activity la activity donde se va a ejecutar
      */
     public CustomDatePicker(Context context, Activity activity){
         this.c = context;
@@ -50,7 +49,7 @@ public class CustomDatePicker {
     /**
      * Método para instanciar al calendario
      *
-     * @throws ParseException the parse exception
+     * @throws ParseException lanza la exception cuando no se puede hacer el parse a string
      */
     public void obtenerFecha() throws ParseException {
         //Creamos el diálogo
@@ -91,12 +90,12 @@ public class CustomDatePicker {
     }
 
     /**
-     * Pasamos los int de el dia mes y anio un String con forma de fecha
+     * Método para convertir el dia, mes y año de int a String
      *
-     * @param dia
-     * @param mes
-     * @param anio
-     * @return
+     * @param dia int que representa el número del día del mes
+     * @param mes int que representa el número de mes del año
+     * @param anio int que representa el año
+     * @return String con la fecha completa
      */
     private String fechasConverter(int dia, int mes, int anio){
         String fecha;

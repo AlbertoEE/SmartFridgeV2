@@ -34,20 +34,19 @@ public class GestionAlmacenamientoInterno {
     private String path;//Para el path de la foto
 
     /**
-     * Instantiates a new Gestor almacenamiento interno.
+     * Constructor de la clase
      *
-     * @param cont the cont
+     * @param cont el contexto de la Activity
      */
     public GestionAlmacenamientoInterno(Context cont){
         this.contexto=cont;
     }
 
     /**
-     * Disponible boolean.
+     * Método para comprobar si el almacenamiento externo está disponible
      *
-     * @return the boolean
+     * @return booleano que indica si el almacenamiento está disponible o no
      */
-//Método para comprobar si el almacenamiento externo está disponible
     public boolean disponible() {
         //Guardamos en un String el estado del almacenamiento externo
         String estado = Environment.getExternalStorageState();
@@ -59,28 +58,24 @@ public class GestionAlmacenamientoInterno {
     }
 
     /**
-     * Coger directorio string.
+     * Método para obtener el directorio donde se va a almacenar
      *
-     * @return the string
+     * @return directorio donde se almacenará internamente el elemento
      */
-//Obtenemos el directorio donde se va a almacenar
     public String cogerDirectorio(){
         //Indiamos la cte DIRECTORY_PICTURES para que se guarde en la carpeta de imágenes del dispositivo
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
         //Devolvemos el path con la ruta al fichero
         return file.getAbsolutePath();
     }
 
     /**
-     * Guardar imagen string.
+     * Método para guardar la imagen en almacenamiento interno
      *
-     * @param b the b
-     * @return the string
+     * @param b El bitmap con la imagen que queremos almacenar
+     * @return ruta del almacenamiento interno
      */
-//Método para guardar la imagen
     public String guardarImagen(Bitmap b){
-
         String directorioAlmcto;//Para darle el nombre a la imagen
         File fichero;
         //Creamos los streams para almacenar la imagen, que irá bomo byte[]

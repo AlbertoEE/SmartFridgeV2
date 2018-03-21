@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -24,7 +24,6 @@ import com.robertlevonyan.views.chip.Chip;
 import com.robertlevonyan.views.chip.OnCloseClickListener;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterNeveraRecetas;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
@@ -47,7 +46,6 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
     private int sort = 1;
     private LinearLayout llChipsFiltro;
     private ArrayList<Receta> recetas;
-    private Intent intent;
 
     private Context context;
     private Activity activity;
@@ -203,12 +201,12 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
                     item.setImagenReceta(null);
                 }
                 Intent intent = new Intent();
-                intent.putExtra("filtro", recetas);
-                intent.putExtra("filtroImagenes" , imagenes);
+                intent.putExtra(getString(R.string.filtro), recetas);
+                intent.putExtra(getString(R.string.filtro_i) , imagenes);
                 activity.setResult(activity.RESULT_OK, intent);
             } else {
                 //Si no hay coincidencias, se mostrará un toast al usuario
-                Toast.makeText(context, "No hay resultados", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.no_res), Toast.LENGTH_SHORT).show();
             }
             try {
                 myHelper.cerrarConexion();

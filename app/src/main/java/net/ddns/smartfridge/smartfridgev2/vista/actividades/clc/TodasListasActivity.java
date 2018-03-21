@@ -7,9 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -42,18 +42,9 @@ public class TodasListasActivity extends AppCompatActivity {
     private ArrayList<ListaCompra> listas;//ArrayList con todas las listas del adapter
     private Paint p = new Paint();
     private Intent intent;
-    private ListaCompraDB listaCompraDB;//Para trabajar con la bbdd de datos y la tabla de las listas
     private GestionFicheroLista gfl;//Para leer del fichero las listas
-    private ArrayList<Integer> idsCopia;//Para almacenar los ids de la tabla listas
-    //private ArrayList<Lista> productosInterna;//Para almacenar los componentes de cada compra almacenada en la bbdd
-    private CopyOnWriteArrayList<ComponenteListaCompra> productosExterna;//Para almacenar los componentes de cada compra almacenada en la bbdd
-    private CopyOnWriteArrayList<ComponenteListaCompra> productosManual;//Para almacenar los componentes de cada compra almacenada en la bbdd
     private ListaCompra lista;//Para generar cada objeto de tipo ListaCompra
-    private String fechaLista;//Para saber la fecha de una lista
-    private Fecha fecha;//Para cambiar el formato de la fecha que recibimos de la bbdd
     private ArrayList<ListaCompra> todasLasListas = new ArrayList<>();//Array con todas las listas de la compra que hay en la bbdd
-    private static final int MAX_AVAILABLE = 1;//Para la construcción del semáforo, nº de hilos
-    //private ArrayList<Lista>todosLosProductos = new ArrayList<>();//Para crear la lista con todos los productos
     private int sort = 1;
     private TodasListasActivity todasListasActivity;
     private Dialogos dialogos;
@@ -119,11 +110,10 @@ public class TodasListasActivity extends AppCompatActivity {
 
                 if (direction == ItemTouchHelper.LEFT){
                     dialogos.dialogoBorrarLista(todasListasActivity, position);
-                    //Log.d("swipe", "tamaño: " + listas.size());
                     Log.d("ñññ", "onSwiped: 1");
                 } else if(direction == ItemTouchHelper.RIGHT){
                     intent = new Intent(getApplicationContext(), MostradorProductosListaActivity.class);
-                    intent.putExtra("ListaProductos", adapter.getLista(position));
+                    intent.putExtra(getString(R.string.lista_p), adapter.getLista(position));
                     adapter.notifyDataSetChanged();
                     startActivity(intent);
                     Log.d("ñññ", "onSwiped: 2");

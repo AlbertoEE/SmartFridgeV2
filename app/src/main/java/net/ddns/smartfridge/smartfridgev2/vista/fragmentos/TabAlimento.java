@@ -13,11 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -30,7 +28,6 @@ import com.robertlevonyan.views.chip.OnCloseClickListener;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
@@ -44,18 +41,13 @@ public class TabAlimento extends Fragment {
     private ArrayList<Ingrediente> ingredientes;//Para almacenar los ingredientes recogidos de la bbdd
     private AutoCompleteTextView act;//Para coger la referencia al elemento del layout
     private ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
-    private String sentencia;//Para ejecutar la sentencia de búsqueda en la bbdd
     private String sentenciaSeleccion;//Para ejecutar la sentencia de búsqueda en la bbdd
     private ArrayList<Ingrediente> ingredientesSeleccionados;//Para almacenar los ingredientes seleccionados por el usuario
     private Boolean contenga = null;//Para ver qué radiobutton se ha seleccionado
     private Intent intent;//Intent para pasar los datos al adapter y refrescarlos
-    private ArrayList<Bitmap> arrayFotoReceta;//Array para guardar las imágenes de las recetas
     private ArrayList<String> ingredientesSeleccionadosString;
     private ArrayList<String> tiempo;//Array para guardar los ids de la tabla del tiempo de las recetas
     private ArrayList<String> dif;//Array para guardar los ids de la tabla de la dificultad de las recetas
-
-    private int contador = 0;
-
     private ArrayList<String> ingredientesComprobacion;
     private LinearLayout llChips;
 
@@ -83,8 +75,8 @@ public class TabAlimento extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
         new ShowcaseView.Builder(getActivity())
                 .setTarget( new ViewTarget( ((View) v.findViewById(R.id.ibBuscar)) ) )
-                .setContentTitle("Buscar")
-                .setContentText("Boton para filtrar las recetas")
+                .setContentTitle(getString(R.string.buscar))
+                .setContentText(getString(R.string.buscar_t))
                 .hideOnTouchOutside()
                 .build();
         llChips = (LinearLayout) v.findViewById(R.id.llChips);
@@ -101,14 +93,12 @@ public class TabAlimento extends Fragment {
                         //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
                         contenga = true;
                         Log.d("check", "contenga: " + contenga);
-                        //sentencia = myHelper.montarSentenciaSi(ingredientesSeleccionados);
                         break;
                     case R.id.rbNoTenga:
                         Log.d("check", "boton pulsado No Tenga");
                         contenga = false;
                         Log.d("check", "contenga: " + contenga);
                         //Si queremos que no tenga alimentos, montamos la select correspondiente
-                        //sentencia = myHelper.montarSentenciaNo(ingredientesSeleccionados);
                         break;
                 }
             }
@@ -118,11 +108,7 @@ public class TabAlimento extends Fragment {
             @Override
             public void onClick(View view) {
                 //Le damos el arrayList con los datos indicados por el usuario
-                //ingredientesSeleccionados = fake();
-                //Log.d("check", "sentencia: " + sentenciaSeleccion);
-                //Log.d("check", "boton pulsado Búsqueda");
                 if (contenga){
-                    //Log.d("check", "contenga onClick: " + contenga);
                     //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
                     sentenciaSeleccion = myHelper.montarSentenciaSi(ingredientesSeleccionados);
                     Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
@@ -163,8 +149,6 @@ public class TabAlimento extends Fragment {
         int contador = 0;
         Log.d("Count", "generarSugerencias: " + count);
         String[] alimentos = new String[count];
-        //Log.d("String", "NOMBRE: " + cursor.getString(0));
-        //Log.d("String", "NOMBRE: " + cursor.getString(1));
         for (int i=0; i<count; i++){
             alimentos[contador] = ing.get(i).getNombreIngrediente();
             contador++;
@@ -202,10 +186,10 @@ public class TabAlimento extends Fragment {
                 });
             } else {
                 Log.d("ingrediente", "entra por el else, va vacío");
-                Toast.makeText(getContext(), "No existe dicho ingrediente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.no_ing), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getContext(), "No inntroduzcas más de 3 ingredientes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.no_mas_ing), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -304,7 +288,7 @@ public class TabAlimento extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
-            Toast.makeText(getContext(), "No se ha encontrado ninguna menu_receta con los ingredientes indicados", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.no_receta), Toast.LENGTH_SHORT).show();
             if (recetas !=null) {
                 ArrayList<Bitmap> imagenes = new ArrayList<>();
                 for (Receta item : recetas) {
@@ -312,13 +296,13 @@ public class TabAlimento extends Fragment {
                     item.setImagenReceta(null);
                 }
                 intent = new Intent();
-                intent.putExtra("filtro", recetas);
-                intent.putExtra("filtroImagenes", imagenes);
+                intent.putExtra(getString(R.string.filtro), recetas);
+                intent.putExtra(getString(R.string.filtro_i), imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
             /*    Dialogos d = new Dialogos(getContext());
                 d.dialogoNoReceta();*/
-                Toast.makeText(getContext(), "No se ha encontrado ninguna menu_receta con los ingredientes indicados", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.no_receta), Toast.LENGTH_SHORT).show();
             }
             try {
                 myHelper.cerrarConexion();

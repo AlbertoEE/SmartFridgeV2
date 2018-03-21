@@ -1,8 +1,8 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.sr;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabAlimento;
@@ -23,11 +23,11 @@ public class FiltroRecetaActivity extends AppCompatActivity {
         tabHost= (FragmentTabHost) findViewById(android.R.id.tabhost);
         tabHost.setup(this,getSupportFragmentManager(),android.R.id.tabcontent);
         //Añadimos 3 pesatañas
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("Alimentos"),
+        tabHost.addTab(tabHost.newTabSpec(getString(R.string.t1)).setIndicator(getString(R.string.ali)),
                 TabAlimento.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Tipo"),
+        tabHost.addTab(tabHost.newTabSpec(getString(R.string.t2)).setIndicator(getString(R.string.tipo)),
                 TabTipo.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Otros"),
+        tabHost.addTab(tabHost.newTabSpec(getString(R.string.t3)).setIndicator(getString(R.string.otros)),
                 TabOtros.class, null);
     }
 }

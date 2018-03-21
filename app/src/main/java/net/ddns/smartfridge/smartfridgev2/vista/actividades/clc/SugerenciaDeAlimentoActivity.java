@@ -1,9 +1,9 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,18 +37,12 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
         gsp = new GestionSharedP();
         //Cogemos la referecencia al fab
         FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab1);
-        //alimentosSugeridos = getIntent().getStringArrayListExtra("AlimentosSugeridos");
-        alimentosSugeridos = (ArrayList<ComponenteListaCompra>)getIntent().getSerializableExtra("AlimentosSugeridos");
+        alimentosSugeridos = (ArrayList<ComponenteListaCompra>)getIntent().getSerializableExtra(getString(R.string.ali_sug));
         customArrayAdapter = new CustomArrayAdapter(this, alimentosSugeridos);
         nuevaLista = new ArrayList<String>();
-
         listView = findViewById(R.id.listView);
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(customArrayAdapter);
-
-        //Hay que hacer lo de obtener la nueva lista
-        //customArrayAdapter.getNuevaLista();
-
         //Añadimos el onclick al fab
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +51,7 @@ public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
                 gsp.borrarSP();
                 //Añadimos los elementos a la lista de la compra.
                 Intent intent = new Intent();
-                intent.putExtra("AlimentosSeleccionados", customArrayAdapter.getNuevaLista());
+                intent.putExtra(getString(R.string.ali_sel), customArrayAdapter.getNuevaLista());
                 setResult(RESULT_OK, intent);
                 finish();
             }

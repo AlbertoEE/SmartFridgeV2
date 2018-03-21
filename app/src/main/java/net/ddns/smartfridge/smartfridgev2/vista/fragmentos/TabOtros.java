@@ -34,15 +34,12 @@ import java.util.List;
  */
 public class TabOtros extends Fragment {
     private EditText buscar;//TextView donde el usuario va a introducir los criterios de búsqueda
-    private String texto;//La búsqueda del usuario
-    private CustomDialogProgressBar customDialogProgressBar;
     private MySQLHelper myHelper;//Para trabajar con la bbdd
     private ArrayList<Receta> recetas;
     private ArrayList<String> tiempo;//Array para guardar los ids de la tabla del tiempo de las recetas
     private ArrayList<String> dificultad;//Array para guardar los ids de la tabla de dificultad de las recetas
     private Spinner spinnerT;//Para coger la referencia del spinner del tiempo
     private Spinner spinnerD;//Para coger la referencia del spinner de la duración
-    private Context contexto;//Para el contexto del activity
     private int procedencia=2;//Para ver por dónde se va a realizar la búsqueda
 
     /**
@@ -55,7 +52,6 @@ public class TabOtros extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customDialogProgressBar = new CustomDialogProgressBar(getActivity());
         //Cogemos la referencia al activity donde se sacan los datos
         TabAlimento ta = (TabAlimento)getFragmentManager().findFragmentByTag("tab1");
         //Recogemos los valores que necesitamos para los comboBox
@@ -101,12 +97,12 @@ public class TabOtros extends Fragment {
                 switch (procedencia){
                     case 1:
                         //En caso de que filtre por el título, pasamos estos parámetros al asyncTask
-                        new mostrarRecetasFiltro().execute("titulo", buscar.getText().toString().toUpperCase());
+                        new mostrarRecetasFiltro().execute(getString(R.string.titulo), buscar.getText().toString().toUpperCase());
                         break;
                     case 2:
                         Log.d("sentencia4", "case 2");
                         //En caso de que filtre por la duración y el tiempo, pasamos estos parámetros al asyncTask
-                        new mostrarRecetasFiltro().execute("spinner", spinnerT.getSelectedItem().toString(), spinnerD.getSelectedItem().toString());
+                        new mostrarRecetasFiltro().execute(getString(R.string.spinner), spinnerT.getSelectedItem().toString(), spinnerD.getSelectedItem().toString());
                         break;
                 }
 
@@ -202,12 +198,12 @@ public class TabOtros extends Fragment {
                     item.setImagenReceta(null);
                 }
                 Intent intent = new Intent();
-                intent.putExtra("filtro", recetas);
-                intent.putExtra("filtroImagenes" , imagenes);
+                intent.putExtra(getString(R.string.filtro), recetas);
+                intent.putExtra(getString(R.string.filtro_i) , imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
                 //Si no hay coincidencias, se mostrará un toast al usuario
-                Toast.makeText(getContext(), "No hay resultados", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.no_res), Toast.LENGTH_SHORT).show();
             }
             try {
                 myHelper.cerrarConexion();

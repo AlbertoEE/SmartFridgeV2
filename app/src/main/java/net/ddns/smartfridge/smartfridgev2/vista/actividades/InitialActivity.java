@@ -58,28 +58,28 @@ public class InitialActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.ca:
                     mainCa = new MainCa();
-                    setTitle("Control de Alimentos");
+                    setTitle(getString(R.string.ca));
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content, mainCa, "CA");
                     fragmentTransaction.commit();
                     return true;
                 case R.id.pm:
                     MainPm pm = new MainPm();
-                    setTitle("Programar Menu");
+                    setTitle(getString(R.string.pm));
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.content, pm, "PM");
                     fragmentTransaction2.commit();
                     return true;
                 case R.id.clc:
                     mainClc = new MainClc();
-                    setTitle("Crear lista de la Compra");
+                    setTitle(getString(R.string.clc));
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction3.replace(R.id.content, mainClc, "CLC");
                     fragmentTransaction3.commit();
                     return true;
                 case R.id.sr:
                     mainSr = new MainSr();
-                    setTitle("Sugerencias de recetas");
+                    setTitle(getString(R.string.sr));
                     FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction4.replace(R.id.content, mainSr, "SR");
                     fragmentTransaction4.commit();
@@ -97,7 +97,7 @@ public class InitialActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mainCa = new MainCa();
-        setTitle("Control de Alimentos");
+        setTitle(getString(R.string.ca));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content, mainCa, "CA");
         fragmentTransaction.commit();
@@ -122,11 +122,11 @@ public class InitialActivity extends AppCompatActivity {
     private void checkInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        Toast.makeText(this, "no internet connection", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show();
         if (null == ni)
-            Toast.makeText(this, "no internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show();
         else {
-            Toast.makeText(this, "Internet Connect is detected .. check access to sire", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.si_internet), Toast.LENGTH_LONG).show();
             try {
                 String parameters = ""; //
                 URL url = new URL("http://smartFridge.ddns.net" + parameters);
@@ -134,7 +134,7 @@ public class InitialActivity extends AppCompatActivity {
             }
             catch(Exception e){
                 //Error
-                Toast.makeText(this, "Pos no", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.no_connect), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -168,7 +168,7 @@ public class InitialActivity extends AppCompatActivity {
         conn = (HttpURLConnection) urlObject.openConnection();
         conn.setReadTimeout(100000); //Milliseconds
         conn.setConnectTimeout(150000); //Milliseconds
-        conn.setRequestMethod("GET");
+        conn.setRequestMethod(getString(R.string.get));
         conn.setDoInput(true);
 
         // Start connect
@@ -201,11 +201,11 @@ public class InitialActivity extends AppCompatActivity {
      * Método para mostrar el tutorial al usuario
      */
     private void mostrarTutorial(){
-        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        final SharedPreferences tutorialShowcases = getSharedPreferences(getString(R.string.tutorialSP), MODE_PRIVATE);
 
         boolean run;
 
-        run = tutorialShowcases.getBoolean("run?", true);
+        run = tutorialShowcases.getBoolean(getString(R.string.tutorial6), true);
 
         if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
             //Creamos un nuevo LayoutParms para cambiar el botón de posición
@@ -219,11 +219,11 @@ public class InitialActivity extends AppCompatActivity {
             //Creamos el ShowCase
             final ShowcaseView s = new ShowcaseView.Builder(this)
                     .setTarget( new ViewTarget( ((View) findViewById(R.id.ca)) ) )
-                    .setContentTitle("Control de Alimentos")
-                    .setContentText("Botón para gestionar el control de los alimentos de MiNevera")
+                    .setContentTitle(getString(R.string.ca))
+                    .setContentText(getString(R.string.ca_t))
                     .hideOnTouchOutside()
                     .build();
-            s.setButtonText("Siguiente");
+            s.setButtonText(getString(R.string.siguiente));
             s.setButtonPosition(lps);
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
             s.overrideButtonClick(new View.OnClickListener() {
@@ -235,30 +235,28 @@ public class InitialActivity extends AppCompatActivity {
                     switch (contadorS) {
                         case 1:
                             s.setTarget( new ViewTarget( ((View) findViewById(R.id.sr)) ) );
-                            s.setContentTitle("Sugerir recetas");
-                            s.setContentText("Botón para gestionar todas las recetas con sus filtros");
+                            s.setContentTitle(getString(R.string.sr));
+                            s.setContentText(getString(R.string.sr_t));
                             break;
 
                         case 2:
                             s.setTarget( new ViewTarget( ((View) findViewById(R.id.clc)) )  );
-                            s.setContentTitle("Programar lista de la compra");
-                            s.setContentText("Botón para gestionar las listas de la compra");
+                            s.setContentTitle(getString(R.string.clc));
+                            s.setContentText(getString(R.string.clc_t));
                             break;
 
                         case 3:
                             s.setTarget( new ViewTarget( ((View) findViewById(R.id.pm)) )  );
-                            s.setContentTitle("Programar Menu");
-                            s.setContentText("Botón para gestionar la programación de los menús (En desarrollo)");
+                            s.setContentTitle(getString(R.string.pm));
+                            s.setContentText(getString(R.string.pm_c));
                             break;
                         case 4:
                             s.hide();
-                            //View vista = mainCa.getV();
-                            //mainCa.mostrarTutorialCa(vista);
                             break;
                         case 5:
                             //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("run?", false);
+                            tutorialShowcasesEdit.putBoolean(getString(R.string.tutorial6), false);
                             tutorialShowcasesEdit.apply();
                             break;
                     }

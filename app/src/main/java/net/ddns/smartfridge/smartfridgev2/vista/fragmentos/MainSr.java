@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.yayandroid.parallaxrecyclerview.ParallaxRecyclerView;
-import com.yayandroid.parallaxrecyclerview.ParallaxViewHolder;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRecetas;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
-//import net.ddns.smartfridge.smartfridgev2.modelo.servicios.RecetasIntentService;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.DetallesRecetaActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.FiltroRecetaActivity;
@@ -32,13 +29,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 /**
  * Fragment para la parte de sugerir receta
  */
 public class MainSr extends Fragment {
     private ParallaxRecyclerView recyclerView;
     private CustomRecyclerViewAdapterRecetas adapter;
-    private Receta receta;
     private ArrayList<Receta> recetas;
     private static final int REQUEST_FILTRO = 506;
     private static final int REQUEST_FILTRO2 = 78;
@@ -59,9 +56,6 @@ public class MainSr extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_sr, container, false);
-        //service = new RecetasIntentService();
-        //service.setMainSr(this);
-        //getContext().startService(new Intent(getContext(), RecetasIntentService.class));
         customDialogProgressBar = new CustomDialogProgressBar(getActivity());
         recyclerView = (ParallaxRecyclerView) view.findViewById(R.id.rvRecetas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -82,13 +76,13 @@ public class MainSr extends Fragment {
                 //Buscará una menu_receta aleatoria
                 recetaDado = recetaAleatoria(recetas);
                 intent = new Intent(getActivity(), DetallesRecetaActivity.class);
-                intent.putExtra("id", recetaDado.getIdReceta());
-                intent.putExtra("nombre", recetaDado.getTituloReceta());
-                intent.putExtra("descripcion", recetaDado.getDescripcion());
-                intent.putExtra("tipo", recetaDado.getTipoReceta());
-                intent.putExtra("duracion", recetaDado.getTiempo());
-                intent.putExtra("dificultad", recetaDado.getDificultad());
-                intent.putExtra("imagen", recetaDado.getImagenReceta());
+                intent.putExtra(getString(R.string.id), recetaDado.getIdReceta());
+                intent.putExtra(getString(R.string.nombre), recetaDado.getTituloReceta());
+                intent.putExtra(getString(R.string.desc), recetaDado.getDescripcion());
+                intent.putExtra(getString(R.string.tipo), recetaDado.getTipoReceta());
+                intent.putExtra(getString(R.string.duracion), recetaDado.getTiempo());
+                intent.putExtra(getString(R.string.dificultad), recetaDado.getDificultad());
+                intent.putExtra(getString(R.string.imagen), recetaDado.getImagenReceta());
                 startActivity(intent);
             }
         });
@@ -159,7 +153,6 @@ public class MainSr extends Fragment {
             try {
                 myHelper.cerrarConexion();
                 mainSr.crearAdapter(recetas);
-                //customDialogProgressBar.endDialog();
                 Log.d("AAAAAAAA", "tiempo en AsyncTask: " + recetas.get(0).getTiempo());
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
@@ -180,10 +173,10 @@ public class MainSr extends Fragment {
             if(resultCode == Activity.RESULT_OK){
                 Log.d("mainSR", "mainSR: Result Ok");
                 recetas = new ArrayList<>();
-                recetas = (ArrayList<Receta>)data.getSerializableExtra("filtro");
+                recetas = (ArrayList<Receta>)data.getSerializableExtra(getString(R.string.filtro));
                 Log.d("mainSR", "mainSR: "+ recetas.size());
 
-                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra("filtroImagenes");
+                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra(getString(R.string.filtro_i));
                 for (int i = 0; i < bitmaps.size(); i++){
                     recetas.get(i).setImagenReceta(bitmaps.get(i));
                 }
@@ -193,10 +186,10 @@ public class MainSr extends Fragment {
             if(resultCode == Activity.RESULT_OK){
                 Log.d("mainSR", "mainSR: Result Ok");
                 recetas = new ArrayList<>();
-                recetas = (ArrayList<Receta>)data.getSerializableExtra("filtro");
+                recetas = (ArrayList<Receta>)data.getSerializableExtra(getString(R.string.filtro));
                 Log.d("mainSR", "mainSR: "+ recetas.size());
 
-                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra("filtroImagenes");
+                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra(getString(R.string.filtro_i));
                 for (int i = 0; i < bitmaps.size(); i++){
                     recetas.get(i).setImagenReceta(bitmaps.get(i));
                 }

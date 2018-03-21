@@ -23,8 +23,6 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -118,7 +116,6 @@ public class Fragment_detalles extends Fragment {
      * @param wheelPicker Wheelpicker que vamos a utilizar
      */
     public void wheel(final WheelPicker wheelPicker){
-        //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
         List<Integer> unidades = new ArrayList<>();
         for (int k = 0; k <= MAXUDS; k++)
@@ -133,8 +130,6 @@ public class Fragment_detalles extends Fragment {
 
         wheelPicker.setSelectedItemPosition(alimento.getCantidad());
         //Iniciamos la variable a 1, ya que empezará en el primer elemento, que tendrá valor 1
-        /*Para poner color de fondo
-        wheelPicker.setBackgroundColor(getResources().getColor(R.color.viewfinder_laser));*/
         wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
             @Override
             public void onItemSelected(WheelPicker picker, Object data, int position) {
@@ -144,7 +139,6 @@ public class Fragment_detalles extends Fragment {
                     unidadesWheel = itemSel;
                     alimento.setCantidad(unidadesWheel);
                     alimentoDB.actualizarUnidades(alimento.getId(), unidadesWheel);
-                    //CustomPageAdapter.setCambio(true);
                 } else {
                     dialogos.dialogCeroUnidades(
                             constraintLayout,
@@ -184,10 +178,8 @@ public class Fragment_detalles extends Fragment {
         Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(), R.drawable.inside_fridge2)).into(ivFondoBlur);
 
         if(imagen != null){
-            //ivAlimento.setImageBitmap(imagen);
             comprimirImagen(imagen, ivAlimento);
         } else {
-            //ivAlimento.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found));
             comprimirImagen(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found), ivAlimento);
         }
 

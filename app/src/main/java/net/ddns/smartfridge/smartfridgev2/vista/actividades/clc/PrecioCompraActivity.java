@@ -41,6 +41,7 @@ public class PrecioCompraActivity extends AppCompatActivity {
     private TextView tvHipercor;
     private TextView tvMercadona;
     private Intent intentNuevo;
+    private static final String FORMATO = "##.00";//Para el formato a la hora de visualizar los precios
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +111,9 @@ public class PrecioCompraActivity extends AppCompatActivity {
         imageButtonAlcampo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intentNuevo.putExtra("Precios", precios);
-                intentNuevo.putExtra("Super", "alcampo");
-                intentNuevo.putExtra("Total", totales.get(1));
+                intentNuevo.putExtra(getString(R.string.precios), precios);
+                intentNuevo.putExtra(getString(R.string.superm), SUPERMERCADOS[1]);
+                intentNuevo.putExtra(getString(R.string.total), totales.get(1));
                 startActivity(intentNuevo);
             }
         });
@@ -120,9 +121,9 @@ public class PrecioCompraActivity extends AppCompatActivity {
         imageButtonHipercor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intentNuevo.putExtra("Precios", precios);
-                intentNuevo.putExtra("Super", "hipercor");
-                intentNuevo.putExtra("Total", totales.get(2));
+                intentNuevo.putExtra(getString(R.string.precios), precios);
+                intentNuevo.putExtra(getString(R.string.superm), SUPERMERCADOS[2]);
+                intentNuevo.putExtra(getString(R.string.total), totales.get(2));
                 startActivity(intentNuevo);
             }
         });
@@ -130,9 +131,9 @@ public class PrecioCompraActivity extends AppCompatActivity {
         imageButtonCarrefour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intentNuevo.putExtra("Precios", precios);
-                intentNuevo.putExtra("Super", "carrefour");
-                intentNuevo.putExtra("Total", totales.get(0));
+                intentNuevo.putExtra(getString(R.string.precios), precios);
+                intentNuevo.putExtra(getString(R.string.superm), SUPERMERCADOS[0]);
+                intentNuevo.putExtra(getString(R.string.total), totales.get(0));
                 startActivity(intentNuevo);
             }
         });
@@ -140,14 +141,14 @@ public class PrecioCompraActivity extends AppCompatActivity {
         imageButtonMercadona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intentNuevo.putExtra("Precios", precios);
-                intentNuevo.putExtra("Super", "mercadona");
-                intentNuevo.putExtra("Total", totales.get(3));
+                intentNuevo.putExtra(getString(R.string.precios), precios);
+                intentNuevo.putExtra(getString(R.string.superm), SUPERMERCADOS[3]);
+                intentNuevo.putExtra(getString(R.string.total), totales.get(3));
                 startActivity(intentNuevo);
             }
         });
 
-        DecimalFormat f = new DecimalFormat("##.00");
+        DecimalFormat f = new DecimalFormat(FORMATO);
 
         tvCarrefour = findViewById(R.id.tvCar);
         tvAlcampo = findViewById(R.id.tvAlc);
@@ -159,7 +160,7 @@ public class PrecioCompraActivity extends AppCompatActivity {
             tvHipercor.setText(f.format(totales.get(2)));
             tvMercadona.setText(f.format(totales.get(3)));
         } catch (NullPointerException e){
-            Toast.makeText(this, "No se han encontrado resultados", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_precio), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -202,9 +203,6 @@ public class PrecioCompraActivity extends AppCompatActivity {
                     for(int j=0; j<precioPorSuper.size(); j++){
                         totalPorSupermercado.add(precioPorSuper.get(j));
                     }
-                    /*Calculamos el total por cada supermercado
-                    totalPorSupermercado = calcularTotal(precioPorSuper);
-                    precioTotalSuper.add(totalPorSupermercado);*/
                     Log.d("precio", "total de todos los supermercados: " + totalPorSupermercado.size());
                 }
             } catch (ClassNotFoundException e) {

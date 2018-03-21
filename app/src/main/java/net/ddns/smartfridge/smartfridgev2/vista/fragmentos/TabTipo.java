@@ -1,12 +1,7 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +16,6 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterFiltroTipos;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Tipo;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
 import java.sql.SQLException;
@@ -92,8 +86,8 @@ public class TabTipo extends Fragment {
                 item.setImagenReceta(null);
             }
             intent = new Intent();
-            intent.putExtra("filtro", recetas);
-            intent.putExtra("filtroImagenes" , imagenes);
+            intent.putExtra(getString(R.string.filtro), recetas);
+            intent.putExtra(getString(R.string.filtro_i) , imagenes);
             getActivity().setResult(getActivity().RESULT_OK, intent);
             try {
                 myHelper.cerrarConexion();

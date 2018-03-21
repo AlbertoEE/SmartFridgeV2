@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * The type Precio compra productos activity.
+ * Activity para ver el detalle de los precios por cada supermercado, por producto
  */
 public class PrecioCompraProductosActivity extends AppCompatActivity {
     private RecyclerView recyclerView;

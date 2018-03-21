@@ -24,7 +24,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * The type Precio compra activity.
+ * Activity donde se muestra el precio de los ingredientes de la lista según los distintos comercios
  */
 public class PrecioCompraActivity extends AppCompatActivity {
     private Intent intent;//Para recoger los valores del Activity que le llama
@@ -65,10 +65,10 @@ public class PrecioCompraActivity extends AppCompatActivity {
     }
 
     /**
-     * Calcular total array list.
+     * Método para calcular el total del precio de todos los ingredientes
      *
-     * @param precios the precios
-     * @return the array list
+     * @param precios Lista con todos los precios
+     * @return Lista con todos los precios totales
      */
     public ArrayList<Double> calcularTotal(ArrayList<Precio> precios){
         double carrefour=0f;//Para calcular el total en Carrefour
@@ -110,9 +110,9 @@ public class PrecioCompraActivity extends AppCompatActivity {
     }
 
     /**
-     * Set array.
+     * Método para asignar a cada botón los precios correspondientes a ese supermercado
      *
-     * @param preciosS the precios s
+     * @param preciosS Lista con todos los precios de los alimentos
      */
     public void setArray(ArrayList<Precio> preciosS){
         this.precios = preciosS;
@@ -180,9 +180,8 @@ public class PrecioCompraActivity extends AppCompatActivity {
     }
 
     /**
-     * The type Consultar todos precios.
+     * Clase con el AsyncTask para consultar los precios a partir de los ingredientes de la bbdd
      */
-//Creamos la consulta a la bbdd
     public class consultarTodosPrecios extends AsyncTask<ArrayList<ComponenteListaCompra>, Void, ArrayList<Precio>>{
         private final String [] SUPERMERCADOS = {"carrefour", "alcampo", "hipercor", "mercadona"};
         private ArrayList<Precio>  precioPorSuper = new ArrayList<>();//Para almacenar los resultados de la bbdd
@@ -192,9 +191,9 @@ public class PrecioCompraActivity extends AppCompatActivity {
         private PrecioCompraActivity clase;
 
         /**
-         * Instantiates a new Consultar todos precios.
+         * Constructor
          *
-         * @param clase the clase
+         * @param clase Activity sobre el que se van a mostrar los datos
          */
         public consultarTodosPrecios(PrecioCompraActivity clase){
             this.clase = clase;
@@ -244,52 +243,6 @@ public class PrecioCompraActivity extends AppCompatActivity {
             } catch (SQLException e) {
                 Log.d("SQL", "Error al cerrar la bbdd");
             }
-        }
-
-        /*  @Override
-        protected void onPostExecute(ArrayList<Double> doubles) {
-            super.onPostExecute(doubles);
-            precioTotalSuper = doubles;
-            try {
-                //Asignamos aqui el ArrayList al recyclerview
-                myHelper.cerrarConexion();
-                customDialogProgressBar.endDialog();
-            } catch (SQLException e) {
-                Log.d("SQL", "Error al cerrar la bbdd");
-            }
-        }*/
-
-        /**
-         * Calcular total array list.
-         *
-         * @param precios the precios
-         * @return the array list
-         */
-//Método para calcular el total de precio en función de cada supermercado
-        public ArrayList<Double> calcularTotal(ArrayList<Precio> precios){
-            ArrayList<Double> totales = new ArrayList<>();//Variable para almacenar el total de los productos por supermercado
-            double carrefour=0;//Para calcular el total en Carrefour
-            double alcampo=0;//Para calcular el total en Alcampo
-            double hipercor=0;//Para calcular el total en Hipercor
-            double mercadona=0;//Para calcular el total en Mercadona
-            //Recorremos el array y vamos calculando los valores
-            for (int i=0; i<precios.size();i++){
-                if(precios.get(i).getSupermercado().equals(SUPERMERCADOS[0])){
-                    carrefour += precios.get(i).getPvp();
-                } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[1])){
-                    alcampo += precios.get(i).getPvp();
-                } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[2])){
-                    hipercor += precios.get(i).getPvp();
-                } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[3])){
-                    mercadona += precios.get(i).getPvp();
-                }
-                //Asignamos los valore a un ArrayList de double
-                totales.add(carrefour);
-                totales.add(alcampo);
-                totales.add(hipercor);
-                totales.add(mercadona);
-            }
-            return totales;
         }
     }
 }

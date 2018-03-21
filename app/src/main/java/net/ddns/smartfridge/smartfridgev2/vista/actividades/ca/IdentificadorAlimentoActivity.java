@@ -53,7 +53,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * The type Identificar alimento activity.
+ * Activity que representa las tres opciones de identificación de alimentos: escáner, Cloud Vision y manual
  */
 public class IdentificadorAlimentoActivity extends AppCompatActivity {
     /**
@@ -98,11 +98,11 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             //No hacemos nada
         }
-        //mostrarTutorial();
+        mostrarTutorial();
     }
 
     /**
-     * Escanear.
+     * Método que abre el escáner para detectar el código de barras
      */
     public void escanear() {
         Intent intent = new Intent(this, EscanerActivity.class);
@@ -147,11 +147,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Scaner.
+     * Método para ver si están los permisos. Si están a true, llamaremos al método escanear().
      *
-     * @param v the v
+     * @param v View sobre el que actúa el onClick
      */
-//Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void scaner(View v) {
         Permiso permiso = new Permiso();
         if (permiso.permisoCamara(this, this)) {
@@ -173,18 +172,18 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
             case PERMISOS: {
                 if ((grantResults.length > 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     llamarHacerFoto();
-                    Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
             case 320: {
                 if ((grantResults.length > 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     escanear();
-                    Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -192,11 +191,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Vision cloud.
+     * Método para ver si están los permisos. Si están a true, llamaremos al método llamarHacerFoto()
      *
-     * @param v the v
+     * @param v View sobre el que actúa el onClick
      */
-//Llamaremos a este método para ver si están los permisos. Si están a true, llamaremos al método escanear()
     public void visionCloud(View v) {
         //Creamos la instancia del objeto Vision para usar Cloud Vision API.
 
@@ -212,9 +210,8 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Llamar hacer foto.
+     * Método para llamar a la cámara para hacer la foto del Cloud
      */
-//Para llamar a la cámara para hacer la foto del Cloud
     public void llamarHacerFoto() {
         Intent iHacerFotografia = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Miramos si hay alguna aplicación que pueda hacer la foto
@@ -224,11 +221,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Insertar manualmente button.
+     * Método para abrir la opción de la inserción manual de alimentos
      *
-     * @param view the view
+     * @param view View sobre el que actúa el onClick
      */
-//Abre el intent de la inserción manual de alimentos
     public void insertarManualmenteButton(View view) {
         Log.d("cod", "codigo 3_A: " + codigo_barras);
         Intent intent = new Intent(this, InsertadorManualmenteActivity.class);
@@ -240,11 +236,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Coger archivo camara file.
+     * Metodo para coger el fichero con la imagen hecha con la cámara
      *
-     * @return the file
+     * @return fichero con la imagen hecha con la cámara
      */
-//Metodo para coger el fichero con la imagen hecha con la cámara
     public File cogerArchivoCamara() {
         File archivo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String directorioAlmcto;//Para darle el nombre a la imagen
@@ -256,11 +251,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Cargar imagen.
+     * Metodo para cargar la imagen y ejecutar el AsyncTask
      *
-     * @param uri the uri
+     * @param uri Uri con la imagen almacenada que queremos comprobar
      */
-//Metodo para cargar la imagen y ejecutar el AsyncTask
     public void cargarImagen(Uri uri) {
         //Comprobamos que no esté vacía
         if (uri != null) {
@@ -287,11 +281,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Conexion boolean.
+     * Método para comprobar si hay conexión a internet
      *
-     * @return the boolean
+     * @return true si hay conexión y false si no la hay
      */
-//Comrpobamos si hay conexión
     public boolean conexion() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -299,9 +292,8 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * The type Cloud vision task.
+     * Clase para hacer el AsyncTask del CloudVision
      */
-//Creamos el AsyncTask para hacer la consulta a la web
     public class CloudVisionTask extends AsyncTask<Object, Void, String> {
 
         @Override
@@ -343,31 +335,6 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
             /*Creamos el objeto Vision con el builder. Este objeto se va a encargar de manejar internamente el transporte HTTP
             y la lógica de análisis JSON para cada solicitud y cada respuesta que hagamos*/
                 Vision vision = builder.build();
-
-            /*Ahora vamos a codificar los datos de la imagen, ya que el API no puede usar Bitmap directamente, y vamos a crear un objeto Imagen. Se lo pasaremos como argumento a
-            AnnotateImageRequest y activaremos la función LABEL_DETECTION
-            BatchAnnotateImagesRequest bair = new BatchAnnotateImagesRequest();
-            bair.setRequests(new ArrayList<AnnotateImageRequest>(){{
-                AnnotateImageRequest air = new AnnotateImageRequest();
-                //Convertimos la imagen escalada
-                convertirBitmap(imagenEscalada);
-                //Le damos las características al AnnotateImageRequest. Le vamos a dar la detección de etiquetas
-                air.setFeatures(new ArrayList<Feature>(){{
-                    add(caracteristicasVision(FEATURES, NUM_RESULTADOS));
-                }});
-                add(air);
-            }});
-            //Ahora tratamos la respuesta que nos envíe el API Vision
-
-                Vision.Images.Annotate aRespuesta = vision.images().annotate(bair);
-                //Si el tamaño de la imagen es muy grande, puede darnos error cuando intentemos comprimirlo a GZIP, lo inhabilitamos
-                aRespuesta.setDisableGZipContent(true);
-                Log.d("seguimiento", "creada Cloud Vision request objetc, enviando consulta");
-                //Almacenamos la respuesta en un BatchAnnotateImagesResponse
-                BatchAnnotateImagesResponse respuesta = aRespuesta.execute();*/
-
-            /*Ahora vamos a codificar los datos de la imagen, ya que el API no puede usar Bitmap directamente, y vamos a crear un objeto Imagen. Se lo pasaremos como argumento a
-            AnnotateImageRequest y activaremos la función LABEL_DETECTION*/
                 //Creamos la solicitud con la imagen escalada
                 AnnotateImageRequest air = new AnnotateImageRequest();
                 //Escalamos la imagen
@@ -424,6 +391,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
             startActivity(i);
         }
     }
+
+    /**
+     * Método que muestra el tutorial al usuario
+     */
     private void mostrarTutorial() {
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
         boolean run;
@@ -466,10 +437,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
                             break;
 
                         case 3:
-                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("runIA", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.apply();
                             s.hide();
                             break;
                     }

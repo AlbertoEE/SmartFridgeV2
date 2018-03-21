@@ -21,7 +21,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import java.util.ArrayList;
 
 /**
- * The type Detalle lista externa activity.
+ * Activity para ver los detalles de los alimentos seleccinados a través del catálogo
  */
 public class DetalleListaExternaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> componentes;//Para cargar los componentes seleccionados
@@ -61,7 +61,10 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
             }
         });
     }
-    //Método para cargar el adapter con el arraylist de los datos
+
+    /**
+     * Método para cargar el adapter con el arraylist de los datos
+     */
     private void cargarAdapter(){
         if(componentesAdapter != null){
             adapter = new CustomArrayAdapterNuevaLista(this, componentesAdapter, this);

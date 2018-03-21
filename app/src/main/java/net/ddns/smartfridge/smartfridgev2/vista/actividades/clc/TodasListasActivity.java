@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * The type Todas listas activity.
+ * Activity para mostrar todas las listas de la compra que hay almacenadas
  */
 public class TodasListasActivity extends AppCompatActivity {
     private CustomRecyclerViewAdapterListas adapter;
@@ -87,6 +87,10 @@ public class TodasListasActivity extends AppCompatActivity {
         todasListasActivity = this;
     }
 
+    /**
+     * Método para cargar el recyclerView para mostrar los datos
+     * @param array Lista con todas las listas de la compra que se van a mostrar
+     */
     private void cargarRecyclerView(ArrayList<ListaCompra>array){
         adapter = new CustomRecyclerViewAdapterListas(todasLasListas);
         recyclerView = (RecyclerView) findViewById(R.id.rvListas);
@@ -98,6 +102,9 @@ public class TodasListasActivity extends AppCompatActivity {
         cargarSwipe();
     }
 
+    /**
+     * Método para adjuntar el swipe para ver el detalle de una lista o borrarla
+     */
     private void cargarSwipe(){
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -176,9 +183,9 @@ public class TodasListasActivity extends AppCompatActivity {
     }
 
     /**
-     * Delete one.
+     * Método para eliminar una lista
      *
-     * @param position the position
+     * @param position posicion de la lista en el listado con todas ellas
      */
     public void deleteOne(int position){
         adapter.removeItem(position);
@@ -187,7 +194,7 @@ public class TodasListasActivity extends AppCompatActivity {
     }
 
     /**
-     * Cancel.
+     * Método para cancelar la eliminación de una lista de la compra
      */
     public void cancel(){
         adapter.notifyDataSetChanged();

@@ -21,13 +21,13 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.TodasListasActiv
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment para la parte de control lista de la compra
  */
 public class MainClc extends Fragment {
 
 
     /**
-     * Instantiates a new Main clc.
+     * Constructor
      */
     public MainClc() {
         // Required empty public constructor
@@ -56,12 +56,12 @@ public class MainClc extends Fragment {
                 startActivity(intent);
             }
         });
-        //mostrarTutorialCa(view);
+        mostrarTutorialCa(view);
         return view;
     }
 
     /**
-     * Mostrar tutorial ca.
+     * Método para mostrar el tutorial
      *
      * @param v the v
      */
@@ -97,10 +97,10 @@ public class MainClc extends Fragment {
                             s.setContentText("Pulsa para crear una nueva lista de la compra.");
                             break;
                         case 2:
-                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("runMainClc", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.apply();
                             s.hide();
                             break;
                     }

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment para hacer el filtro de las recetas
  */
 public class TabOtros extends Fragment {
     private EditText buscar;//TextView donde el usuario va a introducir los criterios de búsqueda
@@ -46,7 +46,7 @@ public class TabOtros extends Fragment {
     private int procedencia=2;//Para ver por dónde se va a realizar la búsqueda
 
     /**
-     * Instantiates a new Tab otros.
+     * Constructor
      */
     public TabOtros() {
         // Required empty public constructor
@@ -154,7 +154,7 @@ public class TabOtros extends Fragment {
     }
 
     /**
-     * The type Mostrar recetas filtro.
+     * Clase interna con el AsyncTask para sacar las recetas en función del filtro aplicado
      */
     public class mostrarRecetasFiltro extends AsyncTask<String, Void, ArrayList<Receta>> {
 

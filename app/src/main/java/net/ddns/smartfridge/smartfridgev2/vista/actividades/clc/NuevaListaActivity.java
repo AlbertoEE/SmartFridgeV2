@@ -26,7 +26,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.ListaCompraDB;
 import java.util.ArrayList;
 
 /**
- * The type Nueva lista activity.
+ * Activity que muestra las opciones para añadir alimentos a una nueva lista de la compra
  */
 public class NuevaListaActivity extends AppCompatActivity {
     private Intent intent;//Para trabajar con los intents para lanzar nuevos activitys
@@ -178,12 +178,11 @@ public class NuevaListaActivity extends AppCompatActivity {
 
 
     /**
-     * Insertar componentes lista.
+     * Método para hacer los insert en las tablas correspondientes
      *
-     * @param a       the a
-     * @param idLista the id lista
+     * @param a       Lista de componentes a almacenar
+     * @param idLista id de la lista donde están esos componentes
      */
-//Método para hacer los insert en las tablas correspondientes
     public void insertarComponentesLista(ArrayList<ComponenteListaCompra> a, int idLista){
         int tipo;//Para guardar el tipo de cada objeto del arrayList
         //Recorremos el ArrayList
@@ -207,33 +206,8 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
     /**
-     * Crear array array list.
-     *
-     * @return the array list
+     * Método para cargar el adaptador
      */
-//Método para crear un arrayList ficticio con datos, luego BORRAR!!!!!!!!!!!!
-    public ArrayList<ComponenteListaCompra> crearArray(){
-        ComponenteListaCompra c = new ComponenteListaCompra(1, "patata", 1);
-        ComponenteListaCompra c1 = new ComponenteListaCompra(2, "tomate", 1);
-        ComponenteListaCompra c2 = new ComponenteListaCompra(3, "lechuga", 1);
-        ComponenteListaCompra c3 = new ComponenteListaCompra(1, "nata", 2);
-        ComponenteListaCompra c4 = new ComponenteListaCompra(2, "mantequilla", 2);
-        ComponenteListaCompra c5 = new ComponenteListaCompra(3, "azúcar", 2);
-        ComponenteListaCompra c6 = new ComponenteListaCompra(1, "chorizo", 3);
-        ComponenteListaCompra c7 = new ComponenteListaCompra(2, "salchichón", 3);
-        ComponenteListaCompra c8 = new ComponenteListaCompra(3, "jamón serrano", 3);
-        listadoProductos.add(c);
-        listadoProductos.add(c1);
-        listadoProductos.add(c2);
-        listadoProductos.add(c3);
-        listadoProductos.add(c4);
-        listadoProductos.add(c5);
-        listadoProductos.add(c6);
-        listadoProductos.add(c7);
-        listadoProductos.add(c8);
-        return listadoProductos;
-    }
-
     private void cargarAdapter(){
         if(componenteListaCompras != null){
             adapter = new CustomArrayAdapterNuevaLista(this, componenteListaCompras, this);
@@ -283,9 +257,8 @@ public class NuevaListaActivity extends AppCompatActivity {
     }
 
     /**
-     * The type Agregar escasez.
+     * Clase con el AsyncTask para comprobar si hay modificaciones el el SP para añadir esos elementos a la lista
      */
-//Creamos un AsyncTask que esté comprobando si hay modificaciones el el SP para añadir esos elementos a la lista
     public class agregarEscasez extends AsyncTask<Object, Void, Void> {
         private GestionSharedP gsp;//Para trabajar con el SP
         private CustomArrayAdapterNuevaLista adapter;//Para trabajar con el adaptador de la clase

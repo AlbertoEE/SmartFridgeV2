@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment para la parte de sugerir receta
  */
 public class MainSr extends Fragment {
     private ParallaxRecyclerView recyclerView;
@@ -47,7 +47,7 @@ public class MainSr extends Fragment {
     private Intent intent;//Para abrir los detalles
 
     /**
-     * Instantiates a new Main sr.
+     * Constructor
      */
     public MainSr() {
         // Required empty public constructor
@@ -103,9 +103,9 @@ public class MainSr extends Fragment {
     }
 
     /**
-     * Crear adapter.
+     * Clase para crear el adapter
      *
-     * @param recetas the recetas
+     * @param recetas listado de las recetas a mostrar
      */
     public void crearAdapter(ArrayList<Receta> recetas){
         this.recetas = recetas;
@@ -115,15 +115,15 @@ public class MainSr extends Fragment {
     }
 
     /**
-     * The type Mostrar recetas.
+     * Clase con el AsyncTask para recoger todas las recetas de la bbdd y mostrarlas
      */
     public class mostrarRecetas extends AsyncTask<Void, Void, ArrayList<Receta>>{
         private MainSr mainSr;
 
         /**
-         * Instantiates a new Mostrar recetas.
+         * Constructor
          *
-         * @param mainSr the main sr
+         * @param mainSr Fragment
          */
         public mostrarRecetas(MainSr mainSr){
             this.mainSr = mainSr;
@@ -133,7 +133,6 @@ public class MainSr extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //customDialogProgressBar.showDialogOndas();
         }
 
         @Override
@@ -204,12 +203,11 @@ public class MainSr extends Fragment {
     }
 
     /**
-     * Receta aleatoria receta.
+     * Método para coger una menu_receta aleatoria de la bbdd
      *
-     * @param array the array
-     * @return the receta
+     * @param array Lista con todas las rectas
+     * @return receta seleccionada aleatoriamente
      */
-//Método para coger una menu_receta aleatoria de la bbdd
     public Receta recetaAleatoria(ArrayList<Receta> array){
         //Miramos el número de elementos que tiene el array para sacar el número aleatorio
         int longitud = array.size();

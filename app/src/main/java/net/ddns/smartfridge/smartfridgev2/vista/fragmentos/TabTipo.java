@@ -29,13 +29,11 @@ import java.util.ArrayList;
 
 
 /**
- * The type Tab tipo.
+ * Fragment para filtrar por tipo de receta
  */
 public class TabTipo extends Fragment {
     private static MySQLHelper myHelper;//Para trabajar con la bbdd de MySQL
     private static ArrayList<Receta> recetas;//Para almacenar las recetas recogidas de la bbdd
-    //private static ArrayList<Receta> recetasTipo;//Para almacenar las recetas recogidas de la bbdd
-    //private static ArrayList<Bitmap> imagenesTipo;//Para almacenar las imágenes de las recetas de la bbdd
     private RecyclerView recyclerView;
     private CustomRecyclerViewAdapterFiltroTipos adapter;
     private Intent intent;
@@ -45,8 +43,6 @@ public class TabTipo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recetas = new ArrayList<Receta>();
-        //recetasTipo = new ArrayList<Receta>();
-        //imagenesTipo = new ArrayList<>();
         new SacarTipos().execute();
     }
 
@@ -62,7 +58,7 @@ public class TabTipo extends Fragment {
     }
 
     /**
-     * The type Filtrar por tipo.
+     * Clase para sacar las recetas en función del tipo seleccionado
      */
     public class FiltrarPorTipo extends AsyncTask<Integer, Void, ArrayList<Receta>>{
 
@@ -112,7 +108,7 @@ public class TabTipo extends Fragment {
     }
 
     /**
-     * The type Sacar tipos.
+     * Clase interna con el AsyncTask para sacar todos los tipos de recetas de la bbdd
      */
     public static class SacarTipos extends AsyncTask<Void, Void, ArrayList<Tipo>>{
         private ArrayList<Tipo> tipos;//Para recoger los resultados de la consulta en el AsyncTask
@@ -152,19 +148,11 @@ public class TabTipo extends Fragment {
     }
 
     /**
-     * Iniciar async.
+     * Método para iniciar el AsyncTask para sacar los tipos
      *
      * @param position the position
      */
     public void iniciarAsync(int position){
         new FiltrarPorTipo().execute(position + 1);
     }
-/*
-    public static ArrayList<Receta> getRecetasTipo() {
-        return recetasTipo;
-    }
-
-    public static ArrayList<Bitmap> getImagenesTipo() {
-        return imagenesTipo;
-    }*/
 }

@@ -1,6 +1,5 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades;
 
-import android.app.ActionBar;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -22,21 +21,18 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
-//import net.ddns.smartfridge.smartfridgev2.modelo.servicios.RecetasIntentService;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainCa;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainClc;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainPm;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.MainSr;
 
 /**
- * The type Initial activity.
+ * Activity inicial de la aplicación
  */
 public class InitialActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private Intent intentServicio;//Para iniciar el IntentService de caducidad y escasez
-    //private Intent intentRecetas;//Para iniciar el IntentService de recetas
     private static final String NOMBRE_SERVICIO= "net.ddns.smartfridge.smartfridgev2.ComprobarCaducidadIntentService";
     private static SharedPreferences sp;//Para recoger el SP de la app
     //Atributos de la clase que hacen referencia a los fragmentos para llamar a los metodos de los tutoriales de cada fragmento
@@ -109,7 +105,7 @@ public class InitialActivity extends AppCompatActivity {
         sp = getPreferences(Context.MODE_PRIVATE);
         //Ponemos el tutorial para el inicio
         Log.d("lñlñ", "onCreate: " + mainCa);
-        //mostrarTutorial();
+        mostrarTutorial();
     }
 
     @Override
@@ -117,7 +113,10 @@ public class InitialActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    //Método para comprobar si ya está iniciado el servicio
+    /**
+     * Método para comprobar si ya está iniciado el servicio
+     * @return true o false en función de si se está ejecutando el service
+     */
     private boolean servicioEjecutando() {
         //Cogemos los servicios activos
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
@@ -141,6 +140,9 @@ public class InitialActivity extends AppCompatActivity {
         return sp;
     }
 
+    /**
+     * Método para mostrar el tutorial al usuario
+     */
     private void mostrarTutorial(){
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
 
@@ -149,13 +151,6 @@ public class InitialActivity extends AppCompatActivity {
         run = tutorialShowcases.getBoolean("run?", true);
 
         if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
-
-            /*Declaramos todas las variables que vamos a usar
-            final ViewTarget b1 = new ViewTarget(R.id.ca, this);
-            final ViewTarget b2 = new ViewTarget(R.id.pm, this);
-            final ViewTarget b3 = new ViewTarget(R.id.sr , this);
-            final ViewTarget b4 = new ViewTarget(R.id.clc , this);*/
-
             //Creamos un nuevo LayoutParms para cambiar el botón de posición
             final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -204,10 +199,10 @@ public class InitialActivity extends AppCompatActivity {
                             //mainCa.mostrarTutorialCa(vista);
                             break;
                         case 5:
-                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("run?", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.apply();
                             break;
                     }
                 }

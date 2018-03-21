@@ -34,7 +34,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The type Mi nevera activity.
+ * Activity donde se muestran todos los alimentos almacenados en la bbdd interna, llamada MiNevera
  */
 public class MiNeveraActivity extends AppCompatActivity {
     private AlimentoDB alimentoDB;
@@ -57,9 +57,12 @@ public class MiNeveraActivity extends AppCompatActivity {
         cursor = alimentoDB.getAlimentos();
 
         iniciarRecyclerView();
-        //mostrarTutorial();
+        mostrarTutorial();
     }
 
+    /**
+     * Método para iniciar el RecyclerView que muestra los alimentos
+     */
     private void iniciarRecyclerView() {
         rvMiNevera = (RecyclerView) findViewById(R.id.rvMiNevera);
         layoutManager = new GridLayoutManager(this, 2);
@@ -71,40 +74,10 @@ public class MiNeveraActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets imagen detalles.
+     * Método para inciar un activity mostrando los detalles de la fila que se haya pulsado
      *
-     * @param bitmaps the bitmaps
-     */
-    public static void setImagenDetalles(ArrayList<Bitmap> bitmaps) {
-        imagenesDetalles = bitmaps;
-    }
-
-    /**
-     * Iniciardetalles.
-     *
-     * @param alimento the alimento
-     */
-    public void iniciardetalles(Alimento alimento) {
-        //this.imagenDetalles = alimento.getImagen();
-        alimento = new Alimento(
-                alimento.getId(),
-                alimento.getNombreAlimento(),
-                alimento.getCantidad(),
-                alimento.getDias_caducidad(),
-                alimento.getFecha_registro(),
-                alimento.getFecha_caducidad(),
-                null);
-        Intent intent = new Intent(this, DetallesActivity.class);
-        intent.putExtra("Alimento", alimento);
-        intent.putExtra("ClasePadre", "MiNeveraActivity");
-        startActivityForResult(intent, DETALLES_ACTIVITY);
-    }
-
-    /**
-     * Iniciardetalles.
-     *
-     * @param alimentos the alimentos
-     * @param position  the position
+     * @param alimentos Lista con los alimentos a mostrar
+     * @param position  posicion del elemento pulsado
      */
     public void iniciardetalles(ArrayList<Alimento> alimentos, int position) {
         ArrayList<Alimento> alimentosSinFoto = new ArrayList<>();
@@ -202,6 +175,10 @@ public class MiNeveraActivity extends AppCompatActivity {
         super.onDestroy();
         alimentoDB.cerrarConexion();
     }
+
+    /**
+     * Método para mostrar el tutorial al usuario
+     */
     private void mostrarTutorial(){
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
         boolean run;
@@ -239,10 +216,10 @@ public class MiNeveraActivity extends AppCompatActivity {
                     contadorS++;
                     switch (contadorS) {
                         case 1:
-                           /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                           //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("runMiNevera", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.apply();
                             s.hide();
                             break;
                     }

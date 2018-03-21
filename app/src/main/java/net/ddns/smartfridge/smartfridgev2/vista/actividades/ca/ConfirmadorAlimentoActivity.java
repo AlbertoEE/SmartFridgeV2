@@ -21,7 +21,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 import java.sql.SQLException;
 
 /**
- * The type Confirmar alimento activity.
+ * Activity donde se van a confirmar que los datos obtenidos de las consultas del código de barras o de Google Cloud son los esperados
  */
 public class ConfirmadorAlimentoActivity extends AppCompatActivity {
     private Intent escaner;//Para recoger el Intent
@@ -67,9 +67,8 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * The type Verificador.
+     * Clase para hacer la consulta a la bbdd y ver si los datos obtenidos son los esperados
      */
-//Creamos el AsyncTask para hacer la consulta a la bbdd
     public class Verificador extends AsyncTask<String,Void, Alimento_Codigo> {
         @Override
         protected void onPreExecute() {
@@ -79,7 +78,6 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
 
         @Override
         protected Alimento_Codigo doInBackground(String... cod_barras) {
-            //Alimento_Codigo al;
             myHelper = new MySQLHelper();
             try {
                 myHelper.abrirConexion();
@@ -127,22 +125,20 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
     }
 
     /**
-     * Volver identificar alimento.
+     * Método que muestra un dialog si el usuario selecciona que el alimento mostrado no es el esperado
      *
-     * @param v the v
+     * @param v Vista para programar el onClick del boton de NO
      */
-//Programamos el botón de NO
     public void volverIdentificarAlimento (View v){
         //Toast.makeText(this, "nombre: " + al.getNomAlimento(), Toast.LENGTH_SHORT).show();
         dialogos.dialogAlimentoNoEncontrado();
     }
 
     /**
-     * Alimento identificado.
+     * Método que muestra un dialog si el usuario selecciona que el alimento mostrado es el esperado
      *
-     * @param v the v
+     * @param v Vista para programar el onClick del boton de SI
      */
-//Programamos el botón de SI
     public void alimentoIdentificado (View v){
         dialogos.dialogAlimentoEncontrado();
     }

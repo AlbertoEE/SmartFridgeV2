@@ -122,7 +122,6 @@ public class InitialActivity extends AppCompatActivity {
     private void checkInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show();
         if (null == ni)
             Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show();
         else {

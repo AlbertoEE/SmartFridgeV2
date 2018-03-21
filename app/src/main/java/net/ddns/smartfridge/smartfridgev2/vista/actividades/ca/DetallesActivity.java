@@ -57,7 +57,7 @@ public class DetallesActivity extends FragmentActivity {
         viewPager.setAdapter(pageAdapter);
 
         viewPager.setCurrentItem(posicion);
-        mostrarTutorial();
+        //mostrarTutorial();
     }
 
     /**

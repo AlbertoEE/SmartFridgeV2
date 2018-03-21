@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.support.design.widget.Snackbar;
 import android.util.Log;

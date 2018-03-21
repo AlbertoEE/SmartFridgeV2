@@ -86,6 +86,7 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         super.onCreate(savedInstanceState);
+        ConfirmadorAlimentoActivity.setAlimento(null);
         setContentView(R.layout.activity_identificar_alimento);
         AlimentoDB alimentoDB = new AlimentoDB(this);
         dialogos = new Dialogos(this, this);
@@ -130,9 +131,6 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
             //Si viene del api vision
         } else {
             if (resultCode == RESULT_OK) {
-//                Bundle extras = data.getExtras();
-             //   imagenCamara = (Bitmap) extras.get(KEY);
-
                 File file = new File(Environment.getExternalStorageDirectory().getPath(), "photo.jpg");
                 Uri uri = Uri.fromFile(file);
                 Bitmap bitmap;

@@ -148,6 +148,9 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
     public static Alimento_Codigo getAlimento() {
         return al;
     }
+    public static void setAlimento(Alimento_Codigo all){
+        al = all;
+    }
 
     /**
      * Gets imagen cloud.

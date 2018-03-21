@@ -201,12 +201,12 @@ public class MiNeveraActivity extends AppCompatActivity {
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
             s.overrideButtonClick(new View.OnClickListener() {
                 int contadorS = 0;
-                Target targetOrdenar = new Target() {
+                /*Target targetOrdenar = new Target() {
                     @Override
                     public Point getPoint() {
                         return new ViewTarget(searchView.findViewById(R.id.menuSort)).getPoint();
                     }
-                };
+                };*/
                 @Override
                 public void onClick(View v) {
                     contadorS++;

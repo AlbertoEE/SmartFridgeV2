@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +35,9 @@ import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,15 +113,44 @@ public class CaducidadAlimento extends AppCompatActivity {
             //Si venimos de confirmar alimento debemos ver si venimos desde el scaner o desde el Cloud Vision
             //Intentamos coger el objeto
             ac = ConfirmadorAlimentoActivity.getAlimento();
+            Log.d("NULL_MIS_HUEVOS", "comprobarPadre: " + ac);
             if (ac == null){
                 //Si es null, venimos del cloud vision
-                imagenAlimento = ConfirmadorAlimentoActivity.getImagenCloud();
+
+                File file = new File(Environment.getExternalStorageDirectory().getPath(), "photo.jpg");
+                Uri uri = Uri.fromFile(file);
+                Bitmap bitmap;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    bitmap = crupAndScale(bitmap, 300);
+                    imagenAlimento = bitmap;
+                    //Llamamos al metodo cargarImagen y le pasamos la uri
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Log.d("jjjjj", "onActivityResult: " + "hoaalala2");
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Log.d("jjjjj", "onActivityResult: " + "hoaalala3");
+                }
+
                 dd.setImageBitmap(imagenAlimento);
                 nombreAlimento = ConfirmadorAlimentoActivity.getNombreCloud();
             } else {
                 dd.setImageBitmap(ac.getImagen());
             }
         }
+    }
+
+    public static  Bitmap crupAndScale (Bitmap source,int scale){
+        int factor = source.getHeight() <= source.getWidth() ? source.getHeight(): source.getWidth();
+        int longer = source.getHeight() >= source.getWidth() ? source.getHeight(): source.getWidth();
+        int x = source.getHeight() >= source.getWidth() ?0:(longer-factor)/2;
+        int y = source.getHeight() <= source.getWidth() ?0:(longer-factor)/2;
+        source = Bitmap.createBitmap(source, x, y, factor, factor);
+        source = Bitmap.createScaledBitmap(source, scale, scale, false);
+        return source;
     }
 
     /**

@@ -73,12 +73,12 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
-        new ShowcaseView.Builder(getActivity())
+        /*new ShowcaseView.Builder(getActivity())
                 .setTarget( new ViewTarget( ((View) v.findViewById(R.id.ibBuscar)) ) )
                 .setContentTitle(getString(R.string.buscar))
                 .setContentText(getString(R.string.buscar_t))
                 .hideOnTouchOutside()
-                .build();
+                .build();*/
         llChips = (LinearLayout) v.findViewById(R.id.llChips);
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);
@@ -86,7 +86,6 @@ public class TabAlimento extends Fragment {
         {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
-
                 switch(checkedId) {
                     case R.id.rbTenga:
                         Log.d("check", "boton pulsado Tenga");
@@ -288,7 +287,6 @@ public class TabAlimento extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
-            Toast.makeText(getContext(), getString(R.string.no_receta), Toast.LENGTH_SHORT).show();
             if (recetas !=null) {
                 ArrayList<Bitmap> imagenes = new ArrayList<>();
                 for (Receta item : recetas) {
@@ -300,8 +298,6 @@ public class TabAlimento extends Fragment {
                 intent.putExtra(getString(R.string.filtro_i), imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
-            /*    Dialogos d = new Dialogos(getContext());
-                d.dialogoNoReceta();*/
                 Toast.makeText(getContext(), getString(R.string.no_receta), Toast.LENGTH_SHORT).show();
             }
             try {

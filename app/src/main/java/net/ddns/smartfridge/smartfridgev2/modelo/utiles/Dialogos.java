@@ -32,11 +32,11 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.Alimento_NuevoDB;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmadorAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificadorAlimentoActivity;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.TodasListasActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
@@ -50,15 +50,11 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class Dialogos {
     private Context contexto;//El contexto del dialog
     private static Intent intent;//Para llamar a otras Activitys
-    private Alimento acod;//Para crear un objeto que sea un alimento
-    //private AlertDialog.Builder builder;//El builder para crear los dialogs
     private static Activity clase;//Para el constructor necesitamos indicar el activity donde se va a ejecutar el dialog
     private static TabTipo fragment;//Para el constructor necesitamos indicar el fragment donde se va a ejecutar el dialog
     private static final String DIA = " día";//Cte para el mensaje del dialog
     private static final String DIAS = " días";//Cte para el mensaje del dialog
     private static AlimentoDB alimentoDB;//Para usar los métodos de la bbdd de los alimentos de Mi Nevera
-    private static Bitmap imagenDetalles;//Para recoger el bitmap de la bbdd
-    private ArrayList<String>listadoAlimentosEscasez = new ArrayList<String>();//Para almacenar todos los alimentos que tienen escasez
     private int idAlimento;//Para guardar el id recogido de la bbdd
     private Alimento_Nuevo aliNuevo;//Para crear un objeto alimento nuevo y guardarlo en la bbdd
     private ComponenteListaCompra componente;//Para crear un componente nuevo de la lista para añadirlo a esta
@@ -100,33 +96,7 @@ public class Dialogos {
     /**
      * Método que muestra el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
      */
-//Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
     public void dialogAlimentoNoEncontrado(){
-        /*
-        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
-        //Mensaje del Alert
-        builder.setMessage("¡Vaya! El producto no es correcto.\nPor favor, vuelve a intentar localizar tu producto.");
-        //Título
-        builder.setTitle("Ups...");
-        //Añadimos los botones
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                intent = new Intent(contexto, IdentificadorAlimentoActivity.class);
-                contexto.startActivity(intent);
-                ConfirmadorAlimentoActivity ca = (ConfirmadorAlimentoActivity) clase;
-                //Finalizamos el activity
-                ca.finishAffinity();
-            }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //No hacemos nada
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();*/
         new FancyGifDialog.Builder(clase)
                 //Ponemos el título
                 .setTitle("Ups...")
@@ -469,7 +439,6 @@ public class Dialogos {
                             alimentoDB = new AlimentoDB(contexto);
                             alimentoDB.borrarAlimento(id);
                             Toast.makeText(contexto, "Elemento eliminado", Toast.LENGTH_SHORT).show();
-                            //dialogAnadirLista(contexto, foto, nombre);
                             adapter.removePage(posicion);
                             alimentoDB.cerrarConexion();
                             break;
@@ -480,48 +449,6 @@ public class Dialogos {
             }
         });
     }
-
-    /**
-     * Método que muestra un dialog cuando se van a eliminar todas las uds de un alimento
-     *
-     * @param contexto contexto donde se va a mostrar
-     * @param foto     Bit
-     * @param nombre   the nombre
-
-//Dialog para cuando se van a eliminar todas las uds de un alimento
-    public static void dialogAnadirLista(final Context contexto, Bitmap foto, String nombre){
-        new FancyGifDialog.Builder(clase)
-                //Ponemos el título
-                .setTitle("Agregar a MiLista")
-                //Ponemos el mensaje
-                .setMessage("¿Quieres aprovechar y agregar este producto a MiLista?")
-                //Asignamos el botón de negativo
-                .setNegativeBtnText("No, gracias")
-                //Asignamos el color de fondo del boton positivo
-                .setPositiveBtnBackground("#1CACCC")
-                .setPositiveBtnText("Sí, por favor")
-                .setNegativeBtnBackground("#FFA9A7A8")
-                //Asignamos el gif
-                .setGifResource(R.drawable.gif6)
-                .isCancellable(true)
-                //Añadimos los listener
-                .OnPositiveClicked(new FancyGifDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        //Llamamos al método que agrega el elemento en la lista de la compra
-                        //agregarMiLista(foto, nombre);
-                        Toast.makeText(contexto, "Se ha agregado el producto a MiLista", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .OnNegativeClicked(new FancyGifDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        //No hacemos nada
-                    }
-                })
-                .build();
-    }*/
-
     /**
      * Método que va a enviar la notiviación cuando haya un alimento caducado
      *
@@ -534,21 +461,6 @@ public class Dialogos {
         intent = new Intent(contexto, DetallesActivity.class);
         intent.putExtra("Alimento", alimento);
         intent.putExtra("posicion", posicion);
-        /*int id = alimento.getId();
-        String nombreAlimento = alimento.getNombreAlimento();
-        int cantidad = alimento.getCantidad();
-        String fecha_registro = alimento.getFecha_registro();
-        String fecha_caducidad = alimento.getFecha_caducidad();
-        int dias_caducidad = alimento.getDias_caducidad();
-        imagen = alimento.getImagen();
-        i.putExtra("id", id);
-        i.putExtra("nombre", nombreAlimento);
-        i.putExtra("cantidad", cantidad);
-        i.putExtra("fecha_registro", fecha_registro);
-        i.putExtra("fecha_caducidad", fecha_caducidad);
-        i.putExtra("dias_caducidad", dias_caducidad);
-        i.putExtra("imagen", imagen);
-        i.putExtra("alimento", alimento);*/
         intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
@@ -577,18 +489,11 @@ public class Dialogos {
 //Método para enviar la notificación cuando falten menos de dos días para la caducidad
     public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto, int posicion){
         //Completar cuando esté creado el BuscarReceta por alimento
-
-        //intent = new Intent (contexto, BuscarRecetaActivity.class);
-        //intent.putExtra("Alimento", alimento);
-        //intent.putExtra("posicion", posicion);
-        //intent.putExtra("ClasePadre", "Dialogos");
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Va a caducar...");
         nb.setContentText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
                 " Ver los detalles.");
-       // nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
-                //intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
         //Permitimos que se pueda expandir la notificación
         Notification notificacion = new Notification.BigTextStyle(nb).bigText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
@@ -610,15 +515,7 @@ public class Dialogos {
     public void enviarNotificacionProximaEscasez(Alimento alimento, Context contexto, int posicion){
         //Creamos el objeto componente con todos los datos
         componente = new ComponenteListaCompra(alimento.getId(), alimento.getNombreAlimento(),ComponenteListaCompra.TIPOS[0]);
-
-        //intent = new Intent (contexto, AñadirAListaActivity.class);
-        //intent.putExtra("Alimento", alimento);
-        //intent.putExtra("posicion", posicion);
-        //intent.putExtra("ClasePadre", "Dialogos");
-
-        //listadoAlimentosEscasez.add(alimento.getNombreAlimento());
         intent = new Intent(contexto, DialogActivity.class);
-        //intent.putExtra("Alimento", alimento.getNombreAlimento());
         intent.putExtra("Alimento", componente);
         Log.d("Alimento", componente.getNombreElemento());
         Notification.Builder nb = new Notification.Builder(contexto);
@@ -654,8 +551,6 @@ public class Dialogos {
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //intent = new Intent(contexto, IdentificadorAlimentoActivity.class);
-                //contexto.startActivity(intent);
                 DialogActivity ca = (DialogActivity) clase;
                 //Finalizamos el activity
                 ca.finishAffinity();
@@ -718,31 +613,6 @@ public class Dialogos {
 
         Log.d("tengen", "dialogoModificarBorrar: " + componenteReturn[0]);
     }
-
-    /**
-     * Método que mostrará un dialog cuando se vaya a borrar una lista de la compra de las que hay guardadas
-     *
-     * @param clase    Clase sobre la que se va a mostrar
-     * @param position int con la posicion en el adapter
-     */
-/*Dialog que se mostrará cuando no se haya encontrado ninguna menu_receta con los criterios de búsqueda
-    public void dialogoNoReceta(){
-        new FancyGifDialog.Builder(clase)
-                //Ponemos el título
-                .setTitle("¡Vaya, qué pena!")
-                //Ponemos el mensaje
-                .setMessage("No hemos encontrado ninguna menu_receta con esos criterios de búsqueda. Por favor, vuelve a intentarlo")
-                //Asignamos el botón de negativo
-                .setNegativeBtnText("Cancelar")
-                //Asignamos el color de fondo del boton positivo
-                .setPositiveBtnBackground("#1CACCC")
-                .setPositiveBtnText("Aceptar")
-                .setNegativeBtnBackground("#FFA9A7A8")
-                //Asignamos el gif
-                .setGifResource(R.drawable.gif_dk)
-                .isCancellable(true)
-                .build();
-    }*/
     //Dialog que se mostrará cuando se vaya a borrar una lista de la compra de las que hay guardadas
     public void dialogoBorrarLista(final TodasListasActivity clase, final int position){
         new FancyGifDialog.Builder(clase)
@@ -776,41 +646,4 @@ public class Dialogos {
                 })
                 .build();
     }
-    /*Dialog que se mostrará cuando se vaya a filtrar por algún tipo de menu_receta
-    public void dialogoFiltroTipo(final int tipo){
-        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
-        //Mensaje del Alert
-        builder.setMessage("Aplicando filtro seleccionado...");
-        //Título
-        builder.setTitle("Filtrando menu_receta");
-        //Añadimos los botones
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Hacemos la consulta
-                Log.d("dialogo", "pulsado aceptar");
-                Log.d("dialogo", "tipo: " + tipo);
-                new TabTipo.FiltrarPorTipo().execute(tipo);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent();
-                intent.putExtra("filtro", TabTipo.getRecetasTipo());
-                Log.d("dialogo", "tamaño: " + TabTipo.getRecetasTipo().size());
-                intent.putExtra("filtroImagenes" , fragment.getImagenesTipo());
-                clase.setResult(clase.RESULT_OK, intent);
-                clase.finish();
-            }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Volvemos a la pantalla para que el usuario pueda seleccionar otro tipo
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }*/
 }

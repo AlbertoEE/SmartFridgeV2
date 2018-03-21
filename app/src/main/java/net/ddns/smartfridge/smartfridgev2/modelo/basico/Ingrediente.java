@@ -74,30 +74,12 @@ public class Ingrediente {
     }
 
     /**
-     * Sets id ingrediente.
-     *
-     * @param idIngrediente the id ingrediente
-     */
-    public void setIdIngrediente(int idIngrediente) {
-        this.idIngrediente = idIngrediente;
-    }
-
-    /**
      * Gets nombre ingrediente.
      *
      * @return the nombre ingrediente
      */
     public String getNombreIngrediente() {
         return nombreIngrediente;
-    }
-
-    /**
-     * Sets nombre ingrediente.
-     *
-     * @param nombreIngrediente the nombre ingrediente
-     */
-    public void setNombreIngrediente(String nombreIngrediente) {
-        this.nombreIngrediente = nombreIngrediente;
     }
 
     /**
@@ -109,30 +91,4 @@ public class Ingrediente {
         return imagenIngrediente;
     }
 
-    /**
-     * Sets imagen ingrediente.
-     *
-     * @param imagenIngrediente the imagen ingrediente
-     */
-    public void setImagenIngrediente(Bitmap imagenIngrediente) {
-        this.imagenIngrediente = imagenIngrediente;
-    }
-
-    /**
-     * Gets clasificacion compra.
-     *
-     * @return the clasificacion compra
-     */
-    public String getClasificacion_compra() {
-        return clasificacion_compra;
-    }
-
-    /**
-     * Sets clasificacion compra.
-     *
-     * @param clasificacion_compra the clasificacion compra
-     */
-    public void setClasificacion_compra(String clasificacion_compra) {
-        this.clasificacion_compra = clasificacion_compra;
-    }
 }

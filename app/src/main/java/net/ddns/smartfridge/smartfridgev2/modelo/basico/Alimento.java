@@ -3,7 +3,6 @@ package net.ddns.smartfridge.smartfridgev2.modelo.basico;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 
 /**
  * Clase que representa un alimento de la bbdd de sqlite
@@ -121,15 +120,6 @@ public class Alimento implements Serializable {
     }
 
     /**
-     * Sets nombre alimento.
-     *
-     * @param nombreAlimento the nombre alimento
-     */
-    public void setNombreAlimento(String nombreAlimento) {
-        this.nombreAlimento = nombreAlimento;
-    }
-
-    /**
      * Sets cantidad.
      *
      * @param cantidad the cantidad
@@ -148,15 +138,6 @@ public class Alimento implements Serializable {
     }
 
     /**
-     * Sets fecha registro.
-     *
-     * @param fecha_registro the fecha registro
-     */
-    public void setFecha_registro(String fecha_registro) {
-        this.fecha_registro = fecha_registro;
-    }
-
-    /**
      * Gets fecha caducidad.
      *
      * @return the fecha caducidad
@@ -166,30 +147,12 @@ public class Alimento implements Serializable {
     }
 
     /**
-     * Sets fecha caducidad.
-     *
-     * @param fecha_caducidad the fecha caducidad
-     */
-    public void setFecha_caducidad(String fecha_caducidad) {
-        this.fecha_caducidad = fecha_caducidad;
-    }
-
-    /**
      * Gets dias caducidad.
      *
      * @return the dias caducidad
      */
     public int getDias_caducidad() {
         return dias_caducidad;
-    }
-
-    /**
-     * Sets dias caducidad.
-     *
-     * @param dias_caducidad the dias caducidad
-     */
-    public void setDias_caducidad(int dias_caducidad) {
-        this.dias_caducidad = dias_caducidad;
     }
 
     /**

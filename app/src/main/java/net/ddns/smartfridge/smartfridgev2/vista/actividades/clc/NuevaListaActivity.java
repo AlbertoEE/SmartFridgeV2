@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +51,7 @@ public class NuevaListaActivity extends AppCompatActivity {
     private ArrayList<ComponenteListaCompra> listadoProductosExternos;//ArrayList para almacenar todos los productos que vienen de la parte externa
     private static ArrayList<ListaCompra> todasLasListas = new ArrayList<ListaCompra>();//Array con todas las listas de la compra que hay en la bbdd
     private GestionFicheroLista gfl;//Para almacenar las listas en un fichero interno
+    private static final int SLEEP = 1500;//Milisegundos para detener el AsyncTask
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,6 @@ public class NuevaListaActivity extends AppCompatActivity {
         gfl = new GestionFicheroLista(this);
         listaCompraDB = new ListaCompraDB(this);
         listadoProductosExternos = new ArrayList<>();
-        //SharedPreferences mysp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         cargarAdapter();
         //Fijamos el contexto del activity
         context = this;
@@ -73,8 +73,7 @@ public class NuevaListaActivity extends AppCompatActivity {
             //Mostramos la lista indicándo que hay elementos y cuáles quiere añadir a la lista
             alimentosLeidosSP = gsp.recogerValores();
             intent = new Intent(this, SugerenciaDeAlimentoActivity.class);
-            //intent.putStringArrayListExtra("AlimentosSugeridos", alimentosLeidosSP);
-            intent.putExtra("AlimentosSugeridos", alimentosLeidosSP);
+            intent.putExtra(getString(R.string.ali_sug), alimentosLeidosSP);
             startActivityForResult(intent, REQUEST_CODE_ALIMENTOS_SUGERIDOS);
             gsp.borrarSP();
         }
@@ -91,15 +90,15 @@ public class NuevaListaActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Cuando pulsemos el botón, nos da la opción de añadir alimentos de manera manual
                     //Mensaje del Alert
-                    builder.setMessage("Introduzca el elemento que quiere añadir a la lista:");
+                    builder.setMessage(getString(R.string.agregar_lista));
                     //Título
-                    builder.setTitle("Añadir manualmente");
+                    builder.setTitle(getString(R.string.agregar_manual));
                     //Añadimos el layout que hemos creado
                     //builder.setView(inflater.inflate(R.layout.dialognewfood, null));
                     final EditText input = new EditText(context);
                     builder.setView(input);
                     //Añadimos los botones
-                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getString(R.string.aceptar), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //Asignamos el valor introducido a la variable
@@ -121,7 +120,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                             Log.d("alimento", "alimento: " + alimentoNuevo + ", id: " + id_alimento_manual);
                         }
                     });
-                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //No hacemos nada
@@ -171,10 +170,9 @@ public class NuevaListaActivity extends AppCompatActivity {
                 Log.d("guardarLista", "id: " + id);
                 insertarComponentesLista(listadoProductos, id);
                 listaNueva.setId(id);
-                //todasLasListas.add(listaNueva);
                 //Guardamos todas las listas que se generan en un fichero interno de la app
                 gfl.escribirLista(listaNueva);
-                Toast.makeText(context, "Se ha guardado una nueva lista con fecha " + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.lista_guardada) + fecha.fechaActual(), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -194,7 +192,6 @@ public class NuevaListaActivity extends AppCompatActivity {
         //Recorremos el ArrayList
         for (ComponenteListaCompra c : a){
             tipo = c.getTipo();
-            Log.d("tipo", "Tipo: " + tipo);
             switch (tipo){
                 case 1:
                     listaCompraDB.insertComponenteInterno(c, idLista);
@@ -220,11 +217,7 @@ public class NuevaListaActivity extends AppCompatActivity {
         } else {
             adapter = new CustomArrayAdapterNuevaLista(this, new ArrayList<ComponenteListaCompra>(), this);
         }
-
-        //Log.d("elputo", "cargarAdapter: " + crearArray());
-        Log.d("elputo", "cargarAdapter: " + adapter);
         listView = (ListView)findViewById(R.id.lvNuevaLista);
-        Log.d("elputo", "cargarAdapter: " + listView);
         listView.setAdapter(adapter);
     }
 
@@ -237,31 +230,14 @@ public class NuevaListaActivity extends AppCompatActivity {
             cargarAdapter();
         } else if (requestCode == REQUEST_CODE_REVISTA && resultCode == RESULT_OK){
             if (listadoProductosExternos!=null) {
+                listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
+                adapter.addProductosVarios(listadoProductosExternos);
                 if(data.getExtras() != null){
                     listadoProductosExternos = (ArrayList<ComponenteListaCompra>) data.getExtras().getSerializable("AlimentosSeleccionados");
                     adapter.addProductosVarios(listadoProductosExternos);
                 }
-                Log.d("hola", "longitud externo: " + listadoProductosExternos.size());
             }
         }
-    }
-
-    /**
-     * Gets todas las listas.
-     *
-     * @return the todas las listas
-     */
-    public static ArrayList<ListaCompra> getTodasLasListas() {
-        return todasLasListas;
-    }
-
-    /**
-     * Sets todas las listas.
-     *
-     * @param todasLasListas the todas las listas
-     */
-    public static void setTodasLasListas(ArrayList<ListaCompra> todasLasListas) {
-        todasLasListas = todasLasListas;
     }
 
     /**
@@ -293,7 +269,7 @@ public class NuevaListaActivity extends AppCompatActivity {
                 }
                 try {
                     //Hacemos un sleep para que no esté continuament haciendo accesos al SP
-                    Thread.sleep(1500);
+                    Thread.sleep(SLEEP);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -3,8 +3,8 @@ package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +36,7 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
     private static Bitmap imagenCloud;//Para recuperar la imagen del intent cuando viene del Cloud Vision
     private static String nombreCloud;//Para poner el nombre del alimento identificado
     private Dialogos dialogos;
+    private static final int SLEEP =1000;//Tiempo en miliseguntos para el sleep del AyncTask
 
 
     @Override
@@ -43,22 +44,20 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         escaner = getIntent();
-        //TextView t = (TextView)findViewById(R.id.tvCloud) ;
         ProgressBar progressBar = findViewById(R.id.spin_kit);
-        //Log.d("NOFUNCIONA", "onCreate: " + progressBar);
         customDialogProgressBar = new CustomDialogProgressBar(this);
         dialogos = new Dialogos(this, this);
         //Comprobamos el activity desde el que viene
-        if(escaner.getStringExtra("ClasePadre").equals("IdentificadorAlimentoActivity")){
+        if(escaner.getStringExtra(getString(R.string.clasePadre)).equals(getString(R.string.identificador))){
             setContentView(R.layout.activity_confirmar_alimento);
             imagen_alimento = (ImageView)findViewById(R.id.ivProducto_ConfirmarAlimento);
             texto_alimento = (TextView)findViewById(R.id.tvCloud);
-            imagenCloud = (Bitmap) escaner.getExtras().get("imagenCloud");
-            nombreCloud = escaner.getStringExtra("nombreCloud");
+            imagenCloud = (Bitmap) escaner.getExtras().get(getString(R.string.img_Cl));
+            nombreCloud = escaner.getStringExtra(getString(R.string.nom_Cl));
             texto_alimento.setText(nombreCloud);
             imagen_alimento.setImageBitmap(imagenCloud);
-        } else if(escaner.getStringExtra("ClasePadre").equals("EscanerActivity")){
-            String s = escaner.getStringExtra("string");
+        } else if(escaner.getStringExtra(getString(R.string.clasePadre)).equals(getString(R.string.escaner))){
+            String s = escaner.getStringExtra(getString(R.string.string));
             cod_barrras = escaner.getStringExtra(EscanerActivity.TAG_CODIGO);
             formato_codigo = escaner.getStringExtra(EscanerActivity.TAG_TIPO_CODIGO);
             new Verificador().execute(cod_barrras);
@@ -88,7 +87,7 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(SLEEP);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -107,14 +106,12 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
                 texto_alimento.setSelected(true);//Para las animaciones de los textos
             } else {
                 Intent intent = new Intent(getApplicationContext(), IdentificadorAlimentoActivity.class);
-                intent.putExtra("CODIGO_BARRAS", cod_barrras);
-                intent.putExtra("ClasePadre", "ConfirmarAlmientoActivity");
+                intent.putExtra(getString(R.string.cod_barras), cod_barrras);
+                intent.putExtra(getString(R.string.clasePadre), getString(R.string.confirmador));
                 startActivity(intent);
                 Log.d("cod", "codigo 1: " + cod_barrras);
-                //dialogos.dialogNoCodBarras();
                 finishAffinity();
             }
-            //Toast.makeText(getApplicationContext(), "nombre" + al.getNomAlimento(), Toast.LENGTH_LONG).show();h
             try {
                 myHelper.cerrarConexion();
                 customDialogProgressBar.endDialog();
@@ -130,7 +127,6 @@ public class ConfirmadorAlimentoActivity extends AppCompatActivity {
      * @param v Vista para programar el onClick del boton de NO
      */
     public void volverIdentificarAlimento (View v){
-        //Toast.makeText(this, "nombre: " + al.getNomAlimento(), Toast.LENGTH_SHORT).show();
         dialogos.dialogAlimentoNoEncontrado();
     }
 

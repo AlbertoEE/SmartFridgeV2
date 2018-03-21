@@ -23,15 +23,7 @@ public class ListaCompraDB {
     private ArrayList<Integer> ids = new ArrayList<Integer>();//Para almacenar los ids de todas las listas que hay creadas
     private String sentencia;//Para crear todas las sentencias de la bbdd
     private Cursor cursor;//Cursor para recorrer los datos de la bbdd
-    private Cursor cursor3;//Cursor para recorrer los datos de la bbdd
-    private CopyOnWriteArrayList<ComponenteListaCompra> productos = new CopyOnWriteArrayList<ComponenteListaCompra>();//ArrayList para guardar los ítems de la lista de la compra
-    private ListaCompra lc;//Para generar objetos ListaCompra y mostrarlos en la lista
-    private ComponenteListaCompra componenteListaCompra;//Para crear objetos a partir de los datos de la bbdd
-    private ArrayList<Integer> idsTabla = new ArrayList<Integer>();//Para recoger los ids de la tabla
-    private CopyOnWriteArrayList<ComponenteListaCompra>productosM = new CopyOnWriteArrayList<ComponenteListaCompra>();
-    private ArrayList<ComponenteListaCompra>todosLosProductos = new ArrayList<ComponenteListaCompra>();//Para crear la lista con todos los productos
     private String fecha;//Para almacenar la fecha obtenida a partir del id de la lista
-    //private ArrayList<Lista>todosLosProductos2 = new ArrayList<>();
 
     /**
      * Constructor

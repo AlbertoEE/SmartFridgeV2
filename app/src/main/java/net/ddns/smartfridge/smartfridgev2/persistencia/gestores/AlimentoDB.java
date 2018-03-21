@@ -99,7 +99,6 @@ public class AlimentoDB {
         //Creamos la sentencia con la consulta
         String updateUds = "UPDATE " + MiNeveraDB.TABLA_ALIMENTOS + " SET " + MiNeveraDB.CAMPOS_ALIMENTOS[2] + "=" + uds + " WHERE " + MiNeveraDB.CAMPOS_ALIMENTOS[0] + "=" + id;
         sql.execSQL(updateUds);
-        //Log.d("sql", "update: " + updateUds);
     }
 
     /**

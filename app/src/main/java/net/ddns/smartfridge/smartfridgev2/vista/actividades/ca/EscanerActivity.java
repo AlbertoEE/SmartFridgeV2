@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.zxing.Result;
 
+import net.ddns.smartfridge.smartfridgev2.R;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
@@ -52,8 +54,6 @@ public class EscanerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result resultado) {
-        //Toast.makeText(this, resultado.getText(), Toast.LENGTH_SHORT).show();
-        // If you would like to resume scanning, call this method below:
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -66,7 +66,7 @@ public class EscanerActivity extends AppCompatActivity implements ZXingScannerVi
         //Pasamos el código de barras y el formato para comprobar que se encuentra en la bbdd
         confirmar.putExtra(TAG_CODIGO, resultado.getText());
         confirmar.putExtra(TAG_TIPO_CODIGO, resultado.getBarcodeFormat().toString());
-        confirmar.putExtra("ClasePadre", "EscanerActivity");
+        confirmar.putExtra(getString(R.string.clasePadre), getString(R.string.escaner));
         startActivity(confirmar);
         finish();
     }

@@ -21,7 +21,6 @@ import java.util.ArrayList;
  * Activity que muestra una lista con las categorias de clasificación de los alimentos en la bbdd externa para poder añadirlos a la lista
  */
 public class CompraExternaActivity extends AppCompatActivity {
-   //private static final int REQUEST_CODE_ANTERIOR = 5465;//Código de respuesta para el activity que lo llamó
     private static final int REQUEST_CODE_SIGUIENTE = 468;//Código de respuesta para el activity que al que va a llamar, el detalle de cada elemento
     private static final int REQUEST_CODE_CARRO = 834;//Código de respuesta para el activity que al que va a llamar, el carro de la compra
     private static final String[] categorias = {"Verdura", "Carne", "Fruta", "Pescado", "Bebida", "Embutido", "Frutos secos", "Desayuno", "Otros"};//Array con los nombres
@@ -48,7 +47,7 @@ public class CompraExternaActivity extends AppCompatActivity {
         adapter = new CustomRecyclerViewAdapterRevistaMain(this, this);
         recyclerView = findViewById(R.id.rvCompraExterna);
         layoutManager = new GridLayoutManager(this, 2);
-       recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -62,7 +61,7 @@ public class CompraExternaActivity extends AppCompatActivity {
         seleccion = categorias[categoria];
         intent = new Intent(this, CategoriaActivity.class);
         //Le asignamos la categoría
-        intent.putExtra("Categoria", seleccion);
+        intent.putExtra(getString(R.string.categoria), seleccion);
         startActivityForResult(intent, REQUEST_CODE_SIGUIENTE);
     }
 
@@ -77,7 +76,7 @@ public class CompraExternaActivity extends AppCompatActivity {
             // Vemos que el resultado esté correcto
             if (resultCode == RESULT_OK) {
                 //Recogemos los datos del intent y se los asignamos al ArrayList
-                alimentosExternos = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra("result");
+                alimentosExternos = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra(getString(R.string.result));
                 Log.d("componente", "tamaño alimentosExternos: " + alimentosExternos.size());
                 //Comprobamos si hay alguno repetido para enviárselo al activity del carro
                 for(int i=0; i<alimentosExternos.size(); i++){
@@ -92,21 +91,17 @@ public class CompraExternaActivity extends AppCompatActivity {
                     Log.d("componente", "alimento para incorporar a la lista de la compra: " + alimentosExternos.get(i).getNombreElemento());
                 }
                 clasePadre = data.getStringExtra("clasePadre");
-            /*    intent = getIntent();
-                intent.putExtra("Categorias", alimentosExternosTotales);
-                //Devolvemos el ArrayList con el request_code del intent
-                setResult(REQUEST_CODE_ANTERIOR, intent);*/
             }
             //Comprobamos el intent que viene de vuelta del activity DetalleListaActitivity
         } else if(requestCode == REQUEST_CODE_CARRO){
             // Vemos que el resultado esté correcto
             if (resultCode == RESULT_OK) {
                 //Recogemos los datos del intent y se los asignamos al ArrayList
-                alimentosDevueltosCarro = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra("elementosLista");
+                alimentosDevueltosCarro = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra(getString(R.string.ele_lista));
                 for(int i=0; i<alimentosDevueltosCarro.size(); i++){
                     Log.d("vuelta", "alimentos: " + alimentosDevueltosCarro.get(i).getNombreElemento());
                 }
-                clasePadre = data.getStringExtra("clasePadre");
+                clasePadre = data.getStringExtra(getString(R.string.clase_padre_minusculas));
                 Log.d("vuelta", clasePadre);
             }
         }
@@ -133,7 +128,7 @@ public class CompraExternaActivity extends AppCompatActivity {
             case R.id.shoppingCart:
                 //Cuando pulsemos en el carro, se nos mostrará la lista de los alimentos seleccionados para añadir añadir a la lista de la compra
                 intent = new Intent(this, DetalleListaExternaActivity.class);
-                intent.putExtra("componentes", alimentosExternosTotales);
+                intent.putExtra(getString(R.string.comp), alimentosExternosTotales);
                 Log.d("componente", "tamaño alimentosExternosTotales: " + alimentosExternosTotales.size());
                 for(int i=0; i<alimentosExternosTotales.size();i++) {
                     Log.d("componente", "nombre cuando se pulsa el carro: " + alimentosExternosTotales.get(i).getNombreElemento());
@@ -172,10 +167,10 @@ public class CompraExternaActivity extends AppCompatActivity {
     public void onBackPressed() {
         intent = new Intent();
         if(clasePadre!=null) {
-            if (clasePadre.equals("Carro")) {
-                intent.putExtra("AlimentosSeleccionados", alimentosDevueltos);
-            } else if (clasePadre.equals("Detalle")) {
-                intent.putExtra("AlimentosSeleccionados", alimentosDevueltosCarro);
+            if (clasePadre.equals(getString(R.string.carro))) {
+                intent.putExtra(getString(R.string.ali_sel), alimentosDevueltos);
+            } else if (clasePadre.equals(getString(R.string.detalle))) {
+                intent.putExtra(getString(R.string.ali_sel), alimentosDevueltosCarro);
             }
         }
         setResult(RESULT_OK, intent);

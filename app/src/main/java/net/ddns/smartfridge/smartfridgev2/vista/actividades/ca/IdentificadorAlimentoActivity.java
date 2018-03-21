@@ -10,27 +10,25 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.api.client.extensions.android.http.AndroidHttp;
-
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.http.HttpTransport;
 import com.google.api.services.vision.v1.Vision;
 import com.google.api.services.vision.v1.VisionRequest;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
@@ -41,8 +39,8 @@ import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.servicios.CloudVision;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
+import net.ddns.smartfridge.smartfridgev2.modelo.servicios.CloudVision;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Firma;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso;
@@ -59,7 +57,8 @@ import java.util.Collections;
  */
 public class IdentificadorAlimentoActivity extends AppCompatActivity {
     /**
-     * The constant PERMISOS.
+     * Constante que representa el valor que le damos al parámetro onRequestPermissionsResult del grantResult, en el caso
+     * de que el usuario no haya concedido los permisos necesarios
      */
     public static final int PERMISOS = 5;//Cte que representa el valor que le daremos al parámetro onRequestPermissionsResult del grantResult, en el caso
     //de que el usuario no haya concedido los permisos necesarios
@@ -80,6 +79,7 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     private Dialogos dialogos;//Para utilizar la clase con los diálogos
     private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
     private CloudVision cvision;//Para crear una instancia y usar los métodos
+    private static final int VALOR=16;//Valor para redimensionar la imagen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +94,9 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
         cvision = new CloudVision();
         try {
             i = getIntent();
-            if (i.getStringExtra("ClasePadre").equals("ConfirmarAlmientoActivity")) {
+            if (i.getStringExtra(getString(R.string.clasePadre)).equals(getString(R.string.confirmador))) {
                 dialogos.dialogNoCodBarras();
-                codigo_barras = i.getStringExtra("CODIGO_BARRAS");
+                codigo_barras = i.getStringExtra(getString(R.string.cod_barras));
                 Log.d("cod", "codigo 2: " + codigo_barras);
             }
         } catch (NullPointerException e){
@@ -111,7 +111,7 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     public void escanear() {
         Intent intent = new Intent(this, EscanerActivity.class);
         //Para que no se guarde el histórico de códigos escaneados
-        intent.putExtra("SAVE_HISTORY", false);
+        intent.putExtra(getString(R.string.save_hist), false);
         startActivity(intent);
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
@@ -122,7 +122,7 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
         //Si viene del escaner
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                String contents = data.getStringExtra("SCAN_RESULT");
+                String contents = data.getStringExtra(getString(R.string.escan_r));
                 //Log.d("scaner", "contents: " + contents);
             } else if (resultCode == RESULT_CANCELED) {
                 //Log.d("scaner", "RESULT_CANCELED");
@@ -263,10 +263,8 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
     public void insertarManualmenteButton(View view) {
         Log.d("cod", "codigo 3_A: " + codigo_barras);
         Intent intent = new Intent(this, InsertadorManualmenteActivity.class);
-       // if(codigo_barras!=null){
-            intent.putExtra("CODIGO_BARRAS", codigo_barras);
-            Log.d("cod", "codigo 3: " + codigo_barras);
-        //}
+        intent.putExtra(getString(R.string.cod_barras), codigo_barras);
+        Log.d("cod", "codigo 3: " + codigo_barras);
         startActivity(intent);
     }
 
@@ -306,12 +304,10 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
                 }
             } catch (IOException e) {
                 Log.d("seguimiento", "Error al ejecutar la consulta: " + e.getMessage());
-                Toast.makeText(this, "Error al ejecutar la consulta. Por favor, vuelva a " +
-                        "intentarlo.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.Error_1), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Error al cargar la imagen. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
-            Log.d("seguimiento", "Image picker da imagen a null");
+            Toast.makeText(this, getString(R.string.Error_2), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -405,24 +401,23 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
             super.onPostExecute(s);
             customDialogProgressBar.endDialog();
             Log.d("json", "mensaje: " + s);
-            Toast.makeText(IdentificadorAlimentoActivity.this, "" + s, Toast.LENGTH_SHORT).show();
             //Vamos a crear el Intent para abrir el activity de ConfirmadorAlimentoActivity
             Intent i = new Intent(getApplicationContext(), ConfirmadorAlimentoActivity.class);
             //Le pasamos el nombre de la clase padre
-            i.putExtra("ClasePadre", "IdentificadorAlimentoActivity");
+            i.putExtra(getString(R.string.clasePadre), getString(R.string.identificador));
             if (s!=null){
                 //Le pasamos el nombre del elemento
-                i.putExtra("nombreCloud", s);
+                i.putExtra(getString(R.string.nom_Cl), s);
                 //Si hemos detectado algún nombre, cambiaremos la variable a true
-                i.putExtra("elementoEncontrado", true);
+                i.putExtra(getString(R.string.ele_encontrado), true);
             } else {
                 //Controlamos que haya algún dato
-                i.putExtra("nombreCloud", "Elemento desconido");
+                i.putExtra(getString(R.string.nom_Cl), getString(R.string.ele_des));
                 //Si no hemos detectado el nombre, cambiaremos la variable a false
-                i.putExtra("elementoEncontrado", false);
+                i.putExtra(getString(R.string.ele_encontrado), false);
             }
             //Le pasamos la imagen
-            i.putExtra("imagenCloud", imagenCamara);
+            i.putExtra(getString(R.string.img_Cl), imagenCamara);
             startActivity(i);
         }
     }
@@ -431,24 +426,24 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
      * Método que muestra el tutorial al usuario
      */
     private void mostrarTutorial() {
-        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        final SharedPreferences tutorialShowcases = getSharedPreferences(getString(R.string.tutorialSP), MODE_PRIVATE);
         boolean run;
-        run = tutorialShowcases.getBoolean("runIA", true);
+        run = tutorialShowcases.getBoolean(getString(R.string.tutorial3), true);
         if (run) {//Comprobamos si ya se ha mostrado el tutorial en algún momento
             //Creamos el ShowCase
             final ShowcaseView s = new ShowcaseView.Builder(this)
                     .setTarget(new ViewTarget(((View) findViewById(R.id.ibEscaner))))
-                    .setContentTitle("Escanear")
-                    .setContentText("Pulsa para escanear el código de barras de un alimento")
+                    .setContentTitle(getString(R.string.sc))
+                    .setContentText(getString(R.string.sc_texto))
                     .hideOnTouchOutside()
                     .build();
-            s.setButtonText("Siguiente");
+            s.setButtonText(getString(R.string.siguiente));
             //Creamos un nuevo LayoutParms para cambiar el botón de posición
             final RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
             lps.addRule(RelativeLayout.CENTER_HORIZONTAL);
             // Ponemos márgenes al botón
-            int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+            int margin = ((Number) (getResources().getDisplayMetrics().density * VALOR)).intValue();
             lps.setMargins(margin, margin, margin, margin);
             s.setButtonPosition(lps);
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
@@ -462,19 +457,19 @@ public class IdentificadorAlimentoActivity extends AppCompatActivity {
                         case 1:
                             // Ponemos márgenes al botón
                             s.setTarget(new ViewTarget(((View) findViewById(R.id.ibCloudVision))));
-                            s.setContentTitle("Identificar vía imagen");
-                            s.setContentText("Pulsa para identificar un alimento a través de su imagen");
+                            s.setContentTitle(getString(R.string.identificar));
+                            s.setContentText(getString(R.string.identificar_t));
                             break;
                         case 2:
                             s.setTarget(new ViewTarget(((View) findViewById(R.id.ibManual))));
-                            s.setContentTitle("Identificar manualmente");
-                            s.setContentText("Pulsa para identificar un alimento de manera manual");
+                            s.setContentTitle(getString(R.string.identificar_manual));
+                            s.setContentText(getString(R.string.identificar_manual_t));
                             break;
 
                         case 3:
                             //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("runIA", false);
+                            tutorialShowcasesEdit.putBoolean(getString(R.string.tutorial3), false);
                             tutorialShowcasesEdit.apply();
                             s.hide();
                             break;

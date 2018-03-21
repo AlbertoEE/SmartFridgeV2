@@ -2,18 +2,10 @@
 
 package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
-import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.OperationApplicationException;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
-import android.os.RemoteException;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,8 +14,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Clase con los métodos para guardar una imagen realizada con la cámara en el almacenamieno interno del teléfono o de la tablet
@@ -87,7 +77,6 @@ public class GestionAlmacenamientoInterno {
             //Creamos el fichero con el nombre equivalente a los ms del sistema para que no se repita
             fichero = new File(directorioAlmcto + "/imagenVision.png");
             Log.d("seguimiento", ""+ fichero.getAbsolutePath());
-            //Log.i("fichero", "Creado fichero de imagen");
             //Almacenamos el fichero que hemos creado
             try {
                 fileoutputstream = new FileOutputStream(fichero);

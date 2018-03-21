@@ -3,14 +3,11 @@ package net.ddns.smartfridge.smartfridgev2.modelo.utiles;
 import android.content.Context;
 import android.net.ParseException;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Clase con los métodos para trabajar con las fechas
@@ -33,7 +30,6 @@ public class Fecha {
         //Lo pasamos a un string
         String fecha_actual = dateFormat.format(date);
         Log.d("fecha", "fecha actual111: " + fecha_actual);
-        //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
         return fecha_actual;
     }
 
@@ -50,7 +46,6 @@ public class Fecha {
         //Lo pasamos a un string
         String fecha_actual = dateFormat.format(date);
         Log.d("fecha", "fecha actual111: " + fecha_actual);
-        //Toast.makeText(this, "fecha actual: " + fecha_actual, Toast.LENGTH_SHORT).show();
         return fecha_actual;
     }
 

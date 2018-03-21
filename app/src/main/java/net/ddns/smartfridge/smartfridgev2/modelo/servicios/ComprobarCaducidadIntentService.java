@@ -11,8 +11,8 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
-import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionSharedP;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
+import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionSharedP;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -62,8 +62,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                //Hacemos el while(true) para que siempre esté en ejecución
-                //while(true){
                     //Recogemos todos los alimentos y los almacenamos en el cursor
                     cursor = alimentoDB.getAlimentos();
                     //Recorremos el cursor
@@ -137,66 +135,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
                 }
          //   }
         };
-
-
-
-/*
-
-        //Hacemos el while(true) para que siempre esté en ejecución
-        while(true){
-            //Recogemos todos los alimentos y los almacenamos en el cursor
-            cursor = alimentoDB.getAlimentos();
-            //Recorremos el cursor
-            if (cursor.moveToFirst()) {
-                //Recorremos el cursor hasta que no haya más registros
-                do {
-                    //Recogemos la fecha de caducidad del alimento de la bbdd
-                    fechaCaducidad = cursor.getString(5);
-                    Log.d("servicio", "fecha de caducidad: " + fechaCaducidad);
-                    byte[] byteArrayFoto;
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    byteArrayFoto = cursor.getBlob(6);
-                    try {
-                        bm = BitmapFactory.decodeByteArray(byteArrayFoto, 0, byteArrayFoto.length);
-                        bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    } catch (NullPointerException e){
-                        //No hay imagen en la bbdd
-                    }
-                    //Calculamos los días de diferencia
-                    try{
-                        diasParaCaducidad = fecha.fechaDias(fechaCaducidad, this);
-                    } catch (ParseException e){
-                        //Lanzamos la notificación de alimento caducado
-                        alimento = new Alimento(cursor.getInt(0),
-                                cursor.getString(1),
-                                cursor.getInt(2),
-                                cursor.getInt(3),
-                                cursor.getString(4),
-                                cursor.getString(5),
-                                null);
-                        dialogos.enviarNotificacionCaducado(alimento, getApplicationContext());
-                    }
-                    Log.d("servicio", "dias para caducidad: " + diasParaCaducidad);
-                    //Comprobamos si quedan <2 días para que caduque. Si es así, se lanzará la notificación
-                    if (diasParaCaducidad<=DIAS_CADUCIDAD) {
-                        //Creamos el objeto alimento
-                        alimento = new Alimento(cursor.getInt(0),
-                                cursor.getString(1),
-                                cursor.getInt(2),
-                                cursor.getInt(3),
-                                cursor.getString(4),
-                                cursor.getString(5), null);
-                        //Lanzamos la notificación
-                        Log.d("servicio", "Faltan: " + diasParaCaducidad + " días para que caduque.");
-                    }
-                    try {
-                        sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } while(cursor.moveToNext());
-            }
-        }*/
         Timer timer = new Timer();
         timer.schedule(timerTask,DELAY,MINUTO);
     }
@@ -208,7 +146,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
      *
      * @param cursor Cursor con los elementos de la bbdd
      */
-//Método para comprobar si hay algún alimento con una cantidad <2 y enviar la notificación
     public void comprobarCantidad(Cursor cursor){
         alimentoRepetidoSP=false;
         //Almacenamos en la variable el número de unidades de cada elemento
@@ -219,7 +156,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
             Log.d("probandoSP", "num: " + elementos);
             if(elementos>0) {
                 alimentosLeidosSP = gsp.recogerValores();
-                //Log.d("probandoSP", "alimentos");
                 //Creamos el objeto alimento
                 alimento = new Alimento(cursor.getInt(0),
                         cursor.getString(1),
@@ -249,7 +185,6 @@ public class ComprobarCaducidadIntentService extends IntentService {
      * @param lista    ArrayList con componentes de la lista de la compra
      * @param alimento objeto Alimento a comparar con los almacenados
      */
-//Método para comparar los alimentos que tienen escasez con los alimentos que hay en el SP para que, si coinciden, no se vuelvan a guardar en el SP
     public void comprobarEscasezSharedP(ArrayList<ComponenteListaCompra> lista, Alimento alimento){
         for ( int i=0; i<lista.size(); i++){
             if(lista.get(i).getNombreElemento().equals(alimento.getNombreAlimento())){

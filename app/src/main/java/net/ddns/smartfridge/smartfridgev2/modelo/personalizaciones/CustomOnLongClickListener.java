@@ -11,7 +11,6 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento
 public class CustomOnLongClickListener implements View.OnLongClickListener {
 
     private String tiempo;
-    private CaducidadAlimento ca;
 
     /**
      * Constructor

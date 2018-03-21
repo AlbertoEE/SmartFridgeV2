@@ -7,7 +7,6 @@ import android.util.Log;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
@@ -16,7 +15,6 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Tipo;
 
 import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -60,7 +58,6 @@ public class MySQLHelper {
     public void abrirConexion() throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
         conexion = (Connection) DriverManager.getConnection(servidor, USER, PASS);
-        Log.d("BUGAZO", "abrirConexion: "+ conexion);
     }
 
     /**
@@ -254,40 +251,6 @@ public class MySQLHelper {
         }
         return recetas;
     }
-
-    /**
-     * Método para recoger las recetas con la foto en función de si tienen o no algún ingrediente
-     *
-     * @param consulta sentencia con la consulta a ejecutar
-     * @return Lista de las recetas encontradas en función de la consulta aplicada
-     */
-    public ArrayList<Receta> filtrarFotoReceta(String consulta){
-        Log.d("check", "filtrarReceta");
-        Log.d("check", "consulta: " + consulta);
-        recetas = new ArrayList<>();
-        Statement st = null;
-        ResultSet rs = null;
-        try {
-            st = (Statement) conexion.createStatement();
-            rs = st.executeQuery(consulta);
-            while (rs.next()) {
-                Log.d("check", "hay registros");
-                blob = rs.getBlob(7);
-                byte[] data = blob.getBytes(1, (int)blob.length());
-                ByteArrayInputStream bais = new ByteArrayInputStream(data);
-                imagen = BitmapFactory.decodeStream(bais);
-                //Vamos creando los objetos que almacenaremos luego en un arraylist
-                receta = new Receta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                        rs.getInt(5), rs.getInt(6), imagen);
-                recetas.add(receta);
-                Log.d("check", "menu_receta: " + receta.getTituloReceta());
-            }
-        } catch (SQLException e) {
-            Log.d("SQL", "Error de SQL: " + e.getErrorCode());
-        }
-        return recetas;
-    }
-
     /**
      * Método para montar la sentencia SQL para la búsqueda en la bbdd
      *
@@ -295,10 +258,8 @@ public class MySQLHelper {
      * @return Sentencia para la búsqueda de esos ingredientes en la bbdd
      */
     public String montarSentenciaSi(ArrayList<Ingrediente> aIngrediente){
-        //Log.d("check", "metodo en mysql");
         int numero = aIngrediente.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
         Log.d("check", "elementos en array: " + numero);
-       // for (int i=0; i<numero; i++){
             if (numero==1){
                 Log.d("check", "solo hay un elemento en el array");
                 //sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
@@ -315,9 +276,6 @@ public class MySQLHelper {
                     ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + ", ";
                     Log.d("check", "valor de la sentencia: " + ing);
                 }
-             /*   sentencia = "SELECT * FROM RECETAS WHERE id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
-                        "WHERE id_ingrediente IN (" + ing + aIngrediente.get(numero-1).getIdIngrediente() + ")" +
-                        " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";*/
                 sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                         "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
                         " AND id_receta IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
@@ -325,7 +283,6 @@ public class MySQLHelper {
                         " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";
                 Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
             }
-      //  }
         return sentencia;
     }
 
@@ -337,11 +294,8 @@ public class MySQLHelper {
      */
     public String montarSentenciaNo(ArrayList<Ingrediente> aIngrediente){
         int numero = aIngrediente.size(); //Para ver el número de ingredientes que ha seleccionado el usuario
-    //    for (Ingrediente i : aIngrediente){
         if (numero==1){
             Log.d("check", "solo hay un elemento en el array");
-          /*  sentencia = "SELECT * FROM RECETAS WHERE id_receta NOT IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
-                    "WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";*/
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                     "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
                     " AND id_receta NOT IN (SELECT id_receta FROM INGREDIENTES_RECETAS WHERE id_ingrediente = " + aIngrediente.get(0).getIdIngrediente() + ");";
@@ -353,9 +307,6 @@ public class MySQLHelper {
                 ing += String.valueOf(aIngrediente.get(j).getIdIngrediente()) + ", ";
                 Log.d("check", "valor de la sentencia: " + ing);
             }
-        /*    sentencia = "SELECT * FROM RECETAS WHERE id_receta NOT IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
-                    "WHERE id_ingrediente IN (" + ing + aIngrediente.get(numero-1).getIdIngrediente() + ")" +
-                    " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";*/
             sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                     "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
                     " AND id_receta NOT IN (SELECT id_receta FROM INGREDIENTES_RECETAS " +
@@ -363,7 +314,6 @@ public class MySQLHelper {
                     " GROUP BY id_receta HAVING COUNT(*) = " + numero + ");";
             Log.d("sentencia", "sentencia con varios ingredientes: " + sentencia);
         }
-      //  }
         return sentencia;
     }
 
@@ -375,18 +325,13 @@ public class MySQLHelper {
      */
     public ArrayList<Receta> filtrarRecetaPorTipo(int tipo){
         recetas = new ArrayList<>();
-        //Statement st = null;
         PreparedStatement pst =null;
         ResultSet rs = null;
-        //Sacamos todos los datos de la bbdd
-        //sentencia = "SELECT * FROM RECETAS WHERE id_tipo_receta = ?;";
         sentencia = "SELECT R.id_receta, R.nombre_receta, R.descripcion_receta, R.id_tipo_receta, T.duracion, D.nombre_dificultad, R.imagen_receta " +
                 "FROM RECETAS R, CLASIFICACION_TIEMPO T, DIFICULTAD D WHERE R.id_tiempo_receta = T.id_tiempo_receta AND R.id_dificultad_receta = D.id_dificultad_receta" +
                 " AND id_tipo_receta = ?;";
         Log.d("dialogo", "sentencia tipo: " + sentencia);
         try {
-            //st = (Statement) conexion.createStatement();
-            //rs = st.executeQuery(sentencia);
             pst = conexion.prepareStatement(sentencia);
             pst.setInt(1, tipo);
             rs = pst.executeQuery();
@@ -426,7 +371,6 @@ public class MySQLHelper {
                 //Vamos creando los objetos que almacenaremos luego en un arraylist
                 tipo = new Tipo(rs.getInt(1), rs.getString(2));
                 tipos.add(tipo);
-                //Log.d("menu_receta", "ingrediente: " + alimentoExterno.getNombreIngrediente());
             }
         } catch (SQLException e) {
             Log.d("SQL", "Error de SQL: " + e.getErrorCode());

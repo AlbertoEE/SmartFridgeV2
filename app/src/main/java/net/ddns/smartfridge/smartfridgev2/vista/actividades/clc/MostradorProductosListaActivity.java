@@ -1,21 +1,19 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity para mostrar todos los alimentos que hay en la lista de la compra
@@ -35,7 +33,7 @@ public class MostradorProductosListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mostrar_productos_lista);
         alimentos = new ArrayList<>();
         intent = getIntent();
-        componentesListaCompra = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra("ListaProductos");
+        componentesListaCompra = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra(getString(R.string.lista_p));
         for (ComponenteListaCompra item: componentesListaCompra) {
             alimentos.add(item.getNombreElemento());
         }
@@ -85,25 +83,24 @@ public class MostradorProductosListaActivity extends AppCompatActivity {
                 //Creamos el intent
                 compartir = new Intent();
                 compartir.setAction(Intent.ACTION_SEND);
-                //compartir.putExtra(Intent.EXTRA_EMAIL, new String[]{"raquel.menciac@gmail.com", "smartfridgespain@gmail.com"});
-                compartir.putExtra(Intent.EXTRA_SUBJECT, "Lista de la compra compartida");
+                compartir.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.lista_comp));
                 compartir.putExtra(Intent.EXTRA_TEXT, "Hola,\nTe envío la lista de la compra:\n" + sentencia + "Gracias.");
                 compartir.setType("*/*");
-                startActivity(Intent.createChooser(compartir, "Enviar lista de la compra por Email"));
-                Toast.makeText(this, "Preparando el envío.", Toast.LENGTH_SHORT).show();
+                startActivity(Intent.createChooser(compartir, getString(R.string.chooser)));
+                Toast.makeText(this, getString(R.string.prep_envio), Toast.LENGTH_SHORT).show();
                 Log.d("compartir", "Enviada lista");
                 if (compartir.resolveActivity(getPackageManager()) != null) {
                     //Para que elijamos cómo compartir, con qué app
-                    startActivity(Intent.createChooser(compartir, "Seleccione aplicación"));
+                    startActivity(Intent.createChooser(compartir, getString(R.string.select_app)));
                 } else {
-                    Toast.makeText(this, "No hay ninguna aplicación disponible para enviar la lista.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.no_app), Toast.LENGTH_LONG).show();
                 }
                 return true;
             //Botón de ver cuánto le cuesta la compra
             case R.id.miCompra:
                 intent = new Intent(this, PrecioCompraActivity.class);
                 //Le pasamos el arrayList con los productos que contiene esta lista de la compra
-                intent.putExtra("productos", componentesListaCompra);
+                intent.putExtra(getString(R.string.productos), componentesListaCompra);
                 startActivity(intent);
                 return true;
 

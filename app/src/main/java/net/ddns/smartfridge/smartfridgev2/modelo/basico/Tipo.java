@@ -45,15 +45,4 @@ public class Tipo {
         return descripcion;
     }
 
-    /**
-     * Sets descripcion.
-     *
-     *
-     *
-     *
-     * @param descripcion the descripcion
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 }

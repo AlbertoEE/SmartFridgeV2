@@ -5,7 +5,6 @@ import android.content.ClipDescription;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;

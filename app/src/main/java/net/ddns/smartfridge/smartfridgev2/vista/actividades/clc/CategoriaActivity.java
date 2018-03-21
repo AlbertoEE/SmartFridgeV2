@@ -1,18 +1,12 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapterRevistaCategorias;
@@ -33,9 +27,7 @@ public class CategoriaActivity extends AppCompatActivity {
     private MySQLHelper myHelper;//Para acceder a la bbdd
     private ArrayList<Ingrediente> ingredientesCategoria;//Para recoger todos los ingredientes de una categoria
     private CustomDialogProgressBar customDialogProgressBar;//Para mostrar un progressBar cuando se ejecuta la consulta a la bbdd
-    private static Ingrediente ingrediente=null;//Para recoger los ingredientes de la bbdd
     private ArrayList<ComponenteListaCompra> componentes;//Para almacenar todos los elementos seleccionados
-
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private CustomRecyclerViewAdapterRevistaCategorias adapter;
@@ -44,10 +36,8 @@ public class CategoriaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria);
-        /*Para visualizar el botón de retroceso del actionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         i = getIntent();
-        categoria = i.getStringExtra("Categoria");
+        categoria = i.getStringExtra(getString(R.string.categoria));
         customDialogProgressBar = new CustomDialogProgressBar(this);
         ingredientesCategoria = new ArrayList<Ingrediente>();
         componentes = new ArrayList<ComponenteListaCompra>();
@@ -114,8 +104,8 @@ public class CategoriaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("result",adapter.getComponentes());
-        returnIntent.putExtra("clasePadre", "Carro");
+        returnIntent.putExtra(getString(R.string.result),adapter.getComponentes());
+        returnIntent.putExtra(getString(R.string.clase_padre_minusculas), getString(R.string.carro));
         setResult(this.RESULT_OK,returnIntent);
         super.onBackPressed();
     }

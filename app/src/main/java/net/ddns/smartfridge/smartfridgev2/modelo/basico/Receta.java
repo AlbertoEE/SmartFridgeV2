@@ -71,30 +71,12 @@ public class Receta implements Serializable{
     }
 
     /**
-     * Sets id receta.
-     *
-     * @param idReceta the id receta
-     */
-    public void setIdReceta(int idReceta) {
-        this.idReceta = idReceta;
-    }
-
-    /**
      * Gets titulo receta.
      *
      * @return the titulo receta
      */
     public String getTituloReceta() {
         return tituloReceta;
-    }
-
-    /**
-     * Sets titulo receta.
-     *
-     * @param tituloReceta the titulo receta
-     */
-    public void setTituloReceta(String tituloReceta) {
-        this.tituloReceta = tituloReceta;
     }
 
     /**
@@ -107,66 +89,12 @@ public class Receta implements Serializable{
     }
 
     /**
-     * Sets descripcion.
-     *
-     * @param descripcion the descripcion
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    /**
      * Gets tipo receta.
      *
      * @return the tipo receta
      */
     public int getTipoReceta() {
         return tipoReceta;
-    }
-
-    /**
-     * Sets tipo receta.
-     *
-     * @param tipoReceta the tipo receta
-     */
-    public void setTipoReceta(int tipoReceta) {
-        this.tipoReceta = tipoReceta;
-    }
-
-    /**
-     * Gets tiempo receta.
-     *
-     * @return the tiempo receta
-     */
-    public int getTiempoReceta() {
-        return tiempoReceta;
-    }
-
-    /**
-     * Sets tiempo receta.
-     *
-     * @param tiempoReceta the tiempo receta
-     */
-    public void setTiempoReceta(int tiempoReceta) {
-        this.tiempoReceta = tiempoReceta;
-    }
-
-    /**
-     * Gets dificultad receta.
-     *
-     * @return the dificultad receta
-     */
-    public int getDificultadReceta() {
-        return dificultadReceta;
-    }
-
-    /**
-     * Sets dificultad receta.
-     *
-     * @param dificultadReceta the dificultad receta
-     */
-    public void setDificultadReceta(int dificultadReceta) {
-        this.dificultadReceta = dificultadReceta;
     }
 
     /**
@@ -197,15 +125,6 @@ public class Receta implements Serializable{
     }
 
     /**
-     * Sets tiempo.
-     *
-     * @param tiempo the tiempo
-     */
-    public void setTiempo(String tiempo) {
-        this.tiempo = tiempo;
-    }
-
-    /**
      * Gets dificultad.
      *
      * @return the dificultad
@@ -214,12 +133,4 @@ public class Receta implements Serializable{
         return dificultad;
     }
 
-    /**
-     * Sets dificultad.
-     *
-     * @param dificultad the dificultad
-     */
-    public void setDificultad(String dificultad) {
-        this.dificultad = dificultad;
-    }
 }

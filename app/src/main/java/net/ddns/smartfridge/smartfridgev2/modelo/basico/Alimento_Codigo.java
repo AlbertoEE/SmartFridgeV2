@@ -29,57 +29,12 @@ public class Alimento_Codigo implements Serializable{
     }
 
     /**
-     * Gets id codigo.
-     *
-     * @return the id codigo
-     */
-    public int getId_codigo() {
-        return id_codigo;
-    }
-
-    /**
-     * Sets id codigo.
-     *
-     * @param id_codigo the id codigo
-     */
-    public void setId_codigo(int id_codigo) {
-        this.id_codigo = id_codigo;
-    }
-
-    /**
      * Gets nom alimento.
      *
      * @return the nom alimento
      */
     public String getNomAlimento() {
         return nomAlimento;
-    }
-
-    /**
-     * Sets nom alimento.
-     *
-     * @param nomAlimento the nom alimento
-     */
-    public void setNomAlimento(String nomAlimento) {
-        this.nomAlimento = nomAlimento;
-    }
-
-    /**
-     * Gets codigo barras.
-     *
-     * @return the codigo barras
-     */
-    public String getCodigo_barras() {
-        return codigo_barras;
-    }
-
-    /**
-     * Sets codigo barras.
-     *
-     * @param codigo_barras the codigo barras
-     */
-    public void setCodigo_barras(String codigo_barras) {
-        this.codigo_barras = codigo_barras;
     }
 
     /**

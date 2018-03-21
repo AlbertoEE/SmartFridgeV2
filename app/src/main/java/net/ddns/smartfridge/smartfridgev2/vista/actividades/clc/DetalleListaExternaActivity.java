@@ -98,8 +98,8 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         intent = new Intent();
-        intent.putExtra("elementosLista", componentesAdapter);
-        intent.putExtra("clasePadre", "Detalle");
+        intent.putExtra(getString(R.string.ele_lista), componentesAdapter);
+        intent.putExtra(getString(R.string.clase_padre_minusculas), getString(R.string.detalle));
         setResult(RESULT_OK, intent);
         super.onBackPressed();
     }

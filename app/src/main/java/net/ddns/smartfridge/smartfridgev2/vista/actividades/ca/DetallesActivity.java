@@ -1,36 +1,27 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.ca;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.aigestudio.wheelpicker.WheelPicker;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Nuevo;
-import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity que muestra el detalle de un alimento seleccionado
@@ -52,7 +43,7 @@ public class DetallesActivity extends FragmentActivity {
         setContentView(R.layout.activity_detalles_viewpager);
         Log.d("SWIPE", "onCreate: estoy aqui en el detalles activity");
         viewPager = findViewById(R.id.viewpager);
-        alimentos = (ArrayList<Alimento>) getIntent().getSerializableExtra("alimentosSinFoto");
+        alimentos = (ArrayList<Alimento>) getIntent().getSerializableExtra(getString(R.string.ali_s_f));
         if (alimentos == null) {
             cursor = alimentoDB.getAlimentos();
             cargarArray();
@@ -60,7 +51,7 @@ public class DetallesActivity extends FragmentActivity {
             imagenes = MiNeveraActivity.getImagenDetalles();
         }
 
-        posicion = getIntent().getExtras().getInt("posicion");
+        posicion = getIntent().getExtras().getInt(getString(R.string.posicion));
 
         CustomPageAdapter pageAdapter = new CustomPageAdapter(getSupportFragmentManager(), alimentos, imagenes);
         viewPager.setAdapter(pageAdapter);
@@ -118,9 +109,9 @@ public class DetallesActivity extends FragmentActivity {
      * Método para mostrar el tutorial al usuario
      */
     private void mostrarTutorial(){
-        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        final SharedPreferences tutorialShowcases = getSharedPreferences(getString(R.string.tutorialSP), MODE_PRIVATE);
         boolean run;
-        run = tutorialShowcases.getBoolean("runDetalles", true);
+        run = tutorialShowcases.getBoolean(getString(R.string.tutorial2), true);
 
         if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
 
@@ -135,16 +126,15 @@ public class DetallesActivity extends FragmentActivity {
             //Creamos el ShowCase
             final ShowcaseView s = new ShowcaseView.Builder(this)
                     .setTarget( new ViewTarget( ((View) findViewById(R.id.wheelUdsDetalles)) ) )
-                    .setContentTitle("Modificar Unidades")
-                    .setContentText("Modifica las uds disponibles girando la rueda. Si lo dejas a 0, el producto se eliminará.")
+                    .setContentTitle(getString(R.string.m_uds))
+                    .setContentText(getString(R.string.m_uds_t))
                     .hideOnTouchOutside()
                     .build();
-            s.setButtonText("Siguiente");
+            s.setButtonText(getString(R.string.siguiente));
             s.setButtonPosition(lps);
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
             s.overrideButtonClick(new View.OnClickListener() {
                 int contadorS = 0;
-
                 @Override
                 public void onClick(View v) {
                     contadorS++;
@@ -152,7 +142,7 @@ public class DetallesActivity extends FragmentActivity {
                         case 1:
                             //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("runDetalles", false);
+                            tutorialShowcasesEdit.putBoolean(getString(R.string.tutorial2), false);
                             tutorialShowcasesEdit.apply();
                             s.hide();
                             break;

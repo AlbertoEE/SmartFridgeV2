@@ -1,10 +1,9 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,8 +16,6 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Precio;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDialogProgressBar;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
-import java.math.BigDecimal;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -33,19 +30,16 @@ public class PrecioCompraActivity extends AppCompatActivity {
     private MySQLHelper myHelper;//Para acceder a la bbdd
     private ArrayList<Precio> precios;
     private ArrayList<Double> totales;//Para almacenar los totales de todos los supermercados
-
+    //ArrayList con el nombre de los 4 comercios consultados
     private final String [] SUPERMERCADOS = {"carrefour", "alcampo", "hipercor", "mercadona"};
-
     private ImageButton imageButtonAlcampo;
     private ImageButton imageButtonHipercor;
     private ImageButton imageButtonCarrefour;
     private ImageButton imageButtonMercadona;
-
     private TextView tvCarrefour;
     private TextView tvAlcampo;
     private TextView tvHipercor;
     private TextView tvMercadona;
-
     private Intent intentNuevo;
 
     @Override
@@ -56,7 +50,7 @@ public class PrecioCompraActivity extends AppCompatActivity {
         totales = new ArrayList<>();
         //Recogemos los valores del intent
         intent = getIntent();
-        nombres = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra("productos");
+        nombres = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra(getString(R.string.productos));
         Log.d("precio", "nombres: " + nombres.size());
 
         intentNuevo = new Intent(this, PrecioCompraProductosActivity.class);
@@ -77,24 +71,15 @@ public class PrecioCompraActivity extends AppCompatActivity {
         double mercadona=0f;//Para calcular el total en Mercadona
         //Recorremos el array y vamos calculando los valores
         for (int i=0; i<precios.size();i++){
-            Log.d("CeroMisHuevos", "valor de i: " + precios.get(i).getSupermercado());
             if(precios.get(i).getSupermercado().equals(SUPERMERCADOS[0])){
                 carrefour += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: " + carrefour);
             } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[1])){
                 alcampo += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: " + alcampo);
             } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[2])){
                 hipercor += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: " + hipercor);
             } else if (precios.get(i).getSupermercado().equals(SUPERMERCADOS[3])){
                 mercadona += precios.get(i).getPvp();
-                Log.d("CeroMisHuevos", "calcularTotal: " + mercadona);
             }
-            Log.d("CeroMisHuevos", "valor de carreforu: " + carrefour);
-            Log.d("CeroMisHuevos", "valor de alcampo: " + alcampo);
-            Log.d("CeroMisHuevos", "valor de hipercor: " + hipercor);
-            Log.d("CeroMisHuevos", "valor de mercadona: " + mercadona);
             //Asignamos los valore a un ArrayList de double
             totales.clear();
             totales.add(carrefour);
@@ -104,7 +89,6 @@ public class PrecioCompraActivity extends AppCompatActivity {
             for (int j=0; j<totales.size(); j++){
                 Log.d("TotalArray", "TotalArray: " + totales.get(j).doubleValue());
             }
-            Log.d("CeroMisHuevos", "calcularTotal: adfasf" + totales.get(2));
         }
         return totales;
     }

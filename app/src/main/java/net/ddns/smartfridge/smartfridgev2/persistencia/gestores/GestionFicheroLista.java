@@ -1,20 +1,16 @@
 package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +20,7 @@ import java.util.ArrayList;
 public class GestionFicheroLista {
     private ArrayList<ListaCompra>listas;//ArrayList para guardar todas las listas leidas del fichero
     private Context contexto;//Para almacenar el contexto del activity donde se va a instanciar la clase
-    private ListaCompra lista;//Para leer cada objeto del fichero y trabajar con él
+    private String nombreFichero="Listas.obj";//Nombre del fichero
 
     /**
      * Constructor
@@ -50,7 +46,7 @@ public class GestionFicheroLista {
         FileOutputStream fos=null;
         ObjectOutputStream oos = null;
         try {
-            fos = contexto.getApplicationContext().openFileOutput("Listas.obj", contexto.MODE_PRIVATE);
+            fos = contexto.getApplicationContext().openFileOutput(nombreFichero, contexto.MODE_PRIVATE);
             oos = new ObjectOutputStream(fos);
             //Escribimos el objeto en el fichero
             oos.writeObject(listas);
@@ -78,18 +74,16 @@ public class GestionFicheroLista {
      */
     public ArrayList<ListaCompra> leerTodasListas(){
         listas = new ArrayList<ListaCompra>();
-        //BufferedReader br=null;
         ObjectInputStream ois=null;
         FileInputStream fis = null;
         try {
-            fis = contexto.getApplicationContext().openFileInput("Listas.obj");
+            fis = contexto.getApplicationContext().openFileInput(nombreFichero);
             ois = new ObjectInputStream(fis);
             //Leemos cada objeto y lo almacenamos en la variable
             //lista = (ListaCompra)ois.readObject();
             while (true) {
                 listas = (ArrayList<ListaCompra>) ois.readObject();
             }
-            //Log.d("listaTotalFinal", "longitud de array leido en fichero: " + listas.size());
         } catch (NullPointerException e){
             //Si el fichero no existe, directamente escribimos en él
         } catch (FileNotFoundException e) {
@@ -121,7 +115,7 @@ public class GestionFicheroLista {
         FileOutputStream fos=null;
         ObjectOutputStream oos = null;
         try {
-            fos = contexto.getApplicationContext().openFileOutput("Listas.obj", contexto.MODE_PRIVATE);
+            fos = contexto.getApplicationContext().openFileOutput(nombreFichero, contexto.MODE_PRIVATE);
             oos = new ObjectOutputStream(fos);
             //Escribimos el objeto en el fichero
             oos.writeObject(alc);

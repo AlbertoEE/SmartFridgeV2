@@ -7,15 +7,14 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.support.v7.widget.SearchView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +25,10 @@ import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomRecyclerViewAdapter;
+import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +44,7 @@ public class MiNeveraActivity extends AppCompatActivity {
     private static ArrayList<Bitmap> imagenesDetalles;
     private static final int DETALLES_ACTIVITY = 16;
     private int sort = 1;
+    private static final int VALOR=16;//Valor para redimensionar la imagen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class MiNeveraActivity extends AppCompatActivity {
         imagenesDetalles = new ArrayList<>();
         alimentoDB = new AlimentoDB(this);
         cursor = alimentoDB.getAlimentos();
-
         iniciarRecyclerView();
         mostrarTutorial();
     }
@@ -70,7 +68,6 @@ public class MiNeveraActivity extends AppCompatActivity {
         cursor.close();
         rvMiNevera.setLayoutManager(layoutManager);
         rvMiNevera.setAdapter(recyclerViewAdapter);
-        //recyclerViewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -96,10 +93,9 @@ public class MiNeveraActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, DetallesActivity.class);
-        Log.d("SWIPE", "iniciardetalles: primegenio  " + alimentos.size());
-        intent.putExtra("alimentosSinFoto", alimentosSinFoto);
-        intent.putExtra("posicion", position);
-        intent.putExtra("ClasePadre", "MiNeveraActivity");
+        intent.putExtra(getString(R.string.ali_no_foto), alimentosSinFoto);
+        intent.putExtra(getString(R.string.posicion), position);
+        intent.putExtra(getString(R.string.clasePadre), getString(R.string.mi_nevera));
         startActivityForResult(intent, DETALLES_ACTIVITY);
     }
 
@@ -180,9 +176,9 @@ public class MiNeveraActivity extends AppCompatActivity {
      * Método para mostrar el tutorial al usuario
      */
     private void mostrarTutorial(){
-        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        final SharedPreferences tutorialShowcases = getSharedPreferences(getString(R.string.tutorialSP), MODE_PRIVATE);
         boolean run;
-        run = tutorialShowcases.getBoolean("runMiNevera", true);
+        run = tutorialShowcases.getBoolean(getString(R.string.tutorial5), true);
 
         if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
 
@@ -191,16 +187,16 @@ public class MiNeveraActivity extends AppCompatActivity {
             lps.addRule(RelativeLayout.ALIGN_PARENT_TOP);
             lps.addRule(RelativeLayout.CENTER_HORIZONTAL);
             // Ponemos márgenes al botón
-            int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+            int margin = ((Number) (getResources().getDisplayMetrics().density * VALOR)).intValue();
             lps.setMargins(margin, margin, margin, margin);
 
             //Creamos el ShowCase
             final ShowcaseView s = new ShowcaseView.Builder(this)
                     .setTarget( new ViewTarget( ((View) findViewById(R.id.rvMiNevera)) ) )
-                    .setContentTitle("Pulsa en el que desees ver con detalle")
+                    .setContentTitle(getString(R.string.pulsa_detalle))
                     .hideOnTouchOutside()
                     .build();
-            s.setButtonText("Siguiente");
+            s.setButtonText(getString(R.string.siguiente));
             s.setButtonPosition(lps);
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
             s.overrideButtonClick(new View.OnClickListener() {
@@ -218,7 +214,7 @@ public class MiNeveraActivity extends AppCompatActivity {
                         case 1:
                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("runMiNevera", false);
+                            tutorialShowcasesEdit.putBoolean(getString(R.string.tutorial5), false);
                             tutorialShowcasesEdit.apply();
                             s.hide();
                             break;

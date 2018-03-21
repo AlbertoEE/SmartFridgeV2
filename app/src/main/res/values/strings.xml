@@ -5,20 +5,82 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="clasePadre">ClasePadre</string>
+    <string name="insertador">InsertadorManualmenteActivity</string>
+    <string name="nombreAlimento">NombreAlimento</string>
+    <string name="fotoB">FotoBitMap</string>
+    <string name="confirmador">ConfirmarAlmientoActivity</string>
+    <string name="tutorialSP">showcaseTutorial</string>
+    <string name="tutorial1">runCAlimento</string>
+    <string name="dias_c">Días para caducidad</string>
+    <string name="dias_c_t">Arrastra los días que faltan para la caducidad del aliment</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="mas_d">Más días</string>
+    <string name="mas_d_t">Si faltan más de 7 días para la caducidad, puedes seleccionar la fecha pulsando en este icono. Se mostrará el calendario para
+        indicar la fecha de caducidad.</string>
+    <string name="uds_a">Unidades añadidas a MiNevera</string>
+    <string name="uds_a_t">Mueve la rueda para seleccionar las unidades añadidas a MiNevera</string>
+    <string name="b_acep">Botón Aceptar"</string>
+    <string name="b_acep_t">Pulsa cuando quieras confirmar los datos. Se te mostrará un mensaje indicándote los datos introducidos para ver si estás conforme con ellos.</string>
+    <string name="identificador">IdentificadorAlimentoActivity</string>
+    <string name="img_Cl">imagenCloud</string>
+    <string name="nom_Cl">nombreCloud</string>
+    <string name="escaner">EscanerActivity</string>
+    <string name="string">string</string>
+    <string name="cod_barras">CODIGO_BARRAS</string>
+    <string name="ali_s_f">alimentosSinFoto</string>
+    <string name="posicion">posicion</string>
+    <string name="m_uds">Modificar Unidades</string>
+    <string name="m_uds_t">Modifica las uds disponibles girando la rueda. Si lo dejas a 0, el producto se eliminará.</string>
+    <string name="tutorial2">runDetalles</string>
+    <string name="save_hist">SAVE_HISTORY</string>
+    <string name="escan_r">SCAN_RESULT</string>
+    <string name="Error_1">Error al ejecutar la consulta. Por favor, vuelva a intentarlo.</string>
+    <string name="Error_2">Error al cargar la imagen. Vuelva a intentarlo</string>
+    <string name="ele_encontrado">elementoEncontrado</string>
+    <string name="ele_des">Elemento desconido</string>
+    <string name="tutorial3">runIA</string>
+    <string name="sc">Escanear</string>
+    <string name="sc_texto">Pulsa para escanear el código de barras de un alimento</string>
+    <string name="identificar">Identificar vía imagen</string>
+    <string name="identificar_t">Pulsa para identificar un alimento a través de su imagen</string>
+    <string name="identificar_manual">Identificar manualmente</string>
+    <string name="identificar_manual_t">Pulsa para identificar un alimento de manera manual</string>
+    <string name="no_img">Imagen no disponible</string>
+    <string name="nombre_a">NombreAlimento</string>
+    <string name="campo_oblig">Campo de nombre obligatorio</string>
+    <string name="no_camara">No se ha podido abrir la cámara</string>
+    <string name="tutorial4">runInsertarManualmente</string>
+    <string name="nom_ali">Nombre del alimento</string>
+    <string name="nom_ali_t">Escribe el nombre del alimento que quieras incluir. Se te mostrará la lista con las sugerencias de productos que
+        hayas incluido manualmente con anterioridad</string>
+    <string name="realizar_f">Realizar fotografía</string>
+    <string name="realizar_f_t">Pulsa para realizar una fotografía del alimento.</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="pulsa_confirmar">Pulsa para confirmar los datos y pasar a la pantalla de insertar caducidad y cantidad.</string>
+    <string name="ali_no_foto">alimentosSinFoto</string>
+    <string name="mi_nevera">MiNeveraActivity</string>
+    <string name="tutorial5">runMiNevera</string>
+    <string name="pulsa_detalle">Pulsa en el que desees ver con detalle</string>
+    <string name="categoria">Categoria</string>
+    <string name="result">result</string>
+    <string name="clase_padre_minusculas">clasePadre</string>
+    <string name="carro">Carro</string>
+    <string name="ele_lista">elementosLista</string>
+    <string name="comp">componentes</string>
+    <string name="ali_sel">AlimentosSeleccionados</string>
+    <string name="detalle">Detalle</string>
+    <string name="lista_p">ListaProductos</string>
+    <string name="lista_comp">Lista de la compra compartida</string>
+    <string name="chooser">Enviar lista de la compra por Email</string>
+    <string name="prep_envio">Preparando el envío</string>
+    <string name="select_app">Seleccione la aplicación que desea utilizar</string>
+    <string name="no_app">No hay ninguna aplicación disponible para enviar la lista.</string>
+    <string name="productos">productos</string>
+    <string name="ali_sug">AlimentosSugeridos</string>
+    <string name="agregar_lista">Introduzca el elemento que quiere añadir a la lista:</string>
+    <string name="agregar_manual">Añadir manualmente</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="lista_guardada">Se ha guardado una nueva lista con fecha </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <array name="tiempo">
-        <item>Menos de 15 min</item>
-        <item>Entre 15 y 30 min</item>
-        <item>Entre 30 y 60 min</item>
-        <item>Entre 1 y 2 horas</item>
-        <item>Más de 2 horas</item>
-    </array>
-    <array name="dificultad">
-        <item>Fácil</item>
-        <item>Media</item>
-        <item>Difícil</item>
-        <item>Muy difícil</item>
-    </array>
 </resources>

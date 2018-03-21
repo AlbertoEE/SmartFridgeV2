@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -15,7 +16,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +54,10 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
     private Alimento_NuevoDB alimento_nuevoDB;
     private Intent intent;//Para recoger el intent lanzado desde otro activity
     private String codigo_barras;//Para recoger el código de barras cuando venga de un código no encontrado
+    private static final int CALIDAD = 100;//Para la calidad a la hora de redimensionar la imagen
+    private static final String NOMBRE_IMAGEN = "photo.jpg";//Nombre de la imagen al guardarse
+    private static final int ESCALA = 300;//Dimensión para escalar la imagen
+
 
 
     @Override
@@ -71,7 +75,7 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
         etNombreAlimento.setAdapter(adapter);
         try {
             intent = getIntent();
-            codigo_barras = intent.getStringExtra("CODIGO_BARRAS");
+            codigo_barras = intent.getStringExtra(getString(R.string.cod_barras));
             Log.d("cod", "codigo 4: " + codigo_barras);
         } catch (NullPointerException e) {
             //No hacemos nada
@@ -151,7 +155,7 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
     private void mostrarFoto() {
         ImageButton ibCamara = (ImageButton) findViewById(R.id.ibCamara);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        this.foto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        this.foto.compress(Bitmap.CompressFormat.PNG, CALIDAD, stream);
         try {
             Glide.with(this)
                     .load(stream.toByteArray())
@@ -159,8 +163,8 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(ibCamara);
-        } catch (Exception e) {
-            Toast.makeText(this, "Imagen no disponible", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            Toast.makeText(this, getString(R.string.no_img), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -174,15 +178,15 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
         Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
         if (!nombre.equals("")) {
             Intent intent = new Intent(InsertadorManualmenteActivity.this, CaducidadAlimento.class);
-            intent.putExtra("FotoBitMap", foto);
-            intent.putExtra("ClasePadre", "InsertarManualmenteActivity");
-            intent.putExtra("NombreAlimento", etNombreAlimento.getText());
-            intent.putExtra("CODIGO_BARRAS", codigo_barras);
+            intent.putExtra(getString(R.string.fotoB), foto);
+            intent.putExtra(getString(R.string.clasePadre), getString(R.string.insertador));
+            intent.putExtra(getString(R.string.nombre_a) , etNombreAlimento.getText());
+            intent.putExtra(getString(R.string.cod_barras), codigo_barras);
             Log.d("cod", "codigo 5: " + codigo_barras);
             startActivity(intent);
             //finish();
-        } else {
-            Toast.makeText(this, "Campo de nombre obligatorio", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, getString(R.string.campo_oblig), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -196,12 +200,9 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
     private String[] generarSugerencias(Cursor cursor) {
         int count = cursor.getCount();
         int contador = 0;
-        Log.d("Count", "generarSugerencias: " + count);
         String[] alimentos = new String[count];
-        //Log.d("String", "NOMBRE: " + cursor.getString(0));
-        //Log.d("String", "NOMBRE: " + cursor.getString(1));
-        if (cursor.moveToFirst()) {
-            do {
+        if(cursor.moveToFirst()){
+            do{
                 alimentos[contador] = cursor.getString(0);
                 contador++;
             } while (cursor.moveToNext() && contador != count);
@@ -217,8 +218,8 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
             case PERM_FOTO2: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     hacerFoto();
-                } else {
-                    Toast.makeText(this, "No se ha podido abrir la cámara", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(this, getString(R.string.no_camara), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -226,28 +227,20 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         //Al volver de hacer la foto la colocamos en el lugar del botón de la cámara
-        Log.d("LA PUERTA", "onActivityResult: " + requestCode + resultCode + data);
         if (requestCode == COD_CAMARA) {
-            Log.d("jjjjj", "onActivityResult: " + "hoaalala");
-            File file = new File(Environment.getExternalStorageDirectory().getPath(), "photo.jpg");
+            File file = new File(Environment.getExternalStorageDirectory().getPath(), NOMBRE_IMAGEN);
             Uri uri = Uri.fromFile(file);
             Bitmap bitmap;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                bitmap = crupAndScale(bitmap, 300);
-                Log.d("MADRELAFOTO", "onActivityResult: " + bitmap);
+                bitmap = crupAndScale(bitmap, ESCALA);
                 foto = bitmap;
                 mostrarFoto();
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
-                Log.d("jjjjj", "onActivityResult: " + "hoaalala2");
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
-                Log.d("jjjjj", "onActivityResult: " + "hoaalala3");
             }
         }
     }
@@ -269,24 +262,6 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
         return source;
     }
 
-    /**
-     * Gets foto.
-     *
-     * @return the foto
-     */
-    public static Bitmap getFoto() {
-        return foto;
-    }
-
-    /**
-     * Sets foto.
-     *
-     * @param foto the foto
-     */
-    public static void setFoto(Bitmap foto) {
-        foto = foto;
-    }
-
     //Cerramos la bbdd en el onDestroy
 
     @Override
@@ -298,10 +273,10 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
     /**
      * Método para mostrar el tutorial al usuario
      */
-    private void mostrarTutorial() {
-        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+    private void mostrarTutorial(){
+        final SharedPreferences tutorialShowcases = getSharedPreferences(getString(R.string.tutorialSP), MODE_PRIVATE);
         boolean run;
-        run = tutorialShowcases.getBoolean("runInsertarManualmente", true);
+        run = tutorialShowcases.getBoolean(getString(R.string.tutorial4), true);
 
         if (run) {//Comprobamos si ya se ha mostrado el tutorial en algún momento
 
@@ -315,13 +290,12 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
 
             //Creamos el ShowCase
             final ShowcaseView s = new ShowcaseView.Builder(this)
-                    .setTarget(new ViewTarget(((View) findViewById(R.id.etNombreAlimento))))
-                    .setContentTitle("Nombre del alimento")
-                    .setContentText("Escribe el nombre del alimento que quieras incluir. Se te mostrará la lista con las sugerencias" +
-                            " de productos que hayas incluido manualmente con anterioridad")
+                    .setTarget( new ViewTarget( ((View) findViewById(R.id.etNombreAlimento)) ) )
+                    .setContentTitle(getString(R.string.nom_ali))
+                    .setContentText(getString(R.string.nom_ali_t))
                     .hideOnTouchOutside()
                     .build();
-            s.setButtonText("Siguiente");
+            s.setButtonText(getString(R.string.siguiente));
             s.setButtonPosition(lps);
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
             s.overrideButtonClick(new View.OnClickListener() {
@@ -333,22 +307,22 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
                     switch (contadorS) {
                         case 1:
 
-                            s.setTarget(new ViewTarget(((View) findViewById(R.id.ibCamara))));
-                            s.setContentTitle("Realizar fotografía");
-                            s.setContentText("Pulsa para realizar una fotografía del alimento.");
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.ibCamara)) ) );
+                            s.setContentTitle(getString(R.string.realizar_f));
+                            s.setContentText(getString(R.string.realizar_f_t));
                             break;
 
                         case 2:
-                            s.setTarget(new ViewTarget(((View) findViewById(R.id.ibSiguiente))));
-                            s.setContentTitle("Aceptar");
-                            s.setContentText("Pulsa para confirmar los datos y pasar a la pantalla de insertar caducidad y cantidad.");
+                            s.setTarget( new ViewTarget( ((View) findViewById(R.id.ibSiguiente)) )  );
+                            s.setContentTitle(getString(R.string.aceptar));
+                            s.setContentText(getString(R.string.pulsa_confirmar));
                             break;
 
                         case 3:
-                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("runInsertarManualmente", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.putBoolean(getString(R.string.tutorial4), false);
+                            tutorialShowcasesEdit.apply();
                             s.hide();
                             break;
                     }

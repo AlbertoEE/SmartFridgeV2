@@ -1,17 +1,13 @@
 package net.ddns.smartfridge.smartfridgev2.persistencia.gestores;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.DialogActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.InitialActivity;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Clase que gestiona el almacenamiento del fichero Shared Preferences
@@ -66,15 +62,6 @@ public class GestionSharedP {
      */
     public boolean isHayElemento() {
         return hayElemento;
-    }
-
-    /**
-     * Sets hay elemento.
-     *
-     * @param hayElemento the hay elemento
-     */
-    public void setHayElemento(boolean hayElemento) {
-        this.hayElemento = hayElemento;
     }
 
     /**

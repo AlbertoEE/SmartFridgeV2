@@ -48,15 +48,6 @@ public class Alimento_Nuevo {
     }
 
     /**
-     * Sets nombre ali nuevo.
-     *
-     * @param nombre_ali_nuevo the nombre ali nuevo
-     */
-    public void setNombre_ali_nuevo(String nombre_ali_nuevo) {
-        this.nombre_ali_nuevo = nombre_ali_nuevo;
-    }
-
-    /**
      * Gets fecha alta.
      *
      * @return the fecha alta
@@ -65,12 +56,4 @@ public class Alimento_Nuevo {
         return fecha_alta;
     }
 
-    /**
-     * Sets fecha alta.
-     *
-     * @param fecha_alta the fecha alta
-     */
-    public void setFecha_alta(String fecha_alta) {
-        this.fecha_alta = fecha_alta;
-    }
 }

@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +26,10 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento_Codigo;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomDatePicker;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomOnDragListener;
 import net.ddns.smartfridge.smartfridgev2.modelo.personalizaciones.CustomOnLongClickListener;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
+import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 
 import java.text.ParseException;
@@ -95,18 +95,17 @@ public class CaducidadAlimento extends AppCompatActivity {
      */
     private void comprobarPadre(){
         //Comprobamos si venimos de insertar manualmente o no
-        if(intent.getExtras().get("ClasePadre").equals("InsertadorManualmenteActivity")){
-            nombreAlimento = String.valueOf(intent.getExtras().get("NombreAlimento"));
-            imagenAlimento = (Bitmap) intent.getExtras().get("FotoBitMap");
+        if(intent.getExtras().get(getString(R.string.clasePadre)).equals(getString(R.string.insertador))){
+            nombreAlimento = String.valueOf(intent.getExtras().get(getString(R.string.nombreAlimento)));
+            imagenAlimento = (Bitmap) intent.getExtras().get(getString(R.string.fotoB));
             dd.setImageBitmap(imagenAlimento);
             if (cod_barras!=null){
                 manual = true;
             }
-        }else if (intent.getExtras().get("ClasePadre").equals("ConfirmarAlmientoActivity")){
+        }else if (intent.getExtras().get(getString(R.string.clasePadre)).equals(getString(R.string.confirmador))){
             manual = false;
             //Si venimos de confirmar alimento debemos ver si venimos desde el scaner o desde el Cloud Vision
             //Intentamos coger el objeto
-
             ac = ConfirmadorAlimentoActivity.getAlimento();
             if (ac == null){
                 //Si es null, venimos del cloud vision
@@ -141,7 +140,6 @@ public class CaducidadAlimento extends AppCompatActivity {
         findViewById(R.id.ivCad7).setOnLongClickListener(new CustomOnLongClickListener(7));
         findViewById(R.id.relativeLayout).setOnDragListener(new CustomOnDragListener((ImageView) findViewById(R.id.ivDropZone),
                 (LinearLayout) findViewById(R.id.linearLayout), this, this));
-        //findViewById(R.id.linearLayout).setOnDragListener(new CustomOnDragListener2(this));
     }
 
     /**
@@ -150,7 +148,6 @@ public class CaducidadAlimento extends AppCompatActivity {
      * @param wheelPicker Wheelpicker al que le queremos dar las caractrísticas
      */
     public void wheel(WheelPicker wheelPicker){
-        //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
         List<Integer> unidades = new ArrayList<>();
         for (int k = 1; k <= MAXUDS; k++)
@@ -164,8 +161,6 @@ public class CaducidadAlimento extends AppCompatActivity {
         wheelPicker.setSelectedItemPosition(0);
         //Iniciamos la variable a 1, ya que empezará en el primer elemento, que tendrá valor 1
         unidadesWheel = 1;
-        /*Para poner color de fondo
-        wheelPicker.setBackgroundColor(getResources().getColor(R.color.viewfinder_laser));*/
         wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
             @Override
             public void onItemSelected(WheelPicker picker, Object data, int position) {
@@ -206,7 +201,6 @@ public class CaducidadAlimento extends AppCompatActivity {
         //Convertimos en String la fecha del día de hoy
         String fecha_actual = fecha.fechaActual();
         //Verificamos si se ha seleccionado la caducidad por drag and drop o por el calendario
-        //controlDragAndDrop=1;
         if (controlDragAndDrop==-1){
             //Significa que se ha seleccionado la caducidad por medio del drag and drop
             String fecha_caducidad_alimento = fecha.diasAFecha(tiempo_Caducidad);
@@ -232,7 +226,7 @@ public class CaducidadAlimento extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "dias para caducidad: " + diasCaducidad, Toast.LENGTH_LONG).show();
             //Creamos el objeto Alimento
             try{
                 //Almacenamos en las variables los valores. Si venimos del escaner, tendremos el objeto. Si no, tendremos un NullPointer
@@ -242,8 +236,7 @@ public class CaducidadAlimento extends AppCompatActivity {
                 //Entrará por aquí cuando vengamos de Cloud Vision
                 imagenAlimento = ConfirmadorAlimentoActivity.getImagenCloud();
                 if (imagenAlimento==null){
-                    //imagenAlimento = InsertadorManualmenteActivity.getFoto();
-                    imagenAlimento = (Bitmap)intent.getExtras().get("FotoBitMap");
+                    imagenAlimento = (Bitmap)intent.getExtras().get(getString(R.string.fotoB));
                 }
             }
             al = new Alimento(nombreAlimento, unidadesWheel, diasCaducidad, fecha_actual, fecha_final, imagenAlimento);
@@ -251,10 +244,9 @@ public class CaducidadAlimento extends AppCompatActivity {
             dialogos.dialogCaducidad(unidadesWheel, diasCaducidad, al, manual, cod_barras);
             Log.d("cod", "codigo 8: " + cod_barras);
         } else if (controlDragAndDrop==0){
-            //Programar
             dialogos.dialogNoCaducidad();
         }
-        Toast.makeText(this, String.valueOf(controlDragAndDrop), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(controlDragAndDrop), Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -378,9 +370,9 @@ public class CaducidadAlimento extends AppCompatActivity {
      * Método para mostrar el tutorial
      */
     private void mostrarTutorial(){
-        final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
+        final SharedPreferences tutorialShowcases = getSharedPreferences(getString(R.string.tutorialSP), MODE_PRIVATE);
         boolean run;
-        run = tutorialShowcases.getBoolean("runCAlimento", true);
+        run = tutorialShowcases.getBoolean(getString(R.string.tutorial1), true);
 
         if(run){//Comprobamos si ya se ha mostrado el tutorial en algún momento
 
@@ -395,11 +387,11 @@ public class CaducidadAlimento extends AppCompatActivity {
             //Creamos el ShowCase
             final ShowcaseView s = new ShowcaseView.Builder(this)
                     .setTarget( new ViewTarget( ((View) findViewById(R.id.ivCad4)) ) )
-                    .setContentTitle("Días para caducidad")
-                    .setContentText("Arrastra los días que faltan para la caducidad del alimento")
+                    .setContentTitle(getString(R.string.dias_c))
+                    .setContentText(getString(R.string.dias_c_t))
                     .hideOnTouchOutside()
                     .build();
-            s.setButtonText("Siguiente");
+            s.setButtonText(getString(R.string.siguiente));
             //s.setButtonPosition(lps);
             //Comprobamos que el botón del showCase se pulsa para hacer el switch. Se va acomprobar el contador para ver si se muestra el siguiente showcas
             s.overrideButtonClick(new View.OnClickListener() {
@@ -412,27 +404,26 @@ public class CaducidadAlimento extends AppCompatActivity {
                         case 1:
                             s.setButtonPosition(lps);
                             s.setTarget( new ViewTarget( ((View) findViewById(R.id.ivCadMas)) ) );
-                            s.setContentTitle("Más días");
-                            s.setContentText("Si faltan más de 7 días para la caducidad, puedes seleccionar la fecha pulsando en este icono. Se mostrará el calendario para" +
-                                    " indicar la fecha de caducidad.");
+                            s.setContentTitle(getString(R.string.mas_d));
+                            s.setContentText(getString(R.string.mas_d_t));
                             break;
 
                         case 2:
 
                             s.setTarget( new ViewTarget( ((View) findViewById(R.id.wheelUdsDetalles)) )  );
-                            s.setContentTitle("Unidades añadidas a MiNevera");
-                            s.setContentText("Mueve la rueda para seleccionar las unidades añadidas a MiNevera");
+                            s.setContentTitle(getString(R.string.uds_a));
+                            s.setContentText(getString(R.string.uds_a_t));
                             break;
 
                         case 3:
                             s.setTarget( new ViewTarget( ((View) findViewById(R.id.btOkCad)) )  );
-                            s.setContentTitle("Botón Aceptar");
-                            s.setContentText("Pulsa cuando quieras confirmar los datos. Se te mostrará un mensaje indicándote los datos introducidos para ver si estás conforme con ellos.");
+                            s.setContentTitle(getString(R.string.b_acep));
+                            s.setContentText(getString(R.string.b_acep_t));
                             break;
                         case 4:
                             //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
-                            tutorialShowcasesEdit.putBoolean("runCAlimento", false);
+                            tutorialShowcasesEdit.putBoolean(getString(R.string.tutorial1), false);
                             tutorialShowcasesEdit.apply();
                             s.hide();
                             break;

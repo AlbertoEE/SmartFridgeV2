@@ -33,30 +33,12 @@ public class Precio implements Serializable {
     }
 
     /**
-     * Sets nombre producto.
-     *
-     * @param nombreProducto the nombre producto
-     */
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
-
-    /**
      * Gets pvp.
      *
      * @return the pvp
      */
     public double getPvp() {
         return pvp;
-    }
-
-    /**
-     * Sets pvp.
-     *
-     * @param pvp the pvp
-     */
-    public void setPvp(double pvp) {
-        this.pvp = pvp;
     }
 
     /**
@@ -68,12 +50,4 @@ public class Precio implements Serializable {
         return supermercado;
     }
 
-    /**
-     * Sets supermercado.
-     *
-     * @param supermercado the supermercado
-     */
-    public void setSupermercado(String supermercado) {
-        this.supermercado = supermercado;
-    }
 }

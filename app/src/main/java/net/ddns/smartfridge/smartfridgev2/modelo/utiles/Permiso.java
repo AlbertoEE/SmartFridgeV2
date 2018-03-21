@@ -9,32 +9,32 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 /**
- * Created by raquel on 29/12/2017.
+ * Clase que representa los permisos que se le solicitan explícitamente al usuario como el de la cámara y el de lectura y escritura
  */
 public class Permiso {
     /**
-     * The constant PERM_FOTO.
+     * Constante que sirve para indicar la posición del array para el permiso de la cámara
      */
     public static final int PERM_FOTO=1;//Lo usaremos para indicar la posición del array para el permiso de la cámara
     /**
-     * The constant PERM_LECTURA.
+     * Constante que sirve para indicar la posición del array para el permiso de lectura en almcto interno
      */
     public static final int PERM_LECTURA=2;//Lo usaremos para indicar la posición del array para el permiso de lectura en almcto interno
     /**
-     * The constant PERM_ESCRITURA.
+     * Constante que sirve para indicar la posición del array para el permiso de escritura en almcto interno
      */
     public static final int PERM_ESCRITURA=3;//Lo usaremos para indicar la posición del array para el permiso de escritura en almcto interno
     /**
-     * The constant PERM_FOTO2.
+     * Constante que sirve para indicar la posición del array para el otro permiso de la cámara
      */
     public static final int PERM_FOTO2 = 4;
 
     /**
-     * Permiso camara boolean.
+     * Metodo para comprobar si tiene concedido el permiso para acceder a la cámara
      *
-     * @param contexto  the contexto
-     * @param actividad the actividad
-     * @return the boolean
+     * @param contexto  Contexto donde se ejecuta el permiso
+     * @param actividad Activity sobre la que se va a ejecutar el permiso
+     * @return boolean que si está a true significa que tiene el permiso
      */
 //Metodo para comprobar si tiene concedido el permiso para acceder a la cámara
     public boolean permisoCamara(Context contexto, Activity actividad){
@@ -51,11 +51,11 @@ public class Permiso {
     }
 
     /**
-     * Permiso lectura boolean.
+     * Metodo para comprobar si tiene concedido el permiso para lectura del almacenamiento interno
      *
-     * @param contexto  the contexto
-     * @param actividad the actividad
-     * @return the boolean
+     * @param contexto  Contexto donde se ejecuta el permiso
+     * @param actividad Activity sobre la que se va a ejecutar el permiso
+     * @return boolean que si está a true significa que tiene el permiso
      */
 //Metodo para comprobar si tiene concedido el permiso para lectura del almacenamiento interno
     public boolean permisoLectura(Context contexto, Activity actividad){
@@ -77,11 +77,11 @@ public class Permiso {
     }
 
     /**
-     * Permiso escritura boolean.
+     * Metodo para comprobar si tiene concedido el permiso para escritura del almacenamiento interno
      *
-     * @param contexto  the contexto
-     * @param actividad the actividad
-     * @return the boolean
+     * @param contexto  Contexto donde se ejecuta el permiso
+     * @param actividad Activity sobre la que se va a ejecutar el permiso
+     * @return boolean que si está a true significa que tiene el permiso
      */
 //Metodo para comprobar si tiene concedido el permiso para escritura del almacenamiento interno
     public boolean permisoEscritura(Context contexto, Activity actividad){
@@ -103,11 +103,11 @@ public class Permiso {
     }
 
     /**
-     * Permiso camara 2 boolean.
+     * Metodo que sirve para solicitar permiso para la cámara
      *
-     * @param activity the activity
-     * @param context  the context
-     * @return the boolean
+     * @param activity Activity sobre la que se va a ejecutar el permiso
+     * @param context  Contexto donde se ejecuta el permiso
+     * @return boolean que si está a true significa que tiene el permiso
      */
     public boolean permisoCamara2(Activity activity, Context context){
         boolean permisoCamara = false;

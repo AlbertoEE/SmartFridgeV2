@@ -25,11 +25,10 @@ public class GestionSharedP {
     private ComponenteListaCompra componente;//Para crear los componentes a partir del SP
 
     /**
-     * Productos almacenados int.
+     * Método para comprobar si hay algún elemento en el SP
      *
-     * @return the int
+     * @return número de elementos que hay en el SP
      */
-//Método para comprobar si hay algún elemento en el SP
     public  int productosAlmacenados(){
         elementos = 0;
         //Comprobamos si hay algún elemento leyendo el SP
@@ -50,20 +49,8 @@ public class GestionSharedP {
     }
 
     /**
-     * Borrar sp.
+     * Método para eliminar los datos almacenados en el SP
      */
-/*Método para recoger los valores del SP
-    public ArrayList<String> recogerValores(int elem){
-        String valor;//Para almacenar el valor recogido del SP
-        alimentosLeidosSP = new ArrayList<String>();
-        for (int i=1; i<=elem;i++){
-            valor = sp.getString(String.valueOf(i),null);
-            alimentosLeidosSP.add(valor);
-            Log.d("sp", "alimento leido: " + valor);
-        }
-        return alimentosLeidosSP;
-    }*/
-    //Método para eliminar los datos almacenados en el SP
     public void borrarSP(){
         SharedPreferences.Editor editor = sp.edit();
         //Limpiamos lo que hay en el Shared Preferences
@@ -91,11 +78,10 @@ public class GestionSharedP {
     }
 
     /**
-     * Recoger valores array list.
+     * Método para recoger los valores del SP
      *
-     * @return the array list
+     * @return ArrayList con todos los elementos que hay en el sharedPreferences almacenados
      */
-//Método para recoger los valores del SP
     public ArrayList<ComponenteListaCompra> recogerValores(){
         //Recogemos todos los datos del SP
         totalElementos = sp.getAll();

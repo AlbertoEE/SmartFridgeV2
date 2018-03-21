@@ -16,9 +16,7 @@ import android.widget.RelativeLayout;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento;
 
 /**
- * Created by Alberto on 10/01/2018.
- * <p>
- * Esta clase maneja la zona de drop del Activity CaducidadAlimento
+ * Clase para manejar la zona de drop del Activity CaducidadAlimento
  */
 public class CustomOnDragListener implements View.OnDragListener {
     private boolean dentro; //Booelean que declara si la imagen arrastrada está dentro o no
@@ -33,12 +31,12 @@ public class CustomOnDragListener implements View.OnDragListener {
     private int h; //Altura de los dias
 
     /**
-     * Instantiates a new Custom on drag listener.
+     * Constructor
      *
-     * @param imageView         the image view
-     * @param linearLayout      the linear layout
-     * @param context           the context
-     * @param caducidadAlimento the caducidad alimento
+     * @param imageView         imageView con la imagen del elemento
+     * @param linearLayout      layout
+     * @param context           contexto donde se ejecuta
+     * @param caducidadAlimento Activity dónde se ejecuta, que representa a CaducidadAlimento
      */
     public CustomOnDragListener(ImageView imageView, LinearLayout linearLayout, Context context, CaducidadAlimento caducidadAlimento){
         this.backGround = imageView;
@@ -179,6 +177,9 @@ public class CustomOnDragListener implements View.OnDragListener {
         return false;
     }
 
+    /**
+     * Método para redondear los días de semana si no está bien hecho el drop
+     */
     private void ordenarSegundoPaso() {
         this.children = new View[6];
         for (int i=0; i < 6; i++){

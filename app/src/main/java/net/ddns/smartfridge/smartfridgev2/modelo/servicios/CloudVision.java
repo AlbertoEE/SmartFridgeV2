@@ -16,21 +16,30 @@ import java.util.Locale;
  */
 public class CloudVision {
     /**
-     * The constant DIMENSION_BITMAP.
+     * Constante que representa la dimensión que tendrá el bitmap cuando se redimensione
      */
     public static final int DIMENSION_BITMAP = 1000;//Para redimensionar el bitmap de la imagen
+    /**
+     * Constante que representa la calidad de la imagen para pasarla de bitmap a jpeg
+     */
     private static final int CALIDAD = 90;//Calidad de la imagen para pasarla de bitmap a jpeg
+    /**
+     * Constante que representa un array con palabras clave
+     */
     private static final String [] clave = {"pen", "bottle", "lemon", "tomato", "egg"};//Array con palabras clave
+    /**
+     * Constante que representa un array con palabras clave en español
+     */
     private static final String [] claveEsp = {"bolígrafo", "botella", "limón", "tomate", "huevo"};//Array con palabras clave en español
     private int cloudOk;//Lo vamos a usar para saber si ha habido algún resultado o no en la consulta al Cloud Vision. En función de este parámetro, se cargará
     //una funcionalidad u otra en el activity que se inicia. Si es 0, será que no ha habido resultados
 
     /**
-     * Escalar imagen bitmap.
+     * Método para esclar la imagen
      *
-     * @param bitmap    the bitmap
-     * @param dimension the dimension
-     * @return the bitmap
+     * @param bitmap    Bitmap a escalar
+     * @param dimension int con la dimension que va a tener
+     * @return el bitmap escalado
      */
 //Metodo para escalar la imagen y darle el tamaño de 1000x1000
     public Bitmap escalarImagen(Bitmap bitmap, int dimension) {
@@ -56,10 +65,10 @@ public class CloudVision {
     }
 
     /**
-     * Convertir bitmap image.
+     * Metodo para crear un objeto Imagen a partir del Bitmap obtenido de la camara
      *
-     * @param b the b
-     * @return the image
+     * @param b Bitmap obtenido de la cámara
+     * @return Imagen en la que hemos convertido el Bitmap
      */
 //Metodo para crear un objeto Imagen a partir del Bitmap obtenido de la camara
     public static Image convertirBitmap(Bitmap b) {
@@ -76,10 +85,10 @@ public class CloudVision {
     }
 
     /**
-     * Tratar respuesta string.
+     * Método para tratar la respuesta obtenida por el API
      *
-     * @param respuesta the respuesta
-     * @return the string
+     * @param respuesta Respuesta que nos da el API
+     * @return String con los datos tratados a partir de la respuesta
      */
 //Método para tratar la respuesta obtenida por el API
     public String tratarRespuesta(BatchAnnotateImagesResponse respuesta) {
@@ -110,23 +119,5 @@ public class CloudVision {
             cloudOk=0;//Tomará el valor de 0 si no hemos obtenido respuesta por parte del API
         }
         return mostrar;
-    }
-
-    /**
-     * Gets cloud ok.
-     *
-     * @return the cloud ok
-     */
-    public int getCloudOk() {
-        return cloudOk;
-    }
-
-    /**
-     * Sets cloud ok.
-     *
-     * @param cloudOk the cloud ok
-     */
-    public void setCloudOk(int cloudOk) {
-        this.cloudOk = cloudOk;
     }
 }

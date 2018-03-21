@@ -27,22 +27,20 @@ public class GestionFicheroLista {
     private ListaCompra lista;//Para leer cada objeto del fichero y trabajar con él
 
     /**
-     * Instantiates a new Gestor fichero lista.
+     * Constructor
      *
-     * @param context the context
+     * @param context el Contexto de la Activity
      */
-//Constructor
     public GestionFicheroLista(Context context){
         this.contexto = context;
     }
 
     /**
-     * Escribir lista array list.
+     * Método para añadir los objetos de tipo ListaCompra al fichero
      *
-     * @param l the l
-     * @return the array list
+     * @param l Objeto ListaCompra que contiene los datos que componen una lista de la compra
+     * @return ArrayList con todas las listas de la compra que hay
      */
-//Método para añadir los objetos de tipo ListaCompra al fichero
     public ArrayList<ListaCompra> escribirLista(ListaCompra l)  {
         listas = leerTodasListas();
         if(listas==null){
@@ -74,11 +72,10 @@ public class GestionFicheroLista {
     }
 
     /**
-     * Leer todas listas array list.
+     * Método para leer el arraylist con las listas almacenado en el fichero
      *
-     * @return the array list
+     * @return ArrayList con todas las listas de la compra que hay en el fichero
      */
-//Método para leer el arraylist con las listas almacenado en el fichero
     public ArrayList<ListaCompra> leerTodasListas(){
         listas = new ArrayList<ListaCompra>();
         //BufferedReader br=null;
@@ -116,11 +113,10 @@ public class GestionFicheroLista {
     }
 
     /**
-     * Actualizar listas.
+     * Método para actualizar el fichero con las listas desde TodasListasActivity
      *
-     * @param alc the alc
+     * @param alc ArrayList con todas las listas de la compra que hay en el fichero antes de actualizar
      */
-//Método para actualizar el fichero con las listas desde TodasListasActivity
     public void actualizarListas(ArrayList<ListaCompra> alc){
         FileOutputStream fos=null;
         ObjectOutputStream oos = null;

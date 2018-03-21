@@ -64,10 +64,10 @@ public class Dialogos {
     private ComponenteListaCompra componente;//Para crear un componente nuevo de la lista para añadirlo a esta
 
     /**
-     * Instantiates a new Dialogos.
+     * Constructor 1
      *
-     * @param context  the context
-     * @param activity the activity
+     * @param context  contexto donde se ejecuta el diálogo
+     * @param activity Activity donde se ejecuta el diálogo
      */
     public Dialogos(Context context, Activity activity){
         this.contexto=context;
@@ -76,11 +76,11 @@ public class Dialogos {
     }
 
     /**
-     * Instantiates a new Dialogos.
+     * Constructor 2
      *
-     * @param context  the context
-     * @param fragment the fragment
-     * @param activity the activity
+     * @param context  contexto donde se ejecuta el diálogo
+     * @param fragment Fragment donde se ejecuta el diálogo
+     * @param activity Activity donde se ejecuta el diálogo
      */
     public Dialogos(Context context, TabTipo fragment, Activity activity){
         this.contexto=context;
@@ -89,16 +89,16 @@ public class Dialogos {
     }
 
     /**
-     * Instantiates a new Dialogos.
+     * Constructor 3
      *
-     * @param context the context
+     * @param context contexto donde se ejecuta el diálogo
      */
     public Dialogos(Context context){
         this.contexto=context;
     }
 
     /**
-     * Dialog alimento no encontrado.
+     * Método que muestra el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
      */
 //Se mostrará el dialog cuando el alimento encontrado en la bbdd no sea el que tiene el cliente
     public void dialogAlimentoNoEncontrado(){
@@ -162,7 +162,7 @@ public class Dialogos {
     }
 
     /**
-     * Dialog alimento encontrado.
+     * Método que muestra el dialog cuando el alimento encontrado en la bbdd sí sea el que tiene el cliente
      */
 //Se mostrará el dialog cuando el alimento encontrado en la bbdd sí sea el que tiene el cliente
     public void dialogAlimentoEncontrado(){
@@ -203,13 +203,13 @@ public class Dialogos {
     }
 
     /**
-     * Dialog caducidad.
+     * Método que muestra el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
      *
-     * @param udsSeleccionadas the uds seleccionadas
-     * @param caducidad        the caducidad
-     * @param alimento         the alimento
-     * @param manualCod        the manual cod
-     * @param cod_barras       the cod barras
+     * @param udsSeleccionadas int con el número de unidades seleccionadas
+     * @param caducidad        int con los dias restantes para la caducidad
+     * @param alimento         objeto de tipo Alimento
+     * @param manualCod        booleano que indica si viene de insertar manualmente
+     * @param cod_barras       String con el código de barras del alimento
      */
 //Se mostrará el dialog cuando haya seleccionado la caducidad y las uds para confirmar los datos
     public void dialogCaducidad(int udsSeleccionadas, int caducidad, final Alimento alimento, final boolean manualCod, final String cod_barras){
@@ -268,7 +268,7 @@ public class Dialogos {
     }
 
     /**
-     * Dialog no caducidad.
+     * Método que muestra un dialog cuando no se ha seleccionado una caducidad
      */
 //Dialog para cuando no se ha seleccionado una caducidad
     public void dialogNoCaducidad(){
@@ -297,10 +297,10 @@ public class Dialogos {
     }
 
     /**
-     * Dialog notificar sf.
+     * Método que muestra un dialog para notificar a SF un alimento nuevo
      *
-     * @param alimento   the alimento
-     * @param cod_barras the cod barras
+     * @param alimento   Alimento que queremos notificar
+     * @param cod_barras String con el docigo de barras del alimento
      */
 //Dialog para notificar a SF un alimento nuevo
     public void dialogNotificarSF(final Alimento alimento, final String cod_barras){
@@ -347,7 +347,7 @@ public class Dialogos {
     }
 
     /**
-     * Dialog no cod barras.
+     * Método que muestra un dialog cuando no se encuentra el producto escaneado en la bbdd de códigos de barras
      */
 //Dialog para cuando no se encuentra el producto escaneado en la bbdd de códigos de barras
     public void dialogNoCodBarras(){
@@ -382,17 +382,17 @@ public class Dialogos {
     }
 
     /**
-     * Dialog cero unidades.
+     * Método que muestra un dialog cuando se van a eliminar todas las uds de un alimento
      *
-     * @param vista       the vista
-     * @param id          the id
-     * @param contexto    the contexto
-     * @param foto        the foto
-     * @param nombre      the nombre
-     * @param adapter     the adapter
-     * @param posicion    the posicion
-     * @param wheelPicker the wheel picker
-     * @param uds         the uds
+     * @param vista       View con la vista
+     * @param id          int con el id del alimento
+     * @param contexto    contexto donde se ejecuta
+     * @param foto        Bitmap con la imagen del alimento
+     * @param nombre      String con el nombre del alimento
+     * @param adapter     Adaptador usado para ver los datos
+     * @param posicion    int con la posición del alimento
+     * @param wheelPicker Wheelpicker donde se muestran las unidades
+     * @param uds         int con las unidades del alimento
      */
 //Dialog para cuando se van a eliminar todas las uds de un alimento
     public void dialogCeroUnidades(final View vista, final int id, final Context contexto, final Bitmap foto, final String nombre, final CustomPageAdapter adapter, final int posicion, final WheelPicker wheelPicker, final int uds){
@@ -429,17 +429,17 @@ public class Dialogos {
     }
 
     /**
-     * Mostrar snack.
+     * Método para mostrar un SnackBar para deshacer la eliminación del elimento
      *
-     * @param vista       the vista
-     * @param id          the id
-     * @param contexto    the contexto
-     * @param foto        the foto
-     * @param nombre      the nombre
-     * @param adapter     the adapter
-     * @param posicion    the posicion
-     * @param wheelPicker the wheel picker
-     * @param uds         the uds
+     * @param vista       Vista sobre la que se muestar el SnackBar
+     * @param id          int con el id del alimento
+     * @param contexto    contexto donde se ejecuta
+     * @param foto        Bitmap con la imagen del alimento
+     * @param nombre      String con el nombre del alimento
+     * @param adapter     Adaptador usado para ver los datos
+     * @param posicion    int con la posición del alimento
+     * @param wheelPicker Wheelpicker donde se muestran las unidades
+     * @param uds         int con las unidades del alimento
      */
 //SnackBar para deshacer la eliminación del elimento
     public static void mostrarSnack(View vista, final int id, final Context contexto, final Bitmap foto, final String nombre, final CustomPageAdapter adapter, final int posicion, final WheelPicker wheelPicker, final int uds){
@@ -482,12 +482,12 @@ public class Dialogos {
     }
 
     /**
-     * Dialog anadir lista.
+     * Método que muestra un dialog cuando se van a eliminar todas las uds de un alimento
      *
-     * @param contexto the contexto
-     * @param foto     the foto
+     * @param contexto contexto donde se va a mostrar
+     * @param foto     Bit
      * @param nombre   the nombre
-     */
+
 //Dialog para cuando se van a eliminar todas las uds de un alimento
     public static void dialogAnadirLista(final Context contexto, Bitmap foto, String nombre){
         new FancyGifDialog.Builder(clase)
@@ -520,14 +520,14 @@ public class Dialogos {
                     }
                 })
                 .build();
-    }
+    }*/
 
     /**
-     * Enviar notificacion caducado.
+     * Método que va a enviar la notiviación cuando haya un alimento caducado
      *
-     * @param alimento the alimento
-     * @param contexto the contexto
-     * @param posicion the posicion
+     * @param alimento Alimento caducado
+     * @param contexto Context donde se va a ejecutar
+     * @param posicion posicion del alimento en el cursor de la bbdd
      */
 //Método para enviar la notificación
     public void enviarNotificacionCaducado(Alimento alimento, Context contexto, int posicion){
@@ -568,11 +568,11 @@ public class Dialogos {
     }
 
     /**
-     * Enviar notificacion proxima caducidad.
+     * Método que envía una notificación cuando faltan menos de dos días para la caducidad
      *
-     * @param alimento the alimento
-     * @param contexto the contexto
-     * @param posicion the posicion
+     * @param alimento Alimento caducado
+     * @param contexto Context donde se va a ejecutar
+     * @param posicion posicion del alimento en el cursor de la bbdd
      */
 //Método para enviar la notificación cuando falten menos de dos días para la caducidad
     public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto, int posicion){
@@ -600,11 +600,11 @@ public class Dialogos {
     }
 
     /**
-     * Enviar notificacion proxima escasez.
+     * Método para enviar la notificación cuando haya menos de dos unidades de alimento
      *
-     * @param alimento the alimento
-     * @param contexto the contexto
-     * @param posicion the posicion
+     * @param alimento Alimento caducado
+     * @param contexto Context donde se va a ejecutar
+     * @param posicion posicion del alimento en el cursor de la bbdd
      */
 //Método para enviar la notificación cuando haya menos de dos unidades de alimento
     public void enviarNotificacionProximaEscasez(Alimento alimento, Context contexto, int posicion){
@@ -641,7 +641,7 @@ public class Dialogos {
     }
 
     /**
-     * Dialog lista compra.
+     * Método que muestar un dialog cuando se añadan productos a la lista de la compra
      */
 //Dialog para cuando se añadan productos a la lista de la compra
     public void dialogListaCompra(){
@@ -666,11 +666,11 @@ public class Dialogos {
     }
 
     /**
-     * Dialogo modificar borrar.
+     * Método que muestra un dialog cuando se quiere modificar un elemento de la lista de la compra
      *
-     * @param texto    the texto
-     * @param adapter  the adapter
-     * @param position the position
+     * @param texto    String con el nombre del elemento que queremos modificar
+     * @param adapter  Adapter del activity
+     * @param position posición del alimento pulsado
      */
     public void dialogoModificarBorrar(String texto, final CustomArrayAdapterNuevaLista adapter, final int position){
         final String[] componenteReturn = new String[1];
@@ -720,10 +720,10 @@ public class Dialogos {
     }
 
     /**
-     * Dialogo borrar lista.
+     * Método que mostrará un dialog cuando se vaya a borrar una lista de la compra de las que hay guardadas
      *
-     * @param clase    the clase
-     * @param position the position
+     * @param clase    Clase sobre la que se va a mostrar
+     * @param position int con la posicion en el adapter
      */
 /*Dialog que se mostrará cuando no se haya encontrado ninguna menu_receta con los criterios de búsqueda
     public void dialogoNoReceta(){

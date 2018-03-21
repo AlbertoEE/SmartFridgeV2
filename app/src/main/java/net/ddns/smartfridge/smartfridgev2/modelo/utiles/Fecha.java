@@ -21,9 +21,9 @@ public class Fecha {
     private static final int MILISEGUNDOS = 86400000;//Representa los milisegundos que tiene un día
 
     /**
-     * Fecha actual string.
+     * Método para conseguir la fecha actual sin las horas
      *
-     * @return the string
+     * @return String con la fecha actual en formato String
      */
 //Método para conseguir la fecha actual
     public String fechaActual(){
@@ -38,9 +38,9 @@ public class Fecha {
     }
 
     /**
-     * Fecha actual completa string.
+     * Método para conseguir la fecha actual con las horas
      *
-     * @return the string
+     * @return String con la fecha actual con las horas
      */
 //Método para conseguir la fecha actual
     public String fechaActualCompleta(){
@@ -55,10 +55,10 @@ public class Fecha {
     }
 
     /**
-     * Fecha corta string.
+     * Método para pasar de formato completo a formato corto de una fecha
      *
-     * @param fechaLarga the fecha larga
-     * @return the string
+     * @param fechaLarga String con la fecha en formato con horas
+     * @return String con la fecha en formato sin horas
      */
 //Método para pasar de formato completo a formato corto de una fecha
     public String fechaCorta(String fechaLarga){
@@ -76,10 +76,10 @@ public class Fecha {
     }
 
     /**
-     * Dias a fecha string.
+     * Método para saber una fecha a partir de unos días dados
      *
-     * @param tiempo_Caducidad the tiempo caducidad
-     * @return the string
+     * @param tiempo_Caducidad int con los dias que faltan para la caducidad
+     * @return String con la fecha en la que caduca el alimento
      */
 //Método para saber una fecha a partir de unos días dados
     public String diasAFecha(int tiempo_Caducidad){
@@ -92,12 +92,12 @@ public class Fecha {
     }
 
     /**
-     * Fecha dias int.
+     * Método para obtener los días a partir de una fecha dada
      *
-     * @param fechaCalendarioMas the fecha calendario mas
-     * @param context            the context
-     * @return the int
-     * @throws ParseException the parse exception
+     * @param fechaCalendarioMas String con la fecha elegida a través del calendario
+     * @param context            contexto donde se ejecuta el método
+     * @return the int          int con los días que faltan para que caduque un alimento
+     * @throws ParseException   cuando no se puede cambiar el formato de la fecha
      */
 //Método para obtener los días a partir de una fecha dada
     public int fechaDias(String fechaCalendarioMas, Context context) throws java.text.ParseException {
@@ -120,7 +120,6 @@ public class Fecha {
         } catch (NullPointerException e){
             diasParaCaducidad = 0;
         }
-
         return diasParaCaducidad;
     }
 }

@@ -120,7 +120,7 @@ public class CompraExternaActivity extends AppCompatActivity {
     /**
      * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onOptionsItemSelected(android.view.MenuItem)'
      */
-    //Programamos el botón del ActionBAr
+    //Programamos el botón del ActionBAR
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

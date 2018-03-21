@@ -53,7 +53,7 @@ public class MainClc extends Fragment {
                 startActivity(intent);
             }
         });
-        mostrarTutorialCa(view);
+        //mostrarTutorialCa(view);
         return view;
     }
 

@@ -106,8 +106,6 @@ public class InitialActivity extends AppCompatActivity {
             //Si no está activo, lo iniciamos
             intentServicio = new Intent(this,ComprobarCaducidadIntentService.class); //serv de tipo Intent
             this.startService(intentServicio); //ctx de tipo Context
-            //intentRecetas = new Intent(this, RecetasIntentService.class);//serv de tipo Intent
-            //this.startService(intentRecetas);//ctx de tipo Context
             Log.d("servicio", "Arranca el servicio");
         } else {
             Log.d("servicio", "El servicio ya está ejecutándose!!!");
@@ -122,18 +120,17 @@ public class InitialActivity extends AppCompatActivity {
     private void checkInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (null == ni)
+        if (ni == null)
             Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show();
         else {
-            Toast.makeText(this, getString(R.string.si_internet), Toast.LENGTH_LONG).show();
             try {
+                Toast.makeText(this, getString(R.string.si_internet), Toast.LENGTH_LONG).show();
                 String parameters = ""; //
                 URL url = new URL("http://smartFridge.ddns.net" + parameters);
                 executeReq(url);
             }
             catch(Exception e){
-                //Error
-                Toast.makeText(this, getString(R.string.no_connect), Toast.LENGTH_SHORT).show();
+                Log.d("error", "" + e.getMessage());
             }
         }
     }

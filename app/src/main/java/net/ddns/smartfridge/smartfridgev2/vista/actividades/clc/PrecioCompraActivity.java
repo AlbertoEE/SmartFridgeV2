@@ -154,12 +154,12 @@ public class PrecioCompraActivity extends AppCompatActivity {
         tvAlcampo = findViewById(R.id.tvAlc);
         tvHipercor = findViewById(R.id.tvHip);
         tvMercadona = findViewById(R.id.tvMer);
-        try{
+        if (totales!=null) {
             tvCarrefour.setText(f.format(totales.get(0)));
             tvAlcampo.setText(f.format(totales.get(1)));
             tvHipercor.setText(f.format(totales.get(2)));
             tvMercadona.setText(f.format(totales.get(3)));
-        } catch (NullPointerException e){
+        } else {
             Toast.makeText(this, getString(R.string.no_precio), Toast.LENGTH_SHORT).show();
         }
     }
@@ -217,9 +217,20 @@ public class PrecioCompraActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Precio> precios) {
             super.onPostExecute(precios);
             totalPorSupermercado = precios;
-            clase.setArray(precios);
-            try {
+            if (precios.size()>0) {
                 //Asignamos aqui el ArrayList al recyclerview
+                clase.setArray(precios);
+            } else {
+                Toast.makeText(clase, getString(R.string.no_precio_r), Toast.LENGTH_SHORT).show();
+                try {
+                    myHelper.cerrarConexion();
+                    customDialogProgressBar.endDialog();
+                    finish();
+                } catch (SQLException e) {
+                    Log.d("SQL", "Error al cerrar la bbdd");
+                }
+            }
+            try {
                 myHelper.cerrarConexion();
                 customDialogProgressBar.endDialog();
             } catch (SQLException e) {

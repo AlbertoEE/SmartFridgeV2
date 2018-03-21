@@ -19,7 +19,7 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.GestionSharedP;
 import java.util.ArrayList;
 
 /**
- * The type Sugerencia de alimento activity.
+ * Activity para mostrar los alimentos que hemos indicado en la notificación que nos tiene que recordar para añadir a la lista de la compra, por haber pocas unidades
  */
 public class SugerenciaDeAlimentoActivity extends AppCompatActivity {
     private ListView listView;

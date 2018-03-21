@@ -33,6 +33,9 @@ import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Activity que muestra las opciones de filtro para los ingredientes que están almacenados en la nevera
+ */
 public class MiNeveraFiltroActivity extends AppCompatActivity {
     private MySQLHelper myHelper;//Para trabajar con la bbdd de mysql
     private AlimentoDB alimentoDB;
@@ -70,6 +73,11 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Para poner el nombre de los ingredientes en unas etiquetas tipo chip
+     *
+     * @param text Texto a poner en la etiqueta
+     */
     public void addChip(String text){
         final Chip chip = new Chip(this);
         chip.setClosable(true);
@@ -85,6 +93,9 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
         llChipsFiltro.addView(chip);
     }
 
+    /**
+     * Método para inicializar el recyclerView que nos mostrará todos los datos de los ingredientes
+     */
     private void iniciarRecyclerView() {
         rvMiNevera = (RecyclerView) findViewById(R.id.rvMiNevera);
         layoutManager = new GridLayoutManager(this, 2);
@@ -146,6 +157,9 @@ public class MiNeveraFiltroActivity extends AppCompatActivity {
         alimentoDB.cerrarConexion();
     }
 
+    /**
+     * Clase con un AsyncTask para seleccionar las recetas en función del filtro aplicado
+     */
     public class mostrarRecetasFiltroString extends AsyncTask<ArrayList<String>, Void, ArrayList<Receta>> {
 
         @Override

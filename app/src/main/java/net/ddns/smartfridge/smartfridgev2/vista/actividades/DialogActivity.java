@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * The type Dialog activity.
+ * Activity que muestra el dialog cuando haya que incluir un alimento en el Shared Preferences para sugerírselo al usuario cuando vaya a hacer una nueva
+ * lista de la compra
  */
 public class DialogActivity extends Activity {
     private Intent i;//Para recoger el intent que nos llega de la notificación del service
@@ -34,91 +35,24 @@ public class DialogActivity extends Activity {
         //Recogemos el intent
         i = getIntent();
         componente = (ComponenteListaCompra)i.getSerializableExtra("Alimento");
-        //String alimento = i.getStringExtra("Alimento");
         Log.d("sp", componente.getNombreElemento());
-        /*
-        ArrayList<String> nombreAlimentos = i.getStringArrayListExtra("Alimento");
-        Log.d("sp", "intent: "+  nombreAlimentos.get(0).toString());
-        Log.d("sp", "intent: "+  nombreAlimentos.get(1).toString());*/
-        //Cogemos el SP.
-        //mySp = getPreferences(MODE_PRIVATE);
         mySp = InitialActivity.getSp();
-        /*
-        Log.d("Alimento", "alimento: "+ nombreAlimentos.get(0).toString());
-        Log.d("Alimento", "alimento: "+ nombreAlimentos.get(1).toString());*/
-        //Comprobamos el número de elementos que hay en el SP
-        //posicion = recogerPosicion(mySp);
-        //Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
-        //Añadimos el elemento en la posición siguiente
-        //posicion++;
-        //Log.d("sp", "posicion en la que se va a insertar: "+ posicion);
-        //Añadimos el elemento
-        //guardarSP(posicion, componente.getNombreElemento());
         guardarSP(componente.getId(), componente.getNombreElemento());
-       // guardarSP(posicion+1, nombreAlimentos.get(1).toString());
         Dialogos d = new Dialogos(this, this);
         d.dialogListaCompra();
     }
 
     /**
-     * Guardar sp.
+     * Método para guardar lo recibido en el intent en el SharedPreferences
      *
-     * @param posicion       the posicion
-     * @param nombreAlimento the nombre alimento
+     * @param posicion       posicion para guardar en el Shared Preferences
+     * @param nombreAlimento Nombre del alimento
      */
-//Método para guardar lo recibido en el intent en el SharedPreferences
     public void guardarSP(int posicion, String nombreAlimento){
         //Escribimos los datos. Generamos el editor
         SharedPreferences.Editor editor = mySp.edit();
         //Metemos cada par clave/valor
         editor.putString(String.valueOf(posicion), nombreAlimento);
         editor.commit();
-    }
-
-    /**
-     * Recoger posicion int.
-     *
-     * @param sp the sp
-     * @return the int
-     */
-//Método para obtener la posición dónde se almacenará el siguiente elemento del sP
-    public int recogerPosicion(SharedPreferences sp){
-        int elementos = 0;//Iniciamos la variable con el total de elementos que hay en el SP a 0
-        //Recogemos todos los elementos que hay en el sp
-        Map<String, ?> totalElementos = sp.getAll();
-
-        for (Map.Entry<String, ?> entry : totalElementos.entrySet()) {
-            Log.d("sp", entry.getKey() + ": " + entry.getValue().toString());
-            elementos++;
-        }
-
-        /*
-        File prefsdir = new File(getApplicationInfo().dataDir,"shared_prefs");
-        //Comprobamos que haya un SP y que sea un directorio
-        if(prefsdir.exists() && prefsdir.isDirectory()){
-            //Guardamos en una lista los datos del sp
-            String[] listaDatos = prefsdir.list();
-            elementos = listaDatos.length;
-            Log.d("sp", "número de elementos en el sp: " + elementos);
-        }*/
-        return elementos;
-    }
-
-    /**
-     * Gets my sp.
-     *
-     * @return the my sp
-     */
-    public static SharedPreferences getMySp() {
-        return mySp;
-    }
-
-    /**
-     * Sets my sp.
-     *
-     * @param mySp the my sp
-     */
-    public void setMySp(SharedPreferences mySp) {
-        this.mySp = mySp;
     }
 }

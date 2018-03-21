@@ -1,25 +1,17 @@
 package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.bumptech.glide.Glide;
@@ -28,7 +20,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomPageAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
-import net.ddns.smartfridge.smartfridgev2.modelo.servicios.ComprobarCaducidadIntentService;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 import net.ddns.smartfridge.smartfridgev2.persistencia.gestores.AlimentoDB;
@@ -43,7 +34,7 @@ import java.util.List;
 import jp.wasabeef.blurry.Blurry;
 
 /**
- * The type Fragment detalles.
+ * Fragment para ver el detalle de un ingrediente
  */
 public class Fragment_detalles extends Fragment {
     private int unidadesWheel;
@@ -56,15 +47,11 @@ public class Fragment_detalles extends Fragment {
     private ImageView ivAlimento;
     private Dialogos dialogos;
     private View constraintLayout;
-    private MiNeveraActivity miNeveraActivity;
     private AlimentoDB adb;
-    private boolean notificacion;//Para ver de donde viene el intent
     private Alimento alimento;
     private Bitmap imagen;
-    private DetallesActivity detallesActivity;
     private AlimentoDB alimentoDB;
     private CustomPageAdapter customPageAdapter;
-    private ViewPager vp;
     private int posicion;
     private Fecha fecha;
 
@@ -92,12 +79,12 @@ public class Fragment_detalles extends Fragment {
     }
 
     /**
-     * New instance fragment detalles.
+     * Crea una nueva instancia del fragment
      *
-     * @param alimento the alimento
-     * @param imagen   the imagen
-     * @param position the position
-     * @return the fragment detalles
+     * @param alimento Alimento a mostrar
+     * @param imagen   imagen del alimento
+     * @param position posición del alimento
+     * @return el Fragment correspondiente
      */
     public static Fragment_detalles newInstance(Alimento alimento, Bitmap imagen, int position) {
         Bundle bundle = new Bundle();
@@ -111,21 +98,24 @@ public class Fragment_detalles extends Fragment {
         return fragment;
     }
 
+    /**
+     * Método para leer los datos que se han recogido en newInstance
+     * @param bundle Datos del newInstance
+     */
     private void readBundle(Bundle bundle) {
         if (bundle != null) {
             this.alimento = (Alimento) bundle.getSerializable("alimento");
             this.imagen = (Bitmap) bundle.getParcelable("imagen");
             this.posicion = (int) bundle.getInt("posicion");
-
             wheel(wheelPicker);
         }
 
     }
 
     /**
-     * Wheel.
+     * Método para crear y dar los parámetros al wheelpicker para elegir los días de caducidad
      *
-     * @param wheelPicker the wheel picker
+     * @param wheelPicker Wheelpicker que vamos a utilizar
      */
     public void wheel(final WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
@@ -171,6 +161,10 @@ public class Fragment_detalles extends Fragment {
         });
     }
 
+    /**
+     * Método para cargar los datos en el detalle  cuando sea necesario
+     * @param view View sobre el que actúa el onClick
+     */
     private void cargarDetallesAlimento(View view){
 
         tvNombreAlimento = (TextView)view.findViewById(R.id.tvNombreAlimentoDetalles);
@@ -197,14 +191,13 @@ public class Fragment_detalles extends Fragment {
             comprimirImagen(BitmapFactory.decodeResource(getResources(), R.drawable.no_image_found), ivAlimento);
         }
 
-        //Controlamos la imagen que hay que pon
     }
 
     /**
-     * Comprimir imagen.
+     * Método para comprimir la imágen a mostrar
      *
-     * @param bitmap    the bitmap
-     * @param imageView the image view
+     * @param bitmap    Imagen a comprimir
+     * @param imageView ImageView donde se muestra dicha imagen
      */
     public void comprimirImagen(Bitmap bitmap, ImageView imageView){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

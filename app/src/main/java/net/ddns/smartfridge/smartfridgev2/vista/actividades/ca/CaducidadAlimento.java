@@ -37,11 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Caducidad alimento.
+ * Activity para elegir la caducidad de los alimentos
  */
 public class CaducidadAlimento extends AppCompatActivity {
     /**
-     * The constant MAXUDS.
+     * Constante con el número máximo de unidades del WheelPicker
      */
     public static final int MAXUDS = 50;//Número máximo de uds del WheelPicker
     private int unidadesWheel;//Unidades del Wheel Picker
@@ -62,7 +62,7 @@ public class CaducidadAlimento extends AppCompatActivity {
     private String cod_barras;//Para el código de barras del alimento
 
     /**
-     * The constant isInFront.
+     * Booleano para ver la pila de actividades
      */
     public static Boolean isInFront = null;
 
@@ -87,9 +87,12 @@ public class CaducidadAlimento extends AppCompatActivity {
         WheelPicker wheelPicker = (WheelPicker) findViewById(R.id.wheelUdsDetalles);
         wheel(wheelPicker);
         adb = new AlimentoDB(this);
-        //mostrarTutorial();
+        mostrarTutorial();
     }
-
+    /**
+     * Método para comprobar de qué Activity proceden los datos del intent
+     *
+     */
     private void comprobarPadre(){
         //Comprobamos si venimos de insertar manualmente o no
         if(intent.getExtras().get("ClasePadre").equals("InsertadorManualmenteActivity")){
@@ -124,7 +127,10 @@ public class CaducidadAlimento extends AppCompatActivity {
     public void setTiempo_Caducidad(int tiempo_Caducidad){
         this.tiempo_Caducidad = tiempo_Caducidad;
     }
-
+    /**
+     * Método para rellenar los elementos del drag & drop
+     *
+     */
     private void cargarDragAndDrop(){
         findViewById(R.id.ivCad1).setOnLongClickListener(new CustomOnLongClickListener(1));
         findViewById(R.id.ivCad2).setOnLongClickListener(new CustomOnLongClickListener(2));
@@ -139,11 +145,10 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     /**
-     * Wheel.
+     * Método para dar las características al WheelPicker.
      *
-     * @param wheelPicker the wheel picker
+     * @param wheelPicker Wheelpicker al que le queremos dar las caractrísticas
      */
-//Método para dar las características al WheelPicker
     public void wheel(WheelPicker wheelPicker){
         //final int itemSel;//Para el item seleccionado
         //Asignamos datos al WheelPicker
@@ -174,11 +179,10 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     /**
-     * Confirmar caducidad.
+     * Metodo que mostrará un dialog con la caducidad y las uds seleccionadas
      *
-     * @param v the v
+     * @param v Vista sobre la que se ejecutará
      */
-//Metodo que mostrará un dialog con la caducidad y las uds seleccionads
     public void confirmarCaducidad(View v){
         Dialogos dialogos = new Dialogos(this,this);
 
@@ -254,9 +258,9 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     /**
-     * Boton mas.
+     * Método para mostrar el calendario cuando se pulsa el botón más
      *
-     * @param view the view
+     * @param view Vista sobre la que se muestra el botón
      */
     public void botonMas(View view){
         try {
@@ -267,10 +271,10 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     /**
-     * Set fechas.
+     * Método para poner las fechas inicial y final
      *
-     * @param fecha_incial the fecha incial
-     * @param fecha_final  the fecha final
+     * @param fecha_incial la fecha inicial
+     * @param fecha_final  la fecha final
      */
     public void setFechas(String fecha_incial, String fecha_final){
         this.fecha_inicial = fecha_incial;
@@ -296,9 +300,8 @@ public class CaducidadAlimento extends AppCompatActivity {
     }
 
     /**
-     * Poner imagenes.
+     * Método para poner las imágenes a los botones del drag and drop
      */
-//Método para poner las imágenes a los botones del drag and drop
     public void ponerImagenes(){
         Drawable elemento;//Para almacenar los elementos drawable
         Bitmap bitmap;//Para convertir el drawable a bitmap
@@ -371,6 +374,9 @@ public class CaducidadAlimento extends AppCompatActivity {
         isInFront = false;
     }
 
+    /**
+     * Método para mostrar el tutorial
+     */
     private void mostrarTutorial(){
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
         boolean run;
@@ -424,10 +430,10 @@ public class CaducidadAlimento extends AppCompatActivity {
                             s.setContentText("Pulsa cuando quieras confirmar los datos. Se te mostrará un mensaje indicándote los datos introducidos para ver si estás conforme con ellos.");
                             break;
                         case 4:
-                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("runCAlimento", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.apply();
                             s.hide();
                             break;
                     }

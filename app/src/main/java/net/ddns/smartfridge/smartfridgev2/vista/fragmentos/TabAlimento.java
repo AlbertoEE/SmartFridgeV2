@@ -37,7 +37,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment para filtrar por alimentos que se quiera tener o no en la receta
  */
 public class TabAlimento extends Fragment {
     private MySQLHelper myHelper;//Para trabajar con la bbdd de mysql
@@ -60,7 +60,7 @@ public class TabAlimento extends Fragment {
     private LinearLayout llChips;
 
     /**
-     * Instantiates a new Tab alimento.
+     * Constructor de la clase
      */
     public TabAlimento() {
         // Required empty public constructor
@@ -152,7 +152,12 @@ public class TabAlimento extends Fragment {
 
         return v;
     }
-    
+
+    /**
+     * Método para generar los nombres de los alimentos a filtrar
+     * @param ing Ingrediente
+     * @return Lista con todos los nombres de los ingredientes
+     */
     private String[] generarSugerencias(ArrayList<Ingrediente> ing){
         int count = ing.size();
         int contador = 0;
@@ -169,7 +174,7 @@ public class TabAlimento extends Fragment {
     }
 
     /**
-     * Add ingrediente.
+     * Método para añadir hasta 3 ingredientes para realizar el filtro
      */
     public void addIngrediente(){
         final String ingrediente = act.getText().toString();
@@ -205,9 +210,9 @@ public class TabAlimento extends Fragment {
     }
 
     /**
-     * Dismiss keyboard.
+     * Método para ocultar el teclado
      *
-     * @param activity the activity
+     * @param activity Activity sobre la que se ejecuta
      */
     public void dismissKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -217,15 +222,15 @@ public class TabAlimento extends Fragment {
     }
 
     /**
-     * The type Get all ingredientes.
+     * Clase con el AsyncTask para sacar de la bbdd la lista de todas las duraciones y dificultades
      */
     public class GetAllIngredientes extends AsyncTask<Void, Void, ArrayList<Ingrediente>> {
         /**
-         * The Duracion.
+         * Lista para almacenar todas las duraciones
          */
         ArrayList<String> duracion = new ArrayList<>();
         /**
-         * The Dificultad.
+         * Lista para almacenar todas las dificultades
          */
         ArrayList<String> dificultad = new ArrayList<>();
         @Override
@@ -272,7 +277,7 @@ public class TabAlimento extends Fragment {
     }
 
     /**
-     * The type Coger recetas filtro.
+     * Clase con el AsyncTask para sacar todas las recetas según el filtro
      */
     public class CogerRecetasFiltro extends AsyncTask<String, Void, ArrayList<Receta>> {
 

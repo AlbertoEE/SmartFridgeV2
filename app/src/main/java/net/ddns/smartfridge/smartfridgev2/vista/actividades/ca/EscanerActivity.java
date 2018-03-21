@@ -11,22 +11,22 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
- * The type Escaner activity.
+ * Activity que muestra el escáner para capturar el código de barras
  */
 public class EscanerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
     private ZXingScannerView escanerView;
     /**
-     * The constant TAG_CODIGO.
+     * Constante con la etiqueta que se le pondrá al código cuando lo pasemos a otra Activity.
      */
     public static final String TAG_CODIGO = "codigo";//Para hacer el paso al Intent
     /**
-     * The constant TAG_TIPO_CODIGO.
+     * Constante con la etiqueta que se le pondrá al tipo de código cuando lo pasemos a otra Activity.
      */
     public static final String TAG_TIPO_CODIGO = "tipoCodigo";//Para hacer el paso al Intent
     private Intent confirmar;//Intent que generamos para abrir un nuevo Activity
     /**
-     * The constant DELAY_SCANNER.
+     * Constante que representa el tiempo de espera para abrir el escáner
      */
     public static final int DELAY_SCANNER = 2000;
 

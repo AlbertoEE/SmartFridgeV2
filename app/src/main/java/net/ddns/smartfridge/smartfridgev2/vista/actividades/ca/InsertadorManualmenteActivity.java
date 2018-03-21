@@ -43,9 +43,9 @@ import java.io.IOException;
 import static net.ddns.smartfridge.smartfridgev2.modelo.utiles.Permiso.PERM_FOTO2;
 
 /**
- * The type Insertar manualmente activity.
+ * Activity que representa la parte de insertar un alimento de manera manual, mediante un nombre y una foto
  */
-public class InsertarManualmenteActivity extends AppCompatActivity {
+public class InsertadorManualmenteActivity extends AppCompatActivity {
     private TextView explicacion;
     private Permiso permiso;
     private static Bitmap foto;
@@ -76,7 +76,7 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             //No hacemos nada
         }
-        //mostrarTutorial();
+        mostrarTutorial();
     }
 
     public void callBroadCast() {
@@ -119,14 +119,17 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     }
 
     /**
-     * Hacer foto button.
+     * Método para llamar a la cámara y hacer una fotografíca del alimento
      *
-     * @param view the view
+     * @param view View sobre el que actúa el onClick
      */
     public void hacerFotoButton(View view) {
         hacerFoto();
     }
 
+    /**
+     * Método para hacer una fotografría al alimento cuando lo queremos introducir de manera manual
+     */
     private void hacerFoto() {
         permiso = new Permiso();
         Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -142,6 +145,9 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para mostrar la imagen hecha con la cámara al usuario
+     */
     private void mostrarFoto() {
         ImageButton ibCamara = (ImageButton) findViewById(R.id.ibCamara);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -159,9 +165,9 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
     }
 
     /**
-     * Siguiente boton.
+     * Método para pasar al activity de confirmar alimento
      *
-     * @param view the view
+     * @param view View sobre el que actúa el onClick del botón
      */
     public void siguienteBoton(View view) {
         String nombre = String.valueOf(etNombreAlimento.getText());
@@ -181,6 +187,12 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para mostrar al usuario las sugerencias de los nombres de los alimentos
+     *
+     * @param cursor Cursor con todos los datos de los alimentos insertados manualmente con anterioridad
+     * @return Lista con todos los Strings con los nombres
+     */
     private String[] generarSugerencias(Cursor cursor) {
         int count = cursor.getCount();
         int contador = 0;
@@ -240,6 +252,13 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para escalar la imagen a la hora de guardarla
+     *
+     * @param source Imagen que queremos escalar
+     * @param scale  Escala a aplicar
+     * @return Imagen escalada
+     */
     public static Bitmap crupAndScale(Bitmap source, int scale) {
         int factor = source.getHeight() <= source.getWidth() ? source.getHeight() : source.getWidth();
         int longer = source.getHeight() >= source.getWidth() ? source.getHeight() : source.getWidth();
@@ -276,6 +295,9 @@ public class InsertarManualmenteActivity extends AppCompatActivity {
         alimento_nuevoDB.cerrarConexion();
     }
 
+    /**
+     * Método para mostrar el tutorial al usuario
+     */
     private void mostrarTutorial() {
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
         boolean run;

@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * The type Detalles receta activity.
+ * Activity para ver el detalle de una receta
  */
 public class DetallesRecetaActivity extends AppCompatActivity {
     private Intent intent;//Para recoger el intent del otro Activity
@@ -45,7 +45,6 @@ public class DetallesRecetaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalles_receta);
         intent = getIntent();
         TextView tvTitulo = (TextView)findViewById(R.id.tvTituloReceta);
-        //titulo =
         tvTitulo.setText(intent.getStringExtra("nombre"));
         TextView tvDificultad = (TextView)findViewById(R.id.tvNumeroProductos);
         tvDificultad.setText(intent.getStringExtra("dificultad"));
@@ -62,7 +61,7 @@ public class DetallesRecetaActivity extends AppCompatActivity {
     }
 
     /**
-     * The type Recoger ingredientes.
+     * Clase con el AsyncTask para recoger todos los ingredientes correspondientes a una receta
      */
     public class RecogerIngredientes extends AsyncTask<Integer, Void, ArrayList<Ingrediente>>{
 

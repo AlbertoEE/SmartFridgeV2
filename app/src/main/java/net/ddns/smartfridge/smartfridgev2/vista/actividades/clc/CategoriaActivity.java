@@ -57,9 +57,8 @@ public class CategoriaActivity extends AppCompatActivity {
     }
 
     /**
-     * The type Listado externo.
+     * Clase que tiene el AsyncTask para hacer la consulta a la bbdd
      */
-//Creamos el AsyncTask para hacer la consulta a la bbdd
     public class ListadoExterno extends AsyncTask<String,Void, ArrayList<Ingrediente>> {
 
         @Override
@@ -99,23 +98,8 @@ public class CategoriaActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets ingredientes categoria.
-     *
-     * @return the ingredientes categoria
+     * Método que incia el adaptador
      */
-    public ArrayList<Ingrediente> getIngredientesCategoria() {
-        return ingredientesCategoria;
-    }
-
-    /**
-     * Sets ingredientes categoria.
-     *
-     * @param ingredientesCategoria the ingredientes categoria
-     */
-    public void setIngredientesCategoria(ArrayList<Ingrediente> ingredientesCategoria) {
-        this.ingredientesCategoria = ingredientesCategoria;
-    }
-
     private void cargarAdapter(){
         Log.d("componente", "longitud del array en el cargarAdapter: " + componentes.size());
         this.adapter = new CustomRecyclerViewAdapterRevistaCategorias(ingredientesCategoria, this, componentes);

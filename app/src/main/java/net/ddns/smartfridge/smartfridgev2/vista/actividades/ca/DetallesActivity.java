@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Detalles activity.
+ * Activity que muestra el detalle de un alimento seleccionado
  */
 public class DetallesActivity extends FragmentActivity {
     private ViewPager viewPager;
@@ -66,11 +66,11 @@ public class DetallesActivity extends FragmentActivity {
         viewPager.setAdapter(pageAdapter);
 
         viewPager.setCurrentItem(posicion);
-        //mostrarTutorial();
+        mostrarTutorial();
     }
 
     /**
-     * Cargar array.
+     * Método para rellenar el array con todos los alimentos de la bbdd
      */
     public void cargarArray() {
         //Limpiamos el array
@@ -85,7 +85,6 @@ public class DetallesActivity extends FragmentActivity {
             for (int i = 0; i < cursor.getCount(); i++) { //Recorremos el cursor (no sé por qué puse un for)
                 byteArrayFoto = cursor.getBlob(6);
                 //no lo es por lo tanto comprimimos la foto y añadimos un nuevo alimento a nuestro array
-
                 alimentos.add(new Alimento(
                         cursor.getInt(0),
                         cursor.getString(1),
@@ -115,7 +114,9 @@ public class DetallesActivity extends FragmentActivity {
         super.onDestroy();
         alimentoDB.cerrarConexion();
     }
-
+    /**
+     * Método para mostrar el tutorial al usuario
+     */
     private void mostrarTutorial(){
         final SharedPreferences tutorialShowcases = getSharedPreferences("showcaseTutorial", MODE_PRIVATE);
         boolean run;
@@ -149,10 +150,10 @@ public class DetallesActivity extends FragmentActivity {
                     contadorS++;
                     switch (contadorS) {
                         case 1:
-                            /*Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
+                            //Cambiamos la variable en el sharedPreferences para que no se vuelva a mostrar el tutorial
                             SharedPreferences.Editor tutorialShowcasesEdit = tutorialShowcases.edit();
                             tutorialShowcasesEdit.putBoolean("runDetalles", false);
-                            tutorialShowcasesEdit.apply();*/
+                            tutorialShowcasesEdit.apply();
                             s.hide();
                             break;
                     }

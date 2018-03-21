@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import net.ddns.smartfridge.smartfridgev2.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment para la parte de programar Menú
  */
 public class MainPm extends Fragment {
 
 
     /**
-     * Instantiates a new Main pm.
+     * Constructor
      */
     public MainPm() {
         // Required empty public constructor

@@ -54,11 +54,10 @@ public class CompraExternaActivity extends AppCompatActivity {
     }
 
     /**
-     * Abrir categoria.
+     * Método que abre un intent con los datos de los ingredientes según la categoría indicada
      *
-     * @param categoria the categoria
+     * @param categoria Categoria para filtrar
      */
-//Programamos el método que va a haber en cada botón. Programamos el de las verduras
     public void abrirCategoria(int categoria){
         seleccion = categorias[categoria];
         intent = new Intent(this, CategoriaActivity.class);
@@ -109,13 +108,6 @@ public class CompraExternaActivity extends AppCompatActivity {
                 }
                 clasePadre = data.getStringExtra("clasePadre");
                 Log.d("vuelta", clasePadre);
-
-
-
-/*
-                intent.putExtra("Categorias", alimentosExternosTotales);
-                //Devolvemos el ArrayList con el request_code del intent
-                setResult(REQUEST_CODE_ANTERIOR, intent);*/
             }
         }
     }
@@ -157,12 +149,11 @@ public class CompraExternaActivity extends AppCompatActivity {
     }
 
     /**
-     * Comprobar repetidos.
+     * Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
      *
-     * @param comp            the comp
-     * @param componenteNuevo the componente nuevo
+     * @param comp            Lista con todos los componentes que hay en ella
+     * @param componenteNuevo nuevo componente que queremos incluir en la lista
      */
-//Método para comprobar si hay algún alimento repetido en la lista y no ponerlo
     public void comprobarRepetidos(ArrayList<ComponenteListaCompra> comp, ComponenteListaCompra componenteNuevo){
         int contador=0;
         for (ComponenteListaCompra c : comp){

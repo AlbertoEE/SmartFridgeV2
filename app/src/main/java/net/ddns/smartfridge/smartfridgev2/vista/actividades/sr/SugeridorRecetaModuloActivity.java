@@ -8,7 +8,7 @@ import android.view.View;
 import net.ddns.smartfridge.smartfridgev2.R;
 
 /**
- * The type Sugerir receta modulo activity.
+ * Activity para filtrar por recetas
  */
 public class SugeridorRecetaModuloActivity extends AppCompatActivity {
 
@@ -24,9 +24,9 @@ public class SugeridorRecetaModuloActivity extends AppCompatActivity {
     }
 
     /**
-     * Abrir seleccionar.
+     * Método para abrir el intent correspondiente en función de la selección del usuario
      *
-     * @param v the v
+     * @param v Vista sobre la que actúa el onClick
      */
     public void abrirSeleccionar(View v){
         //Abrirmos el intent

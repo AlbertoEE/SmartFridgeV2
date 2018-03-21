@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Mostrar productos lista activity.
+ * Activity para mostrar todos los alimentos que hay en la lista de la compra
  */
 public class MostradorProductosListaActivity extends AppCompatActivity {
     private Intent intent;
@@ -42,6 +42,9 @@ public class MostradorProductosListaActivity extends AppCompatActivity {
         cargarAdapter();
     }
 
+    /**
+     * Método para cargar el adaptador para ver los alimentos
+     */
     private void cargarAdapter(){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this, (R.layout.fila_producto),

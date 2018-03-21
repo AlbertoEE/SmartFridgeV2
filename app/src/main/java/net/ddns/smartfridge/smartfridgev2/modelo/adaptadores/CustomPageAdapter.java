@@ -7,26 +7,24 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
-import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.Fragment_detalles;
 
 import java.util.ArrayList;
 
 /**
- * Created by Alberto on 23/01/2018.
+ * Clase creada para controlar y cargar de datos el viewPager que se encuentra en la parte de mi
+ * nevera cuando iniciamos los detalles de un alimento
  */
 public class CustomPageAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Alimento> alimentos;
     private static ArrayList<Bitmap> imagen;
-    private int id;
-    private static boolean cambio = false;
 
     /**
-     * Instantiates a new Custom page adapter.
+     * Constructor de la clase CustomPageAdapter.
      *
-     * @param fm             the fm
-     * @param alimentos      the alimentos
-     * @param imagenAlimento the imagen alimento
+     * @param fm             el fragment manager
+     * @param alimentos      los alimentos con imagenes null que pueden visualizarse en la lista de detalles
+     * @param imagenAlimento las imagenes de los alimentos se pasan a aparte de los propios alimentos
      */
     public CustomPageAdapter(FragmentManager fm, ArrayList<Alimento> alimentos, ArrayList<Bitmap> imagenAlimento) {
         super(fm);
@@ -42,35 +40,17 @@ public class CustomPageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        /*if(cambio){
-            Log.d("PETA", "getItemPosition: " + cambio);
-            cambio = false;
-            Log.d("PETA", "getItemPosition: " + cambio);
-            return POSITION_NONE;
-        }else {
-            Log.d("PETA", "getItemPosition: " + cambio);
-            return POSITION_UNCHANGED;
-        }*/
         return POSITION_NONE;
     }
 
     /**
-     * Set cambio.
+     * Método que sirve para eliminar una página si un alimento es eliminado.
      *
-     * @param cambio1 the cambio 1
+     * @param posicion la POSICIÓN del alimento en la lista
      */
-    public static void setCambio(boolean cambio1){
-        cambio = cambio1;
-    }
-
-    /**
-     * Remove page.
-     *
-     * @param id the id
-     */
-    public void removePage(int id){
-        alimentos.remove(id);
-        imagen.remove(id);
+    public void removePage(int posicion){
+        alimentos.remove(posicion);
+        imagen.remove(posicion);
         notifyDataSetChanged();
     }
 

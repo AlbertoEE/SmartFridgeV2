@@ -3,7 +3,6 @@ package net.ddns.smartfridge.smartfridgev2.modelo.adaptadores;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
@@ -27,7 +23,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Created by Alberto on 17/01/2018.
  * Esta clase servirá para adaptar el recycler view que se encuentra la clase de "MiNeveraActivity"
  * Este adaptador funciona con un cursor pero su principal fuente de datos es un arrayList cargado
  * con la información del cursor.
@@ -40,10 +35,10 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     private Fecha fecha;
 
     /**
-     * Instantiates a new Custom recycler view adapter.
+     * Constructor de la clase CustomRecyclerViewAdapter.
      *
-     * @param cursor   the cursor
-     * @param activity the activity
+     * @param cursor   el cursor, fuente principal de la información
+     * @param activity la actividad donde se encuentra el recyclerView
      */
     public CustomRecyclerViewAdapter(Cursor cursor, MiNeveraActivity activity) {
         this.cursor = cursor;

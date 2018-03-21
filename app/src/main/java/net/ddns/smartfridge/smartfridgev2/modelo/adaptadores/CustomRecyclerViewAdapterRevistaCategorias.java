@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Created by Alberto on 15/02/2018.
+ * Clase creada para mostrar las categorias del catalogo de alimentos.
  */
 public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Adapter<CustomRecyclerViewAdapterRevistaCategorias.ViewHolderRevistaCategorias> {
     private ArrayList<Ingrediente> ingredientes;
@@ -38,11 +38,11 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
     private ComponenteListaCompra c;//Para crear el objeto que añadiremos al array de los elementos seleccionados
 
     /**
-     * Instantiates a new Custom recycler view adapter revista categorias.
+     * Constructor de la clase Custom recycler view adapter revista categorias.
      *
-     * @param ingredientes the ingredientes
-     * @param activity     the activity
-     * @param array        the array
+     * @param ingredientes los ingredientes de la receta
+     * @param activity     la actividad donde se encuentra el recycler view
+     * @param array        el array de los componentes de la lista de la compra
      */
     public CustomRecyclerViewAdapterRevistaCategorias(ArrayList<Ingrediente> ingredientes, Activity activity, ArrayList<ComponenteListaCompra> array){
         this.ingredientes = ingredientes;
@@ -76,6 +76,8 @@ public class CustomRecyclerViewAdapterRevistaCategorias extends RecyclerView.Ada
         }
 
         holder.tvNombreAlimento.setText(ingredientes.get(position).getNombreIngrediente());
+
+        //Al hacer clic en una fila obtenemos el alimento seleccionado y lo añadimos a la lista
         holder.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

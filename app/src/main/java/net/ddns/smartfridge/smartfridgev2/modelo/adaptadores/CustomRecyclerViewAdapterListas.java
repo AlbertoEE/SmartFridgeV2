@@ -24,7 +24,7 @@ import java.util.Comparator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created by Alberto on 09/02/2018.
+ * Clase creada para cargar datos en el recycler view de las listas de la compra
  */
 public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<CustomRecyclerViewAdapterListas.ViewHolder2> {
     private ArrayList<ListaCompra> listas;
@@ -32,16 +32,16 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
     private ListaCompra lista;//Para recoger la lista de la posición seleccionada
 
     /**
-     * Instantiates a new Custom recycler view adapter listas.
+     * Constructor para crear un objeto CustomRecyclerViewAdapterListas.
      *
-     * @param listaCompras the lista compras
+     * @param listaCompras las listas de la compra
      */
     public CustomRecyclerViewAdapterListas(ArrayList<ListaCompra> listaCompras){
         this.listas = listaCompras;
     }
 
     /**
-     * Add item.
+     * Añadir una nueva lista de la compra.
      *
      * @param listaCompra the lista compra
      */
@@ -51,7 +51,7 @@ public class CustomRecyclerViewAdapterListas extends RecyclerView.Adapter<Custom
     }
 
     /**
-     * Remove item.
+     * Eliminar una nueva lista de la compra.
      *
      * @param position the position
      */

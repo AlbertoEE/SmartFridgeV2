@@ -10,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,82 +22,76 @@ import java.util.Comparator;
 import cn.refactor.library.SmoothCheckBox;
 
 /**
- * Created by Alberto on 10/02/2018.
+ * Esta clase se encarga de mostrar de adaptar un listView a la hora de crear una lista de la compra
+ * nueva
  */
 public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> productos;
     private ArrayList<ComponenteListaCompra> auxiliar;
-    private ArrayList<ComponenteListaCompra> falseProducts; //ArrayList para almacenar los productos que se han deseleccionado con el checkbox
     private ArrayList<SmoothCheckBox> checkBoxes;
     private Dialogos dialogos;
-    private Activity activity;
-    private String modificacion;
     private ArrayList<Boolean> booleans;
     private int contador;//Para ver si hay elementos que están repetidos
 
     /**
-     * Instantiates a new Custom array adapter nueva lista.
+     * Constructor para crear un CustomArrayAdapterNuevaLista
      *
-     * @param context            the context
-     * @param productosSugeridos the productos sugeridos
-     * @param activity           the activity
+     * @param context            el contexto
+     * @param productosSugeridos los productos sugeridos por la apliación al usuario
+     * @param activity           la actividad para poder crear diálogos
      */
     public CustomArrayAdapterNuevaLista(@NonNull Context context, ArrayList<ComponenteListaCompra> productosSugeridos, Activity activity) {
         super(context, R.layout.fila_producto_nueva_lista, productosSugeridos);
+        //Si el array recibido es distinto de null lo asignamos al atributo de la clase para
+        //trabajar con él. Este parámetro puede llegar null ya que de los alimentos sugeridos el
+        //usuario puede no haber seleccionado ninguno.
         if (productosSugeridos != null) {
             this.productos = productosSugeridos;
-
-        } else {
+        } else { // En caso de que sea null lo instanciamos como uno nuevo y lo asignamos
             productosSugeridos = new ArrayList<>();
             this.productos = productosSugeridos;
         }
+        //Instanciamos los atributos de la clase
         this.auxiliar = new ArrayList<>();
         this.checkBoxes = new ArrayList<>();
-        this.falseProducts = new ArrayList<>();
         dialogos = new Dialogos(context, activity);
+        //cargamos un array de booleans
         cargarBooleans();
     }
 
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //Log.d("MECAGOENDIOS", "llamadas: " + llamada++);
+        //Obtenemos el string del arrayList del constructor según la posición de la fila
         final String alimento = productos.get(position).getNombreElemento();
-        Log.d("MECAGOENDIOS", "getView: " + productos.size());
+        //Aquí inflamos la "fila" con el fin de poder trabajar con ella
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_producto_nueva_lista, parent, false);
         }
+        //En este bloque de código empezamos a cargar los elementos gráficos, además también
+        //empieza el control de checkboxes y se le añade el listener correspondiente a cada checkbox
+        //y se añade a un array de checkboxes.
         TextView tvAlimentoSugerido = convertView.findViewById(R.id.tvNombreroductoNuevaLista);
         SmoothCheckBox scb = convertView.findViewById(R.id.smoothCheckBoxNuevaLista);
+        //Hacemos que los checkboxes sean invisibles desde el primer momento
         scb.setVisibility(View.INVISIBLE);
-        //Log.d("MECAGOENDIOS", "dimensión checkboxes antes de añadir: " + checkBoxes.size());
         //Añadimos el correspondiente checkbox al arrayList siempre y cuando sea único
         comprobarRepetidos(checkBoxes, scb);
-        Log.d("MECAGOENDIOS", "dimensión checkboxes: " + checkBoxes.size());
         tvAlimentoSugerido.setText(alimento);
-        //AQUI ESTA EL LISTENER DE LOS CHECKBOXES, SI SE CAMBIA A TRUE LO AÑADE A UN ARRAY LIST AUXILIAR Y SI SE CAMBIA A FALSE SE ELIMINA DE ESE ARRAYLIST AUXILIAR
-        //TODO ESTO SE CONFIRMA CUANDO LLAMAMOS AL METODO DE CONFIRMAR CAMBIOS
-        //AQUI PASA UNA COSA RARA QUE CUANDO PASA POR AQUI PASA 14 VECES
         scb.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
-                if (b) {//Si está marcado a true el checkbox
-                    //Se añade al auxiliar
-                    //comprobarRepetidosAlimentos(auxiliar, productos.get(position));
-                    //Miramos si un alimento que estaba a false, se ha vuelto a poner a true para quitarlo del array correspondiente
+                if (b) {
+                    //Si un checkbox se ha puesto a true, en nuestro array de booleans ponemos el
+                    //boolean correspondiente a la posición del checkbox a true.
                     booleans.set(position, true);
-                    /*for(int i=0;i<falseProducts.size();i++){
-                        if(falseProducts.get(i).getNombreElemento().equals(productos.get(position)));
-                        falseProducts.remove(productos.get(position));
-                    }*/
                 } else {
-                    //Comprobamos que el elemento que queremos eliminar no está ya incluido en el arrayList. Si no está ni se mete en el array
                     booleans.set(position, false);
-                    //comprobarRepetidosAlimentos(falseProducts, productos.get(position));
                 }
             }
         });
-
+        //Asignamos un listener a cada fila, al hacer un "long clic" iniciamos el diálogo de
+        //modificar
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -111,6 +103,10 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         return convertView;
     }
 
+    /**
+     * Este método instancia un array de booleans con todos a true según el tamaño del array de los
+     * alimentos sugeridos por la aplicación
+     */
     public void cargarBooleans(){
         booleans = new ArrayList<>();
         booleans.clear();
@@ -120,13 +116,13 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     }
 
     /**
-     * Add producto.
+     * Este método añade un prodcuto al array de productos y además tamién añade un booleano true
+     * al array de booleanos que tiene que estar sincronizado con el array de alimentos
      *
-     * @param producto the producto
+     * @param producto el producto que se quiere añadir
      */
     public void addProducto(ComponenteListaCompra producto) {
         if(this.productos.contains(producto)){
-            //Toast.makeText(activity.getApplicationContext(), "Ya está en la lista", Toast.LENGTH_SHORT).show();
         } else {
             productos.add(producto);
             booleans.add(new Boolean(true));
@@ -135,7 +131,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     }
 
     /**
-     * Método para eliminar los alimentos que ha seleccionado el usuario
+     * Método para confirmar los alimentos que ha seleccionado o no el usuario
      */
     public void confirmarCambios() {
         for (Boolean item : booleans) {
@@ -143,17 +139,6 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
         }
         Log.d("ConfirmarCambios", "confirmarCambios: " + booleans.size());
         Log.d("ConfirmarCambios", "confirmarCambios: " + productos.size());
-        //Recorremos el auxiliar y lo comparamos con cada objeto del array falseProducts
-        /*for(int a=0; a < auxiliar.size(); a++){
-            for (int f=0; f < falseProducts.size(); f++){
-                //Si coinciden los elementos, se elimina del auxiliar
-                if (auxiliar.get(a).getNombreElemento().equals(falseProducts.get(f).getNombreElemento())){
-                    auxiliar.remove(falseProducts.get(f));
-                }
-            }
-        }
-        //Asignamos al arrayList llamado productos, el valor del arrayList auxiliar
-        this.productos = auxiliar;*/
 
         for (int i = 0; i < booleans.size(); i++) {
             if(booleans.get(i).booleanValue()){
@@ -181,7 +166,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     /**
      * Gets lista final.
      *
-     * @return the lista final
+     * @return la lista final de alimetos filtrada según los criterios del usuario
      */
     public ArrayList<ComponenteListaCompra> getListaFinal() {
         return this.productos;
@@ -191,9 +176,6 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
      * Metodo para mostrar los checkboxes gracias al arrayList de checkboxes
      */
     public void mostrarCheckboxes() {
-        //auxiliar = productos;
-        //*Log.d("check", "longitud de productos: " + auxiliar.size());
-        //Log.d("MECAGOENDIOS", "mostrarCheckboxes: " + checkBoxes.size());
         for (SmoothCheckBox item : this.checkBoxes) {
             item.setVisibility(View.VISIBLE);
             item.setChecked(true);
@@ -212,8 +194,8 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     /**
      * Metodo para modificar el nombre de un alimento ya existente en el array
      *
-     * @param position     the position
-     * @param modificacion the modificacion
+     * @param position     la posición del alimento
+     * @param modificacion el nuevo nombre
      */
     public void modificar(int position, String modificacion){
         if (modificacion != null) {
@@ -226,9 +208,9 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     }
 
     /**
-     * Get size int.
+     * Getter del tamaño.
      *
-     * @return the int
+     * @return tamaño
      */
     public int getSize(){
         Log.d("PR", "getSize: " + productos.size());
@@ -295,7 +277,7 @@ public class CustomArrayAdapterNuevaLista extends ArrayAdapter<ComponenteListaCo
     /**
      * Add productos varios.
      *
-     * @param productos the productos
+     * @param productos los productos obtenidos desde el catálogo de productos
      */
     public void addProductosVarios(ArrayList<ComponenteListaCompra> productos){
         for (ComponenteListaCompra item: productos) {

@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Created by Alberto on 25/02/2018.
+ * Clase creada para mostrar las recetas filtradas desde la nevera por el usuario
  */
 
 public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter<CustomRecyclerViewAdapterNeveraRecetas.ViewHolderNeveraRecetas>{
@@ -36,6 +36,12 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
     private Cursor cursor;
     private MiNeveraFiltroActivity clase;
 
+    /**
+     * Constructor de la clase CustomRecyclerViewAdapterNeveraRecetas
+     * @param cursor el cursor como fuente principal de información
+     * @param activity la actividad donde se encuentra el recyclerView
+     * @param clase la clase MiNeveraFiltroActivity
+     */
     public CustomRecyclerViewAdapterNeveraRecetas(Cursor cursor, Activity activity, MiNeveraFiltroActivity clase){
         this.alimentos = new ArrayList<>();
         this.alimentosCopia = new ArrayList<>();
@@ -47,7 +53,7 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
         cargarArray();
     }
 
-    public void cargarArray() {
+    private void cargarArray() {
         //Limpiamos el array
         alimentos.clear();
 
@@ -141,7 +147,7 @@ public class CustomRecyclerViewAdapterNeveraRecetas extends RecyclerView.Adapter
     }
 
     /**
-     * Método para filtrar en el recycler view
+     * Método para filtrar el recycler view
      *
      * @param text
      */

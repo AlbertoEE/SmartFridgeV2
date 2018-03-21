@@ -26,26 +26,24 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * Created by Alberto on 17/02/2018.
+ * Clase creada para mostrar los precios de un supermercado.
  */
 public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecyclerViewSuper.ViewHolderSuper> {
     private Activity activity;
     private ArrayList<Precio> precios;
     private ArrayList<Precio> preciosAuxiliar;
-    private String superMercado;
     private DecimalFormat f = new DecimalFormat("##.00");
 
     /**
-     * Instantiates a new Custom recycler view super.
+     * Constructor de la clase Custom recycler view super.
      *
-     * @param activity     the activity
-     * @param precios      the precios
-     * @param superMercado the super mercado
+     * @param activity     la actividad donde se encuentra el recycler view
+     * @param precios      los precios
+     * @param superMercado el supermercado del que provienen
      */
     public CustomRecyclerViewSuper(Activity activity, ArrayList<Precio> precios, String superMercado){
         this.activity = activity;
         this.precios = precios;
-        this.superMercado = superMercado;
 
         preciosAuxiliar = new ArrayList<>();
 
@@ -70,7 +68,6 @@ public class CustomRecyclerViewSuper extends RecyclerView.Adapter<CustomRecycler
     public void onBindViewHolder(CustomRecyclerViewSuper.ViewHolderSuper holder, int position) {
         holder.tvProductoSuper.setText(precios.get(position).getNombreProducto());
         holder.tvSuperMercado.setText(precios.get(position).getSupermercado());
-        //holder.tvPrecioSuper.setText(String.valueOf(Math.round(precios.get(position).getPvp() * 100) / 100) + "€");
         holder.tvPrecioSuper.setText(f.format(precios.get(position).getPvp()) + "€");
     }
 

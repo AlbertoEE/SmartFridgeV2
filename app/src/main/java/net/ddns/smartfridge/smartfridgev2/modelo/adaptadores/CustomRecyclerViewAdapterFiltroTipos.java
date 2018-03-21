@@ -15,13 +15,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Dialogos;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by Alberto on 22/02/2018.
+ * Clase creada para cargar de información los tipos de alimento existentes en el catálogo
  */
 public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos> {
     private Activity activity;
@@ -29,11 +28,11 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
     private Context contexto;
 
     /**
-     * Instantiates a new Custom recycler view adapter filtro tipos.
+     * Constructor de la clase CustomRecyclerViewAadapterFiltroTipos.
      *
-     * @param activity the activity
-     * @param tabTipo  the tab tipo
-     * @param cont     the cont
+     * @param activity la actividad donde se encuentra el recyclerView
+     * @param tabTipo  el fragmento donde se encuentra el recyclerView
+     * @param cont     el contexto
      */
     public CustomRecyclerViewAdapterFiltroTipos(Activity activity, TabTipo tabTipo, Context cont){
         this.activity = activity;
@@ -51,6 +50,7 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
     @Override
     public void onBindViewHolder(CustomRecyclerViewAdapterFiltroTipos.ViewHolderRevistaFiltroTipos holder, final int position) {
         Drawable d = null;
+        //Según la posición cargarmos una imagen u otra
         if (position == 0){
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.ic_arroz);
         } else if (position == 1) {
@@ -87,6 +87,8 @@ public class CustomRecyclerViewAdapterFiltroTipos extends RecyclerView.Adapter<C
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //Segun la posición el onClic inicia una actividad con parámetros diferentes
 
         holder.iamgebutton.setOnClickListener(new View.OnClickListener() {
             @Override

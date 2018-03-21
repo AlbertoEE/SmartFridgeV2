@@ -19,14 +19,14 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.CompraExternaAct
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by Alberto on 15/02/2018.
+ * Clase creada para la carga de datos en el recycler view que muestra la revista de alimentos.
  */
 public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<CustomRecyclerViewAdapterRevistaMain.ViewHolderRevistaMain> {
     private Activity activity;
     private CompraExternaActivity compraExternaActivity;
 
     /**
-     * Instantiates a new Custom recycler view adapter revista main.
+     * Constructor de la clase Custom recycler view adapter revista main.
      *
      * @param activity              the activity
      * @param compraExternaActivity the compra externa activity
@@ -47,6 +47,7 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
     @Override
     public void onBindViewHolder(CustomRecyclerViewAdapterRevistaMain.ViewHolderRevistaMain holder, final int position) {
         Drawable d = null;
+        //Según la posición de la fila mostramos diferentes imágenes
         if (position == 0){
             d = this.activity.getApplicationContext().getResources().getDrawable(R.drawable.verduras);
         } else if (position == 1) {
@@ -81,7 +82,7 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        //Al hacer clic según la posición de la fila abrimos una categoría u otra con distintos datos
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +101,7 @@ public class CustomRecyclerViewAdapterRevistaMain extends RecyclerView.Adapter<C
      */
     public static class ViewHolderRevistaMain extends RecyclerView.ViewHolder {
         /**
-         * The Fila.
+         * La Fila.
          */
         public View fila;//La fila completa, para el listener
         private ImageButton imageButton;

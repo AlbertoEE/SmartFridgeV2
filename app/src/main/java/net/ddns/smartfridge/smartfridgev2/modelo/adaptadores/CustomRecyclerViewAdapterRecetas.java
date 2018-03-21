@@ -24,7 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
- * Created by Alberto on 19/02/2018.
+ * Clase creada para cargar de datos el recyclerView que contiene las recetas que se le muestran al
+ * usuario.
  */
 public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<CustomRecyclerViewAdapterRecetas.ViewHolderRecetas>{
     private ArrayList<Receta> recetas;
@@ -32,10 +33,10 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     private Intent intent;//Para iniciar la nueva actividad
 
     /**
-     * Instantiates a new Custom recycler view adapter recetas.
+     * Constructor de la clase Custom recycler view adapter recetas.
      *
-     * @param recetas  the recetas
-     * @param activity the activity
+     * @param recetas  las recetas que se van a mostrar
+     * @param activity la actividad donde se encuentra el recycler view
      */
     public CustomRecyclerViewAdapterRecetas(ArrayList<Receta> recetas, Activity activity){
         this.recetas = recetas;
@@ -70,6 +71,8 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
             e.printStackTrace();
         }
         holder.getBackgroundImage().reuse();
+        //Al pulsar sobre una fila pasamos los datos de la receta a un nueva activity que nos
+        //mostrará mas detalles sobre esta
         holder.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +97,7 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
     /**
      * Filtrar array.
      *
-     * @param recetasFiltradas the recetas filtradas
+     * @param recetasFiltradas las recetas
      */
     public void filtrarArray(ArrayList<Receta> recetasFiltradas){
         Log.d("lll", "filtrarArray: " + recetasFiltradas);

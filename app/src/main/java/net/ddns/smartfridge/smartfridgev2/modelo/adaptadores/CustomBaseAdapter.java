@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
@@ -13,7 +12,7 @@ import net.ddns.smartfridge.smartfridgev2.R;
 import java.util.ArrayList;
 
 /**
- * Created by Alberto on 22/02/2018.
+ * Clase para cargar un "comboBox" también llamado spinner en android
  */
 public class CustomBaseAdapter extends BaseAdapter {
     private Context context;

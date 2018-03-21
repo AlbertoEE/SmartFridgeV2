@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.Alimento;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import java.util.Comparator;
 import cn.refactor.library.SmoothCheckBox;
 
 /**
- * Created by Alberto on 07/02/2018.
+ * Esta clase es usada para el filtrado de alimentos sugeridos.
  */
 public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> alimentos;
@@ -30,10 +29,10 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     private boolean cambio = false;
 
     /**
-     * Instantiates a new Custom array adapter.
+     * Constructor de la clase CustomArrayAdapter
      *
-     * @param context   the context
-     * @param alimentos the alimentos
+     * @param context   el contexto
+     * @param alimentos arraylist que contiene los los alimentos que se le van a sugerir al usuario
      */
     public CustomArrayAdapter(Context context, ArrayList<ComponenteListaCompra> alimentos){
         super(context, R.layout.fila_alimentos_sugeridos, alimentos);
@@ -45,12 +44,15 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        //Obtenemos el string del arrayList del constructor según la posición de la fila
         final String alimento = alimentos.get(position).getNombreElemento();
-
+        //Aquí inflamos la "fila" con el fin de poder trabajar con ella
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_alimentos_sugeridos, parent, false);
         }
-
+        //En este bloque de código empezamos a cargar los elementos gráficos, además también
+        //empieza el control de checkboxes y se le añade el listener correspondiente a cada checkbox
+        //y se añade a un array de checkboxes.
         TextView tvAlimentoSugerido = convertView.findViewById(R.id.textViewAlimentoSugerido);
         SmoothCheckBox scb = convertView.findViewById(R.id.smoothCheckBox);
         smoothCheckBoxes.add(scb);
@@ -72,7 +74,7 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     }
 
     /**
-     * Cambiar check boxes.
+     * Este método sirve para cambiar todos los checkboxes a true o a false de manera alternativa
      */
     public void cambiarCheckBoxes(){
         cambio = !cambio;
@@ -91,7 +93,7 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     /**
      * Get nueva lista array list.
      *
-     * @return the array list
+     * @return el array list que contiene los alimentos seleccionados por el usuario
      */
     public ArrayList<ComponenteListaCompra> getNuevaLista(){
         return alimentosSeleccionados;
@@ -111,5 +113,4 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
         });
         notifyDataSetChanged();
     }
-
 }

@@ -173,7 +173,7 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
         String nombre = String.valueOf(etNombreAlimento.getText());
         Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
         if (!nombre.equals("")) {
-            Intent intent = new Intent(InsertarManualmenteActivity.this, CaducidadAlimento.class);
+            Intent intent = new Intent(InsertadorManualmenteActivity.this, CaducidadAlimento.class);
             intent.putExtra("FotoBitMap", foto);
             intent.putExtra("ClasePadre", "InsertarManualmenteActivity");
             intent.putExtra("NombreAlimento", etNombreAlimento.getText());

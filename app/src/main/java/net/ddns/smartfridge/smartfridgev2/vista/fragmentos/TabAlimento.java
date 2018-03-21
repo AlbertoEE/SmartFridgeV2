@@ -57,6 +57,9 @@ public class TabAlimento extends Fragment {
     public TabAlimento() {
         // Required empty public constructor
     }
+    public void coid(){
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

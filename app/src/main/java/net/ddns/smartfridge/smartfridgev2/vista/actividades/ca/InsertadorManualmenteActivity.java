@@ -175,7 +175,6 @@ public class InsertadorManualmenteActivity extends AppCompatActivity {
      */
     public void siguienteBoton(View view) {
         String nombre = String.valueOf(etNombreAlimento.getText());
-        Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
         if (!nombre.equals("")) {
             Intent intent = new Intent(InsertadorManualmenteActivity.this, CaducidadAlimento.class);
             intent.putExtra(getString(R.string.fotoB), foto);

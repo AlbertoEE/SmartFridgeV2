@@ -53,10 +53,9 @@ public class PrecioCompraActivity extends AppCompatActivity {
         intent = getIntent();
         nombres = (ArrayList<ComponenteListaCompra>) intent.getSerializableExtra(getString(R.string.productos));
         Log.d("precio", "nombres: " + nombres.size());
-
         intentNuevo = new Intent(this, PrecioCompraProductosActivity.class);
-
         new consultarTodosPrecios(this).execute(nombres);
+        Toast.makeText(this, getString(R.string.mostrar_precio), Toast.LENGTH_SHORT).show();
     }
 
     /**

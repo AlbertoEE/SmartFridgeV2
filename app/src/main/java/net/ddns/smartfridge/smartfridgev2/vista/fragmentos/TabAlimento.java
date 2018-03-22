@@ -30,6 +30,7 @@ import net.ddns.smartfridge.smartfridgev2.modelo.basico.Ingrediente;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.Receta;
 import net.ddns.smartfridge.smartfridgev2.persistencia.MySQL.MySQLHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -50,6 +51,7 @@ public class TabAlimento extends Fragment {
     private ArrayList<String> dif;//Array para guardar los ids de la tabla de la dificultad de las recetas
     private ArrayList<String> ingredientesComprobacion;
     private LinearLayout llChips;
+    private static ArrayList<Bitmap>imagenes = new ArrayList<>();//Para guardar las imágenes de las recetas
 
     /**
      * Constructor de la clase
@@ -292,14 +294,17 @@ public class TabAlimento extends Fragment {
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
             if (recetas !=null) {
-                ArrayList<Bitmap> imagenes = new ArrayList<>();
+                //ArrayList<byte[]> imagenes = new ArrayList<>();
                 for (Receta item : recetas) {
+                  /*  ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    item.getImagenReceta().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] bytes = stream.toByteArray();*/
                     imagenes.add(item.getImagenReceta());
                     item.setImagenReceta(null);
                 }
                 intent = new Intent();
                 intent.putExtra(getString(R.string.filtro), recetas);
-                intent.putExtra(getString(R.string.filtro_i), imagenes);
+                //intent.putExtra(getString(R.string.filtro_i), imagenes);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
                 Toast.makeText(getContext(), getString(R.string.no_receta), Toast.LENGTH_SHORT).show();
@@ -332,5 +337,13 @@ public class TabAlimento extends Fragment {
      */
     public ArrayList<String> getDif() {
         return dif;
+    }
+
+    /**
+     * Gets imagentes
+     * @return the imagenes
+     */
+    public static ArrayList<Bitmap> getImagenes() {
+        return imagenes;
     }
 }

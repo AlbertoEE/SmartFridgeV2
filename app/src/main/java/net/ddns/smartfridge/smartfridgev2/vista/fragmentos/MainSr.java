@@ -4,6 +4,7 @@ package net.ddns.smartfridge.smartfridgev2.vista.fragmentos;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -175,10 +176,11 @@ public class MainSr extends Fragment {
                 recetas = new ArrayList<>();
                 recetas = (ArrayList<Receta>)data.getSerializableExtra(getString(R.string.filtro));
                 Log.d("mainSR", "mainSR: "+ recetas.size());
-
-                ArrayList<Bitmap> bitmaps = (ArrayList<Bitmap>)data.getSerializableExtra(getString(R.string.filtro_i));
-                for (int i = 0; i < bitmaps.size(); i++){
-                    recetas.get(i).setImagenReceta(bitmaps.get(i));
+                /*ArrayList<byte[]> bitmaps = (ArrayList<byte[]>)data.getSerializableExtra(getString(R.string.filtro_i));*/
+                for (int i = 0; i < TabAlimento.getImagenes().size(); i++){
+                    /*byte[] bytes = bitmaps.get(i);*/
+                    Bitmap bmp = TabAlimento.getImagenes().get(i);
+                    recetas.get(i).setImagenReceta(bmp);
                 }
                 adapter.filtrarArray(recetas);
             }

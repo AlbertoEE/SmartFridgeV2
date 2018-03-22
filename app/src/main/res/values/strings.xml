@@ -132,4 +132,5 @@
     <string name="titulo">titulo</string>
     <string name="spinner">spinner</string>
     <string name="no_precio_r">No se han encontrado resultados para esos elementos</string>
+    <string name="mostrar_precio">Sólo se mostraran los precios de los productos almacenados en Smart Fridge</string>
 </resources>

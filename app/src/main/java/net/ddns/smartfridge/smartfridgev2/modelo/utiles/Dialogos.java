@@ -38,7 +38,9 @@ import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.CaducidadAlimento
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.ConfirmadorAlimentoActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.DetallesActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.IdentificadorAlimentoActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.ca.MiNeveraActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.actividades.clc.TodasListasActivity;
+import net.ddns.smartfridge.smartfridgev2.vista.actividades.sr.MiNeveraFiltroActivity;
 import net.ddns.smartfridge.smartfridgev2.vista.fragmentos.TabTipo;
 
 import java.util.ArrayList;
@@ -459,7 +461,7 @@ public class Dialogos {
      */
 //Método para enviar la notificación
     public void enviarNotificacionCaducado(Alimento alimento, Context contexto, int posicion){
-        intent = new Intent(contexto, DetallesActivity.class);
+        intent = new Intent(contexto, MiNeveraActivity.class);
         intent.putExtra("Alimento", alimento);
         intent.putExtra("posicion", posicion);
         intent.putExtra("ClasePadre", "Dialogos");
@@ -467,7 +469,7 @@ public class Dialogos {
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("¡¡¡Alimento Caducado!!!");
         nb.setContentText("¡Vaya! " + alimento.getNombreAlimento() + " ha caducado." +
-                " Pulsa para ver los detalles.");
+                " Pulsa para ver los detalles de MiNevera.");
         nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
@@ -489,12 +491,14 @@ public class Dialogos {
      */
 //Método para enviar la notificación cuando falten menos de dos días para la caducidad
     public void enviarNotificacionProximaCaducidad(Alimento alimento, Context contexto, int posicion){
-        //Completar cuando esté creado el BuscarReceta por alimento
+        intent = new Intent(contexto, MiNeveraFiltroActivity.class);
         Notification.Builder nb = new Notification.Builder(contexto);
         nb.setSmallIcon(R.mipmap.ic_launcher_f);
         nb.setContentTitle("Va a caducar...");
         nb.setContentText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +
                 " Ver los detalles.");
+        nb.setContentIntent(PendingIntent.getActivity(contexto, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT));
         nb.setAutoCancel(true);
         //Permitimos que se pueda expandir la notificación
         Notification notificacion = new Notification.BigTextStyle(nb).bigText("Faltan menos de 2 días para que " + alimento.getNombreAlimento() + " caduque." +

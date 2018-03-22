@@ -52,12 +52,11 @@ public class DetallesActivity extends FragmentActivity {
         }
 
         posicion = getIntent().getExtras().getInt(getString(R.string.posicion));
-
         CustomPageAdapter pageAdapter = new CustomPageAdapter(getSupportFragmentManager(), alimentos, imagenes);
         viewPager.setAdapter(pageAdapter);
 
         viewPager.setCurrentItem(posicion);
-        //mostrarTutorial();
+        mostrarTutorial();
     }
 
     /**

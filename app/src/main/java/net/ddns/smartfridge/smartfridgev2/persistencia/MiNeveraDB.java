@@ -123,7 +123,7 @@ public class MiNeveraDB extends SQLiteOpenHelper {
     /**
      * Sentencia par insertar alimentos de prueba en la bbdd
      */
-    public static final String INSERT_ALIMENTO6 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'nata\', 1, 0, \'13-01-2018\', \'19-01-2018\')";
+    public static final String INSERT_ALIMENTO6 = "INSERT INTO alimentos (nombre, cantidad, dias_caducidad, fecha_registro, fecha_caducidad) VALUES (\'nata\', 6, 2, \'13-01-2018\', \'23-03-2018\')";
     /**
      * Sentencia par insertar alimentos de prueba en la bbdd
      */

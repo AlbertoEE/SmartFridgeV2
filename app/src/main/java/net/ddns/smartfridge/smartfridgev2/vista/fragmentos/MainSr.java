@@ -176,11 +176,26 @@ public class MainSr extends Fragment {
                 recetas = new ArrayList<>();
                 recetas = (ArrayList<Receta>)data.getSerializableExtra(getString(R.string.filtro));
                 Log.d("mainSR", "mainSR: "+ recetas.size());
+                ArrayList<Bitmap> imgs = new ArrayList<>();
+                imgs.clear();
+
+
+
                 /*ArrayList<byte[]> bitmaps = (ArrayList<byte[]>)data.getSerializableExtra(getString(R.string.filtro_i));*/
-                for (int i = 0; i < TabAlimento.getImagenes().size(); i++){
                     /*byte[] bytes = bitmaps.get(i);*/
-                    Bitmap bmp = TabAlimento.getImagenes().get(i);
-                    recetas.get(i).setImagenReceta(bmp);
+                    if((int)data.getExtras().get(getString(R.string.id_tab)) > 0){
+                        //Bitmap bmp = TabOtros.getImagenes().get(i);
+                        imgs = TabOtros.getImagenes();
+                    } else if((int)data.getExtras().get(getString(R.string.id_tab)) < 0){
+                        //Bitmap bmp = TabAlimento.getImagenes().get(i);
+                        imgs = TabAlimento.getImagenes();
+                    } else if((int)data.getExtras().get(getString(R.string.id_tab)) == 0){
+                        //Bitmap bmp = TabTipo.getImagenes().get(i);
+                        imgs = TabTipo.getImagenes();
+
+                    }
+                for (int i = 0; i < imgs.size(); i++){
+                    recetas.get(i).setImagenReceta(imgs.get(i));
                 }
                 adapter.filtrarArray(recetas);
             }

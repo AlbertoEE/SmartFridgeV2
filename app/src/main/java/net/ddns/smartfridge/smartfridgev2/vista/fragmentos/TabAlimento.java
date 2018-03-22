@@ -59,14 +59,12 @@ public class TabAlimento extends Fragment {
     public TabAlimento() {
         // Required empty public constructor
     }
-    public void coid(){
-
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myHelper = new MySQLHelper();
+        imagenes.clear();
         ingredientesSeleccionados = new ArrayList<>();
         ingredientesComprobacion = new ArrayList<>();
         ingredientesSeleccionadosString = new ArrayList<>();
@@ -78,12 +76,12 @@ public class TabAlimento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_alimento, container, false);
-        new ShowcaseView.Builder(getActivity())
+        /*new ShowcaseView.Builder(getActivity())
                 .setTarget( new ViewTarget( ((View) v.findViewById(R.id.ibBuscar)) ) )
                 .setContentTitle(getString(R.string.buscar))
                 .setContentText(getString(R.string.buscar_t))
                 .hideOnTouchOutside()
-                .build();
+                .build();*/
         llChips = (LinearLayout) v.findViewById(R.id.llChips);
         act = (AutoCompleteTextView)v.findViewById(R.id.acAlimentosReceta);
         RadioGroup radioGroup = (RadioGroup) v .findViewById(R.id.radioGroup);
@@ -113,22 +111,27 @@ public class TabAlimento extends Fragment {
             @Override
             public void onClick(View view) {
                 //Le damos el arrayList con los datos indicados por el usuario
-                if (contenga){
-                    //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
-                    sentenciaSeleccion = myHelper.montarSentenciaSi(ingredientesSeleccionados);
-                    Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
-                    //Llamamos al asyncTask pasándole la select correspondiente
-                    new CogerRecetasFiltro().execute(sentenciaSeleccion);
-                } else if (!contenga){
-                    Log.d("check", "contenga onClick: " + contenga);
-                    //Si queremos que no tenga alimentos, montamos la select correspondiente
-                    sentenciaSeleccion = myHelper.montarSentenciaNo(ingredientesSeleccionados);
-                    Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
-                    //Llamamos al asyncTask pasándole la select correspondiente
-                    new CogerRecetasFiltro().execute(sentenciaSeleccion);
-                } else if (contenga == null){
-                    Toast.makeText(getContext(), "Selecciona una opción", Toast.LENGTH_SHORT).show();
+                if(llChips.getChildCount() > 0){
+                    if (contenga){
+                        //Si queremos alimentos que contengan, hacemos la select correspondiente para pasársela al AsyncTask
+                        sentenciaSeleccion = myHelper.montarSentenciaSi(ingredientesSeleccionados);
+                        Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
+                        //Llamamos al asyncTask pasándole la select correspondiente
+                        new CogerRecetasFiltro().execute(sentenciaSeleccion);
+                    } else if (!contenga){
+                        Log.d("check", "contenga onClick: " + contenga);
+                        //Si queremos que no tenga alimentos, montamos la select correspondiente
+                        sentenciaSeleccion = myHelper.montarSentenciaNo(ingredientesSeleccionados);
+                        Log.d("check", "sentencia onClick: " + sentenciaSeleccion);
+                        //Llamamos al asyncTask pasándole la select correspondiente
+                        new CogerRecetasFiltro().execute(sentenciaSeleccion);
+                    } else if (contenga == null){
+                        Toast.makeText(getContext(), "Selecciona una opción", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Introduce mínimo un ingrediente", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -274,6 +277,7 @@ public class TabAlimento extends Fragment {
         protected ArrayList<Receta> doInBackground(String... strings) {
 
             try {
+                imagenes.clear();
                 //Abrimos la conexión a la bbdd
                 myHelper.abrirConexion();
                 Log.d("check", "Sentencia en AsyncTask: " + strings[0]);
@@ -305,6 +309,7 @@ public class TabAlimento extends Fragment {
                 intent = new Intent();
                 intent.putExtra(getString(R.string.filtro), recetas);
                 //intent.putExtra(getString(R.string.filtro_i), imagenes);
+                intent.putExtra(getString(R.string.id_tab), -1);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
                 Toast.makeText(getContext(), getString(R.string.no_receta), Toast.LENGTH_SHORT).show();

@@ -56,20 +56,21 @@ public class CustomRecyclerViewAdapterRecetas extends RecyclerView.Adapter<Custo
         holder.tvNombreReceta.setText(String.valueOf(recetas.get(position).getTituloReceta()));
         Bitmap bitmap = (recetas.get(position).getImagenReceta());
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitmapdata = stream.toByteArray();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] bitmapdata = stream.toByteArray();
 
-        try {
-            Glide.with(this.activity.getApplicationContext())
-                    .load(bitmapdata)
-                    .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .into(holder.getBackgroundImage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+                Glide.with(this.activity.getApplicationContext())
+                        .load(bitmapdata)
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(holder.getBackgroundImage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         holder.getBackgroundImage().reuse();
         //Al pulsar sobre una fila pasamos los datos de la receta a un nueva activity que nos
         //mostrará mas detalles sobre esta

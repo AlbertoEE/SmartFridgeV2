@@ -31,6 +31,7 @@ public class TabTipo extends Fragment {
     private RecyclerView recyclerView;
     private CustomRecyclerViewAdapterFiltroTipos adapter;
     private Intent intent;
+    private static ArrayList<Bitmap> imagenes = new ArrayList<>();
 
 
     @Override
@@ -51,6 +52,10 @@ public class TabTipo extends Fragment {
         return v;
     }
 
+    public static ArrayList<Bitmap> getImagenes(){
+        return imagenes;
+    }
+
     /**
      * Clase para sacar las recetas en función del tipo seleccionado
      */
@@ -58,6 +63,7 @@ public class TabTipo extends Fragment {
 
         @Override
         protected ArrayList<Receta> doInBackground(Integer... ints) {
+            imagenes.clear();
             try {
                 myHelper = new MySQLHelper();
                 //Abrimos la conexión a la bbdd
@@ -80,14 +86,16 @@ public class TabTipo extends Fragment {
         protected void onPostExecute(ArrayList<Receta> recetas) {
             super.onPostExecute(recetas);
             //recetasTipo = recetas;
-            ArrayList<Bitmap> imagenes = new ArrayList<>();
             for (Receta item : recetas) {
                 imagenes.add(item.getImagenReceta());
                 item.setImagenReceta(null);
             }
             intent = new Intent();
             intent.putExtra(getString(R.string.filtro), recetas);
-            intent.putExtra(getString(R.string.filtro_i) , imagenes);
+
+            Log.d("CNTD", "onPostExecute: " + recetas.size());
+
+            intent.putExtra(getString(R.string.id_tab) , 0);
             getActivity().setResult(getActivity().RESULT_OK, intent);
             try {
                 myHelper.cerrarConexion();

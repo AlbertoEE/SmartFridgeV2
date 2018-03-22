@@ -41,6 +41,7 @@ public class TabOtros extends Fragment {
     private Spinner spinnerT;//Para coger la referencia del spinner del tiempo
     private Spinner spinnerD;//Para coger la referencia del spinner de la duración
     private int procedencia=2;//Para ver por dónde se va a realizar la búsqueda
+    private static ArrayList<Bitmap> imagenes = new ArrayList<>();
 
     /**
      * Constructor
@@ -149,6 +150,10 @@ public class TabOtros extends Fragment {
         return v;
     }
 
+    public static ArrayList<Bitmap> getImagenes(){
+        return imagenes;
+    }
+
     /**
      * Clase interna con el AsyncTask para sacar las recetas en función del filtro aplicado
      */
@@ -157,6 +162,7 @@ public class TabOtros extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            imagenes.clear();
             //ustomDialogProgressBar.showDialogCuadrado();
         }
 
@@ -192,14 +198,13 @@ public class TabOtros extends Fragment {
             super.onPostExecute(recetas);
             if (recetas.size()>0) {
                 Log.d("otros", "receta: " + recetas.get(0).getTituloReceta());
-                ArrayList<Bitmap> imagenes = new ArrayList<>();
                 for (Receta item : recetas) {
                     imagenes.add(item.getImagenReceta());
                     item.setImagenReceta(null);
                 }
                 Intent intent = new Intent();
                 intent.putExtra(getString(R.string.filtro), recetas);
-                intent.putExtra(getString(R.string.filtro_i) , imagenes);
+                intent.putExtra(getString(R.string.id_tab) , 1);
                 getActivity().setResult(getActivity().RESULT_OK, intent);
             } else {
                 //Si no hay coincidencias, se mostrará un toast al usuario

@@ -97,7 +97,7 @@ public class CompraExternaActivity extends AppCompatActivity {
             // Vemos que el resultado esté correcto
             if (resultCode == RESULT_OK) {
                 //Recogemos los datos del intent y se los asignamos al ArrayList
-                alimentosDevueltosCarro = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra(getString(R.string.ele_lista));
+                alimentosExternosTotales = (ArrayList<ComponenteListaCompra>) data.getSerializableExtra(getString(R.string.ele_lista));
                 for(int i=0; i<alimentosDevueltosCarro.size(); i++){
                     Log.d("vuelta", "alimentos: " + alimentosDevueltosCarro.get(i).getNombreElemento());
                 }
@@ -120,7 +120,7 @@ public class CompraExternaActivity extends AppCompatActivity {
     /**
      * @see 'https://developer.android.com/reference/android/app/Activity.html?hl=es-419#onOptionsItemSelected(android.view.MenuItem)'
      */
-    //Programamos el botón del ActionBAR
+    //Programamos el botón del ActionBAr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -170,7 +170,7 @@ public class CompraExternaActivity extends AppCompatActivity {
             if (clasePadre.equals(getString(R.string.carro))) {
                 intent.putExtra(getString(R.string.ali_sel), alimentosDevueltos);
             } else if (clasePadre.equals(getString(R.string.detalle))) {
-                intent.putExtra(getString(R.string.ali_sel), alimentosDevueltosCarro);
+                intent.putExtra(getString(R.string.ali_sel), alimentosExternosTotales);
             }
         }
         setResult(RESULT_OK, intent);

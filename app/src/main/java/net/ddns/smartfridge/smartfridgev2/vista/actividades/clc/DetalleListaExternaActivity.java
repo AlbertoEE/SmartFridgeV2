@@ -1,22 +1,18 @@
 package net.ddns.smartfridge.smartfridgev2.vista.actividades.clc;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import net.ddns.smartfridge.smartfridgev2.R;
-import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapter;
 import net.ddns.smartfridge.smartfridgev2.modelo.adaptadores.CustomArrayAdapterNuevaLista;
 import net.ddns.smartfridge.smartfridgev2.modelo.basico.ComponenteListaCompra;
-import net.ddns.smartfridge.smartfridgev2.modelo.basico.ListaCompra;
-import net.ddns.smartfridge.smartfridgev2.modelo.utiles.Fecha;
 
 import java.util.ArrayList;
 
@@ -98,6 +94,10 @@ public class DetalleListaExternaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         intent = new Intent();
+        componentesAdapter = adapter.getListaFinal();
+        for (ComponenteListaCompra item : componentesAdapter) {
+            Log.d("KOOK", "onBackPressed: " + item.getNombreElemento());
+        }
         intent.putExtra(getString(R.string.ele_lista), componentesAdapter);
         intent.putExtra(getString(R.string.clase_padre_minusculas), getString(R.string.detalle));
         setResult(RESULT_OK, intent);

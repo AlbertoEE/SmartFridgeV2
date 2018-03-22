@@ -24,7 +24,8 @@ import cn.refactor.library.SmoothCheckBox;
  */
 public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     private ArrayList<ComponenteListaCompra> alimentos;
-    private ArrayList<ComponenteListaCompra> alimentosSeleccionados;
+    private ArrayList<ComponenteListaCompra> auxiliar;
+    private ArrayList<Boolean> booleans;
     private ArrayList<SmoothCheckBox> smoothCheckBoxes;
     private boolean cambio = false;
 
@@ -37,8 +38,9 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
     public CustomArrayAdapter(Context context, ArrayList<ComponenteListaCompra> alimentos){
         super(context, R.layout.fila_alimentos_sugeridos, alimentos);
         this.alimentos = alimentos;
-        alimentosSeleccionados = new ArrayList<>();
+        auxiliar = new ArrayList<>();
         smoothCheckBoxes = new ArrayList<>();
+        cargarBooleans();
     }
 
     @NonNull
@@ -61,16 +63,23 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
                 if(b){
-                    alimentosSeleccionados.add(alimentos.get(position));
+                    booleans.set(position, new Boolean(true));
                     Log.d("RETRASO", "onCheckedChanged: TRUE " + position);
                 } else {
-                    alimentosSeleccionados.remove(alimento);
+                    booleans.set(position, new Boolean(false));
                     Log.d("RETRASO", "onCheckedChanged: FALSO " + position);
                 }
             }
         });
 
         return convertView;
+    }
+
+    public void cargarBooleans(){
+        booleans = new ArrayList<>();
+        for(int i = 0; i < alimentos.size(); i++){
+            booleans.add(new Boolean(false));
+        }
     }
 
     /**
@@ -86,7 +95,6 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
             for (SmoothCheckBox item: smoothCheckBoxes) {
                 item.setChecked(false, true);
             }
-            alimentosSeleccionados.clear();
         }
     }
 
@@ -96,7 +104,26 @@ public class CustomArrayAdapter extends ArrayAdapter<ComponenteListaCompra> {
      * @return el array list que contiene los alimentos seleccionados por el usuario
      */
     public ArrayList<ComponenteListaCompra> getNuevaLista(){
-        return alimentosSeleccionados;
+        for (int i = 0; i < booleans.size(); i++) {
+            if(booleans.get(i).booleanValue()){
+                auxiliar.add(alimentos.get(i));
+            }
+        }
+        for (ComponenteListaCompra item : auxiliar) {
+            Log.d("bucle", "confirmarCambios: " + item.getNombreElemento());
+        }
+
+        alimentos.clear();
+        for (ComponenteListaCompra item : auxiliar) {
+            alimentos.add(item);
+        }
+        for (ComponenteListaCompra item : alimentos) {
+            Log.d("bucle2", "confirmarCambios: " + item.getNombreElemento());
+        }
+        auxiliar.clear();
+
+        cargarBooleans();
+        return alimentos;
     }
 
     /**

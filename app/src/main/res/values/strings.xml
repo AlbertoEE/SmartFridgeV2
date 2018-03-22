@@ -132,4 +132,5 @@
     <string name="titulo">titulo</string>
     <string name="spinner">spinner</string>
     <string name="no_precio_r">No se han encontrado resultados para esos elementos</string>
+    <string name="no_listas">Se han encontrado 0 listas... ¡Prueba a crear una!</string>
 </resources>

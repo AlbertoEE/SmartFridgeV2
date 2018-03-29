@@ -28,11 +28,11 @@ import java.util.ArrayList;
  */
 public class MySQLHelper {
     private final static String DRIVER = "com.mysql.jdbc.Driver";//Driver para la conexión con la bbdd
-    private final static String NOMBRE_BBDD = "BBDD_SMART_FRIDGE";//Nombre de la bbdd
-    private final static String IP = "smartfridge.ddns.net";//Dirección ip del servidor
-    private final static String PUERTO = "3306";//Puerto de conexión
-    private final static String USER = "RealRoot";//Usuario de la bbdd
-    private final static String PASS = "OTTsteTl";//Contraseña
+    private final static String NOMBRE_BBDD = "";//Nombre de la bbdd
+    private final static String IP = "";//Dirección ip del servidor
+    private final static String PUERTO = "";//Puerto de conexión
+    private final static String USER = "";//Usuario de la bbdd
+    private final static String PASS = "";//Contraseña
     private String servidor = "jdbc:mysql://" + IP + ":" + PUERTO + "/" + NOMBRE_BBDD;
     private Connection conexion;
     private static final String TABLA_COD_ALI = "CODIGO_ALIMENTO";//Nombre de la tabla con los códigos de los alimentos
